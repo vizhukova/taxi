@@ -2,5 +2,10 @@
   "name": "taxi",
   "app_id": "",
   "v2": true,
-  "typescript": true
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "http://shoes.mikero.ru/api"
+    }
+  ]
 }
