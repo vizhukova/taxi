@@ -5,15 +5,15 @@ import { Map } from './../../components/map';
 import { Place } from './../../providers/place/place';
 
 @Component({
-  templateUrl: 'build/pages/home/home.html'
+  templateUrl: 'build/pages/home/home.html',
+  directives: [Map]
 })
 export class HomePage {
 
   names: string[];
   loading: boolean;
-  private PlaceProvider: Place;
 
-  constructor(private navController: NavController, private http: Http) {
+  constructor(private navController: NavController, private http: Http, private PlaceProvider: Place) {
     this.http = http;
     this.names = ['Ari1', 'Ari2', 'Ari3', 'Ari4', 'Ari5'];
     this.makeRequest();
