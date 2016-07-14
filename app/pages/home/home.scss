@@ -1,6 +1,22 @@
+.toolbar.show-navbar {
+  min-height: 60px;
+}
+
+.toolbar-background {
+  background: #2c2c30;
+}
+
+.toolbar-title {
+  color: #e57339;
+  font-weight: 100;
+}
+
+.scroll-content {
+  margin-top: 15px;
+}
 
 .home {
   
 }
 
-#mapid { height: 180px; }
+#mapid { height: 100%; }

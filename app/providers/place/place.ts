@@ -1,38 +1,56 @@
 import {Geolocation} from 'ionic-native';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
+import {Http, Response, RequestOptions, Headers} from '@angular/http';
 
 @Injectable()
 export class Place {
 
-  data:any;
+    data:any;
 
-  constructor() {
-    this.get();
-  }
+    constructor(private http:Http) {
 
-  get() {
-    return Geolocation.getCurrentPosition().then((resp) => {
-      debugger
-     //resp.coords.latitude
-     //resp.coords.longitude
-    })
+    }
 
-  }
+    public get() {
 
-  watch(callback) {
-    let watch = Geolocation.watchPosition();
-    watch.subscribe((data) => {
-      debugger
-      callback(data);
-     //data.coords.latitude
-     //data.coords.longitude
-    })
-  }
+        return new Promise((resolve, reject) => {
+            Geolocation.getCurrentPosition().then((resp) => {
+                this.data = resp;
+                resolve(resp.coords);
+                //resp.coords.latitude
+                //resp.coords.longitude
+            }, (err) => {
+                reject(err);
+            })
+        })
+
+    }
+
+    //http://maps.googleapis.com/maps/api/geocode/json?latlng=44.4647452,7.3553838&sensor=true
+
+    public getCurrentAddress() {
+        return new Promise((resolve, reject) => {
+            this.get().then((coords:any) => {
+                this.http.get(`http://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.latitude},${coords.longitude}&sensor=true&language=ru`)
+                    .subscribe((res:Response) => {
+                        var data = res.json();
+                        resolve(`${data.results[0].address_components[1].long_name}, ${data.results[0].address_components[0].long_name}`);
+                    });
+            })
+        })
+    }
+
+    public watch(callback) {
+        let watch = Geolocation.watchPosition();
+        watch.subscribe((data) => {
+            callback(data);
+            //data.coords.latitude
+            //data.coords.longitude
+        })
+    }
 
 }
-
-
 
 
 //import { Injectable } from '@angular/core';
