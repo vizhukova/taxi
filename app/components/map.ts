@@ -66,9 +66,9 @@ export class Map {
 
             popup.setLatLng(e.latlng);
 
-            popup.setContent("Координаты точки " + latlngStr);
-
-            map.openPopup(popup);
+            //popup.setContent("Координаты точки " + latlngStr);
+            //
+            //map.openPopup(popup);
 
             //this.myMap = L.map('mapid').setView([51.505, -0.09], 13);
             //L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
