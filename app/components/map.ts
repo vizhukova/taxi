@@ -20,7 +20,7 @@ export class Map {
 
     public ngAfterViewInit(): void {
 
-        var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        var osmUrl = 'http://tiles.maps.sputnik.ru//{z}/{x}/{y}.png',
             osmAttribution = 'Map data <a target="_blank" href="http://www.openstreetmap.org">OpenStreetMap.org</a>; contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
             osmLayer = new L.TileLayer(osmUrl, {maxZoom: 18, attribution: osmAttribution});
 
@@ -48,6 +48,10 @@ export class Map {
          this.PlaceProvider.get().then((data: any) => {
               map.setView(L.latLng(data.latitude, data.longitude), 14);
               L.marker([data.latitude, data.longitude], {icon: greenIcon}).addTo(map);
+             console.log(data.latitude, data.longitude)
+
+             setTimeout(() => map.panTo([data.latitude + 0.001, data.longitude +0.001]), 1000);
+
         }).catch((err) => {
             //debugger
         })
@@ -67,8 +71,8 @@ export class Map {
             popup.setLatLng(e.latlng);
 
             //popup.setContent("Координаты точки " + latlngStr);
-            //
-            //map.openPopup(popup);
+
+            //map.open/Popup(popup);
 
             //this.myMap = L.map('mapid').setView([51.505, -0.09], 13);
             //L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {

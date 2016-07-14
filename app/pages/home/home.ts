@@ -14,12 +14,14 @@ export class HomePage {
   names: string[];
   loading: boolean;
   title: string;
+  isAddress: boolean;
 
   constructor(private navController: NavController, private http: Http, private PlaceProvider: Place) {
     this.http = http;
     this.title = 'определяем адрес...';
     this.names = ['Ari1', 'Ari2', 'Ari3', 'Ari4', 'Ari5'];
     this.makeRequest();
+    this.isAddress = false;
   }
 
 
@@ -35,6 +37,7 @@ export class HomePage {
 
     this.PlaceProvider.getCurrentAddress().then((data:any) => {
         this.title = data;
+        this.isAddress = true;
     }).catch((err) => {
         //debugger
     })

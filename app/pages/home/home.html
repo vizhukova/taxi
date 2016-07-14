@@ -6,6 +6,9 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content class="scroll-content">
+<ion-content  class="has-footer">
   <map></map>
 </ion-content>
+<ion-footer-bar class="ion-footer-bar">
+   <button class="call" *ngIf="isAddress">Вызвать такси</button>
+</ion-footer-bar>
