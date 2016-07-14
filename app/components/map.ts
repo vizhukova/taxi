@@ -17,7 +17,7 @@ export class Map {
 
     }
 
-    Initialize() {
+    public afterViewInit(): void {
 
         // this.PlaceProvider.get();
 
@@ -29,6 +29,7 @@ export class Map {
             accessToken: 'your.mapbox.public.access.token'
         }).addTo(this.myMap);
     }
+
 
 
 }
