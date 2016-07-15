@@ -29,17 +29,19 @@ export class Place {
 
     //http://maps.googleapis.com/maps/api/geocode/json?latlng=44.4647452,7.3553838&sensor=true
 
-    public getCurrentAddress() {
+    public getCurrentAddress(coords:any) {
         return new Promise((resolve, reject) => {
-            this.get().then((coords:any) => {
+            //this.get().then((coords:any) => {
                 this.http.get(`http://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.latitude},${coords.longitude}&sensor=true&language=ru`)
                     .subscribe((res:Response) => {
                         var data = res.json();
                         resolve(`${data.results[0].address_components[1].long_name}, ${data.results[0].address_components[0].long_name}`);
                     });
-            })
+            //})
         })
     }
+
+
 
     public watch(callback) {
         let watch = Geolocation.watchPosition();

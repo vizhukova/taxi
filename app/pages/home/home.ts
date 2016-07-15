@@ -16,6 +16,12 @@ export class HomePage {
   title: string;
   isAddress: boolean;
 
+  public theBoundCallback: Function;
+
+  public ngOnInit(){
+    this.theBoundCallback = this.onDragendMap.bind(this);
+  }
+
   constructor(private navController: NavController, private http: Http, private PlaceProvider: Place) {
     this.http = http;
     this.title = 'определяем адрес...';
@@ -29,31 +35,35 @@ export class HomePage {
   makeRequest(): void {
     this.loading = true;
 
-    this.http.request('http://jsonplaceholder.typicode.com/posts')
-    .subscribe((res: Response) => {
-      this.loading = false;
-        this.names = res.json();
-    });
+    //this.http.request('http://jsonplaceholder.typicode.com/posts')
+    //.subscribe((res: Response) => {
+    //  this.loading = false;
+    //    this.names = res.json();
+    //});
 
-    this.PlaceProvider.getCurrentAddress().then((data:any) => {
-        this.title = data;
-        this.isAddress = true;
-    }).catch((err) => {
-        //debugger
+
+    this.PlaceProvider.get().then((coords:any) => {
+       this.PlaceProvider.getCurrentAddress(coords).then((data:any) => {
+          this.title = data;
+          this.isAddress = true;
+         this.loading = false;
+      }).catch((err) => {
+          //debugger
+      })
     })
 
   }
 
+  public onDragendMap(coords) { //lat; lng
+    this.title = 'определяем адрес...';
+    this.PlaceProvider.getCurrentAddress({latitude: coords.lat, longitude: coords.lng}).then((data:any) => {
+        this.title = data;
+        this.isAddress = true;
+        this.loading = false;
+    }).catch((err) => {
 
-
-
-  //get();
-  //
-  //  get (): {
-  //  return this.http.get('http://shoes.mikero.ru.ru/api/brand.filter')
-  //                  .map(this.extractData)
-  //                  .catch(this.handleError);
-  //}
+    })
+  }
 }
 
 
