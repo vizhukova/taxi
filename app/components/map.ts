@@ -21,7 +21,7 @@ export class Map {
     public ngAfterViewInit(): void {
 
         var osmUrl = 'http://tiles.maps.sputnik.ru//{z}/{x}/{y}.png',
-            osmAttribution = 'Map data <a target="_blank" href="http://www.openstreetmap.org">OpenStreetMap.org</a>; contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            osmAttribution = '',//'Map data <a target="_blank" href="http://www.openstreetmap.org">OpenStreetMap.org</a>; contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
             osmLayer = new L.TileLayer(osmUrl, {maxZoom: 18, attribution: osmAttribution});
 
         var map = new L.Map('mapid', {center: new L.LatLng(55.8, 37.7), zoom: 7, layers: [osmLayer]});
