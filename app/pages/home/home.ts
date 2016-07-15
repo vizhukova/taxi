@@ -4,6 +4,7 @@ import {NavController} from 'ionic-angular';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { Map } from './../../components/map';
 import {Place} from './../../providers/place/place';
+import * as polyline from 'polyline'
 
 @Component({
   templateUrl: 'build/pages/home/home.html',
@@ -23,7 +24,7 @@ export class HomePage {
     this.theBoundCallback = this.onDragendMap.bind(this);
   }
 
-  constructor(private navController: NavController, private http: Http, private PlaceProvider: Place, private zone: NgZone) {
+  constructor(private navController: NavController, private http: Http, private PlaceProvider: Place) {
     this.http = http;
     this.title = 'определяем адрес...';
     this.names = ['Ari1', 'Ari2', 'Ari3', 'Ari4', 'Ari5'];
@@ -36,22 +37,28 @@ export class HomePage {
   makeRequest(): void {
     this.loading = true;
 
-    //this.http.request('http://jsonplaceholder.typicode.com/posts')
-    //.subscribe((res: Response) => {
-    //  this.loading = false;
-    //    this.names = res.json();
-    //});
+        this.PlaceProvider.get().then((coords:any) => {
+            this.PlaceProvider.getCurrentAddress(coords).then((data:any) => {
+                this.title = data;
+                this.isAddress = true;
+                this.loading = false;
 
+                this.http.put('http://ddtaxity.smarttaxi.ru:8000/1.x/route?taxiserviceid=taxity', '', {
+                        data: JSON.stringify([
+                            {Lat: 55.779219, Lon: 37.583033},
+                            {Lat: 55.731180, Lon: 37.677409}
+                        ])
+                    })
+                    .subscribe((res:Response) => {
+                        var data = res.json();
+                        var decodedPolyline = polyline.decode(data.overviewPolyline);
+                        debugger;
+                    });
 
-    this.PlaceProvider.get().then((coords:any) => {
-       this.PlaceProvider.getCurrentAddress(coords).then((data:any) => {
-          this.title = data;
-          this.isAddress = true;
-         this.loading = false;
-      }).catch((err) => {
-          //debugger
-      })
-    })
+            }).catch((err) => {
+                //debugger
+            })
+        })
 
   }
 
@@ -61,8 +68,8 @@ export class HomePage {
         this.title = data;
         this.isAddress = true;
         this.loading = false;
-        this.zone.run(()=>{});
     }).catch((err) => {
+
     })
   }
 }
