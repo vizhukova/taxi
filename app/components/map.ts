@@ -54,7 +54,6 @@ export class Map {
     }
 
     private onDragEnd(e) {
-        debugger
         if(this.callback) {
             this.callback(this.map.getCenter());
         }

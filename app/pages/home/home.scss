@@ -29,15 +29,19 @@
   button {
     width: 90%;
     margin: 0;
-    background: #e57339;
+    background-color: #e57339;
     color: #fbfbfb;
     font-weight: 600;
     text-transform: uppercase;
     height: 60px;
     border-radius: 0;
 
+    &:hover {
+      background-color: #D26B36 !important;
+    }
+
     &.activated {
-      background: #D26B36;
+      background-color: #D26B36;
     }
   }
 }

@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {NgZone} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { Map } from './../../components/map';
@@ -22,7 +23,7 @@ export class HomePage {
     this.theBoundCallback = this.onDragendMap.bind(this);
   }
 
-  constructor(private navController: NavController, private http: Http, private PlaceProvider: Place) {
+  constructor(private navController: NavController, private http: Http, private PlaceProvider: Place, private zone: NgZone) {
     this.http = http;
     this.title = 'определяем адрес...';
     this.names = ['Ari1', 'Ari2', 'Ari3', 'Ari4', 'Ari5'];
@@ -60,8 +61,8 @@ export class HomePage {
         this.title = data;
         this.isAddress = true;
         this.loading = false;
+        this.zone.run(()=>{});
     }).catch((err) => {
-
     })
   }
 }
