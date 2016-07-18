@@ -4,7 +4,8 @@ import {NavController} from 'ionic-angular';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { Map } from './../../components/map';
 import {Place} from './../../providers/place/place';
-import * as polyline from 'polyline'
+// import polyline from 'polyline'
+
 
 @Component({
   templateUrl: 'build/pages/home/home.html',
@@ -17,6 +18,7 @@ export class HomePage {
   loading: boolean;
   title: string;
   isAddress: boolean;
+  path: any;
 
   public theBoundCallback: Function;
 
@@ -30,6 +32,7 @@ export class HomePage {
     this.names = ['Ari1', 'Ari2', 'Ari3', 'Ari4', 'Ari5'];
     this.makeRequest();
     this.isAddress = false;
+    this.path = []
   }
 
 
@@ -38,32 +41,38 @@ export class HomePage {
     this.loading = true;
 
         this.PlaceProvider.get().then((coords:any) => {
+            
+            this.makePolyline(coords);
+
             this.PlaceProvider.getCurrentAddress(coords).then((data:any) => {
                 this.title = data;
                 this.isAddress = true;
                 this.loading = false;
-
-                this.http.put('http://ddtaxity.smarttaxi.ru:8000/1.x/route?taxiserviceid=taxity', '', {
-                        data: JSON.stringify([
-                            {Lat: 55.779219, Lon: 37.583033},
-                            {Lat: 55.731180, Lon: 37.677409}
-                        ])
-                    })
-                    .subscribe((res:Response) => {
-                        var data = res.json();
-                        var decodedPolyline = polyline.decode(data.overviewPolyline);
-                        debugger;
-                    });
-
             }).catch((err) => {
                 //debugger
             })
         })
 
   }
+    
+  protected makePolyline(coords:any) {
+
+      let offset = Math.random() / 10;
+
+      let from = {Lat: coords.lat, Lon: coords.lng};
+
+      let to = {Lat : from.Lat + offset, Lon: from.Lon + offset};
+
+      this.http.post('http://ddtaxity.smarttaxi.ru:8000/1.x/route?taxiserviceid=taxity', [from, to])
+          .subscribe((res:Response) => {
+              var data = res.json();
+              this.path = this.PlaceProvider.decodeGooglePolyline(data.overviewPolyline);
+      });
+  }
 
   public onDragendMap(coords) { //lat; lng
     this.title = 'определяем адрес...';
+    this.makePolyline(coords);
     this.PlaceProvider.getCurrentAddress({latitude: coords.lat, longitude: coords.lng}).then((data:any) => {
         this.title = data;
         this.isAddress = true;

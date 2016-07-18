@@ -9,19 +9,29 @@ import {Place} from './../providers/place/place';
     selector: 'map',
     template: ' <div id="mapid"></div>',
     providers: [Place],
-    inputs: ['callback']
+    inputs: ['callback', 'path']
 })
 export class Map {
 
     myMap:any;
     popup:any;
     map: any;
+    line: any;
 
     @Input()
     public callback: Function;
+    
+    @Input()
+    public path : any;
+
+    ngOnChanges(data: any) {
+        if(this.map && this.path.length) {
+            this.line && this.clearPolyline();
+            this.line = L.polyline(this.path, {color: 'red'}).addTo(this.map);
+        }
+    }
 
     constructor(private navController:NavController, private PlaceProvider: Place) {
-         this.popup = new L.Popup();
         this.onDragEnd = this.onDragEnd.bind(this);
     }
 
@@ -33,8 +43,9 @@ export class Map {
 
         this.map = new L.Map('mapid', {center: new L.LatLng(55.8, 37.7), zoom: 7, layers: [osmLayer], zoomControl:false});
 
-        this.map.on('click', this.onClick);
         this.map.on('dragend', this.onDragEnd);
+        
+        this.map.on('zoomend', this.onDragEnd);
 
         setTimeout(()=>{this.map.invalidateSize(true)}, 300);
 
@@ -48,9 +59,8 @@ export class Map {
         })
     }
 
-    private onClick(e) {
-        var latlngStr = '(' + e.latlng.lat.toFixed(3) + ', ' + e.latlng.lng.toFixed(3) + ')';
-        this.popup.setLatLng(e.latlng);
+    private clearPolyline() {
+        this.map.removeLayer(this.line)
     }
 
     private onDragEnd(e) {
