@@ -47,6 +47,79 @@
 }
 
 .home {
+
+  // TODO delete this sh*t
+  scroll-content {
+    overflow-y: hidden;
+  }
+
+  .address-panel {
+    height: 110px;
+    background: #323238;
+    position: fixed;
+    top: 70px;
+    width: 100%;
+
+    div {
+      padding-left: 63px;
+      height: 50%;
+      position: relative;
+
+      &.from {
+
+        &:before {
+          content: "";
+          display: block;
+          position: absolute;
+          height: 46px;
+          top: 40px;
+          width: 1px;
+          left: 68.5px;
+          border-right: 1px dashed #a8bea1;
+        }
+
+        span {
+          background: url('../res/icon_path_active.png') no-repeat;
+          background-size: 21px 20px;
+          vertical-align: text-top;
+        }
+
+        input {
+          width: 87%;
+          border-bottom:2px solid #454549;
+        }
+      }
+
+      &.to {
+        span {
+          background: url("../res/icon_pathto_inactive.png") -3.4px -2px no-repeat;
+          background-size: 21px 20px;
+          vertical-align: bottom;
+        }
+      }
+
+      span {
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+      }
+
+      input {
+        background: #323238;
+        border: none;
+        outline: none;
+        color: #e57339;
+        font-size: 21px;
+        height: 100%;
+
+        &::-webkit-input-placeholder {color:#e57339;}
+        &::-moz-placeholder          {color:#e57339;}/* Firefox 19+ */
+        &:-moz-placeholder           {color:#e57339;}/* Firefox 18- */
+        &:-ms-input-placeholder      {color:#e57339;}
+      }
+    }
+  }
+
   .marker {
     position: absolute;
     z-index: 1;

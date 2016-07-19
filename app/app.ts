@@ -1,14 +1,29 @@
 import {Component} from '@angular/core';
 import {Platform, ionicBootstrap} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
-import {HomePage} from './pages/home/home';
+import { HomePage } from './pages/home/home';
+import { SettingsPage } from './pages/settings/settings';
+import { TimePage } from './pages/time/time';
+import { AccountPage } from './pages/account/account';
 
 
 @Component({
-  template: '<ion-nav [root]="rootPage"></ion-nav>'
+  template: `
+    <ion-tabs>
+      <ion-tab tabIcon="locate" [root]="home"></ion-tab>
+      <ion-tab tabIcon="options" [root]="settings"></ion-tab>
+      <ion-tab tabIcon="clock" [root]="time"></ion-tab>
+      <ion-tab tabIcon="person" [root]="account"></ion-tab>
+    </ion-tabs>
+`
 })
 export class MyApp {
-  rootPage: any = HomePage;
+
+  home: any = HomePage;
+  settings: any = SettingsPage;
+  time: any = TimePage;
+  account: any = AccountPage;
+
 
   constructor(platform: Platform) {
     platform.ready().then(() => {
@@ -17,6 +32,11 @@ export class MyApp {
       StatusBar.styleDefault();
     });
   }
+
+
 }
 
-ionicBootstrap(MyApp);
+//noinspection TypeScriptValidateTypes
+ionicBootstrap(MyApp, [], {
+  tabsPlacement: 'top'
+});

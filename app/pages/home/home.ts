@@ -16,7 +16,7 @@ export class HomePage{
 
   names: string[];
   loading: boolean;
-  title: string;
+  address: any;
   isAddress: boolean;
   path: any;
 
@@ -26,9 +26,13 @@ export class HomePage{
     this.theBoundCallback = this.onDragendMap.bind(this);
   }
 
-  constructor(private navController: NavController, private http: Http, private PlaceProvider: Place, private ref: ApplicationRef) {
-    this.http = http;
-    this.title = 'определяем адрес...';
+  constructor(private nav: NavController, private http: Http, private PlaceProvider: Place, private ref: ApplicationRef) {
+      this.nav = nav;
+      this.http = http;
+    this.address = {
+        from: '',
+        to: ''
+    };
     this.names = ['Ari1', 'Ari2', 'Ari3', 'Ari4', 'Ari5'];
     this.makeRequest();
     this.isAddress = false;
@@ -45,7 +49,7 @@ export class HomePage{
             this.makePolyline(coords);
 
             this.PlaceProvider.getCurrentAddress(coords).then((data:any) => {
-                this.title = data;
+                this.address.from = data;
                 this.isAddress = true;
                 this.loading = false;
             }).catch((err) => {
@@ -74,7 +78,7 @@ export class HomePage{
     this.title = 'определяем адрес...';
     this.makePolyline(coords);
     this.PlaceProvider.getCurrentAddress({latitude: coords.lat, longitude: coords.lng}).then((data:any) => {
-        this.title = data;
+        this.address.from = data;
         this.isAddress = true;
         this.loading = false;
         this.ref.tick()

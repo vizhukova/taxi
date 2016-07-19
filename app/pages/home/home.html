@@ -1,15 +1,19 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title class="ion-title">
-      {{title}}
-    </ion-title>
-  </ion-navbar>
-</ion-header>
 
 <ion-content  class="has-footer home">
   <map [callback]="theBoundCallback" [path]="path"></map>
   <img class="marker" src="./build/res/point.png" alt="">
+    <div class="address-panel">
+        <div class="from">
+            <span class="icon"></span>
+            <input type="text" [(ngModel)]="address.from" placeholder="Откуда ...">
+        </div>
+        <div class="to">
+            <span class="icon"></span>
+            <input type="text" [(ngModel)]="address.to" placeholder="Куда ?">
+        </div>
+    </div>
 </ion-content>
 <ion-footer-bar class="ion-footer-bar">
    <button class="call" *ngIf="isAddress">Вызвать такси</button>
+    <div class="search"></div>
 </ion-footer-bar>
