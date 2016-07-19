@@ -14,32 +14,56 @@ import {Place} from './../../providers/place/place';
 })
 export class HomePage{
 
-  names: string[];
-  loading: boolean;
-  address: any;
-  isAddress: boolean;
-  path: any;
+    names: string[];
+    loading: boolean;
+    address: any;
+    isAddress: boolean;
+    path: any;
+    coords: any;
+    direction: string;
 
-  public theBoundCallback: Function;
+    public theBoundCallback: Function;
 
-  public ngOnInit(){
-    this.theBoundCallback = this.onDragendMap.bind(this);
-  }
+    public ngOnInit(){
+        this.theBoundCallback = this.onDragendMap.bind(this);
+    }
 
-  constructor(private nav: NavController, private http: Http, private PlaceProvider: Place, private ref: ApplicationRef) {
-      this.nav = nav;
-      this.http = http;
-    this.address = {
-        from: '',
-        to: ''
-    };
-    this.names = ['Ari1', 'Ari2', 'Ari3', 'Ari4', 'Ari5'];
-    this.makeRequest();
-    this.isAddress = false;
-    this.path = []
-  }
+    constructor(private nav: NavController, private http: Http, private PlaceProvider: Place, private ref: ApplicationRef) {
+        this.nav = nav;
+        this.http = http;
+        this.address = {
+            from: '',
+            to: ''
+        };
+        this.coords = {
+          from: [],
+          to: []
+        };
+        this.names = ['Ari1', 'Ari2', 'Ari3', 'Ari4', 'Ari5'];
+        this.makeRequest();
+        this.isAddress = false;
+        this.path = [];
+        this.direction = 'from'
+    }
 
+    setClasses(direction: string) {
+        return {
+            from: direction === 'from',
+            to: direction === 'to',
+            active: this.direction === direction
+        }
+    }
 
+    markerClasses() {
+        return {
+            marker: true,
+            from: this.direction === 'from'
+        }
+    }
+
+    onFocus(type: string): void {
+        this.direction = type
+    }
 
   makeRequest(): void {
     this.loading = true;
@@ -49,7 +73,7 @@ export class HomePage{
             this.makePolyline(coords);
 
             this.PlaceProvider.getCurrentAddress(coords).then((data:any) => {
-                this.address.from = data;
+                this.address[this.direction] = data;
                 this.isAddress = true;
                 this.loading = false;
             }).catch((err) => {
@@ -63,6 +87,8 @@ export class HomePage{
 
       let offset = Math.random() / 10;
 
+      
+
       let from = {Lat: coords.lat, Lon: coords.lng};
 
       let to = {Lat : from.Lat + offset, Lon: from.Lon + offset};
@@ -75,10 +101,10 @@ export class HomePage{
   }
 
   public onDragendMap(coords) { //lat; lng
-    this.title = 'определяем адрес...';
     this.makePolyline(coords);
+    this.coords[this.direction] = coords;
     this.PlaceProvider.getCurrentAddress({latitude: coords.lat, longitude: coords.lng}).then((data:any) => {
-        this.address.from = data;
+        this.address[this.direction] = data;
         this.isAddress = true;
         this.loading = false;
         this.ref.tick()

@@ -64,8 +64,18 @@
       padding-left: 63px;
       height: 50%;
       position: relative;
+      color: #fff;
 
       &.from {
+
+        &.active {
+          color: #e57339;
+
+          input::-webkit-input-placeholder {color:#e57339;}
+          input::-moz-placeholder          {color:#e57339;}/* Firefox 19+ */
+          input:-moz-placeholder           {color:#e57339;}/* Firefox 18- */
+          input:-ms-input-placeholder      {color:#e57339;}
+        }
 
         &:before {
           content: "";
@@ -91,6 +101,16 @@
       }
 
       &.to {
+
+        &.active {
+          color: #e57339;
+
+          input::-webkit-input-placeholder {color:#e57339;}
+          input::-moz-placeholder          {color:#e57339;}/* Firefox 19+ */
+          input:-moz-placeholder           {color:#e57339;}/* Firefox 18- */
+          input:-ms-input-placeholder      {color:#e57339;}
+        }
+
         span {
           background: url("../res/icon_pathto_inactive.png") -3.4px -2px no-repeat;
           background-size: 21px 20px;
@@ -108,28 +128,38 @@
         background: #323238;
         border: none;
         outline: none;
-        color: #e57339;
         font-size: 21px;
         height: 100%;
 
-        &::-webkit-input-placeholder {color:#e57339;}
-        &::-moz-placeholder          {color:#e57339;}/* Firefox 19+ */
-        &:-moz-placeholder           {color:#e57339;}/* Firefox 18- */
-        &:-ms-input-placeholder      {color:#e57339;}
+        &::-webkit-input-placeholder {color:#fff;}
+        &::-moz-placeholder          {color:#fff;}/* Firefox 19+ */
+        &:-moz-placeholder           {color:#fff;}/* Firefox 18- */
+        &:-ms-input-placeholder      {color:#fff;}
       }
     }
   }
 
-  .marker {
+  span.marker {
+
+    &.from {
+      background: url("../res/icon_path_active.png") no-repeat;
+      width: 26px;
+      height: 36px;
+      background-size: 100% 100%;
+    }
+
     position: absolute;
+    display: inline-block;
     z-index: 1;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
     margin: auto;
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
+    background: url("../res/point.png") no-repeat;
+    background-size: 100% 100%;
   }
 }
 

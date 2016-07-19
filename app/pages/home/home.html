@@ -1,15 +1,27 @@
 
 <ion-content  class="has-footer home">
-  <map [callback]="theBoundCallback" [path]="path"></map>
-  <img class="marker" src="./build/res/point.png" alt="">
+  <map [callback]="theBoundCallback" [path]="path" [direction]="direction" [coords]="coords"></map>
+
+  <span [ngClass]="markerClasses()"></span>
+
     <div class="address-panel">
-        <div class="from">
+        <div [ngClass]="setClasses('from')">
             <span class="icon"></span>
-            <input type="text" [(ngModel)]="address.from" placeholder="Откуда ...">
+            <input
+                type="text"
+                (focus)="onFocus('from')"
+                [(ngModel)]="address.from"
+                placeholder="Откуда ..."
+            >
         </div>
-        <div class="to">
+        <div [ngClass]="setClasses('to')">
             <span class="icon"></span>
-            <input type="text" [(ngModel)]="address.to" placeholder="Куда ?">
+            <input
+                type="text"
+                (focus)="onFocus('to')"
+                [(ngModel)]="address.to"
+                placeholder="Куда ?"
+            >
         </div>
     </div>
 </ion-content>
