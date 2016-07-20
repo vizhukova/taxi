@@ -51,17 +51,16 @@
     p.title {
       display: inline-block;
       color: #fbfbfb;
-      width: 69%;
       text-align: right;
-      padding-right: 80px;
+      margin-left: 9px
     }
 
     div.price {
-      width: 30%;
       display: inline-block;
       height: 100%;
       padding-left: 45px;
-      background: #e7804d url('../res/icon_coins.png') 15px center no-repeat;
+      background: #e7804d url("../res/icon_coins.png") 15px center no-repeat;
+      padding-right: 4px;
       background-size: 23px 18px;
 
       span.currency {

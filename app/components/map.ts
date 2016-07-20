@@ -151,6 +151,10 @@ export class Map {
     }
 
     private onDragEnd() {
+
+        let zoom = this.map.getZoom();
+        this.map.setZoom(Math.round(zoom))
+
         if(this.callback) this.callback(this.map.getCenter());
     }
 

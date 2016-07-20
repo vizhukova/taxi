@@ -38,5 +38,10 @@ export class MyApp {
 
 //noinspection TypeScriptValidateTypes
 ionicBootstrap(MyApp, [], {
-  tabsPlacement: 'top'
+  tabbarPlacement: 'top',
+  platforms: {
+    ios: {
+      tabbarPlacement: 'top'
+    }
+  }
 });

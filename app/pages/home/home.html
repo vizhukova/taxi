@@ -5,20 +5,20 @@
   <span [ngClass]="markerClasses()"></span>
 
     <div class="address-panel">
-        <div [ngClass]="setClasses('from')">
+        <div [ngClass]="setClasses('from')" (click)="onFocus('from')">
             <span class="icon"></span>
             <input
+                disabled
                 type="text"
-                (focus)="onFocus('from')"
                 [(ngModel)]="address.from"
                 placeholder="Откуда ..."
             >
         </div>
-        <div [ngClass]="setClasses('to')">
+        <div [ngClass]="setClasses('to')" (click)="onFocus('to')">
             <span class="icon"></span>
             <input
+                disabled
                 type="text"
-                (focus)="onFocus('to')"
                 [(ngModel)]="address.to"
                 placeholder="Куда ?"
             >
