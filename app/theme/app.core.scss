@@ -12,11 +12,22 @@
 @import "../pages/time/time";
 @import "../pages/account/account";
 
+* {
+  font-family: 'Open Sans Condensed', sans-serif;
+}
 
 .show-tabbar {
   background: #2c2c30;
-  height: 70px;
+  height: 55px;
   .animate {
     display: none;
+  }
+}
+
+.platform-android {
+  &.platform-android6 {
+    div.call {
+      line-height: 20px!important;
+    }
   }
 }

@@ -26,23 +26,62 @@
   right: 0;
   text-align: center;
 
-  button {
+  div.call {
     width: 90%;
-    margin: 0;
-    background-color: #e57339;
-    color: #fbfbfb;
+    margin: auto;
     font-weight: 600;
     text-transform: uppercase;
-    height: 60px;
+    height: 55px;
+    line-height: 9px;
     border-radius: 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    text-align: left;
+    font-size: 20px;
+    overflow: hidden;
+    background: #e57339 url("../res/icon_arrow.png") no-repeat;
+    background-position: right 10px center;
+    background-size: 30px 30px;
+    position: absolute;
+    left:0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
 
-    &:hover {
-      background-color: #D26B36 !important;
+    p.title {
+      display: inline-block;
+      color: #fbfbfb;
+      width: 69%;
+      text-align: right;
+      padding-right: 80px;
     }
 
-    &.activated {
-      background-color: #D26B36;
+    div.price {
+      width: 30%;
+      display: inline-block;
+      height: 100%;
+      padding-left: 45px;
+      background: #e7804d url('../res/icon_coins.png') 15px center no-repeat;
+      background-size: 23px 18px;
+
+      span.currency {
+        vertical-align: super;
+        text-transform: capitalize;
+        font-size: 13px;
+        margin-left: 3px;
+      }
     }
+
+  }
+
+  div.search {
+    color: #b2b2b2;
+    background: rgba(0, 0, 0, 0.9);
+    font-size: 19px;
+    line-height: 24px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
   }
 }
 
@@ -54,14 +93,14 @@
   }
 
   .address-panel {
-    height: 110px;
+    height: 90px;
     background: #323238;
     position: fixed;
-    top: 70px;
+    top: 55px;
     width: 100%;
 
     div {
-      padding-left: 63px;
+      padding-left: 9.6%;
       height: 50%;
       position: relative;
       color: #fff;
@@ -77,25 +116,30 @@
           input:-ms-input-placeholder      {color:#e57339;}
         }
 
-        &:before {
-          content: "";
-          display: block;
-          position: absolute;
-          height: 46px;
-          top: 40px;
-          width: 1px;
-          left: 68.5px;
-          border-right: 1px dashed #a8bea1;
-        }
-
         span {
           background: url('../res/icon_path_active.png') no-repeat;
-          background-size: 21px 20px;
-          vertical-align: text-top;
+          background-size: 100% 100%;
+          vertical-align: middle;
+          width: 16px;
+          height: 21px;
+          position: relative;
+
+          &:before {
+            content: "";
+            display: block;
+            position: absolute;
+            height: 23px;
+            bottom: -26px;
+            width: 1px;
+            left: 0;
+            right: 0;
+            margin: auto;
+            border-right: 2px dashed #a8bea1;
+          }
+
         }
 
         input {
-          width: 87%;
           border-bottom:2px solid #454549;
         }
       }
@@ -112,15 +156,15 @@
         }
 
         span {
-          background: url("../res/icon_pathto_inactive.png") -3.4px -2px no-repeat;
-          background-size: 21px 20px;
-          vertical-align: bottom;
+          background: url("../res/icon_pathto_inactive.png") no-repeat;
+          background-size: 100% 100%;
+          vertical-align: middle;
         }
       }
 
       span {
-        width: 30px;
-        height: 30px;
+        width: 16px;
+        height: 16px;
         display: inline-block;
       }
 
@@ -130,6 +174,8 @@
         outline: none;
         font-size: 21px;
         height: 100%;
+        margin-left: 10px;
+        width: 87%;
 
         &::-webkit-input-placeholder {color:#fff;}
         &::-moz-placeholder          {color:#fff;}/* Firefox 19+ */
@@ -163,4 +209,25 @@
   }
 }
 
-#mapid { height: 100%; }
+#mapid {
+  height: 100%;
+
+  .nav-panel {
+    bottom: 53px;
+
+    .locate-button {
+      width: 55px;
+      height: 55px;
+      background: url('../res/btn_locate.png') no-repeat;
+      background-size: 100% 100%;
+      bottom: 60px;
+    }
+    .calcpath-button {
+      width: 55px;
+      height: 55px;
+      background: url('../res/btn_calcpath.png') no-repeat;
+      background-size: 100% 100%;
+      bottom: 60px;
+    }
+  }
+}

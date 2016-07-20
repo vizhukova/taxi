@@ -19,13 +19,15 @@ export class HomePage{
     address: any;
     isAddress: boolean;
     path: any;
+    status: any;
     coords: any;
     direction: string;
-
-    public theBoundCallback: Function;
+    theBoundCallback: Function;
+    callEnable: Function;
 
     public ngOnInit(){
         this.theBoundCallback = this.onDragendMap.bind(this);
+        this.callEnable = this.enableCall.bind(this);
     }
 
     constructor(private nav: NavController, private http: Http, private PlaceProvider: Place, private ref: ApplicationRef) {
@@ -35,15 +37,23 @@ export class HomePage{
             from: '',
             to: ''
         };
+        this.status ={
+            from: 'определение адреса подачи такси',
+            to: 'определение адреса поездки',
+        };
         this.coords = {
-          from: [],
-          to: []
+          from: null,
+          to: null
         };
         this.names = ['Ari1', 'Ari2', 'Ari3', 'Ari4', 'Ari5'];
         this.makeRequest();
         this.isAddress = false;
         this.path = [];
         this.direction = 'from'
+    }
+    
+    enableCall() {
+        this.isAddress = true;
     }
 
     setClasses(direction: string) {
@@ -65,53 +75,31 @@ export class HomePage{
         this.direction = type
     }
 
-  makeRequest(): void {
-    this.loading = true;
-
+    makeRequest(): void {
+        this.loading = true;
+    
         this.PlaceProvider.get().then((coords:any) => {
             
-            this.makePolyline(coords);
-
             this.PlaceProvider.getCurrentAddress(coords).then((data:any) => {
                 this.address[this.direction] = data;
-                this.isAddress = true;
                 this.loading = false;
             }).catch((err) => {
                 //debugger
             })
         })
+    }
 
-  }
-    
-  protected makePolyline(coords:any) {
-
-      let offset = Math.random() / 10;
-
-      
-
-      let from = {Lat: coords.lat, Lon: coords.lng};
-
-      let to = {Lat : from.Lat + offset, Lon: from.Lon + offset};
-
-      this.http.post('http://ddtaxity.smarttaxi.ru:8000/1.x/route?taxiserviceid=taxity', [from, to])
-          .subscribe((res:Response) => {
-              var data = res.json();
-              this.path = this.PlaceProvider.decodeGooglePolyline(data.overviewPolyline);
-      });
-  }
-
-  public onDragendMap(coords) { //lat; lng
-    this.makePolyline(coords);
-    this.coords[this.direction] = coords;
-    this.PlaceProvider.getCurrentAddress({latitude: coords.lat, longitude: coords.lng}).then((data:any) => {
-        this.address[this.direction] = data;
-        this.isAddress = true;
-        this.loading = false;
-        this.ref.tick()
-    }).catch((err) => {
-
-    })
-  }
+    public onDragendMap(coords) { 
+        this.coords[this.direction] = coords;
+        
+        this.PlaceProvider.getCurrentAddress({latitude: coords.lat, longitude: coords.lng}).then((data:any) => {
+            this.address[this.direction] = data;
+            this.loading = false;
+            this.ref.tick()
+        }).catch((err) => {
+        
+        })
+    }
 }
 
 
