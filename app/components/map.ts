@@ -7,8 +7,7 @@ import {Place} from './../providers/place/place';
 @Component({
     selector: 'map',
     template: '<div id="mapid"></div>',
-    providers: [Place],
-    inputs: ['callback', 'direction', 'coords', 'callEnable']
+    providers: [Place]
 })
 export class Map {
 
@@ -19,33 +18,28 @@ export class Map {
     iconTo: any;
     pathBtn: any;
 
-    @Input()
-    public callback: Function;
+    @Input() callback: Function;
     
-    @Input()
-    public path : any;
+    @Input() path : any;
     
-    @Input()
-    public direction : string;
+    @Input() direction : string;
     
-    @Input()
-    public coords : any;
+    @Input() coords : any;
 
-    @Input()
-    public callEnable : Function;
+    @Input() callEnable : Function;
 
 
     ngOnChanges(data: any) {
 
-        if(data.direction && typeof data.direction.previousValue === 'string') {
-
-            let curent = data.direction.currentValue;
-            let prev = data.direction.previousValue;
-            let icon = prev === 'from' ? this.icon: this.iconTo;
-
-            if(this.marker[curent]) this.removeLayer(this.marker[curent]);
-            this.marker[prev] = L.marker(this.coords[prev], {icon: icon}).addTo(this.map);
-        }
+        // if(data.direction && typeof data.direction.previousValue === 'string') {
+        //
+        //     let curent = data.direction.currentValue;
+        //     let prev = data.direction.previousValue;
+        //     let icon = prev === 'from' ? this.icon: this.iconTo;
+        //
+        //     if(this.marker[curent]) this.removeLayer(this.marker[curent]);
+        //     this.marker[prev] = L.marker(this.coords[prev], {icon: icon}).addTo(this.map);
+        // }
 
     }
 
@@ -132,7 +126,7 @@ export class Map {
     }
 
     private locateMe() {
-        this.PlaceProvider.get().then((data: any) => {
+        this.PlaceProvider.getPosition().then((data: any) => {
             this.map.setView(L.latLng(data.latitude, data.longitude), 16);
             this.onDragEnd()
         }).catch((err) => {
@@ -153,7 +147,7 @@ export class Map {
     private onDragEnd() {
 
         let zoom = this.map.getZoom();
-        this.map.setZoom(Math.round(zoom))
+        this.map.setZoom(Math.round(zoom));
 
         if(this.callback) this.callback(this.map.getCenter());
     }

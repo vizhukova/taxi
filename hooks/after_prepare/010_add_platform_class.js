@@ -52,14 +52,14 @@ function addPlatformBodyTag(indexPath, platform) {
 }
 
 function findBodyTag(html) {
-  // get the body tag
+  // getPosition the body tag
   try{
     return html.match(/<body(?=[\s>])(.*?)>/gi)[0];
   }catch(e){}
 }
 
 function findClassAttr(bodyTag) {
-  // get the body tag's class attribute
+  // getPosition the body tag's class attribute
   try{
     return bodyTag.match(/ class=["|'](.*?)["|']/gi)[0];
   }catch(e){}

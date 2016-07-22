@@ -27,11 +27,13 @@
   text-align: center;
 
   div.call {
-    width: 90%;
+    left: 8px;
+    right: 8px;
+    bottom: 0;
     margin: auto;
     font-weight: 600;
     text-transform: uppercase;
-    height: 55px;
+    height: 57px;
     line-height: 9px;
     border-radius: 0;
     border-top-left-radius: 10px;
@@ -39,13 +41,10 @@
     text-align: left;
     font-size: 20px;
     overflow: hidden;
-    background: #e57339 url("../res/icon_arrow.png") no-repeat;
-    background-position: right 10px center;
-    background-size: 30px 30px;
+    background: url("../res/btn_price.png") no-repeat, url("../res/icon_arrow.png") no-repeat;
+    background-position: center center, right 10px center;
+    background-size: 100% 100%, 30px 30px;
     position: absolute;
-    left:0;
-    right: 0;
-    bottom: 0;
     z-index: 2;
 
     p.title {
@@ -59,9 +58,9 @@
       display: inline-block;
       height: 100%;
       padding-left: 45px;
-      background: #e7804d url("../res/icon_coins.png") 15px center no-repeat;
+      background: url("../res/btn_price_layer.png") left center no-repeat, url("../res/icon_coins.png") 15px center no-repeat;
+      background-size: 100% 100%, 23px 18px;
       padding-right: 4px;
-      background-size: 23px 18px;
 
       span.currency {
         vertical-align: super;
@@ -92,10 +91,12 @@
   }
 
   .address-panel {
-    height: 90px;
-    background: #323238;
+    height: 97px;
+    background: #323238 url("../res/line_arrow.png") no-repeat;
+    background-size: 80% auto;
+    background-position: right 17px center;
     position: fixed;
-    top: 55px;
+    top: 56px;
     width: 100%;
 
     div {
@@ -116,11 +117,11 @@
         }
 
         span {
-          background: url('../res/icon_path_active.png') no-repeat;
-          background-size: 100% 100%;
+          background: url('../res/icon_from.svg') no-repeat;
+          background-size: contain;
           vertical-align: middle;
           width: 16px;
-          height: 21px;
+          height: 22px;
           position: relative;
 
           &:before {
@@ -139,7 +140,7 @@
         }
 
         input {
-          border-bottom:2px solid #454549;
+          //border-bottom:2px solid #454549;
         }
       }
 
@@ -155,9 +156,11 @@
         }
 
         span {
-          background: url("../res/icon_pathto_inactive.png") no-repeat;
+          background: url("../res/icon_to.svg") no-repeat;
           background-size: 100% 100%;
           vertical-align: middle;
+          width: 10px;
+          height: 10px;
         }
       }
 
@@ -168,10 +171,10 @@
       }
 
       input {
-        background: #323238;
+        background: transparent;
         border: none;
         outline: none;
-        font-size: 21px;
+        font-size: 18px;
         height: 100%;
         margin-left: 10px;
         width: 87%;

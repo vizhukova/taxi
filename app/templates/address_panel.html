@@ -1,0 +1,20 @@
+<div class="address-panel">
+    <div [ngClass]="setClasses('from')" (click)="onFocus('from')">
+        <span class="icon"></span>
+        <input
+                disabled
+                type="text"
+                [(ngModel)]="address.from"
+                placeholder="Откуда ..."
+        >
+    </div>
+    <div [ngClass]="setClasses('to')" (click)="onFocus('to')">
+        <span class="icon"></span>
+        <input
+                disabled
+                type="text"
+                [(ngModel)]="address.to"
+                placeholder="Куда ?"
+        >
+    </div>
+</div>

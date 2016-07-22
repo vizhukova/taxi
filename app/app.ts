@@ -18,11 +18,12 @@ import { AccountPage } from './pages/account/account';
 `
 })
 export class MyApp {
-
+  
   home: any = HomePage;
   settings: any = SettingsPage;
   time: any = TimePage;
   account: any = AccountPage;
+
 
 
   constructor(platform: Platform) {

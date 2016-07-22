@@ -12,13 +12,21 @@
 @import "../pages/time/time";
 @import "../pages/account/account";
 
-* {
-  font-family: 'Open Sans Condensed', sans-serif;
+@font-face {
+  font-family: "Myriad Pro";
+  src: url(../res/fonts/MyriadPro-Regular.otf); /* Путь к файлу со шрифтом */
 }
+
+* {
+  font-family: "Myriad Pro";
+
+  //font-family: 'Open Sans Condensed', sans-serif;
+}
+
 
 .show-tabbar {
   background: #2c2c30;
-  height: 55px;
+  height: 56px;
   .animate {
     display: none;
   }

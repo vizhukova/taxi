@@ -2,28 +2,9 @@
 <ion-content  class="has-footer home">
   <map [callback]="theBoundCallback" [callEnable]="callEnable" [direction]="direction" [coords]="coords"></map>
 
-  <span [ngClass]="markerClasses()"></span>
+    <address></address>
 
-    <div class="address-panel">
-        <div [ngClass]="setClasses('from')" (click)="onFocus('from')">
-            <span class="icon"></span>
-            <input
-                disabled
-                type="text"
-                [(ngModel)]="address.from"
-                placeholder="Откуда ..."
-            >
-        </div>
-        <div [ngClass]="setClasses('to')" (click)="onFocus('to')">
-            <span class="icon"></span>
-            <input
-                disabled
-                type="text"
-                [(ngModel)]="address.to"
-                placeholder="Куда ?"
-            >
-        </div>
-    </div>
+  <span [ngClass]="markerClasses()"></span>
 </ion-content>
 <ion-footer-bar class="ion-footer-bar">
     <div class="call" *ngIf="isAddress">
