@@ -24,10 +24,17 @@
   //font-family: 'Open Sans Condensed', sans-serif;
 }
 
+html {
+  font-size: 1px;
+}
+
+.tab-button-icon {
+  font-size: 22rem;
+}
 
 .show-tabbar {
   background: #2c2c30;
-  height: 56px;
+  height: 56rem;
   .animate {
     display: none;
   }
@@ -36,7 +43,7 @@
 .platform-android {
   &.platform-android6 {
     div.call {
-      line-height: 20px!important;
+      line-height: 20rem!important;
     }
   }
 }

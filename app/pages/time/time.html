@@ -1,3 +1,17 @@
-<ion-content padding>
+<ion-content class="has-footer has-header time">
+     <address></address>
+
+    <div class="block">
+        <p class="header line-header">Время подачи такси</p>
+        <div class="list">
+            <label  *ngFor="let item of time">
+                <input type="radio" name="time">
+                <p class="label">
+                    {{item.name}}
+                    <span class="price">{{item.comment}}</span>
+                </p>
+            </label>
+        </div>
+    </div>
 
 </ion-content>

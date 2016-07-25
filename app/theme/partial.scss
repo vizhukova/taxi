@@ -1,12 +1,15 @@
+.has-header {
+  margin-top: 97rem;
+}
+
 .address-panel {
-    height: 97px;
+    height: 97rem;
     background: #323238 url("../res/line_arrow.png") no-repeat;
     background-size: 80% auto;
-    background-position: right 17px center;
+    background-position: right 17rem center;
     position: fixed;
     top: $tab-height;
     width: 100%;
-    margin-bottom: calc(97px + $tab-height);
 
     div {
       padding-left: 9.6%;
@@ -29,27 +32,27 @@
           background: url('../res/icon_from.svg') no-repeat;
           background-size: contain;
           vertical-align: middle;
-          width: 16px;
-          height: 22px;
+          width: 16rem;
+          height: 22rem;
           position: relative;
 
           &:before {
             content: "";
             display: block;
             position: absolute;
-            height: 23px;
-            bottom: -26px;
-            width: 1px;
+            height: 23rem;
+            bottom: -26rem;
+            width: 1rem;
             left: 0;
             right: 0;
             margin: auto;
-            border-right: 2px dashed #a8bea1;
+            border-right: 2rem dashed #a8bea1;
           }
 
         }
 
         input {
-          //border-bottom:2px solid #454549;
+          //border-bottom:2rem solid #454549;
         }
       }
 
@@ -68,14 +71,14 @@
           background: url("../res/icon_to.svg") no-repeat;
           background-size: 100% 100%;
           vertical-align: middle;
-          width: 10px;
-          height: 10px;
+          width: 10rem;
+          height: 10rem;
         }
       }
 
       span {
-        width: 16px;
-        height: 16px;
+        width: 16rem;
+        height: 16rem;
         display: inline-block;
       }
 
@@ -83,15 +86,74 @@
         background: transparent;
         border: none;
         outline: none;
-        font-size: 18px;
+        font-size: 18rem;
         height: 100%;
-        margin-left: 10px;
+        margin-left: 10rem;
         width: 87%;
 
         &::-webkit-input-placeholder {color:#fff;}
         &::-moz-placeholder          {color:#fff;}/* Firefox 19+ */
         &:-moz-placeholder           {color:#fff;}/* Firefox 18- */
         &:-ms-input-placeholder      {color:#fff;}
+      }
+    }
+  }
+
+ .block {
+    font-weight: 600;
+    font-size: 16rem;
+    border-bottom: solid 1px #c7cace;
+
+    .header {
+      color: $main-bright-color;
+      padding: 16rem;
+      margin: 0;
+      border-bottom: solid 1px #e1e4e9;
+      font-size: 14rem;
+
+      &.line-header {
+        background-image: url("./../res/head_line.png");
+        background-repeat: no-repeat;
+        background-position-y: -1px;
+      }
+    }
+    .list {
+      background: #f7f7f9;
+      padding: 0 36rem;
+      label {
+        display: block;
+        line-height: 48rem;
+
+        &.add {
+          color: $main-bright-color;
+          text-transform: uppercase;
+
+          .label {
+            color: inherit;
+            text-transform: inherit;
+          }
+        }
+
+         .label {
+          padding-left: 17px;
+          width: 90%;
+          display: inline-block;
+          border-bottom: solid 1px #eef0f4;
+          margin: 0;
+          color: $main-dark-color;
+        }
+        .price {
+          color: #b2b2b2;
+          text-transform: uppercase;
+          float: right;
+          font-size: 13rem;
+        }
+        .comment {
+          float: right;
+          color: #FF7431;
+          text-transform: uppercase;
+          font-size: 13rem;
+        }
       }
     }
   }
