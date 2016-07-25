@@ -1,5 +1,5 @@
 <div class="address-panel">
-    <div [ngClass]="setClasses('from')" (click)="onFocus('from')">
+    <div [ngClass]="setClasses('from')" (dblclick)="getAll(address.from)" (click)="onFocus('from')">
         <span class="icon"></span>
         <input
                 disabled
@@ -16,5 +16,10 @@
                 [(ngModel)]="address.to"
                 placeholder="Куда ?"
         >
+    </div>
+    <div class="search-view" *ngIf="search.current">
+        <div *ngFor="let item of addresses.current">
+            <span>{{item.street}}</span><span>{{item.city}}</span>
+        </div>
     </div>
 </div>

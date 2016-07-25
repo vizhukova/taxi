@@ -26,9 +26,8 @@ export class Place {
     changeAddress(address: string) {
         this.addressSource.next(address);
     }
-    
+
     changeCoords(coords: any) {
-        debugger
         this.coordsSource.next(coords);
     }
     
@@ -119,7 +118,6 @@ export class Place {
 
         const self = this;
 
-        debugger
         self.coords[self.direction] = [coords.latitude, coords.longitude];
         self.changeCoords(self.coords);
 
@@ -132,14 +130,4 @@ export class Place {
                 });
         })
     }
-
-    // public watch(callback) {
-    //     let watch = Geolocation.watchPosition();
-    //     watch.subscribe((data) => {
-    //         callback(data);
-    //         //data.coords.latitude
-    //         //data.coords.longitude
-    //     })
-    // }
-
 }

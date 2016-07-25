@@ -94,4 +94,16 @@
         &:-ms-input-placeholder      {color:#fff;}
       }
     }
-  }
+
+   .search-view {
+     position: absolute;
+     width: 100%;
+     height: 40px;
+     background: #323238;
+
+     div {
+       background: #323238;
+       height: 48.5px;
+     }
+   }
+}
