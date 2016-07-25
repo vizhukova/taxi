@@ -58,10 +58,12 @@ export class HomePage{
     }
 
     makeRequest(): void {
-
         this.Place.getPosition()
-
-        .then(this.Place.getCurrentAddress)
+        .then((coords:any) => {
+            this.Place.getCurrentAddress(coords);
+        }).catch((err) => {
+            debugger
+        })
     }
 
     onDragendMap(coords) {

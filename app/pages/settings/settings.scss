@@ -1,3 +1,12 @@
 .settings {
+  background: #e4e7ec;
 
+  .block {
+    .header {
+      color: $main-bright-color;
+    }
+    .list {
+      background: #f7f7f9;
+    }
+  }
 }

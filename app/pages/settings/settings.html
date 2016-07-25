@@ -1,3 +1,20 @@
-<ion-content padding>
-
+<ion-content  class="has-footer settings">
+    <address></address>
+    <div class="block">
+        <p class="header">Тариф</p>
+        <div class="list">
+            <label  *ngFor="let item of tariffs">
+                <input type="radio" name="tariff">
+                {{item.name}}
+            </label>
+        </div>
+    </div>
 </ion-content>
+<ion-footer-bar class="ion-footer-bar">
+    <div class="call">
+        <div class="price">
+            <p class="text">232<span class="currency">руб.</span></p>
+        </div>
+        <p class="title">Вызвать такси</p>
+    </div>
+</ion-footer-bar>

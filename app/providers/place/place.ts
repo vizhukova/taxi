@@ -28,6 +28,7 @@ export class Place {
     }
     
     changeCoords(coords: any) {
+        debugger
         this.coordsSource.next(coords);
     }
     
@@ -49,12 +50,15 @@ export class Place {
     }
 
     public getPosition() {
+        var self = this;
         return new Promise((resolve, reject) => {
             Geolocation.getCurrentPosition().then((resp) => {
-                this.coords[this.direction] = resp.coords;
-                resolve(this.coords[this.direction])
+                self.coords[self.direction] =  resp.coords;
+                self.changeCoords(self.coords);
+                resolve(self.coords[self.direction]);
             }, (err) => { reject(err); })
         })
+
     }
 
     public get(property: string) {
@@ -115,12 +119,16 @@ export class Place {
 
         const self = this;
 
+        debugger
+        self.coords[self.direction] = [coords.latitude, coords.longitude];
+        self.changeCoords(self.coords);
+
         return new Promise((resolve, reject) => {
             self.http.get(`http://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.latitude},${coords.longitude}&sensor=true&language=ru`)
                 .subscribe((res:Response) => {
                     var data = res.json();
                     self.address[self.direction] = `${data.results[0].address_components[1].long_name}, ${data.results[0].address_components[0].long_name}`
-                    self.changeAddress(self.address)
+                    self.changeAddress(self.address);
                 });
         })
     }

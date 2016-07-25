@@ -6,31 +6,27 @@ import {Place} from './../providers/place/place';
 
 @Component({
     selector: 'map',
-    template: '<div id="mapid"></div>',
-    providers: [Place]
+    template: '<div id="mapid"></div>'
 })
+
 export class Map {
 
     map: any;
     polyline: any;
-    marker: any;
-    icon: any;
+    iconFrom: any;
     iconTo: any;
     pathBtn: any;
+    marker: any;
+    markerTo: any;
+    markerFrom: any;
 
     @Input() callback: Function;
-    
     @Input() path : any;
-    
     @Input() direction : string;
-    
     @Input() coords : any;
-
     @Input() callEnable : Function;
 
-
     ngOnChanges(data: any) {
-
         // if(data.direction && typeof data.direction.previousValue === 'string') {
         //
         //     let curent = data.direction.currentValue;
@@ -49,9 +45,32 @@ export class Map {
             from: null,
             to: null
         };
-        const _this = this;
+        const self = this;
 
-        this.icon = L.icon({
+        PlaceProvider.coords$.subscribe(newCoords => {
+            self.coords = newCoords;
+            console.log('PlaceProvider', newCoords);
+        });
+
+         PlaceProvider.direction$.subscribe(newDirection => {
+             console.log(self.coords)
+            if(newDirection === 'to') {
+                console.log('FROM', self.coords.from)
+                console.log('TO', self.coords.to)
+                self.markerTo.setLatLng(L.latLng(self.coords.from[0], self.coords.from[1]));
+                self.markerTo.setOpacity(1);
+                self.markerFrom.setOpacity(0);
+            } else {
+                console.log('FROM', self.coords.from)
+                console.log('TO', self.coords.to)
+                self.markerFrom.setLatLng(L.latLng(self.coords.to[0], self.coords.to[1]));
+                self.markerTo.setOpacity(0);
+                self.markerFrom.setOpacity(1);
+            }
+             console.log(self.coords)
+        });
+
+        this.iconFrom = L.icon({
                 iconUrl: 'build/res/icon_path_active.png',
                 iconSize:     [26, 36], // size of the icon
                 shadowSize:   [26, 36], // size of the shadow
@@ -69,7 +88,7 @@ export class Map {
                 popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
         });
 
-        this.pathBtn = L.Control.extend({
+        this.pathBtn = L.Control.extend({//кнопки навигации
 
             options: {
                 position: 'bottomright'
@@ -81,8 +100,8 @@ export class Map {
                 var locate = L.DomUtil.create('div', 'locate-button', container);
                 var path = L.DomUtil.create('div', 'calcpath-button', container);
 
-                path.addEventListener('click', () => { _this.calcPolyline(_this.coords) });
-                locate.addEventListener('click', () => { _this.locateMe()});
+                path.addEventListener('click', () => { self.calcPolyline(self.coords) });
+                locate.addEventListener('click', () => { self.locateMe()});
 
                 return container;
             }
@@ -103,6 +122,9 @@ export class Map {
 
         this.map.addControl(new this.pathBtn());
 
+        this.markerTo = L.marker([0, 0], {icon: this.iconFrom, opacity: 0}).addTo(this.map);
+        this.markerFrom = L.marker([0, 0], {icon: this.iconTo, opacity: 0}).addTo(this.map);
+
         setTimeout(()=>{this.map.invalidateSize(true)}, 300);
 
         this.locateMe()
@@ -112,9 +134,9 @@ export class Map {
 
         if(!coords.from || !coords.to) return;
 
-        let from = {Lat: coords.from.lat, Lon: coords.from.lng};
+        let from = {Lat: coords.from[0], Lon: coords.from[1]};
 
-        let to = {Lat : coords.to.lat, Lon: coords.to.lng};
+        let to = {Lat : coords.to[0], Lon: coords.to[1]};
 
         this.http.post('http://ddtaxity.smarttaxi.ru:8000/1.x/route?taxiserviceid=taxity', [from, to])
             
