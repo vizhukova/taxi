@@ -1,3 +1,139 @@
 .account {
+  background: #e4e7ec;
+  .top-panel {
+    background: #2e2e35;
+    padding: 15rem;
+    position: relative;
 
+    img {
+      height: 65rem;
+      width: 65rem;
+    }
+    p {
+      color: $main-bright-color;
+      font-size: 18rem;
+      font-weight: 600;
+      line-height: 24rem;
+      text-transform: uppercase;
+      top: 0;
+      position: absolute;
+      bottom: 0;
+      margin: auto;
+      vertical-align: middle;
+      height: 40rem;
+      left: 65rem + 15rem + 24rem; //65-img`s width; 15-.top-panels`s padding; 24-length between img and p
+
+      .text {
+        color: #a8bea1;
+        font-size: 16rem;
+        font-weight: 400;
+        display: block;
+        text-transform: initial;
+      }
+    }
+  }
+
+  .edit {
+    background-color: $main-bright-color;
+    background-image: url('./../res/pen.png');
+    width: 45rem;
+    height: 45rem;
+    background-size: 28rem;
+    border-radius: 50%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    position: absolute;
+    right: 18rem;
+    top: 74rem;
+  }
+
+  .content {
+    background: #f7f7f9;
+    padding: 0 36rem 0 28rem;
+
+    hr {
+      margin-top: 40rem;
+    }
+
+    label {
+      line-height: 55rem;
+      color: $main-dark-color;
+      font-size: 16px;
+      font-weight: 600;
+      text-transform: uppercase;
+      width: 100%;
+      padding-top: 8rem;
+
+      &:before {
+        border: none;
+        background-size: 22rem;
+        width: 20rem;
+        height: 20rem;
+      }
+
+      &::after {
+        background-image: url("./../res/arrow.png");
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        right: 0;
+        content: "";
+        background-size: 10rem;
+        background-repeat: no-repeat;
+        width: 9px;
+        height: 13px;
+      }
+
+      &.time {
+        &:before {
+          background-image: url('./../res/clock.svg');
+        }
+
+        &:after {
+          display: none;
+        }
+
+        div {
+          background: $main-bright-color;
+          color: #fff;
+          width: 17rem;
+          height: 17rem;
+          border-radius: 5rem;
+          text-align: center;
+          line-height: 20rem;
+          font-size: 12rem;
+          float: right;
+          margin-top: (55rem - 17rem) / 2;
+        }
+        //&:after {
+        //  background: $main-bright-color;
+        //  color: #fff;
+        //  content: "2";
+        //  width: 17rem;
+        //  height: 17rem;
+        //  border-radius: 5rem;
+        //  text-align: center;
+        //  line-height: 20rem;
+        //  font-size: 12rem;
+        //}
+      }
+      &.card:before {
+          background-image: url('./../res/card.svg');
+      }
+      &.call:before {
+          background-image: url('./../res/call.svg');
+      }
+      &.settings:before {
+          background-image: url('./../res/settings.svg');
+      }
+      &.share:before {
+          background-image: url('./../res/share.svg');
+      }
+      &.car:before {
+          background-image: url('./../res/car.png');
+          background-size: 19rem;
+      }
+    }
+  }
 }

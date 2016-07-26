@@ -38,4 +38,8 @@ export class SettingsPage {
       {name: 'WI-FI', comment: ''}
     ];
   }
+
+  public getId(name: string, id: number):string{
+    return name + id;
+  }
 }

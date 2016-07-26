@@ -26,4 +26,8 @@ export class TimePage {
       {name: 'Другое', comment: 'чт, 7 июля 2016 10:23'}
     ];
   }
+
+  public getId(name: string, id: number):string{
+    return name + id;
+  }
 }

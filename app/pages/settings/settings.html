@@ -4,47 +4,44 @@
 
     <div class="block">
         <p class="header line-header">Тариф</p>
-        <div class="list">
-            <label  *ngFor="let item of tariffs">
-                <input type="radio" name="tariff">
-                <p class="label">
+        <div class="list radio">
+            <p *ngFor="let item of tariffs; let num = index" class="label">
+                <input type="radio" name="tariff" id="{{getId('tariff', num)}}" />
+                <label htmlFor="{{getId('tariff', num)}}">
                     {{item.name}}
                     <span class="price">{{item.price}}</span>
-                </p>
-            </label>
+                </label>
+            </p>
         </div>
     </div>
 
     <div class="block">
         <p class="header">Оплата</p>
-        <div class="list">
-            <label  *ngFor="let item of payment">
-                <input type="checkbox" name="payment">
-                <p class="label">
+        <div class="list checkbox">
+             <p *ngFor="let item of payment; let num = index" class="label">
+                <input type="checkbox" name="payment" id="{{getId('payment', num)}}" />
+                <label htmlFor="{{getId('payment', num)}}">
                     {{item}}
-                </p>
-            </label>
-
-             <label class="add">
-               +
-                <p class="label">
+                </label>
+            </p>
+             <p class="label">
+                <label class="add">
                     Добавить систему оплаты
-                </p>
             </label>
-
+            </p>
         </div>
     </div>
 
      <div class="block">
         <p class="header">Дополнительные услуги</p>
-        <div class="list">
-            <label  *ngFor="let item of service">
-                <input type="checkbox" name="service">
-                <p class="label">
+          <div class="list checkbox">
+             <p *ngFor="let item of service; let num = index" class="label">
+                <input type="checkbox" name="service" id="{{getId('service', num)}}" />
+                <label htmlFor="{{getId('service', num)}}">
                     {{item.name}}
                     <span class="comment">{{item.comment}}</span>
-                </p>
-            </label>
+                </label>
+            </p>
         </div>
     </div>
 

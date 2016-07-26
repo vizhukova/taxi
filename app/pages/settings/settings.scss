@@ -6,4 +6,8 @@
     height: calc(100% - 210rem);
     background: #e4e7ec;
   }
+
+  .block:last-child {
+    border: none;
+  }
 }
