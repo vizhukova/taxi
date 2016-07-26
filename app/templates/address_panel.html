@@ -1,25 +1,45 @@
 <div class="address-panel">
-    <div [ngClass]="setClasses('from')" (dblclick)="getAll(address.from)" (click)="onFocus('from')">
+    <div
+        [ngClass]="setClasses('from')"
+        (dblclick)="enableEditable('from')"
+        (click)="onFocus('from')"
+    >
         <span class="icon"></span>
         <input
-                disabled
+                [disabled]="editable.from"
+                (keyup)="!editable.from && enableEditable('from')"
                 type="text"
                 [(ngModel)]="address.from"
                 placeholder="Откуда ..."
         >
+        <span
+            class="clear"
+            *ngIf="direction === 'from'"
+            (click)="clearAddress()"></span
+        >
     </div>
-    <div [ngClass]="setClasses('to')" (click)="onFocus('to')">
+    <div
+        [ngClass]="setClasses('to')"
+        (dblclick)="enableEditable('to')"
+        (click)="onFocus('to')"
+    >
         <span class="icon"></span>
         <input
-                disabled
+                [disabled]="editable.to"
+                (keyup)="!editable.to && enableEditable('to')"
                 type="text"
                 [(ngModel)]="address.to"
                 placeholder="Куда ?"
         >
+        <span
+                class="clear"
+                *ngIf="direction === 'to'"
+                (click)="clearAddress()"
+        ></span>
     </div>
-    <div class="search-view" *ngIf="search.current">
-        <div *ngFor="let item of addresses.current">
-            <span>{{item.street}}</span><span>{{item.city}}</span>
+    <div [ngClass]="setViewClasses()" *ngIf="search">
+        <div class="search-item" *ngFor="let item of addresses">
+            <p>{{item.street}}</p><span>{{item.city}}</span>
         </div>
     </div>
 </div>

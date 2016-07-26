@@ -1,7 +1,9 @@
 import {Component, NgZone, Output, EventEmitter, ApplicationRef } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import {Place} from './../providers/place/place';
+import { Router } from '@angular/router';
 import {Observable} from "rxjs/Rx";
+import {Place} from "../providers/place/place";
+
 
 @Component({
     selector: 'address',
@@ -9,40 +11,43 @@ import {Observable} from "rxjs/Rx";
 })
 export class Address {
 
-    @Output() directionUpdated = new EventEmitter();
-
     address: any;
     direction: string;
     addresses: any;
     search: any;
+    coords: any;
+    editable: any;
 
-    constructor(private Place: Place, private NgZone: NgZone, private http: Http, private ApplicationRef: ApplicationRef) {
+
+
+    constructor(private place: Place, private http: Http, private router: Router) {
 
         const self = this;
         this.address = {from: '', to: ''};
         this.direction = 'from';
-        this.addresses = {
-            current: []
+        this.addresses = [];
+        this.search = false;
+        this.editable = {
+            from: true,
+            to: true
         };
-        this.search = {
-            current: false
-        };
 
-        setInterval(()=>{
-            self.search.current = true;
-        }, 3000);
-
-        setInterval(()=>{
-            self.search.current = false;
-        }, 6000);
-
-        Place.address$.subscribe(address => {
-            self.address = address;
+        place.address$.subscribe(newAdress => {
+            self.address = newAdress;
         });
 
-        Place.direction$.subscribe(newDirection => {
+        place.direction$.subscribe(newDirection => {
             self.direction = newDirection;
+        });
+
+        place.coords$.subscribe(newCoords => {
+            self.coords = newCoords;
         })
+    }
+
+    clearAddress() {
+        this.address[this.direction] = '';
+        this.place.changeAddress(this.address)
     }
 
 
@@ -53,12 +58,20 @@ export class Address {
             active: this.direction === direction
         }
     }
-
+    
+    setViewClasses() {
+        return {
+            from: this.direction === 'from',
+            searchView: true,
+            to: this.direction === 'to'
+        }
+    }
 
     getAddresses(search: string): Observable<any> {
-        if(search.length < 3) return;
+        let lat = this.coords[this.direction][0];
+        let lon = this.coords[this.direction][1];
 
-        const url = `http://ddtaxity.smarttaxi.ru:8000/1.x/geocode?taxiServiceId=taxity&search=${search}`;
+        const url = `http://ddtaxity.smarttaxi.ru:8000/1.x/geocode?taxiServiceId=taxity&radius=2000&lat=${lat}&lon=${lon}&search=${search}`;
 
         return this.http.get(url)
             .map(this.extractData)
@@ -67,17 +80,24 @@ export class Address {
 
 
     getAll(address: string) {
+        if(address.length < 3) return;
 
         const self = this;
 
         this.getAddresses(address)
             .subscribe(
                 (addresses) => {
-                    self.addresses.current = addresses;
-                    self.search.current = true;
+                    self.addresses = addresses;
+                    self.search = true;
                 },
                 error => console.log(error)
             )
+    }
+
+    enableEditable(direction: string) {
+        this.router.navigate(['/search']);
+        this.editable[direction] = false;
+        this.getAll(this.address[direction])
     }
 
     private extractData(res: Response) {
@@ -93,7 +113,7 @@ export class Address {
     }
 
     onFocus(type: string): void {
-        this.Place.changeDirection(type);
+        this.place.changeDirection(type);
     }
 }
 

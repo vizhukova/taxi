@@ -1,7 +1,7 @@
 import {Geolocation} from 'ionic-native';
 import { Injectable, Output, EventEmitter } from '@angular/core';
 // import 'rxjs/add/operator/map';
-import { Subject } from 'rxjs/Subject';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { Http, Response } from '@angular/http';
 
 @Injectable()
@@ -13,9 +13,9 @@ export class Place {
     direction: string;
 
     // Observable data sources
-    private addressSource = new Subject<any>();
-    private coordsSource = new Subject<any>();
-    private directionSource = new Subject<any>();
+    private addressSource = new BehaviorSubject<any>({from: '', to: ''});
+    private coordsSource = new BehaviorSubject<any>({from: [], to: []});
+    private directionSource = new BehaviorSubject<any>('from');
 
     // Observable data streams
     address$ = this.addressSource.asObservable();
@@ -38,8 +38,8 @@ export class Place {
 
     constructor(private http: Http) {
         this.coords = {
-            from: null,
-            to: null
+            from: [],
+            to: []
         };
         this.address = {
             from: '',
