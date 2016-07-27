@@ -3,14 +3,12 @@
   <map
           [callback]="theBoundCallback"
           [callEnable]="callEnable"
-          [direction]="direction"
-          [coords]="coords">
           [editable]="false">
   </map>
 
     <address></address>
 
-  <span [ngClass]="markerClasses()"></span>
+
 </ion-content>
 <ion-footer-bar class="ion-footer-bar">
     <div class="call" *ngIf="isAddress">

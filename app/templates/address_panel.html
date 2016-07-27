@@ -7,7 +7,7 @@
         <span class="icon"></span>
         <input
             [disabled]="editable.from"
-            (keyup)="!editable.from && enableEditable('from')"
+            (keyup)="getAll(address.from)"
             type="text"
             [(ngModel)]="address.from"
             placeholder="Откуда ..."
@@ -18,7 +18,7 @@
             (click)="clearAddress()"></span
         >
     </div>
-    <div
+    <div class="main"
         [ngClass]="setClasses('to')"
         (dblclick)="enableEditable('to')"
         (click)="onFocus('to')"
@@ -26,7 +26,7 @@
         <span class="icon"></span>
         <input
             [disabled]="editable.to"
-            (keyup)="!editable.to && enableEditable('to')"
+            (keyup)="getAll(address.to)"
             type="text"
             [(ngModel)]="address.to"
             placeholder="Куда ?"
@@ -47,26 +47,30 @@
         </div>
     </div>
     <div class="addressDetail" *ngIf="detail">
-        <div>
-            <div class="group">
+        <div class="top">
+            <div class="group house">
                 <input type="text" required>
                 <span class="highlight"></span>
                 <span class="bar"></span>
                 <label>номер дома</label>
             </div>
-            <div class="group">
+            <div class="group block">
                 <input type="text" required>
                 <span class="highlight"></span>
                 <span class="bar"></span>
                 <label>подъезд</label>
             </div>
         </div>
-        <div>
-            <div class="group">
+        <div class="bottom">
+            <div class="group comment">
                 <input type="text" required>
                 <span class="highlight"></span>
                 <span class="bar"></span>
                 <label>Примечание</label>
+            </div>
+            <div class="group nav">
+                <div class="btn favorite">В ИЗБРАННОЕ</div>
+                <div class="btn confirm" routerLink="/">ОК</div>
             </div>
         </div>
     </div>

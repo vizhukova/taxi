@@ -36,7 +36,7 @@ export class HomePage{
             to: 'определение адреса поездки',
         };
 
-        this.makeRequest();
+        // this.makeRequest();
         this.isAddress = false;
         this.path = [];
 
@@ -47,13 +47,6 @@ export class HomePage{
     
     enableCall() {
         this.isAddress = true;
-    }
-
-    markerClasses() {
-        return {
-            marker: true,
-            from: this.direction === 'from'
-        }
     }
 
     makeRequest(): void {

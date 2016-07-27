@@ -6,8 +6,10 @@ import {Place} from './../providers/place/place';
 
 @Component({
     selector: 'map',
-    template: '<div id="mapid"></div>'
-})
+    template: `<div id="map-wrap">
+        <span [ngClass]="markerClasses()"></span>
+        <div id="mapid"></div>
+    </div>`})
 
 export class Map {
 
@@ -16,24 +18,29 @@ export class Map {
     iconFrom: any;
     iconTo: any;
     pathBtn: any;
-    marker: any;
     markerTo: any;
     markerFrom: any;
+    coords: any;
+    direction: any;
 
     @Input() callback: Function;
     @Input() editable: boolean;
     @Input() path : any;
-    @Input() direction : string;
-    @Input() coords : any;
     @Input() callEnable : Function;
+
+
 
 
     constructor(private PlaceProvider: Place, private http: Http) {
         this.onDragEnd = this.onDragEnd.bind(this);
-        this.marker = {
-            from: null,
-            to: null
+
+        this.coords = {
+            from: [],
+            to: []
         };
+
+        this.direction = 'from';
+
         const self = this;
 
         this.iconFrom = L.icon({
@@ -73,24 +80,49 @@ export class Map {
             }
         });
 
-        this.markerTo = L.marker([0, 0])
-        this.markerFrom = L.marker([0, 0])
+        this.markerTo = L.marker([0, 0]);
+        this.markerFrom = L.marker([0, 0]);
 
         PlaceProvider.coords$.subscribe(newCoords => {
             self.coords = newCoords;
         });
 
         PlaceProvider.direction$.subscribe(newDirection => {
-            if(newDirection === 'to' && self.coords.from && self.coords.from.length) {
-                self.markerTo.setLatLng(L.latLng(self.coords.from[0], self.coords.from[1]));
-                self.markerTo.setOpacity(1);
-                self.markerFrom.setOpacity(0);
-            } else if(self.coords.to && self.coords.to.length) {
-                self.markerFrom.setLatLng(L.latLng(self.coords.to[0], self.coords.to[1]));
-                self.markerTo.setOpacity(0);
-                self.markerFrom.setOpacity(1);
-            }
+            this.direction = newDirection;
+            if(this.map) this.bootMarkers(newDirection);
         });
+    }
+
+
+    markerClasses() {
+        return {
+            marker: true,
+            from: this.direction === 'from'
+        }
+    }
+
+    private bootMarkers(direction: string) {
+
+        let markerFromCoords = this.coords.from.length ? this.coords.from : [0, 0];
+        let markerToCoords = this.coords.to.length ? this.coords.to : [0, 0];
+
+        if(direction === 'to') {
+            if(!this.map.hasLayer(this.markerFrom)) {
+                this.markerFrom = L.marker(markerFromCoords, {icon: this.iconFrom, opacity: this.coords.from.length ? 1 : 0}).addTo(this.map)
+            } else {
+                this.markerFrom.setLatLng([this.coords.from[0], this.coords.from[1]]);
+                this.markerTo.setOpacity(0);
+                this.markerFrom.setOpacity(1);
+            }
+        } else if(direction === 'from') {
+            if(!this.map.hasLayer(this.markerTo)) {
+                this.markerTo = L.marker(markerToCoords, {icon: this.iconTo, opacity: this.coords.to.length ? 1 : 0}).addTo(this.map)
+            } else {
+                this.markerTo.setLatLng([this.coords.to[0], this.coords.to[1]]);
+                this.markerTo.setOpacity(1);
+                this.markerFrom.setOpacity(0);
+            }
+        }
     }
 
     public ngAfterViewInit(): void {
@@ -99,7 +131,9 @@ export class Map {
             osmAttribution = '',
             osmLayer = new L.TileLayer(osmUrl, {maxZoom: 18, attribution: osmAttribution});
 
-        this.map = new L.Map('mapid', {center: new L.LatLng(55.8, 37.7), zoom: 7, layers: [osmLayer], zoomControl:false});
+        let mapCoords = this.coords[this.direction].length ? this.coords[this.direction] : [58.5, 37.7];
+
+        this.map = new L.Map('mapid', {center: mapCoords, zoom: 7, layers: [osmLayer], zoomControl:false});
 
         if(!this.editable) this.map.on('dragend', this.onDragEnd);
 
@@ -107,12 +141,17 @@ export class Map {
 
         if(!this.editable) this.map.addControl(new this.pathBtn());
 
-        this.markerTo = L.marker([0, 0], {icon: this.iconFrom, opacity: 0}).addTo(this.map);
-        this.markerFrom = L.marker([0, 0], {icon: this.iconTo, opacity: 0}).addTo(this.map);
+        this.bootMarkers(this.direction);
+
+        // let markerFromCoords = this.coords.from.length ? this.coords.from : [0, 0];
+        // let markerToCoords = this.coords.to.length ? this.coords.to : [0, 0];
+        //
+        // this.markerFrom = L.marker(markerFromCoords, {icon: this.iconFrom, opacity: this.coords.from.length ? 1 : 0}).addTo(this.map);
+        // this.markerTo = L.marker(markerToCoords, {icon: this.iconTo, opacity: this.coords.to.length ? 1 : 0}).addTo(this.map);
 
         setTimeout(()=>{this.map.invalidateSize(true)}, 300);
 
-        this.locateMe()
+        if(this.coords && !this.coords.from && !this.coords.to) this.locateMe()
     }
 
     private calcPolyline(coords:any) {

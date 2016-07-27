@@ -90,28 +90,6 @@
     overflow-y: hidden;
   }
 
-  span.marker {
-
-    &.from {
-      background: url("../res/icon_path_active.png") no-repeat;
-      width: 26rem;
-      height: 36rem;
-      background-size: 100% 100%;
-    }
-
-    position: absolute;
-    display: inline-block;
-    z-index: 1;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    width: 20rem;
-    height: 20rem;
-    background: url("../res/point.png") no-repeat;
-    background-size: 100% 100%;
-  }
 }
 
 #mapid {

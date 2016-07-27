@@ -1,13 +1,13 @@
-import {Component, NgZone, Output, EventEmitter, ApplicationRef } from '@angular/core';
+import {Component, Input } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { Router } from '@angular/router';
+import { Router, ROUTER_DIRECTIVES } from '@angular/router';
 import {Observable} from "rxjs/Rx";
 import {Place} from "../providers/place/place";
 
-
 @Component({
     selector: 'address',
-    templateUrl: 'build/templates/address_panel.html'
+    templateUrl: 'build/templates/address_panel.html',
+    directives: [ROUTER_DIRECTIVES]
 })
 export class Address {
 
@@ -19,6 +19,7 @@ export class Address {
     editable: any;
     detail: boolean;
 
+    @Input() view: any;
 
 
     constructor(private place: Place, private http: Http, private router: Router) {
@@ -45,6 +46,13 @@ export class Address {
         place.coords$.subscribe(newCoords => {
             self.coords = newCoords;
         })
+    }
+
+    ngAfterViewInit() {
+        if(this.view) {
+            this.getAll(this.address[this.direction]);
+            this.editable[this.direction] = false;
+        }
     }
 
     clearAddress() {
@@ -112,8 +120,6 @@ export class Address {
 
     enableEditable(direction: string) {
         this.router.navigate(['/search']);
-        this.editable[direction] = false;
-        this.getAll(this.address[direction])
     }
 
     private extractData(res: Response) {
