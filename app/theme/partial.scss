@@ -12,7 +12,7 @@
     top: $tab-height;
     width: 100%;
 
-    div {
+    > div:not(.searchView) {
       padding-left: 9.6%;
       height: 50%;
       position: relative;
@@ -29,7 +29,7 @@
           input:-ms-input-placeholder      {color:#e57339;}
         }
 
-        span {
+        > span:not(.clear) {
           background: url('../res/icon_from.svg') no-repeat;
           background-size: contain;
           vertical-align: middle;
@@ -68,7 +68,7 @@
           input:-ms-input-placeholder      {color:#e57339;}
         }
 
-        span {
+        > span {
           background: url("../res/icon_to.svg") no-repeat;
           background-size: 100% 100%;
           vertical-align: middle;
@@ -77,10 +77,25 @@
         }
       }
 
-      span {
-        width: 16rem;
-        height: 16rem;
+
+
+      span:not(.clear) {
+        width: 16px;
+        height: 16px;
         display: inline-block;
+      }
+
+      > span.clear {
+        display: inline-block;
+        position: absolute;
+        top:0;
+        bottom: 0;
+        right: 20px;
+        width: 20px;
+        height: 20px;
+        margin: auto;
+        background: #323238 url("../res/icon_clear.svg") no-repeat;
+        background-size: 100% 100%;
       }
 
       input {
@@ -237,4 +252,60 @@ input[type=checkbox]:checked + label:before {
     font-size: 22px;
     line-height: 20px;
 }
+
+
+   .searchView {
+     position: absolute;
+     width: 100%;
+     height: 40px;
+     background: #323238;
+     top: 48.5px;
+
+     div.search-item {
+       background: #323238;
+       height: 48.5px;
+       font-size: 18px;
+       padding-left: 13%;
+
+       p {
+         color: #fff;
+       }
+
+       span {
+         font-size: 13px;
+         color: #fff;
+       }
+
+     }
+   }
+
+.modal {
+  position: absolute;
+  font-family: "Myriad Pro";
+  $header-height: 56rem;
+
+  .cross {
+    height: 25rem;
+    width: 25rem;
+    background-image: url('./../res/cross.svg');
+    display: inline-block;
+    line-height: $header-height;
+    vertical-align: middle;
+  }
+  .header {
+    height: $header-height;
+    line-height: $header-height;
+    background: $main-dark-color;
+    font-size: 18px;
+    color: #fff;
+    padding: 0 15rem;
+
+    .cross {
+      margin-right: 15rem;
+    }
+  }
+}
+
+
+
 

@@ -47,29 +47,6 @@ export class Map {
         };
         const self = this;
 
-        PlaceProvider.coords$.subscribe(newCoords => {
-            self.coords = newCoords;
-            console.log('PlaceProvider', newCoords);
-        });
-
-         PlaceProvider.direction$.subscribe(newDirection => {
-             console.log(self.coords)
-            if(newDirection === 'to') {
-                console.log('FROM', self.coords.from)
-                console.log('TO', self.coords.to)
-                self.markerTo.setLatLng(L.latLng(self.coords.from[0], self.coords.from[1]));
-                self.markerTo.setOpacity(1);
-                self.markerFrom.setOpacity(0);
-            } else {
-                console.log('FROM', self.coords.from)
-                console.log('TO', self.coords.to)
-                self.markerFrom.setLatLng(L.latLng(self.coords.to[0], self.coords.to[1]));
-                self.markerTo.setOpacity(0);
-                self.markerFrom.setOpacity(1);
-            }
-             console.log(self.coords)
-        });
-
         this.iconFrom = L.icon({
                 iconUrl: 'build/res/icon_path_active.png',
                 iconSize:     [26, 36], // size of the icon
@@ -105,6 +82,32 @@ export class Map {
 
                 return container;
             }
+        });
+
+        this.markerTo = L.marker([0, 0])
+        this.markerFrom = L.marker([0, 0])
+
+        PlaceProvider.coords$.subscribe(newCoords => {
+            self.coords = newCoords;
+            console.log('PlaceProvider', newCoords);
+        });
+
+        PlaceProvider.direction$.subscribe(newDirection => {
+            console.log(self.coords)
+            if(newDirection === 'to' && self.coords.from && self.coords.from.length) {
+                // console.log('FROM', self.coords.from)
+                // console.log('TO', self.coords.to)
+                self.markerTo.setLatLng(L.latLng(self.coords.from[0], self.coords.from[1]));
+                self.markerTo.setOpacity(1);
+                self.markerFrom.setOpacity(0);
+            } else if(self.coords.to && self.coords.to.length) {
+                // console.log('FROM', self.coords.from)
+                // console.log('TO', self.coords.to)
+                self.markerFrom.setLatLng(L.latLng(self.coords.to[0], self.coords.to[1]));
+                self.markerTo.setOpacity(0);
+                self.markerFrom.setOpacity(1);
+            }
+            console.log(self.coords)
         });
     }
 

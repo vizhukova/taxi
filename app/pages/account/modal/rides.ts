@@ -1,14 +1,20 @@
 import { Component } from '@angular/core';
-import { Modal, NavController, ViewController } from 'ionic-angular';
+import {  NavController } from 'ionic-angular';
 
 @Component({
   template: `
-  <ion-content padding>
+  <ion-content class="modal">
+    <p class="header">
+    <span class="cross"></span>
+    Поездки будущие</p>
+    <p class="header">
+
+    </p>
     <h2>I'm a modal!</h2>
   </ion-content>`
 })
 export class RidesModal {
-  constructor(private viewCtrl: ViewController) {
+  constructor() {
       console.log('RidesModal controller')
   }
 

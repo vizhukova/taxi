@@ -1,5 +1,9 @@
-import {Component, NgZone, Output, EventEmitter } from '@angular/core';
-import {Place} from './../providers/place/place';
+import {Component, NgZone, Output, EventEmitter, ApplicationRef } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { Router } from '@angular/router';
+import {Observable} from "rxjs/Rx";
+import {Place} from "../providers/place/place";
+
 
 @Component({
     selector: 'address',
@@ -7,24 +11,43 @@ import {Place} from './../providers/place/place';
 })
 export class Address {
 
-    @Output() directionUpdated = new EventEmitter();
-
     address: any;
     direction: string;
+    addresses: any;
+    search: any;
+    coords: any;
+    editable: any;
 
-    constructor(private Place: Place, private NgZone: NgZone) {
+
+
+    constructor(private place: Place, private http: Http, private router: Router) {
 
         const self = this;
         this.address = {from: '', to: ''};
         this.direction = 'from';
+        this.addresses = [];
+        this.search = false;
+        this.editable = {
+            from: true,
+            to: true
+        };
 
-        Place.address$.subscribe(address => {
-            self.address = address;
+        place.address$.subscribe(newAdress => {
+            self.address = newAdress;
         });
 
-        Place.direction$.subscribe(newDirection => {
+        place.direction$.subscribe(newDirection => {
             self.direction = newDirection;
+        });
+
+        place.coords$.subscribe(newCoords => {
+            self.coords = newCoords;
         })
+    }
+
+    clearAddress() {
+        this.address[this.direction] = '';
+        this.place.changeAddress(this.address)
     }
 
 
@@ -35,9 +58,62 @@ export class Address {
             active: this.direction === direction
         }
     }
+    
+    setViewClasses() {
+        return {
+            from: this.direction === 'from',
+            searchView: true,
+            to: this.direction === 'to'
+        }
+    }
+
+    getAddresses(search: string): Observable<any> {
+        let lat = this.coords[this.direction][0];
+        let lon = this.coords[this.direction][1];
+
+        const url = `http://ddtaxity.smarttaxi.ru:8000/1.x/geocode?taxiServiceId=taxity&radius=2000&lat=${lat}&lon=${lon}&search=${search}`;
+
+        return this.http.get(url)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+
+    getAll(address: string) {
+        if(address.length < 3) return;
+
+        const self = this;
+
+        this.getAddresses(address)
+            .subscribe(
+                (addresses) => {
+                    self.addresses = addresses;
+                    self.search = true;
+                },
+                error => console.log(error)
+            )
+    }
+
+    enableEditable(direction: string) {
+        this.router.navigate(['/search']);
+        this.editable[direction] = false;
+        this.getAll(this.address[direction])
+    }
+
+    private extractData(res: Response) {
+        let body = res.json();
+        return body || { };
+    }
+
+    private handleError (error: any) {
+        let errMsg = (error.message) ? error.message :
+            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+        console.error(errMsg); // log to console instead
+        return Observable.throw(errMsg);
+    }
 
     onFocus(type: string): void {
-        this.Place.changeDirection(type);
+        this.place.changeDirection(type);
     }
 }
 

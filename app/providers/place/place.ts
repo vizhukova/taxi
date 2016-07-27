@@ -1,7 +1,7 @@
 import {Geolocation} from 'ionic-native';
 import { Injectable, Output, EventEmitter } from '@angular/core';
 // import 'rxjs/add/operator/map';
-import { Subject } from 'rxjs/Subject';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { Http, Response } from '@angular/http';
 
 @Injectable()
@@ -13,9 +13,9 @@ export class Place {
     direction: string;
 
     // Observable data sources
-    private addressSource = new Subject<any>();
-    private coordsSource = new Subject<any>();
-    private directionSource = new Subject<any>();
+    private addressSource = new BehaviorSubject<any>({from: '', to: ''});
+    private coordsSource = new BehaviorSubject<any>({from: [], to: []});
+    private directionSource = new BehaviorSubject<any>('from');
 
     // Observable data streams
     address$ = this.addressSource.asObservable();
@@ -26,9 +26,8 @@ export class Place {
     changeAddress(address: string) {
         this.addressSource.next(address);
     }
-    
+
     changeCoords(coords: any) {
-        debugger
         this.coordsSource.next(coords);
     }
     
@@ -39,8 +38,8 @@ export class Place {
 
     constructor(private http: Http) {
         this.coords = {
-            from: null,
-            to: null
+            from: [],
+            to: []
         };
         this.address = {
             from: '',
@@ -119,7 +118,6 @@ export class Place {
 
         const self = this;
 
-        debugger
         self.coords[self.direction] = [coords.latitude, coords.longitude];
         self.changeCoords(self.coords);
 
@@ -132,14 +130,4 @@ export class Place {
                 });
         })
     }
-
-    // public watch(callback) {
-    //     let watch = Geolocation.watchPosition();
-    //     watch.subscribe((data) => {
-    //         callback(data);
-    //         //data.coords.latitude
-    //         //data.coords.longitude
-    //     })
-    // }
-
 }
