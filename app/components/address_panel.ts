@@ -17,6 +17,7 @@ export class Address {
     search: any;
     coords: any;
     editable: any;
+    detail: boolean;
 
 
 
@@ -27,6 +28,7 @@ export class Address {
         this.direction = 'from';
         this.addresses = [];
         this.search = false;
+        this.detail = false;
         this.editable = {
             from: true,
             to: true
@@ -61,6 +63,7 @@ export class Address {
 
         this.editable[this.direction] = true;
         this.search = false;
+        this.detail = true;
     }
 
 

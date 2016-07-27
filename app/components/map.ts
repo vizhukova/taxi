@@ -21,23 +21,12 @@ export class Map {
     markerFrom: any;
 
     @Input() callback: Function;
+    @Input() editable: boolean;
     @Input() path : any;
     @Input() direction : string;
     @Input() coords : any;
     @Input() callEnable : Function;
 
-    ngOnChanges(data: any) {
-        // if(data.direction && typeof data.direction.previousValue === 'string') {
-        //
-        //     let curent = data.direction.currentValue;
-        //     let prev = data.direction.previousValue;
-        //     let icon = prev === 'from' ? this.icon: this.iconTo;
-        //
-        //     if(this.marker[curent]) this.removeLayer(this.marker[curent]);
-        //     this.marker[prev] = L.marker(this.coords[prev], {icon: icon}).addTo(this.map);
-        // }
-
-    }
 
     constructor(private PlaceProvider: Place, private http: Http) {
         this.onDragEnd = this.onDragEnd.bind(this);
@@ -112,11 +101,11 @@ export class Map {
 
         this.map = new L.Map('mapid', {center: new L.LatLng(55.8, 37.7), zoom: 7, layers: [osmLayer], zoomControl:false});
 
-        this.map.on('dragend', this.onDragEnd);
-        
-        this.map.on('zoomend', this.onDragEnd);
+        if(!this.editable) this.map.on('dragend', this.onDragEnd);
 
-        this.map.addControl(new this.pathBtn());
+        if(!this.editable) this.map.on('zoomend', this.onDragEnd);
+
+        if(!this.editable) this.map.addControl(new this.pathBtn());
 
         this.markerTo = L.marker([0, 0], {icon: this.iconFrom, opacity: 0}).addTo(this.map);
         this.markerFrom = L.marker([0, 0], {icon: this.iconTo, opacity: 0}).addTo(this.map);

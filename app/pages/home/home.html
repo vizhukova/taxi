@@ -1,6 +1,12 @@
 
 <ion-content  class="has-footer home">
-  <map [callback]="theBoundCallback" [callEnable]="callEnable" [direction]="direction" [coords]="coords"></map>
+  <map
+          [callback]="theBoundCallback"
+          [callEnable]="callEnable"
+          [direction]="direction"
+          [coords]="coords">
+          [editable]="false">
+  </map>
 
     <address></address>
 
