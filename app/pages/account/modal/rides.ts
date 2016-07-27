@@ -7,9 +7,9 @@ import {  NavController } from 'ionic-angular';
     <p class="header">
     <span class="cross"></span>
     Поездки будущие</p>
-    <p class="header">
 
-    </p>
+
+
     <h2>I'm a modal!</h2>
   </ion-content>`
 })

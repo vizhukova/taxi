@@ -190,68 +190,67 @@
         }
       }
     }
+
+   // radiobutton and checkbox  styles
+ label {
+      display: inline-block;
+      cursor: pointer;
+      position: relative;
+      padding-left: 30px;
+      margin-right: 15px;
+      font-size: 13px;
   }
 
+  input[type=radio] {
+      display: none;
+  }
 
- // radiobutton and checkbox  styles
- label {
-	display: inline-block;
-	cursor: pointer;
-	position: relative;
-	padding-left: 30px;
-	margin-right: 15px;
-	font-size: 13px;
-}
+  label:before {
+      content: "";
+      display: inline-block;
 
-input[type=radio] {
-	display: none;
-}
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      border: solid 2px #b9b9b9;
+  }
 
-label:before {
-	content: "";
-	display: inline-block;
+  .radio label:before {
+      border-radius: 50%;
+  }
 
-	width: 16px;
-	height: 16px;
-	position: absolute;
-	left: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-	border: solid 2px #b9b9b9;
-}
+  input[type=radio]:checked + label:before {
+      content: "\2022";
+      color: $main-bright-color;
+      font-size: 30px;
+      text-align: center;
+      line-height: 18px;
+      border-color: $main-bright-color;
+      padding: 1px 1px 0 0;
+  }
 
-.radio label:before {
-	border-radius: 50%;
-}
+  input[type=checkbox] {
+      display: none;
+  }
 
-input[type=radio]:checked + label:before {
-    content: "\2022";
-    color: $main-bright-color;
-    font-size: 30px;
-    text-align: center;
-    line-height: 18px;
-    border-color: $main-bright-color;
-    padding: 1px 1px 0 0;
-}
+  .checkbox label:before {
+      border-radius: 3px;
+  }
 
-input[type=checkbox] {
-	display: none;
-}
-
-.checkbox label:before {
-	border-radius: 3px;
-}
-
-input[type=checkbox]:checked + label:before {
-    background-color: $main-bright-color;
-    background-image: url('./../res/check.svg');
-    border-color: $main-bright-color;
-    color: #fff;
-	text-align: center;
-    font-size: 22px;
-    line-height: 20px;
-}
+  input[type=checkbox]:checked + label:before {
+      background-color: $main-bright-color;
+      background-image: url('./../res/check.svg');
+      border-color: $main-bright-color;
+      color: #fff;
+      text-align: center;
+      font-size: 22px;
+      line-height: 20px;
+  }
+  }
 
 
    .searchView {
