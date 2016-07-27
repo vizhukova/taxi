@@ -1,3 +1,30 @@
-<ion-content padding>
+<ion-content class="has-footer has-header time">
+     <address></address>
+
+    <div class="block">
+        <p class="header line-header">Время подачи такси</p>
+          <div class="list radio">
+             <p *ngFor="let item of time; let num = index" class="label">
+                <input type="radio" name="time" id="{{getId('time', num)}}" />
+                <label htmlFor="{{getId('time', num)}}">
+                    {{item.name}}
+                    <span  [ngClass]="{'price': true, 'bright': num > 0}">{{item.comment}}</span>
+                </label>
+            </p>
+        </div>
+    </div>
+    
+    <div class="block">
+        <p class="header">Привязка к рейсу</p>
+        <div class="content">
+            <img src="./build/res/plane.png" alt="" class="plane">
+            <p class="text">
+                Привязать к рейсу
+                <span class="comment">Автоматически привязать вызов такси к месту прилета согласно вашему рейсу</span>
+            </p>
+            <img src="./build/res/arrow.png" alt="" class="arrow">
+         </div>
+    </div>
+
 
 </ion-content>

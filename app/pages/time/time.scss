@@ -1,3 +1,54 @@
 .time {
+    background: #f7f7f9;
 
+  &>* {
+    background: #e4e7ec;
+  }
+
+  .block {
+    .content {
+      background: #f7f7f9;
+      margin: 0;
+      padding: 7rem 34rem 10rem 23rem;
+      position: relative;
+
+      &>* {
+        display: inline-block;
+      }
+
+      img {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+      }
+
+      .plane {
+        width: 17rem;
+        height: auto;
+      }
+
+      .arrow {
+        right: 23rem;
+      }
+
+      .text {
+        color: $main-dark-color;
+        font-size: 16rem;
+        font-weight: 600;
+        width: 245rem;
+        margin: 0;
+        padding-left: 17rem + 21rem; // 17 - width .plane
+
+        .comment {
+          color: #b2b2b2;
+          font-size: 12rem;
+          font-weight: 400;
+          line-height: 13rem;
+          display: block;
+          padding-top: 4rem;
+        }
+      }
+    }
+  }
 }

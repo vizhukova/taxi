@@ -1,3 +1,39 @@
-<ion-content padding>
+<ion-content class="account">
+
+    <div class="top-panel">
+        <img src="./build/res/avatar.png" alt="">
+        <p>
+            Алексей Иванченко
+            <span class="text">234 балла</span>
+        </p>
+    </div>
+    
+    <div class="edit"></div>
+
+    <div class="block">
+        <p class="header line-header">Личный кабинет</p>
+        <div class="content">
+             <label class="time" (click)="showRidesModal()">
+                Мои поездки
+                 <div>2</div>
+            </label>
+            <label class="card">
+                Личный счет
+            </label>
+            <label class="call">
+                Связь с диспетчером
+            </label>
+            <label class="settings">
+                Настройка приложения
+            </label>
+            <label class="share">
+                Рассказать друзьям
+            </label>
+            <hr />
+            <label class="car">
+                Новая поездка
+            </label>
+        </div>
+    </div>
 
 </ion-content>

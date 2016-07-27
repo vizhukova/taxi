@@ -1,6 +1,13 @@
+.has-header {
+  margin-top: 97rem;
+}
+
+//address panel
 .address-panel {
     height: 97px;
-    background: #323238;
+    background: #323238 url("../res/line_arrow.png") no-repeat;
+    background-size: 80% auto;
+    background-position: right 17px center;
     position: fixed;
     top: $tab-height;
     width: 100%;
@@ -29,8 +36,8 @@
           background: url('../res/icon_from.svg') no-repeat;
           background-size: contain;
           vertical-align: middle;
-          width: 16px;
-          height: 22px;
+          width: 16rem;
+          height: 22rem;
           position: relative;
 
           &:before {
@@ -73,9 +80,9 @@
         }
       }
 
-      > span:not(.clear) {
-        width: 16px;
-        height: 16px;
+      span {
+        width: 16rem;
+        height: 16rem;
         display: inline-block;
       }
 
@@ -96,9 +103,9 @@
         background: transparent;
         border: none;
         outline: none;
-        font-size: 18px;
+        font-size: 18rem;
         height: 100%;
-        margin-left: 10px;
+        margin-left: 10rem;
         width: 87%;
 
         &::-webkit-input-placeholder {color:#fff;}
@@ -107,6 +114,147 @@
         &:-ms-input-placeholder      {color:#fff;}
       }
     }
+  }
+
+//block of cases in settings and etc
+ .block {
+    font-weight: 600;
+    font-size: 16rem;
+    border-bottom: solid 1px #c7cace;
+
+    .header {
+      color: $main-bright-color;
+      padding: 16rem;
+      margin: 0;
+      border-bottom: solid 1px #e1e4e9;
+      font-size: 14rem;
+
+      &.line-header {
+        background-image: url("./../res/head_line.png");
+        background-repeat: no-repeat;
+        background-position-y: -1px;
+      }
+    }
+    .list {
+      background: #f7f7f9;
+      padding: 0 36rem;
+      .label {
+        display: block;
+        margin: 0;
+        line-height: 48px;
+
+        .add {
+          color: $main-bright-color;
+          text-transform: uppercase;
+
+          &:before {
+            content: "+";
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            border: none;
+            font-size: 27px;
+            margin: 0;
+          }
+          .label {
+            color: inherit;
+            text-transform: inherit;
+          }
+        }
+
+         label {
+          width: 100%;
+          display: inline-block;
+          border-bottom: solid 1px #eef0f4;
+          margin: 0;
+          color: $main-dark-color;
+          line-height: 48rem;
+        }
+        .price {
+          color: #b2b2b2;
+          text-transform: uppercase;
+          float: right;
+          font-size: 13rem;
+
+          &.bright {
+            color: $main-bright-color;
+          }
+        }
+        .comment {
+          float: right;
+          color: #FF7431;
+          text-transform: uppercase;
+          font-size: 13rem;
+        }
+      }
+    }
+  }
+
+
+ // radiobutton and checkbox  styles
+ label {
+	display: inline-block;
+	cursor: pointer;
+	position: relative;
+	padding-left: 30px;
+	margin-right: 15px;
+	font-size: 13px;
+}
+
+input[type=radio] {
+	display: none;
+}
+
+label:before {
+	content: "";
+	display: inline-block;
+
+	width: 16px;
+	height: 16px;
+	position: absolute;
+	left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+	border: solid 2px #b9b9b9;
+}
+
+.radio label:before {
+	border-radius: 50%;
+}
+
+input[type=radio]:checked + label:before {
+    content: "\2022";
+    color: $main-bright-color;
+    font-size: 30px;
+    text-align: center;
+    line-height: 18px;
+    border-color: $main-bright-color;
+    padding: 1px 1px 0 0;
+}
+
+input[type=checkbox] {
+	display: none;
+}
+
+.checkbox label:before {
+	border-radius: 3px;
+}
+
+input[type=checkbox]:checked + label:before {
+    background-color: $main-bright-color;
+    background-image: url('./../res/check.svg');
+    border-color: $main-bright-color;
+    color: #fff;
+	text-align: center;
+    font-size: 22px;
+    line-height: 20px;
+}
+
+
 
    .searchView {
      position: absolute;
