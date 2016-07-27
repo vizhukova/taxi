@@ -1,0 +1,56 @@
+<ion-content class="modal rides-modal">
+    <p class="modal-header">
+        <span class="cross" nav-pop></span>
+        {{tabDats[tab]}}
+    </p>
+
+    <div [ngClass]="{'active': tab === 'future'}" class="sub-tab future-rides" (click)="tabClick('future')"></div>
+    <div [ngClass]="{'active': tab === 'last'}" class="sub-tab last-rides" (click)="tabClick('last')"></div>
+
+    <div>
+        <div class="block">
+            <p class="header line-header">Мои поездки</p>
+        </div>
+
+        <div class="block" *ngFor="let item of getArrayOfRides()">
+            <div class="content">
+                <p class="panel panel-title">
+                   <span>{{item.time}}</span>
+                </p>
+                <p class="panel">
+                    <span class="route"></span>
+                    <span class="panel">{{item.from.street}}</span>
+                    <span class="panel">{{item.to.street}}</span>
+                </p>
+                <p></p>
+                <p></p>
+            </div>
+
+        </div>
+
+        <!-- <div class="block plane">     ///Template for plane
+            <div class="content">
+                <p class="panel panel-title">
+                   <span>number</span>
+                    <span class="comment">Comment</span>
+                </p>
+                <p class="panel">
+                    <span class="route"></span>
+                    <span class="panel">
+                        <span>Route from</span>
+                        <span>Region</span>
+                        <i class="time">time</i>
+                    </span>
+                    <span class="panel">
+                        <span>Route to</span>
+                        <span>Region</span>
+                        <i class="time">time</i>
+                    </span>
+                </p>
+                <p></p>
+                <p></p>
+            </div>
+        </div>-->
+    </div>
+
+</ion-content>

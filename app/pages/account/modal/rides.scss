@@ -1,0 +1,190 @@
+.rides-modal {
+  $height-top-panel: 56rem;
+  background-color: $main-header-background;
+  .sub-tab {
+    background-color: $main-dark-color;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 27rem;
+    height: $height-top-panel;
+    width: 50%;
+    display: inline-block;
+    position: relative;
+
+    &.active {
+      &:after {
+        content: "";
+        width: 5rem;
+        height: 5rem;
+        background: $main-bright-color;
+        position: absolute;
+        border-radius: 50%;
+        left: 0;
+        right: 0;
+        margin: auto;
+        bottom: 8px;
+      }
+    }
+
+    &.future-rides {
+     float: left;
+     background-image: url('./../res/future_rides.svg');
+      &.active {
+        background-image: url('./../res/future_rides_active.svg');
+      }
+    }
+
+    &.last-rides {
+     float: right;
+     background-image: url('./../res/last_rides.svg');
+      &.active {
+        background-image: url('./../res/last_rides_active.svg');
+      }
+    }
+  }
+
+  .block {
+    margin-top: 5rem;
+
+    &:first-child {
+      margin-top: $height-top-panel;
+    }
+
+    .header {
+      background-color: inherit;
+      color: $main-bright-color;
+    }
+    .content {
+      background-color: #f7f7f9;
+
+      .panel {
+        position: relative;
+        color: #ABADB1;
+        line-height: 48rem;
+        border-bottom: solid 1px $main-header-background;
+
+        &.panel-title {
+          font-weight: 100;
+          &:before {
+            background-image: url("./../res/future_rides_active.svg");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 25rem;
+            height: 48rem;
+            width: 48rem;
+            content: "";
+            position: absolute;
+          }
+          &:after {
+            background-image: url("./../res/more.png");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 20rem;
+            height: 48rem;
+            width: 48rem;
+            content: "";
+            position: absolute;
+            right: 0;
+          }
+          span {
+            line-height: 48rem;
+            padding-left: 48rem;
+          }
+         }
+
+        .route {
+          background: url("../res/icon_from.svg") no-repeat;
+          background-size: contain;
+          vertical-align: middle;
+          width: 16rem;
+          height: 22rem;
+          position: absolute;
+          margin: 14rem;
+
+          &:before {
+            position: absolute;
+            border-right: 2rem dashed #a8bea1;
+            display: block;
+            height: 25rem;
+            bottom: -25rem;
+            width: 1rem;
+            left: 0;
+            right: 0;
+            margin: auto;
+            border-right: 2rem dashed #a8bea1;
+            content: "";
+          }
+
+          &:after {
+            background: url("../res/icon_to.svg") no-repeat;
+            background-size: 18rem;
+            vertical-align: middle;
+            width: 18rem;
+            height: 18rem;
+            content: "";
+            bottom: -45rem;
+            position: absolute;
+          }
+        }
+        }
+
+      span.panel {
+        display: block;
+        margin: 0 15rem 0 48rem;
+        color: $main-dark-color;
+        &:last-child {
+          border: none;
+        }
+      }
+      }
+
+    }
+
+  .plane {
+    .panel-title {
+      text-transform: uppercase;
+      &:before {
+        background-image: url("./../res/plane.png") !important;
+        background-size: 17rem !important;
+      }
+      .comment {
+        position: absolute;
+        right: 48px;
+        font-weight: 600;
+        font-size: 10rem;
+        top: 0;
+        vertical-align: top;
+        line-height: 30rem !important;
+      }
+    }
+
+    span.panel {
+      height: 48rem;
+      padding-top: 8rem;
+      span {
+        line-height: 17rem;
+        display: block;
+
+        &:nth-child(2) {
+          font-size: 12rem;
+          color: #ABADB1;
+        }
+      }
+      .time {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 120rem;
+        border-left: solid 1px $main-header-background;
+        margin: 5rem;
+        line-height: 38rem;
+        font-style: inherit;
+        padding: 0 10rem;
+      }
+    }
+
+    .route {
+      background: url("../res/icon_to.svg") no-repeat !important;
+    }
+  }
+  }

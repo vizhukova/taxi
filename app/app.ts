@@ -7,7 +7,6 @@ import { SettingsPage } from './pages/settings/settings';
 import { TimePage } from './pages/time/time';
 import { AccountPage } from './pages/account/account';
 import { SearchPage } from './pages/search/search';
-import { RidesModal } from './pages/account/modal/rides';
 import { IndexPage } from './pages/index/index';
 import {Place} from './providers/place/place';
 
@@ -43,8 +42,7 @@ export class MyApp {
 
 const routes: RouterConfig = [
   { path: '', component: MyApp },
-  { path: 'search', component: SearchPage },
-  { path: 'rides', component: RidesModal }
+  { path: 'search', component: SearchPage }
 ];
 
 export const appRouterProviders = [
