@@ -50,6 +50,19 @@ export class Address {
         this.place.changeAddress(this.address)
     }
 
+    confirmAddress(index: any) {
+
+        let newCoords = [this.addresses[index].geoPoint.lat, this.addresses[index].geoPoint.lon];
+
+        this.address[this.direction] = this.addresses[index].street;
+        this.coords[this.direction] = newCoords;
+        this.place.changeAddress(this.address);
+        this.place.changeCoords(this.coords);
+
+        this.editable[this.direction] = true;
+        this.search = false;
+    }
+
 
     setClasses(direction: string) {
         return {

@@ -1,12 +1,11 @@
 .address-panel {
     height: 97px;
-    background: #323238 url("../res/line_arrow.png") no-repeat;
-    background-size: 80% auto;
-    background-position: right 17px center;
+    background: #323238;
     position: fixed;
     top: $tab-height;
     width: 100%;
     margin-bottom: calc(97px + $tab-height);
+    z-index: 1;
 
     > div:not(.searchView) {
       padding-left: 9.6%;
@@ -15,6 +14,7 @@
       color: #fff;
 
       &.from {
+        border-bottom: 1px solid #505054;
 
         &.active {
           color: #e57339;
@@ -111,23 +111,27 @@
    .searchView {
      position: absolute;
      width: 100%;
-     height: 40px;
      background: #323238;
      top: 48.5px;
+     overflow: auto;
+     padding-left: 14.4%;
 
      div.search-item {
        background: #323238;
        height: 48.5px;
        font-size: 18px;
-       padding-left: 13%;
+       padding-top: 10px;
+       line-height: 16px;
+       cursor: default;
+       border-bottom: 1px solid #505054;
 
        p {
-         color: #fff;
+         color: #e4e6eb;
        }
 
        span {
-         font-size: 13px;
-         color: #fff;
+         font-size: 12px;
+         color: #b2b2b2;
        }
 
      }

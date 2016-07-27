@@ -89,25 +89,18 @@ export class Map {
 
         PlaceProvider.coords$.subscribe(newCoords => {
             self.coords = newCoords;
-            console.log('PlaceProvider', newCoords);
         });
 
         PlaceProvider.direction$.subscribe(newDirection => {
-            console.log(self.coords)
             if(newDirection === 'to' && self.coords.from && self.coords.from.length) {
-                // console.log('FROM', self.coords.from)
-                // console.log('TO', self.coords.to)
                 self.markerTo.setLatLng(L.latLng(self.coords.from[0], self.coords.from[1]));
                 self.markerTo.setOpacity(1);
                 self.markerFrom.setOpacity(0);
             } else if(self.coords.to && self.coords.to.length) {
-                // console.log('FROM', self.coords.from)
-                // console.log('TO', self.coords.to)
                 self.markerFrom.setLatLng(L.latLng(self.coords.to[0], self.coords.to[1]));
                 self.markerTo.setOpacity(0);
                 self.markerFrom.setOpacity(1);
             }
-            console.log(self.coords)
         });
     }
 

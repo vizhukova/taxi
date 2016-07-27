@@ -6,11 +6,11 @@
     >
         <span class="icon"></span>
         <input
-                [disabled]="editable.from"
-                (keyup)="!editable.from && enableEditable('from')"
-                type="text"
-                [(ngModel)]="address.from"
-                placeholder="Откуда ..."
+            [disabled]="editable.from"
+            (keyup)="!editable.from && enableEditable('from')"
+            type="text"
+            [(ngModel)]="address.from"
+            placeholder="Откуда ..."
         >
         <span
             class="clear"
@@ -25,20 +25,24 @@
     >
         <span class="icon"></span>
         <input
-                [disabled]="editable.to"
-                (keyup)="!editable.to && enableEditable('to')"
-                type="text"
-                [(ngModel)]="address.to"
-                placeholder="Куда ?"
+            [disabled]="editable.to"
+            (keyup)="!editable.to && enableEditable('to')"
+            type="text"
+            [(ngModel)]="address.to"
+            placeholder="Куда ?"
         >
         <span
-                class="clear"
-                *ngIf="direction === 'to'"
-                (click)="clearAddress()"
+            class="clear"
+            *ngIf="direction === 'to'"
+            (click)="clearAddress()"
         ></span>
     </div>
     <div [ngClass]="setViewClasses()" *ngIf="search">
-        <div class="search-item" *ngFor="let item of addresses">
+        <div
+            class="search-item"
+            *ngFor="let item of addresses; let i=index"
+            (click)="confirmAddress(i)"
+        >
             <p>{{item.street}}</p><span>{{item.city}}</span>
         </div>
     </div>
