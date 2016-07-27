@@ -1,24 +1,21 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular/index';
+import {  NavController } from 'ionic-angular';
 
-@Component ({
-    template: `
-        <ion-card class='popover'>
-            <ion-card-content>
-                Hello
-            </ion-card-content>
-        </ion-card>
-    `
+@Component({
+  template: `
+  <ion-content class="modal">
+    <p class="header">
+    <span class="cross"></span>
+    Поездки будущие</p>
+
+
+
+    <h2>I'm a modal!</h2>
+  </ion-content>`
 })
-export class AccModal {
-
-  private dumbData: number;
-
-  constructor(private params: NavParams) {
-   console.log("constructor");
-   this.dumbData= 22;
-   console.log('Param:', params.get('param'));
- }
+export class RidesModal {
+  constructor() {
+      console.log('RidesModal controller')
+  }
 
 }
-

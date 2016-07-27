@@ -73,12 +73,14 @@
           background: url("../res/icon_to.svg") no-repeat;
           background-size: 100% 100%;
           vertical-align: middle;
-          width: 10px;
-          height: 10px;
+          width: 10rem;
+          height: 10rem;
         }
       }
 
-      span {
+
+
+      span:not(.clear) {
         width: 16rem;
         height: 16rem;
         display: inline-block;
@@ -112,6 +114,7 @@
         &:-ms-input-placeholder      {color:#fff;}
       }
     }
+  }
 
     .searchView {
     position: absolute;
@@ -325,66 +328,58 @@
     }
   }
 
+   .searchView {
+     position: absolute;
+     width: 100%;
+     height: 40px;
+     background: #323238;
+     top: 48.5px;
 
- // radiobutton and checkbox  styles
- label {
-	display: inline-block;
-	cursor: pointer;
-	position: relative;
-	padding-left: 30px;
-	margin-right: 15px;
-	font-size: 13px;
-}
+     div.search-item {
+       background: #323238;
+       height: 48.5px;
+       font-size: 18px;
+       padding-left: 13%;
 
-input[type=radio] {
-	display: none;
-}
+       p {
+         color: #fff;
+       }
 
-label:before {
-	content: "";
-	display: inline-block;
+       span {
+         font-size: 13px;
+         color: #fff;
+       }
 
-	width: 16px;
-	height: 16px;
-	position: absolute;
-	left: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-	border: solid 2px #b9b9b9;
-}
+     }
+   }
 
-.radio label:before {
-	border-radius: 50%;
-}
+.modal {
+  position: absolute;
+  font-family: "Myriad Pro";
+  $header-height: 56rem;
 
-input[type=radio]:checked + label:before {
-    content: "\2022";
-    color: $main-bright-color;
-    font-size: 30px;
-    text-align: center;
-    line-height: 18px;
-    border-color: $main-bright-color;
-    padding: 1px 1px 0 0;
-}
-
-input[type=checkbox] {
-	display: none;
-}
-
-.checkbox label:before {
-	border-radius: 3px;
-}
-
-input[type=checkbox]:checked + label:before {
-    background-color: $main-bright-color;
-    background-image: url('./../res/check.svg');
-    border-color: $main-bright-color;
+  .cross {
+    height: 25rem;
+    width: 25rem;
+    background-image: url('./../res/cross.svg');
+    display: inline-block;
+    line-height: $header-height;
+    vertical-align: middle;
+  }
+  .header {
+    height: $header-height;
+    line-height: $header-height;
+    background: $main-dark-color;
+    font-size: 18px;
     color: #fff;
-	text-align: center;
-    font-size: 22px;
-    line-height: 20px;
+    padding: 0 15rem;
+
+    .cross {
+      margin-right: 15rem;
+    }
+  }
 }
+
 
 
 
