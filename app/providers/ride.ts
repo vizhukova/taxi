@@ -9,15 +9,15 @@ export class RideProvider {
 
     }
 
-    public save(array: Array<Ride>) {
+    public save(name: string, data: Array<Ride>) {
 
-        let dataToSave = JSON.stringify(array);
-        localStorage.setItem('rides', dataToSave);
+        let dataToSave = JSON.stringify(data);
+        localStorage.setItem(name, dataToSave);
 
     }
 
-    public get() {
-        var array = JSON.parse(localStorage.getItem('rides'));
+    public get(name: string) {
+        var array = JSON.parse(localStorage.getItem(name));
         return array;
     }
 

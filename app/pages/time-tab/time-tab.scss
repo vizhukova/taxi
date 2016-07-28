@@ -1,3 +1,251 @@
-.time-tab {
+.time-tab-page {
 
+  $height-top-panel: 56rem;
+  background-color: $main-header-background;
+
+  scroll-content {
+    overflow: hidden;
+  }
+
+  .header {
+    position: relative;
+    height: 48.5px;
+    line-height: 51px;
+    padding: 0 20px;
+    background: $header-dark;
+
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: -7px;
+      left: 0;
+      height: 9px;
+      right: 0;
+      margin: auto;
+      background: url("../res/logo_line.png") right bottom no-repeat;
+    }
+
+    p.title {
+      color: #d2d4d9;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    .lbl {
+      position: relative;
+      display: inline-block;
+      height: 15px;
+      width: 38px;
+      background: #898989;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      float: right;
+      margin-top: 17px;
+    }
+
+    .lbl:after {
+      position: absolute;
+      left: -3px;
+      top: -3.5px;
+      display: block;
+      width: 22px;
+      height: 22px;
+      border-radius: 100px;
+      background: #fff;
+      box-shadow: 0px 3px 3px rgba(0,0,0,0.05);
+      content: '';
+      transition: all 0.3s ease;
+    }
+
+    .lbl:active:after { transform: scale(1.15, 0.85); }
+
+    .cbx:checked ~ label { background: #975133; }
+
+    .cbx:checked ~ label:after {
+      left: 20px;
+      background: $main-bright-color;
+    }
+
+    .cbx:disabled ~ label {
+      background: #d5d5d5;
+      pointer-events: none;
+    }
+
+    .cbx:disabled ~ label:after { background: #bcbdbc; }
+
+    .hidden { display: none; }
+  }
+
+  .content {
+
+    > .sub-header {
+      height: 41px;
+      line-height: 43px;
+      color: $main-bright-color;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 0 20px;
+      background: #e4e7ec;
+    }
+
+    .items {
+      position: absolute;
+      bottom: 0;
+      left:0;
+      right: 0;
+      margin: auto;
+      background: #e4e7ec;
+      top: 90px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+
+      &.addresses {
+        padding-left: 17%;
+
+        > div {
+          height: 54px;
+          border-bottom: 1px solid #e6e9ee;
+          padding-top: 11px;
+          padding-left: 5px;
+          width: 93%;
+
+          ion-icon {
+            display: inline-block;
+            font-size: 19.2em;
+            float: right;
+            color: #b3b3b3;
+            margin-top: 2px;
+          }
+
+          p.title {
+            color: #575759;
+            font-size: 16px;
+            font-weight: 600;
+          }
+
+          span.address {
+            color: #b2b2b2;
+            font-size: 14px;
+            font-weight: 400;
+          }
+        }
+      }
+
+      &.trips {
+
+        .block {
+          margin-bottom: 7px;
+          background: #f7f7f9;
+          padding-right: 19px;
+
+          &:first-child {
+          }
+
+          .header {
+            background-color: inherit;
+            color: $main-bright-color;
+          }
+          .content {
+            background-color: #f7f7f9;
+
+            .panel {
+              position: relative;
+              color: #ABADB1;
+              line-height: 48rem;
+              border-bottom: solid 1px $main-header-background;
+
+              &.panel-title {
+                font-weight: 100;
+
+                &:before {
+                  background-image: url("./../res/future_rides_active.svg");
+                  stroke: $main-bright-color;
+                  background-repeat: no-repeat;
+                  background-position: center center;
+                  background-size: 25rem;
+                  height: 48rem;
+                  width: 48rem;
+                  content: "";
+                  position: absolute;
+                }
+                //&:after {
+                //  background-image: url("./../res/more.png");
+                //  background-repeat: no-repeat;
+                //  background-position: center center;
+                //  background-size: 20rem;
+                //  height: 48rem;
+                //  width: 48rem;
+                //  content: "";
+                //  position: absolute;
+                //  right: 0;
+                //}
+
+                ion-icon {
+                  display: inline-block;
+                  font-size: 2.2em;
+                  float: right;
+                  color: #b3b3b3;
+                  margin-top: 6px;
+                }
+
+                span {
+                  line-height: 48rem;
+                  padding-left: 48rem;
+                }
+              }
+
+              .route {
+                background: url("../res/icon_from.svg") no-repeat;
+                background-size: contain;
+                vertical-align: middle;
+                width: 16rem;
+                height: 22rem;
+                position: absolute;
+                margin: 14rem;
+
+                &:before {
+                  position: absolute;
+                  border-right: 2rem dashed #a8bea1;
+                  display: block;
+                  height: 25rem;
+                  bottom: -25rem;
+                  width: 1rem;
+                  left: 0;
+                  right: 0;
+                  margin: auto;
+                  border-right: 2rem dashed #a8bea1;
+                  content: "";
+                }
+
+                &:after {
+                  background: url("../res/icon_to.svg") no-repeat;
+                  background-size: 18rem;
+                  vertical-align: middle;
+                  width: 18rem;
+                  height: 18rem;
+                  content: "";
+                  bottom: -45rem;
+                  position: absolute;
+                }
+              }
+            }
+
+            span.panel {
+              display: block;
+              margin: 0 15rem 0 48rem;
+              color: $main-dark-color;
+              &:last-child {
+                border: none;
+              }
+            }
+          }
+
+        }
+      }
+
+    }
+  }
 }

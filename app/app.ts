@@ -9,7 +9,8 @@ import { AccountPage } from './pages/account/account';
 import { SearchPage } from './pages/search/search';
 import { IndexPage } from './pages/index/index';
 import {Place} from './providers/place/place';
-
+import {RideProvider} from "./providers/ride";
+import {APP_BASE_HREF} from '@angular/common'
 
 @Component({
   template: `
@@ -49,10 +50,13 @@ export const appRouterProviders = [
   provideRouter(routes)
 ];
 
+
 //noinspection TypeScriptValidateTypes
 ionicBootstrap(IndexPage, [
+  {provide: APP_BASE_HREF, useValue: './build'},
   appRouterProviders,
-  Place
+  Place,
+  RideProvider
 ], {
   tabbarPlacement: 'top',
   platforms: {
