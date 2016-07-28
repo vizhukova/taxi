@@ -1,17 +1,20 @@
 import { Component } from '@angular/core';
 import {  NavController } from 'ionic-angular';
+import {  RideProvider } from './../../../providers/ride';
+import {  Ride } from './../../../models/ride';
 
 @Component({
     templateUrl: 'build/pages/account/modal/rides.html',
+    providers: [RideProvider]
 })
 export class RidesModal {
 
-    futureRides: Array<Object>;
-    lastRides: Array<Object>;
+    futureRides: Array<Ride>;
+    lastRides: Array<Ride>;
     tab: string = "future";
     tabDats: Object;
 
-    constructor(private nav: NavController) {
+    constructor(private nav: NavController, private RideProvider: RideProvider) {
 
         this.nav = nav;
 
@@ -21,15 +24,20 @@ export class RidesModal {
         };
 
         this.futureRides = [
-            {time: '15 июля, 22:05', from: {street: 'Комсомольская 69, п.1'}, to: {street: 'Большая Серпуховская, 64'} }
+            new Ride('15 февраля, 22:05', {street: 'Комсомольская 69, п.1'}, {street: 'Большая Серпуховская, 64'})
         ];
 
         this.lastRides = [
-            {time: '15 февраля, 22:05', from: {street: 'Комсомольская 69, п.1'}, to: {street: 'Большая Серпуховская, 64'} },
-            {time: '15 февраля, 22:05', from: {street: 'Комсомольская 69, п.1'}, to: {street: 'Большая Серпуховская, 64'} },
-            {time: '15 февраля, 22:05', from: {street: 'Комсомольская 69, п.1'}, to: {street: 'Большая Серпуховская, 64'} },
-            {time: '15 февраля, 22:05', from: {street: 'Комсомольская 69, п.1'}, to: {street: 'Большая Серпуховская, 64'} }
+            new Ride('15 февраля, 22:05', {street: 'Комсомольская 69, п.1'}, {street: 'Большая Серпуховская, 64'}),
+            new Ride('15 февраля, 22:05', {street: 'Комсомольская 69, п.1'}, {street: 'Большая Серпуховская, 64'}),
+            new Ride('15 февраля, 22:05', {street: 'Комсомольская 69, п.1'}, {street: 'Большая Серпуховская, 64'}),
+            new Ride('15 февраля, 22:05', {street: 'Комсомольская 69, п.1'}, {street: 'Большая Серпуховская, 64'})
         ];
+
+        console.log(this.lastRides)
+        RideProvider.save(this.lastRides);
+        let a = RideProvider.get();
+        console.log(a);
     }
 
 
