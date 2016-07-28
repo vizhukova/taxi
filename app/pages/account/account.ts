@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, Modal, ViewController } from 'ionic-angular';
-import { Router } from '@angular/router';
 import {NavParams} from "ionic-angular/index";
 import {Platform} from "ionic-angular/index";
+import {RidesModal} from "./modal/rides";
 
 
 @Component({
@@ -10,11 +10,11 @@ import {Platform} from "ionic-angular/index";
 })
 export class AccountPage {
 
-  constructor(private nav: NavController, private router: Router) {
+  constructor(private nav: NavController) {
     this.nav = nav;
   }
 
   showRidesModal() {
-    this.router.navigate(['/rides']);
+    this.nav.push(RidesModal);
   }
 }

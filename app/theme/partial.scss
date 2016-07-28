@@ -180,7 +180,7 @@
       padding-left: 8.4%;
     }
 
-    .group 			  {
+    .group            {
       position:relative;
       margin-bottom: 30px;
       border: none;
@@ -205,7 +205,7 @@
       }
     }
 
-    input 				{
+    input               {
       font-size:18px;
       padding:10px 10px 6px 5px;
       display:block;
@@ -217,10 +217,10 @@
       color: #f7f7f9;
       font-weight: 400;
     }
-    input:focus 		{ outline:none; }
+    input:focus         { outline:none; }
 
     /* LABEL ======================================= */
-    label 				 {
+    label                {
       color: #b2b2b2;
       font-size: 12px;
       font-weight: 400;
@@ -234,7 +234,7 @@
     }
 
     /* active state */
-    input:focus ~ label, input:valid ~ label 		{
+    input:focus ~ label, input:valid ~ label        {
       top:-10px;
       font-size:14px;
       color:#b2b2b2;
@@ -278,84 +278,142 @@
 
 }
 
-
-
 //block of cases in settings and etc
-.block {
-  font-weight: 600;
-  font-size: 16rem;
-  border-bottom: solid 1px #c7cace;
+ .block {
+    font-weight: 600;
+    font-size: 16rem;
+    border-bottom: solid 1px #c7cace;
 
-  .header {
-    color: $main-bright-color;
-    padding: 16rem;
-    margin: 0;
-    border-bottom: solid 1px #e1e4e9;
-    font-size: 14rem;
-
-    &.line-header {
-      background-image: url("./../res/head_line.png");
-      background-repeat: no-repeat;
-      background-position-y: -1px;
-    }
-  }
-  .list {
-    background: #f7f7f9;
-    padding: 0 36rem;
-    .label {
-      display: block;
+    .header {
+      color: $main-bright-color;
+      padding: 16rem;
       margin: 0;
-      line-height: 48px;
+      border-bottom: solid 1px #e1e4e9;
+      font-size: 14rem;
 
-      .add {
-        color: $main-bright-color;
-        text-transform: uppercase;
-
-        &:before {
-          content: "+";
-          display: inline-block;
-          width: 16px;
-          height: 16px;
-          position: absolute;
-          left: 0;
-          top: 0;
-          border: none;
-          font-size: 27px;
-          margin: 0;
-        }
-        .label {
-          color: inherit;
-          text-transform: inherit;
-        }
-      }
-
-       label {
-        width: 100%;
-        display: inline-block;
-        border-bottom: solid 1px #eef0f4;
-        margin: 0;
-        color: $main-dark-color;
-        line-height: 48rem;
-      }
-      .price {
-        color: #b2b2b2;
-        text-transform: uppercase;
-        float: right;
-        font-size: 13rem;
-
-        &.bright {
-          color: $main-bright-color;
-        }
-      }
-      .comment {
-        float: right;
-        color: #FF7431;
-        text-transform: uppercase;
-        font-size: 13rem;
+      &.line-header {
+        background-image: url("./../res/head_line.png");
+        background-repeat: no-repeat;
+        background-position-y: -1px;
       }
     }
-  }
+    .list {
+      background: #f7f7f9;
+      padding: 0 36rem;
+      .label {
+        display: block;
+        margin: 0;
+        line-height: 48px;
+
+        .add {
+          color: $main-bright-color;
+          text-transform: uppercase;
+
+          &:before {
+            content: "+";
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            border: none;
+            font-size: 27px;
+            margin: 0;
+          }
+          .label {
+            color: inherit;
+            text-transform: inherit;
+          }
+        }
+
+         label {
+          width: 100%;
+          display: inline-block;
+          border-bottom: solid 1px #eef0f4;
+          margin: 0;
+          color: $main-dark-color;
+          line-height: 48rem;
+        }
+        .price {
+          color: #b2b2b2;
+          text-transform: uppercase;
+          float: right;
+          font-size: 13rem;
+
+          &.bright {
+            color: $main-bright-color;
+          }
+        }
+        .comment {
+          float: right;
+          color: #FF7431;
+          text-transform: uppercase;
+          font-size: 13rem;
+        }
+      }
+    }
+
+   // radiobutton and checkbox  styles
+ label {
+	display: inline-block;
+	cursor: pointer;
+	position: relative;
+	padding-left: 30px;
+	margin-right: 15px;
+	font-size: 13px;
 }
+
+input[type=radio] {
+	display: none;
+}
+
+label:before {
+	content: "";
+	display: inline-block;
+
+	width: 16px;
+	height: 16px;
+	position: absolute;
+	left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+	border: solid 2px #b9b9b9;
+}
+
+.radio label:before {
+	border-radius: 50%;
+}
+
+input[type=radio]:checked + label:before {
+    content: "\2022";
+    color: $main-bright-color;
+    font-size: 30px;
+    text-align: center;
+    line-height: 18px;
+    border-color: $main-bright-color;
+    padding: 1px 1px 0 0;
+}
+
+input[type=checkbox] {
+	display: none;
+}
+
+.checkbox label:before {
+	border-radius: 3px;
+}
+
+input[type=checkbox]:checked + label:before {
+    background-color: $main-bright-color;
+    background-image: url('./../res/check.svg');
+    border-color: $main-bright-color;
+    color: #fff;
+	text-align: center;
+    font-size: 22px;
+    line-height: 20px;
+}
+  }
 
 .modal {
   position: absolute;

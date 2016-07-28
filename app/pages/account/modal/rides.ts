@@ -1,21 +1,52 @@
 import { Component } from '@angular/core';
 import {  NavController } from 'ionic-angular';
+import {  RideProvider } from './../../../providers/ride';
+import {  Ride } from './../../../models/ride';
 
 @Component({
-  template: `
-  <ion-content class="modal">
-    <p class="header">
-    <span class="cross"></span>
-    Поездки будущие</p>
-
-
-
-    <h2>I'm a modal!</h2>
-  </ion-content>`
+    templateUrl: 'build/pages/account/modal/rides.html',
+    providers: [RideProvider]
 })
 export class RidesModal {
-  constructor() {
-      console.log('RidesModal controller')
-  }
+
+    futureRides: Array<Ride>;
+    lastRides: Array<Ride>;
+    tab: string = "future";
+    tabDats: Object;
+
+    constructor(private nav: NavController, private RideProvider: RideProvider) {
+
+        this.nav = nav;
+
+        this.tabDats = {
+            future: 'Поездки будущие' ,
+            last: 'Поездки прошлые'
+        };
+
+        this.futureRides = [
+            new Ride('15 февраля, 22:05', {street: 'Комсомольская 69, п.1'}, {street: 'Большая Серпуховская, 64'})
+        ];
+
+        this.lastRides = [
+            new Ride('15 февраля, 22:05', {street: 'Комсомольская 69, п.1'}, {street: 'Большая Серпуховская, 64'}),
+            new Ride('15 февраля, 22:05', {street: 'Комсомольская 69, п.1'}, {street: 'Большая Серпуховская, 64'}),
+            new Ride('15 февраля, 22:05', {street: 'Комсомольская 69, п.1'}, {street: 'Большая Серпуховская, 64'}),
+            new Ride('15 февраля, 22:05', {street: 'Комсомольская 69, п.1'}, {street: 'Большая Серпуховская, 64'})
+        ];
+
+        console.log(this.lastRides)
+        RideProvider.save(this.lastRides);
+        let a = RideProvider.get();
+        console.log(a);
+    }
+
+
+    public tabClick(value:string) {
+        this.tab = value;
+    }
+
+    public getArrayOfRides() {
+        return this.tab === 'future' ? this.futureRides : this.lastRides;
+    }
 
 }
