@@ -15,5 +15,35 @@
 
     <div class="content">
         <div class="sub-header">{{address ? header.address : header.trip}}</div>
+
+        <div class="items addresses" *ngIf="address" >
+
+            <div class="address-item" *ngFor="let item of addresses">
+                <ion-icon md="md-more"></ion-icon>
+                <p class="title">{{item.title}}</p>
+                <span class="address">{{item.data.street}}</span>
+            </div>
+
+        </div>
+
+        <div class="items trips" *ngIf="!address" >
+            <div class="block" *ngFor="let item of trips">
+                <div class="content">
+                    <p class="panel panel-title">
+                        <ion-icon md="md-more"></ion-icon>
+                        <span>{{item.title}}</span>
+                    </p>
+                    <p class="panel">
+                        <span class="route"></span>
+                        <span class="panel">{{item.data.from}}</span>
+                        <span class="panel">{{item.data.to}}</span>
+                    </p>
+                    <p></p>
+                    <p></p>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 </ion-content>
