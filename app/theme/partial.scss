@@ -423,7 +423,7 @@ input[type=checkbox]:checked + label:before {
   .cross {
     height: 25rem;
     width: 25rem;
-    background-image: url('./../res/cross.svg');
+    background-image: url('./../res/cross_active.svg');
     display: inline-block;
     line-height: $header-height;
     vertical-align: middle;

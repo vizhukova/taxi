@@ -1,0 +1,1 @@
+export const URL = "http://ddtaxity.smarttaxi.ru:5777";
