@@ -121,6 +121,10 @@
     overflow: auto;
     padding-left: 14.4%;
 
+    &.to {
+      top: 97px;
+    }
+
     div.search-item {
       background: #323238;
       height: 48.5px;
@@ -131,11 +135,15 @@
       border-bottom: 1px solid #505054;
       width: 90%;
 
-      p {
+      span {
         color: #e4e6eb;
+
+        &.orange {
+          color: #e57339;
+        }
       }
 
-      span {
+      p {
         font-size: 12px;
         color: #b2b2b2;
       }
@@ -153,6 +161,10 @@
     height: 214px;
     padding-top: 22px;
     padding-left: 8.3%;
+
+    &.to {
+      top: 97px;
+    }
 
     div.top {
       background: url("./../res/icon_home.svg") no-repeat;

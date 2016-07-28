@@ -64,7 +64,7 @@ export class Address {
 
         let newCoords = [this.addresses[index].geoPoint.lat, this.addresses[index].geoPoint.lon];
 
-        this.address[this.direction] = this.addresses[index].street;
+        this.address[this.direction] = this.addresses[index].shortAddress;
         this.coords[this.direction] = newCoords;
         this.place.changeAddress(this.address);
         this.place.changeCoords(this.coords);
@@ -90,6 +90,14 @@ export class Address {
             to: this.direction === 'to'
         }
     }
+    
+    setDetailClasses() {
+        return {
+            addressDetail: true,            
+            from: this.direction === 'from',
+            to: this.direction === 'to'
+        }
+    }
 
     getAddresses(search: string): Observable<any> {
         let lat = this.coords[this.direction][0];
@@ -111,11 +119,43 @@ export class Address {
         this.getAddresses(address)
             .subscribe(
                 (addresses) => {
-                    self.addresses = addresses;
+                    self.addresses = self.formatAddressesSearch(address, addresses);
                     self.search = true;
                 },
                 error => console.log(error)
             )
+    }
+
+    formatAddressesSearch(address: string, addresses: any) {
+        return addresses.map(item => {
+
+            if(item.street.toLowerCase().indexOf(address.toLowerCase()) < 0) {
+                item.street = [{text: item.street || item.shortAddress, class: 'white'}];
+                return item
+            }
+
+            let formated = [];
+
+            let splited = item.street.toLowerCase().split(address.toLowerCase());
+
+            let index = splited.indexOf('');
+
+            if(index === 0) {
+                formated.push({text: address, class: 'orange'});
+                formated.push({text: splited[1], class: 'white'});
+            } else if(index === 1) {
+                formated.push({text: splited[0], class: 'white'});
+                formated.push({text: address, class: 'orange'});
+            } else {
+                formated.push({text: splited[0], class: 'white'});
+                formated.push({text: address, class: 'orange'});
+                formated.push({text: splited[1], class: 'white'});
+            }
+
+            item.street = formated;
+
+            return item;
+        });
     }
 
     enableEditable(direction: string) {
@@ -135,6 +175,7 @@ export class Address {
     }
 
     onFocus(type: string): void {
+        if(!this.editable[type]) return;
         this.place.changeDirection(type);
     }
 }

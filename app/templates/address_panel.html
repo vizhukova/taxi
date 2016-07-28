@@ -43,10 +43,10 @@
             *ngFor="let item of addresses; let i=index"
             (click)="confirmAddress(i)"
         >
-            <p>{{item.street}}</p><span>{{item.city}}</span>
+            <span *ngFor="let text of item.street" [ngClass]="{orange: text.class ==='orange'}">{{text.text}}</span><p>{{item.city}}</p>
         </div>
     </div>
-    <div class="addressDetail" *ngIf="detail">
+    <div [ngClass]="setDetailClasses()" *ngIf="detail">
         <div class="top">
             <div class="group house">
                 <input type="text" required>

@@ -103,24 +103,26 @@ export class Map {
 
     private bootMarkers(direction: string) {
 
-        let markerFromCoords = this.coords.from.length ? this.coords.from : [0, 0];
-        let markerToCoords = this.coords.to.length ? this.coords.to : [0, 0];
+        let markerFromCoords = this.coords.from.length ? this.coords.from : this.map.getCenter();
+        let markerToCoords = this.coords.to.length ? this.coords.to : this.map.getCenter();
 
         if(direction === 'to') {
             if(!this.map.hasLayer(this.markerFrom)) {
                 this.markerFrom = L.marker(markerFromCoords, {icon: this.iconFrom, opacity: this.coords.from.length ? 1 : 0}).addTo(this.map)
             } else {
-                this.markerFrom.setLatLng([this.coords.from[0], this.coords.from[1]]);
+                this.markerFrom.setLatLng(markerFromCoords);
                 this.markerTo.setOpacity(0);
                 this.markerFrom.setOpacity(1);
+                this.map.setView(markerToCoords)
             }
         } else if(direction === 'from') {
             if(!this.map.hasLayer(this.markerTo)) {
                 this.markerTo = L.marker(markerToCoords, {icon: this.iconTo, opacity: this.coords.to.length ? 1 : 0}).addTo(this.map)
             } else {
-                this.markerTo.setLatLng([this.coords.to[0], this.coords.to[1]]);
+                this.markerTo.setLatLng(markerToCoords);
                 this.markerTo.setOpacity(1);
                 this.markerFrom.setOpacity(0);
+                this.map.setView(markerFromCoords)
             }
         }
     }
@@ -142,13 +144,7 @@ export class Map {
         if(!this.editable) this.map.addControl(new this.pathBtn());
 
         this.bootMarkers(this.direction);
-
-        // let markerFromCoords = this.coords.from.length ? this.coords.from : [0, 0];
-        // let markerToCoords = this.coords.to.length ? this.coords.to : [0, 0];
-        //
-        // this.markerFrom = L.marker(markerFromCoords, {icon: this.iconFrom, opacity: this.coords.from.length ? 1 : 0}).addTo(this.map);
-        // this.markerTo = L.marker(markerToCoords, {icon: this.iconTo, opacity: this.coords.to.length ? 1 : 0}).addTo(this.map);
-
+        
         setTimeout(()=>{this.map.invalidateSize(true)}, 300);
 
         if(this.coords && !this.coords.from && !this.coords.to) this.locateMe()
@@ -195,7 +191,12 @@ export class Map {
         let zoom = this.map.getZoom();
         this.map.setZoom(Math.round(zoom));
 
-        if(this.callback) this.callback(this.map.getCenter());
+        const coords = this.map.getCenter();
+
+        this.PlaceProvider.getCurrentAddress({
+            latitude: coords.lat,
+            longitude: coords.lng
+        })
     }
 
 }

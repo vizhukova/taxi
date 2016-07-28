@@ -1,3 +1,19 @@
 <ion-content>
 
+    <div class="header">
+        <p class="title">В виде поездок</p>
+
+        <input
+                (change)="toggleView()"
+                type="checkbox"
+                id="unchecked"
+                class="cbx hidden"
+        />
+        <label for="unchecked" class="lbl"></label>
+
+    </div>
+
+    <div class="content">
+        <div class="sub-header">{{address ? header.address : header.trip}}</div>
+    </div>
 </ion-content>

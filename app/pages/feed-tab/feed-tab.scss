@@ -1,3 +1,91 @@
-.feed-tab {
+.feed-tab-page {
 
+  scroll-content {
+    overflow: hidden;
+  }
+
+  .header {
+    position: relative;
+    height: 48.5px;
+    line-height: 51px;
+    padding: 0 20px;
+    background: $header-dark;
+
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: -7px;
+      left: 0;
+      height: 9px;
+      right: 0;
+      margin: auto;
+      background: url("../res/logo_line.png") right bottom no-repeat;
+    }
+
+    p.title {
+      color: #d2d4d9;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    .lbl {
+      position: relative;
+      display: inline-block;
+      height: 15px;
+      width: 38px;
+      background: #898989;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      float: right;
+      margin-top: 17px;
+    }
+
+    .lbl:after {
+      position: absolute;
+      left: -3px;
+      top: -3.5px;
+      display: block;
+      width: 22px;
+      height: 22px;
+      border-radius: 100px;
+      background: #fff;
+      box-shadow: 0px 3px 3px rgba(0,0,0,0.05);
+      content: '';
+      transition: all 0.3s ease;
+    }
+
+    .lbl:active:after { transform: scale(1.15, 0.85); }
+
+    .cbx:checked ~ label { background: #975133; }
+
+    .cbx:checked ~ label:after {
+      left: 20px;
+      background: $main-bright-color;
+    }
+
+    .cbx:disabled ~ label {
+      background: #d5d5d5;
+      pointer-events: none;
+    }
+
+    .cbx:disabled ~ label:after { background: #bcbdbc; }
+
+    .hidden { display: none; }
+  }
+
+  .content {
+
+    > .sub-header {
+      height: 41px;
+      line-height: 43px;
+      color: $main-bright-color;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 0 20px;
+      background: #e4e7ec;
+    }
+  }
 }
