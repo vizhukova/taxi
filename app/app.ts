@@ -11,6 +11,7 @@ import { IndexPage } from './pages/index/index';
 import {Place} from './providers/place/place';
 import {RideProvider} from "./providers/ride";
 import {APP_BASE_HREF} from '@angular/common'
+import {enableProdMode} from '@angular/core';
 
 @Component({
   template: `
@@ -50,7 +51,7 @@ export const appRouterProviders = [
   provideRouter(routes)
 ];
 
-
+enableProdMode()
 //noinspection TypeScriptValidateTypes
 ionicBootstrap(IndexPage, [
   {provide: APP_BASE_HREF, useValue: './build'},

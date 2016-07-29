@@ -3,6 +3,7 @@ import { Map } from './../../components/map';
 import { Address } from './../../components/address_panel';
 import {Place} from './../../providers/place/place';
 import {RegistrationModal} from './../../components/registration/registration';
+import {NavController} from "ionic-angular/index";
 // import polyline from 'polyline'
 
 

@@ -196,7 +196,10 @@ export class Map {
         this.PlaceProvider.getCurrentAddress({
             latitude: coords.lat,
             longitude: coords.lng
-        })
+        });
+
+        this.map.invalidateSize(true)
+
     }
 
 }
