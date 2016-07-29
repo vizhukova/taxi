@@ -1,13 +1,13 @@
 import {Component, Input } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { Router, ROUTER_DIRECTIVES } from '@angular/router';
 import {Observable} from "rxjs/Rx";
 import {Place} from "../providers/place/place";
+import { NavController, Modal, ViewController } from 'ionic-angular';
+import {SearchPage} from "../pages/search/search";
 
 @Component({
     selector: 'address',
-    templateUrl: 'build/templates/address_panel.html',
-    directives: [ROUTER_DIRECTIVES]
+    templateUrl: 'build/templates/address_panel.html'
 })
 export class Address {
 
@@ -22,8 +22,9 @@ export class Address {
     @Input() view: any;
 
 
-    constructor(private place: Place, private http: Http, private router: Router) {
+    constructor(private place: Place, private http: Http, private nav: NavController) {
 
+        this.nav = nav;
         const self = this;
         this.address = {from: '', to: ''};
         this.direction = 'from';
@@ -159,7 +160,6 @@ export class Address {
     }
 
     enableEditable(direction: string) {
-        this.router.navigate(['/search']);
     }
 
     private extractData(res: Response) {
@@ -177,6 +177,10 @@ export class Address {
     onFocus(type: string): void {
         if(!this.editable[type]) return;
         this.place.changeDirection(type);
+    }
+
+    showSearchTabs() {
+        this.nav.push(SearchPage);
     }
 }
 

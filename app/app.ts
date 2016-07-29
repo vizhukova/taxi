@@ -10,8 +10,7 @@ import { SearchPage } from './pages/search/search';
 import { IndexPage } from './pages/index/index';
 import {Place} from './providers/place/place';
 import {RideProvider} from "./providers/ride";
-import {APP_BASE_HREF} from '@angular/common'
-import {enableProdMode} from '@angular/core';
+import {Address} from './components/address_panel'
 
 @Component({
   template: `
@@ -41,23 +40,18 @@ export class MyApp {
 
 
 }
+//
+//const routes: RouterConfig = [
+//  { path: '', pathMatch: 'full', redirectTo: '/home'},
+//  { path: 'home', component: MyApp },
+//  { path: 'search', component: SearchPage }
+//];
 
-const routes: RouterConfig = [
-  { path: '', component: MyApp },
-  { path: 'search', component: SearchPage }
-];
-
-export const appRouterProviders = [
-  provideRouter(routes)
-];
-
-enableProdMode()
 //noinspection TypeScriptValidateTypes
-ionicBootstrap(IndexPage, [
-  {provide: APP_BASE_HREF, useValue: './build'},
-  appRouterProviders,
+ionicBootstrap(MyApp, [
   Place,
-  RideProvider
+  RideProvider,
+  provide(PLATFORM_DIRECTIVES, {useValue: [Address], multi: true}),
 ], {
   tabbarPlacement: 'top',
   platforms: {

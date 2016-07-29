@@ -10,7 +10,6 @@ import {Place} from './../../providers/place/place';
 */
 @Component({
   templateUrl: 'build/pages/time/time.html',
-  directives: [Address],
   providers: [Place]
 })
 export class TimePage {

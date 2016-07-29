@@ -8,6 +8,7 @@ import { NavController } from 'ionic-angular';
   Ionic pages and navigation.
 */
 @Component({
+  selector: 'time-tab-page',
   templateUrl: 'build/pages/time-tab/time-tab.html',
 })
 export class TimeTabPage {

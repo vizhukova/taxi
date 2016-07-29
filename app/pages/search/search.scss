@@ -1,3 +1,18 @@
-.search {
+ion-page.search-page {
+  .header {
+    height: 56px;
 
+    .tab {
+      width: 25%;
+      float: left;
+      height: 100%;
+      background: #2c2c30;
+      line-height: 72px;
+      text-align: center;
+
+      ion-icon {
+        font-size: 22rem;
+      }
+    }
+  }
 }

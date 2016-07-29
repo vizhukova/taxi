@@ -1,6 +1,19 @@
-<ion-tabs>
-  <ion-tab tabIcon="ios-search" [root]="search"></ion-tab>
-  <ion-tab tabIcon="ios-timer" [root]="time"></ion-tab>
-  <ion-tab tabIcon="ios-star-outline" [root]="feed"></ion-tab>
-  <ion-tab tabIcon="ios-plane" [root]="fly"></ion-tab>
-</ion-tabs>
+<!--<ion-tabs swipeBackEnabled="false">-->
+  <!--<ion-tab tabIcon="ios-search" [root]="search"></ion-tab>-->
+  <!--<ion-tab tabIcon="ios-timer" [root]="time"></ion-tab>-->
+  <!--<ion-tab tabIcon="ios-star-outline" [root]="feed"></ion-tab>-->
+  <!--<ion-tab tabIcon="ios-plane" [root]="fly"></ion-tab>-->
+<!--</ion-tabs>-->
+
+ <div class="header">
+   <div class="tab" (click)="changeTab('search')"><ion-icon md="ios-search"></ion-icon></div>
+   <div class="tab" (click)="changeTab('time')"><ion-icon md="ios-timer"></ion-icon></div>
+   <div class="tab" (click)="changeTab('favorite')"><ion-icon md="ios-star-outline"></ion-icon></div>
+   <div class="tab" (click)="changeTab('fly')"><ion-icon md="ios-plane"></ion-icon></div>
+ </div>
+<div class="content">
+    <search-tab-page *ngIf="activeTab === 'search'"></search-tab-page>
+    <time-tab-page *ngIf="activeTab === 'time'"></time-tab-page>
+    <feed-tab-page *ngIf="activeTab === 'favorite'"></feed-tab-page>
+    <fly-tab-page *ngIf="activeTab === 'fly'"></fly-tab-page>
+</div>
