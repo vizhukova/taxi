@@ -11,7 +11,6 @@ import {Place} from './../../providers/place/place';
 */
 @Component({
   templateUrl: 'build/pages/settings/settings.html',
-  directives: [Address],
   providers: [Place]
 })
 export class SettingsPage {

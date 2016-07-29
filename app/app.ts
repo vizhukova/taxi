@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, PLATFORM_DIRECTIVES, provide} from '@angular/core';
 import {Platform, ionicBootstrap} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import { HomePage } from './pages/home/home';
@@ -9,6 +9,7 @@ import { SearchPage } from './pages/search/search';
 import { IndexPage } from './pages/index/index';
 import {Place} from './providers/place/place';
 import {RideProvider} from "./providers/ride";
+import {Address} from './components/address_panel'
 
 @Component({
   template: `
@@ -48,7 +49,8 @@ export class MyApp {
 //noinspection TypeScriptValidateTypes
 ionicBootstrap(MyApp, [
   Place,
-  RideProvider
+  RideProvider,
+  provide(PLATFORM_DIRECTIVES, {useValue: [Address], multi: true}),
 ], {
   tabbarPlacement: 'top',
   platforms: {

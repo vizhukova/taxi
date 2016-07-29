@@ -12,8 +12,8 @@
    <div class="tab" (click)="changeTab('fly')"><ion-icon md="ios-plane"></ion-icon></div>
  </div>
 <div class="content">
-    <search-tab-page *ngIf="acctiveTab === 'search'"></search-tab-page>
-    <!--<TimeTabPage *ngIf="acctiveTab === 'time'"></TimeTabPage>-->
-    <!--<FeedTabPage *ngIf="acctiveTab === 'favorite'"></FeedTabPage>-->
-    <!--<FlyTabPage *ngIf="acctiveTab === 'fly'"></FlyTabPage>-->
+    <search-tab-page *ngIf="activeTab === 'search'"></search-tab-page>
+    <time-tab-page *ngIf="activeTab === 'time'"></time-tab-page>
+    <feed-tab-page *ngIf="activeTab === 'favorite'"></feed-tab-page>
+    <fly-tab-page *ngIf="activeTab === 'fly'"></fly-tab-page>
 </div>

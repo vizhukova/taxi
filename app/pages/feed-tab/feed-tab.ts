@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
+  selector: 'feed-tab-page',
   templateUrl: 'build/pages/feed-tab/feed-tab.html',
 })
 export class FeedTabPage {

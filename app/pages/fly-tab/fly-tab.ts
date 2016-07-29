@@ -8,6 +8,7 @@ import { NavController } from 'ionic-angular';
   Ionic pages and navigation.
 */
 @Component({
+  selector: 'fly-tab-page',
   templateUrl: 'build/pages/fly-tab/fly-tab.html',
 })
 export class FlyTabPage {

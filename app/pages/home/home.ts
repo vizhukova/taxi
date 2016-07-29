@@ -6,7 +6,7 @@ import {Place} from './../../providers/place/place';
 
 @Component({
   templateUrl: 'build/pages/home/home.html',
-  directives: [Map, Address],
+  directives: [Map],
 })
 export class HomePage{
 
