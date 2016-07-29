@@ -8,30 +8,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var map_1 = require('./../../components/map');
-var place_1 = require('./../../providers/place/place');
-var HomePage = (function () {
-    function HomePage(Place) {
+var ionic_angular_1 = require('ionic-angular');
+var place_1 = require('./../../../providers/place/place');
+var FavoritePopup = (function () {
+    function FavoritePopup(nav, Place) {
+        this.nav = nav;
         this.Place = Place;
-        this.status = {
-            from: 'определение адреса подачи такси',
-            to: 'определение адреса поездки',
-        };
-        this.isAddress = false;
     }
-    HomePage.prototype.ngOnInit = function () {
-        this.callEnable = this.enableCall.bind(this);
-    };
-    HomePage.prototype.enableCall = function () {
-        this.isAddress = true;
-    };
-    HomePage = __decorate([
+    FavoritePopup = __decorate([
         core_1.Component({
-            templateUrl: 'build/pages/home/home.html',
-            directives: [map_1.Map],
+            templateUrl: 'build/pages/search-tab/favorite_popup/popup.html'
         }), 
-        __metadata('design:paramtypes', [place_1.Place])
-    ], HomePage);
-    return HomePage;
+        __metadata('design:paramtypes', [ionic_angular_1.NavController, place_1.Place])
+    ], FavoritePopup);
+    return FavoritePopup;
 })();
-exports.HomePage = HomePage;
+exports.FavoritePopup = FavoritePopup;

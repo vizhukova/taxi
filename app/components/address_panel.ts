@@ -4,6 +4,7 @@ import {Observable} from "rxjs/Rx";
 import {Place} from "../providers/place/place";
 import { NavController, Modal, ViewController } from 'ionic-angular';
 import {SearchPage} from "../pages/search/search";
+import {FavoritePopup} from "../pages/search-tab/favorite_popup/popup";
 
 @Component({
     selector: 'address',
@@ -181,6 +182,11 @@ export class Address {
 
     showSearchTabs() {
         this.nav.push(SearchPage);
+    }
+
+
+    showFavoritePopup() {
+        this.nav.push(FavoritePopup);
     }
 }
 

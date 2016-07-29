@@ -19,6 +19,7 @@ var FlyTabPage = (function () {
     }
     FlyTabPage = __decorate([
         core_1.Component({
+            selector: 'fly-tab-page',
             templateUrl: 'build/pages/fly-tab/fly-tab.html',
         }), 
         __metadata('design:paramtypes', [])

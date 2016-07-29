@@ -24,4 +24,11 @@ export class SearchPage {
   changeTab(newTab:string) {
     this.activeTab = newTab;
   }
+
+  setClasses(active: string) {
+    return {
+      tab: true,
+      active: this.activeTab === active,
+    }
+  }
 }

@@ -22,6 +22,12 @@ var SearchPage = (function () {
     SearchPage.prototype.changeTab = function (newTab) {
         this.activeTab = newTab;
     };
+    SearchPage.prototype.setClasses = function (active) {
+        return {
+            tab: true,
+            active: this.activeTab === active,
+        };
+    };
     SearchPage = __decorate([
         core_1.Component({
             templateUrl: 'build/pages/search/search.html',
