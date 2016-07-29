@@ -1,13 +1,13 @@
-import { Injectable, Output, EventEmitter } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Ride } from './../models/ride';
+import {Injectable, Output, EventEmitter} from '@angular/core';
+import {Http, Response, Headers, RequestOptions} from '@angular/http';
+import {Ride} from './../models/ride';
 import {URL} from './../config';
 
 @Injectable()
 export class Auth {
 
-    http: any;
-    apiId: string;
+    http:any;
+    apiId:string;
 
     constructor(http:Http) {
         this.http = http;
@@ -17,7 +17,9 @@ export class Auth {
 
         let body = {
             name: name,
-            phone: number
+            phone: number,
+            taxi: 'taxity',
+            confirm: true
         };
 
         return new Promise((resolve, reject) => {
@@ -29,13 +31,13 @@ export class Auth {
 
                 }, (err) => {
 
-                reject(err);
+                    reject(err);
 
-            })
+                })
         });
     }
 
-    public confirm(key:string, number: string) {
+    public confirm(key:string, number:string) {
 
         let body = {
             key: key,
@@ -52,9 +54,9 @@ export class Auth {
 
                 }, (err) => {
 
-                reject(err);
+                    reject(err);
 
-            })
+                })
         });
     }
 
