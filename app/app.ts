@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import { provideRouter, RouterConfig } from '@angular/router';
 import {Platform, ionicBootstrap} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import { HomePage } from './pages/home/home';
@@ -10,7 +9,6 @@ import { SearchPage } from './pages/search/search';
 import { IndexPage } from './pages/index/index';
 import {Place} from './providers/place/place';
 import {RideProvider} from "./providers/ride";
-import {APP_BASE_HREF} from '@angular/common'
 
 @Component({
   template: `
@@ -40,21 +38,15 @@ export class MyApp {
 
 
 }
-
-const routes: RouterConfig = [
-  { path: '', component: MyApp },
-  { path: 'search', component: SearchPage }
-];
-
-export const appRouterProviders = [
-  provideRouter(routes)
-];
-
+//
+//const routes: RouterConfig = [
+//  { path: '', pathMatch: 'full', redirectTo: '/home'},
+//  { path: 'home', component: MyApp },
+//  { path: 'search', component: SearchPage }
+//];
 
 //noinspection TypeScriptValidateTypes
-ionicBootstrap(IndexPage, [
-  {provide: APP_BASE_HREF, useValue: './build'},
-  appRouterProviders,
+ionicBootstrap(MyApp, [
   Place,
   RideProvider
 ], {

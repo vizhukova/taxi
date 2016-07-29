@@ -1,7 +1,7 @@
 <div class="address-panel">
     <div class="main"
         [ngClass]="setClasses('from')"
-        (dblclick)="enableEditable('from')"
+        (dblclick)="showSearchTabs()"
         (click)="onFocus('from')"
     >
         <span class="icon"></span>
@@ -20,7 +20,7 @@
     </div>
     <div class="main"
         [ngClass]="setClasses('to')"
-        (dblclick)="enableEditable('to')"
+        (dblclick)="showSearchTabs()"
         (click)="onFocus('to')"
     >
         <span class="icon"></span>
@@ -70,7 +70,7 @@
             </div>
             <div class="group nav">
                 <div class="btn favorite">В ИЗБРАННОЕ</div>
-                <div class="btn confirm" routerLink="/">ОК</div>
+                <div class="btn confirm">ОК</div>
             </div>
         </div>
     </div>
