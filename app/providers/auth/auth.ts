@@ -1,7 +1,7 @@
 import {Injectable, Output, EventEmitter} from '@angular/core';
 import {Http, Response, Headers, RequestOptions} from '@angular/http';
-import {Ride} from './../models/ride';
-import {URL} from './../config';
+import {Ride} from './../../models/ride';
+import {URL} from './../../config';
 
 @Injectable()
 export class Auth {
@@ -23,7 +23,7 @@ export class Auth {
         };
 
         return new Promise((resolve, reject) => {
-            this.http.post(`${URL}/Register/Register`, body)
+            this.http.post(`${URL}/Register/Register`, JSON.stringify(body))
                 .subscribe((res:Response) => {
 
                     var data = res.json();
@@ -45,7 +45,7 @@ export class Auth {
         };
 
         return new Promise((resolve, reject) => {
-            this.http.post(`${URL}/Register/Confirm`, body)
+            this.http.post(`${URL}/Register/Confirm`, JSON.stringify(body))
                 .subscribe((res:Response) => {
 
                     var data = res.json();

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Address } from './../../components/address_panel';
 import {Place} from './../../providers/place/place';
+import {Loader} from './../../components/loader/loader';
+import {GatherOrder} from './../../providers/order/gather_order';
 
 /*
   Generated class for the SettingsPage page.
@@ -12,7 +14,7 @@ import {Place} from './../../providers/place/place';
 @Component({
   templateUrl: 'build/pages/settings/settings.html',
   directives: [Address],
-  providers: [Place]
+  providers: [Place, GatherOrder]
 })
 export class SettingsPage {
 
@@ -20,7 +22,11 @@ export class SettingsPage {
   payment: Array<string>;
   service: Array<Object>;
 
-  constructor(private nav: NavController) {
+  tariffInput: any;
+  paymentInput: string;
+  serviceInput: Array<string> = [];
+
+  constructor(public GatherOrderProvider: GatherOrder, private nav: NavController) {
     this.nav = nav;
     this.tariffs = [
       {name: 'Эконом', price: '50 руб'},
@@ -37,9 +43,48 @@ export class SettingsPage {
       {name: 'Купон', comment: ''},
       {name: 'WI-FI', comment: ''}
     ];
+
+    this.changeTariff(this.tariffs[0]);
+    this.changePayment(this.payment[0]);
+  };
+
+
+
+  getId(name: string, id: number):string{
+    return name + id;
   }
 
-  public getId(name: string, id: number):string{
-    return name + id;
+  showLoader() {
+    this.nav.push(Loader);
+  }
+
+  changeTariff(data:Object) {
+    this.tariffInput = data;
+  }
+
+  changePayment(data: string) {
+    this.paymentInput = this.paymentInput === data ? '' : data;
+  }
+
+  changeService(data: string) {
+    let filtered = this.serviceInput.filter((item:string) => data === item);
+
+    if(filtered.length) {
+      this.serviceInput = this.serviceInput.filter((item:string) => data !== item);
+    }else {
+      this.serviceInput.push(data);
+    }
+    this.GatherOrderProvider.setRequirements(this.serviceInput);
+    console.log(this.GatherOrderProvider.get());
+  }
+
+  isCheckedService(data: string) {
+    return this.serviceInput.filter((item:string) => data === item).length > 0;
+  }
+
+  func() {
+    console.log(this.tariffInput)
+    console.log(this.paymentInput)
+    console.log(this.serviceInput)
   }
 }

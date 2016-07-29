@@ -3,10 +3,16 @@
     <address></address>
 
     <div class="block">
-        <p class="header line-header">Тариф</p>
+        <p class="header line-header" (click)="func()">Тариф</p>
         <div class="list radio">
             <p *ngFor="let item of tariffs; let num = index" class="label">
-                <input type="radio" name="tariff" id="{{getId('tariff', num)}}" />
+
+                <input type="radio"
+                       name="tariff"
+                       (click)="changeTariff(item)"
+                       [checked]="tariffInput===item"
+                       id="{{getId('tariff', num)}}" />
+
                 <label htmlFor="{{getId('tariff', num)}}">
                     {{item.name}}
                     <span class="price">{{item.price}}</span>
@@ -19,7 +25,13 @@
         <p class="header">Оплата</p>
         <div class="list checkbox">
              <p *ngFor="let item of payment; let num = index" class="label">
-                <input type="checkbox" name="payment" id="{{getId('payment', num)}}" />
+
+                 <input type="checkbox"
+                        name="payment"
+                       id="{{getId('payment', num)}}"
+                       [checked]="paymentInput===item"
+                       (change)="changePayment(item)"/>
+
                 <label htmlFor="{{getId('payment', num)}}">
                     {{item}}
                 </label>
@@ -36,7 +48,13 @@
         <p class="header">Дополнительные услуги</p>
           <div class="list checkbox">
              <p *ngFor="let item of service; let num = index" class="label">
-                <input type="checkbox" name="service" id="{{getId('service', num)}}" />
+
+                 <input type="checkbox"
+                       name="service"
+                       id="{{getId('service', num)}}"
+                       [checked]="isCheckedService(item)"
+                       (change)="changeService(item)"/>
+
                 <label htmlFor="{{getId('service', num)}}">
                     {{item.name}}
                     <span class="comment">{{item.comment}}</span>
@@ -47,7 +65,7 @@
 
 </ion-content>
 <ion-footer-bar class="ion-footer-bar">
-    <div class="call">
+    <div class="call" (click)="showLoader()">
         <div class="price">
             <p class="text">232<span class="currency">руб.</span></p>
         </div>

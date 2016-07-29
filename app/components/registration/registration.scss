@@ -1,7 +1,7 @@
 .register-modal {
   background-image: url('./../res/background.png');
   .modal-body {
-    width: 90%;
+    width: 95%;
     height: 90%;
     position: absolute;
     top: 0;
@@ -15,6 +15,7 @@
     background-repeat: no-repeat;
     background-position: bottom center;
     background-color: #fff;
+    background-size: 100% 35%;
 
     -webkit-box-shadow: 0px 6px 16px -2px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 6px 16px -2px rgba(0, 0, 0, 0.75);
@@ -43,14 +44,19 @@
       margin-bottom: 35rem;
       position: relative;
 
+      &.name {
+        width: 100%;
+      }
       &.code {
         width: 30%;
+        float: left;
       }
 
       &.number {
         width: 60%;
         margin-left: 20rem;
         position: relative;
+        float: right;
 
         .cross {
           background-image: url("./../res/cross.svg");

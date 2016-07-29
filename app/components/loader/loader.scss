@@ -1,0 +1,103 @@
+.loader-modal {
+  background-image: url('./../res/background.png');
+
+  .loader-container {
+    $width-loader: 8px;
+
+    @mixin border-color($color) {
+      border-top: $width-loader solid $color;
+      border-right: $width-loader solid $color;
+      border-bottom: $width-loader solid $color;
+    }
+
+    p.title {
+      position: absolute;
+      left: 0;
+      right: 0;
+      font-size: 21px;
+      z-index: 1;
+      margin: auto;
+      text-align: center;
+      color: #D2CFCF;
+      font-weight: 600;
+      line-height: 100px;
+    }
+
+    .loader {
+      border: $width-loader solid transparent;
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+
+      &.first, &.third, &.fifth {
+        animation: right 2s linear infinite;
+      }
+      &.second, &.fourth, &.sixth {
+        animation: left 2s linear infinite;
+      }
+
+      &.first {
+        width: 500px;
+        height: 500px;
+        @include border-color(#34343A);
+        transform: rotate(60deg);
+      }
+      &.second {
+        width: 350px;
+        height: 350px;
+        @include border-color(#56565D);
+        transform: rotate(120deg);
+      }
+      &.third {
+        width: 200px;
+        height: 200px;
+        @include border-color($main-bright-color);
+        transform: rotate(30deg);
+      }
+      &.fourth {
+        width: 150px;
+        height: 150px;
+        @include border-color(#3D3D48);
+        transform: rotate(60deg);
+      }
+      &.fifth {
+        width: 100px;
+        height: 100px;
+        @include border-color(#fff);
+        transform: rotate(120deg);
+      }
+      &.sixth {
+        width: 50px;
+        height: 50px;
+        @include border-color($main-bright-color);
+        transform: rotate(30deg);
+      }
+    }
+
+    @keyframes right {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    @keyframes left {
+        0% { transform: rotate(360deg); }
+        100% { transform: rotate(-0deg); }
+    }
+  }
+}
+
+.loader-footer {
+  div.call {
+    &:before {
+      content: "";
+      position: absolute;
+      background-image: url('./../res/cross.svg');
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+

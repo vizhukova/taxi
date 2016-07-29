@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {  NavController } from 'ionic-angular';
-import {  RideProvider } from './../../../providers/ride';
+import {  RideProvider } from './../../../providers/ride/ride';
 import {  Ride } from './../../../models/ride';
 
 @Component({

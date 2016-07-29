@@ -1,6 +1,6 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { Ride } from './../models/ride';
+import { Ride } from './../../models/ride';
 
 @Injectable()
 export class RideProvider {

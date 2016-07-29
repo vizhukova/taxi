@@ -3,11 +3,14 @@ import { Http, Response } from '@angular/http';
 import { Router } from '@angular/router';
 import {Observable} from "rxjs/Rx";
 import {Place} from "../providers/place/place";
+import {GatherOrder} from './../providers/order/gather_order';
+
 
 
 @Component({
     selector: 'address',
-    templateUrl: 'build/templates/address_panel.html'
+    templateUrl: 'build/templates/address_panel.html',
+    providers: [GatherOrder]
 })
 export class Address {
 
@@ -18,9 +21,7 @@ export class Address {
     coords: any;
     editable: any;
 
-
-
-    constructor(private place: Place, private http: Http, private router: Router) {
+    constructor(public GatherOrderProvider: GatherOrder, private place: Place, private http: Http, private router: Router) {
 
         const self = this;
         this.address = {from: '', to: ''};
@@ -34,6 +35,12 @@ export class Address {
 
         place.address$.subscribe(newAdress => {
             self.address = newAdress;
+            if(newAdress.to) {
+                GatherOrderProvider.setDestination(newAdress.to);
+            }
+            if(newAdress.from) {
+                GatherOrderProvider.setSource(newAdress.from);
+            }
         });
 
         place.direction$.subscribe(newDirection => {

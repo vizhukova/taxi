@@ -27,7 +27,7 @@
 
             <label class="sms">
                 <span *ngIf="isCode">Код из SMS</span>
-                <input type="text" placeholder="Код из SMS">
+                <input type="text" placeholder="Код из SMS" [(ngModel)]="key">
             </label>
         </div>
 
