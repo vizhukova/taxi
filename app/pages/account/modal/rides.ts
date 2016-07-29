@@ -35,8 +35,8 @@ export class RidesModal {
         ];
 
         console.log(this.lastRides)
-        RideProvider.save(this.lastRides);
-        let a = RideProvider.get();
+        RideProvider.save('rides', this.lastRides);
+        let a = RideProvider.get('rides');
         console.log(a);
     }
 

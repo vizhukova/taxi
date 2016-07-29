@@ -1,7 +1,4 @@
-import {Component, ApplicationRef} from '@angular/core';
-import {NgZone} from '@angular/core';
-import {NavController} from 'ionic-angular';
-import { Http, Response, RequestOptions, Headers } from '@angular/http';
+import {Component} from '@angular/core';
 import { Map } from './../../components/map';
 import { Address } from './../../components/address_panel';
 import {Place} from './../../providers/place/place';
@@ -15,16 +12,11 @@ import {RegistrationModal} from './../../components/registration/registration';
 })
 export class HomePage{
 
-    names: string[];
     isAddress: boolean;
-    direction: string = 'from';
-    path: any;
     status: any;
-    theBoundCallback: Function;
     callEnable: Function;
 
     ngOnInit(){
-        this.theBoundCallback = this.onDragendMap.bind(this);
         this.callEnable = this.enableCall.bind(this);
     }
 
@@ -42,23 +34,12 @@ export class HomePage{
         this.nav.push(RegistrationModal);
         this.makeRequest();
         this.isAddress = false;
-        this.path = [];
-
-        Place.direction$.subscribe(newDirection => {
-            self.direction = newDirection;
-        })
     }
     
     enableCall() {
         this.isAddress = true;
     }
 
-    markerClasses() {
-        return {
-            marker: true,
-            from: this.direction === 'from'
-        }
-    }
 
     makeRequest(): void {
         this.Place.getPosition()

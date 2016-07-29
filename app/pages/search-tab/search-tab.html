@@ -1,10 +1,7 @@
 <ion-content>
-    <address></address>
+    <address [view]="true"></address>
     <map
-            [callback]="theBoundCallback"
             [callEnable]="callEnable"
-            [direction]="direction"
-            [coords]="coords"
             [editable]="true"
     ></map>
 </ion-content>
