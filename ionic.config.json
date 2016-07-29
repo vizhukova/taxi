@@ -1,11 +1,11 @@
 {
-  "name": "taxi",
-  "app_id": "",
-  "v2": true,
-  "proxies": [
-    {
-      "path": "/api",
-      "proxyUrl": "http://shoes.mikero.ru/api"
-    }
-  ]
+    "name": "myApp",
+    "app_id": "",
+    "v2": true,
+    "proxies": [
+        {
+            "path": "/api",
+            "proxyUrl": "http://mdtaxiclub.smarttaxi.ru:5777"
+        }
+    ]
 }

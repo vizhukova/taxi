@@ -5,6 +5,7 @@ import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { Map } from './../../components/map';
 import { Address } from './../../components/address_panel';
 import {Place} from './../../providers/place/place';
+import {RegistrationModal} from './../../components/registration/registration';
 // import polyline from 'polyline'
 
 
@@ -27,15 +28,18 @@ export class HomePage{
         this.callEnable = this.enableCall.bind(this);
     }
 
-    constructor(private Place: Place) {
+    constructor(private Place: Place, private nav: NavController) {
 
         const self = this;
+
+        this.nav = nav;
 
         this.status ={
             from: 'определение адреса подачи такси',
             to: 'определение адреса поездки',
         };
 
+        this.nav.push(RegistrationModal);
         this.makeRequest();
         this.isAddress = false;
         this.path = [];

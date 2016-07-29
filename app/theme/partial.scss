@@ -12,114 +12,118 @@
     margin-bottom: calc(97px + $tab-height);
     z-index: 1;
 
-    div.main {
-      padding-left: 9.6%;
-      height: 50%;
-      position: relative;
-      color: #fff;
+  div.main {
+    padding-left: 9.6%;
+    height: 50%;
+    position: relative;
+    color: #fff;
 
-      &.from {
-        border-bottom: 1px solid #505054;
+    &.from {
+      border-bottom: 1px solid #505054;
 
-        &.active {
-          color: #e57339;
+      &.active {
+        color: #e57339;
 
-          input::-webkit-input-placeholder {color:#e57339;}
-          input::-moz-placeholder          {color:#e57339;}/* Firefox 19+ */
-          input:-moz-placeholder           {color:#e57339;}/* Firefox 18- */
-          input:-ms-input-placeholder      {color:#e57339;}
-        }
-
-        > span:not(.clear) {
-          background: url('../res/icon_from.svg') no-repeat;
-          background-size: contain;
-          vertical-align: middle;
-          width: 16rem;
-          height: 22rem;
-          position: relative;
-
-          &:before {
-            content: "";
-            display: block;
-            position: absolute;
-            height: 23px;
-            bottom: -26px;
-            width: 1px;
-            left: 0;
-            right: 0;
-            margin: auto;
-            border-right: 2px dashed #a8bea1;
-          }
-
-        }
-
-        input {
-          //border-bottom:2px solid #454549;
-        }
+        input::-webkit-input-placeholder {color:#e57339;}
+        input::-moz-placeholder          {color:#e57339;}/* Firefox 19+ */
+        input:-moz-placeholder           {color:#e57339;}/* Firefox 18- */
+        input:-ms-input-placeholder      {color:#e57339;}
       }
 
-      &.to {
-
-        &.active {
-          color: #e57339;
-
-          input::-webkit-input-placeholder {color:#e57339;}
-          input::-moz-placeholder          {color:#e57339;}/* Firefox 19+ */
-          input:-moz-placeholder           {color:#e57339;}/* Firefox 18- */
-          input:-ms-input-placeholder      {color:#e57339;}
-        }
-
-        > span {
-          background: url("../res/icon_to.svg") no-repeat;
-          background-size: 100% 100%;
-          vertical-align: middle;
-          width: 10px;
-          height: 10px;
-        }
-      }
-
-      span {
+      > span:not(.clear) {
+        background: url('../res/icon_from.svg') no-repeat;
+        background-size: contain;
+        vertical-align: middle;
         width: 16rem;
-        height: 16rem;
-        display: inline-block;
-      }
+        height: 22rem;
+        position: relative;
 
-      > span.clear {
-        display: inline-block;
-        position: absolute;
-        top:0;
-        bottom: 0;
-        right: 20px;
-        width: 20px;
-        height: 20px;
-        margin: auto;
-        background: #323238 url("../res/icon_clear.svg") no-repeat;
-        background-size: 100% 100%;
-      }
+        &:before {
+          content: "";
+          display: block;
+          position: absolute;
+          height: 23px;
+          bottom: -26px;
+          width: 1px;
+          left: 0;
+          right: 0;
+          margin: auto;
+          border-right: 2px dashed #a8bea1;
+        }
+
+        }
 
       input {
-        background: transparent;
-        border: none;
-        outline: none;
-        font-size: 18rem;
-        height: 100%;
-        margin-left: 10rem;
-        width: 87%;
-
-        &::-webkit-input-placeholder {color:#fff;}
-        &::-moz-placeholder          {color:#fff;}/* Firefox 19+ */
-        &:-moz-placeholder           {color:#fff;}/* Firefox 18- */
-        &:-ms-input-placeholder      {color:#fff;}
+        //border-bottom:2px solid #454549;
       }
     }
 
-    .searchView {
+    &.to {
+
+      &.active {
+        color: #e57339;
+
+        input::-webkit-input-placeholder {color:#e57339;}
+        input::-moz-placeholder          {color:#e57339;}/* Firefox 19+ */
+        input:-moz-placeholder           {color:#e57339;}/* Firefox 18- */
+        input:-ms-input-placeholder      {color:#e57339;}
+      }
+
+      > span {
+        background: url("../res/icon_to.svg") no-repeat;
+        background-size: 100% 100%;
+        vertical-align: middle;
+        width: 10rem;
+        height: 10rem;
+      }
+    }
+
+    span:not(.clear) {
+      width: 16rem;
+      height: 16rem;
+      display: inline-block;
+    }
+
+    > span.clear {
+      display: inline-block;
+      position: absolute;
+      top:0;
+      bottom: 0;
+      right: 20px;
+      width: 20px;
+      height: 20px;
+      margin: auto;
+      background: #323238 url("../res/icon_clear.svg") no-repeat;
+      background-size: 100% 100%;
+    }
+
+    input {
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 18rem;
+      height: 100%;
+      margin-left: 24rem;
+      width: 87%;
+
+      &::-webkit-input-placeholder {color:#fff;}
+      &::-moz-placeholder          {color:#fff;}/* Firefox 19+ */
+      &:-moz-placeholder           {color:#fff;}/* Firefox 18- */
+      &:-ms-input-placeholder      {color:#fff;}
+    }
+  }
+
+  .searchView {
     position: absolute;
     width: 100%;
     background: #323238;
     top: 48.5px;
     overflow: auto;
     padding-left: 14.4%;
+
+    &.to {
+      top: 97px;
+    }
 
     div.search-item {
       background: #323238;
@@ -129,17 +133,23 @@
       line-height: 16px;
       cursor: default;
       border-bottom: 1px solid #505054;
-
-      p {
-        color: #e4e6eb;
-      }
+      width: 90%;
 
       span {
+        color: #e4e6eb;
+
+        &.orange {
+          color: #e57339;
+        }
+      }
+
+      p {
         font-size: 12px;
         color: #b2b2b2;
       }
 
     }
+
   }
 
   .addressDetail {
@@ -148,59 +158,88 @@
     background: #323238;
     top: 48.5px;
     overflow: auto;
-    padding-left: 14.4%;
+    height: 214px;
+    padding-top: 22px;
+    padding-left: 8.3%;
 
-    /* form starting stylings ------------------------------- */
-    .group 			  {
+    &.to {
+      top: 97px;
+    }
+
+    div.top {
+      background: url("./../res/icon_home.svg") no-repeat;
+      background-size: 6%;
+      background-position: left 2px;
+      padding-left: 8.4%;
+    }
+
+    div.bottom {
+      background: url("./../res/icon_comment.svg") no-repeat;
+      background-size: 6%;
+      background-position: left 5px;
+      padding-left: 8.4%;
+    }
+
+    .group            {
       position:relative;
-      margin-bottom:45px;
+      margin-bottom: 30px;
+      border: none;
+      display: inline-block;
+
+      &.house {
+        width: 44%
+      }
+
+      &.block {
+        margin-left: 9%;
+        width: 37%
+      }
+
+      &.comment {
+        width: 90%;
+      }
+
+      &.nav {
+        width: 90%;
+        margin-bottom: 0px;
+      }
     }
-    input 				{
+
+    input               {
       font-size:18px;
-      padding:10px 10px 10px 5px;
+      padding:10px 10px 6px 5px;
       display:block;
-      opacity: 0;
-      width:300px;
+      width: 100%;
       border:none;
-      border-bottom:1px solid #545456;
+      background: #323238;
+      border-bottom:1px solid #757575;
+
+      color: #f7f7f9;
+      font-weight: 400;
     }
-    input:focus 		{ outline:none; }
+    input:focus         { outline:none; }
 
     /* LABEL ======================================= */
-    label 				 {
-      color:#999;
-      font-size:18px;
-      font-weight:normal;
+    label                {
+      color: #b2b2b2;
+      font-size: 12px;
+      font-weight: 400;
       position:absolute;
       pointer-events:none;
       left:5px;
-      top:10px;
+      top:15px;
       transition:0.2s ease all;
       -moz-transition:0.2s ease all;
       -webkit-transition:0.2s ease all;
     }
 
     /* active state */
-    input:focus ~ label, input:valid ~ label 		{
-      top:-20px;
+    input:focus ~ label, input:valid ~ label        {
+      top:-10px;
       font-size:14px;
-      color:#5264AE;
+      color:#b2b2b2;
     }
 
-    /* BOTTOM BARS ================================= */
-    .bar 	{ position:relative; display:block; width:300px; }
-    .bar:before, .bar:after 	{
-      content:'';
-      height:2px;
-      width:0;
-      opacity: 0;
-      bottom:1px;
-      position:absolute;
-      background:#5264AE;
-      transition:0.2s ease all;
-      -moz-transition:0.2s ease all;
-      -webkit-transition:0.2s ease all;
-    }
     .bar:before {
       left:50%;
     }
@@ -213,37 +252,28 @@
       width:50%;
     }
 
-    /* HIGHLIGHTER ================================== */
-    .highlight {
-      position:absolute;
-      height:60%;
-      width:100px;
-      top:25%;
-      left:0;
-      pointer-events:none;
-      opacity:0.5;
+    .btn {
+      width: 86px;
+      color: #a8bea1;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      height: 30px;
+      display: inline-block;
+      line-height: 30px;
+      text-align: center;
+
+      &.favorite {
+
+      }
+      &.confirm {
+        float: right;
+        text-align: right;
+      }
     }
 
-    /* active state */
-    input:focus ~ .highlight {
-      -webkit-animation:inputHighlighter 0.3s ease;
-      -moz-animation:inputHighlighter 0.3s ease;
-      animation:inputHighlighter 0.3s ease;
-    }
 
-    /* ANIMATIONS ================ */
-    @-webkit-keyframes inputHighlighter {
-      from { background:#5264AE; }
-      to 	{ width:0; background:transparent; }
-    }
-    @-moz-keyframes inputHighlighter {
-      from { background:#5264AE; }
-      to 	{ width:0; background:transparent; }
-    }
-    @keyframes inputHighlighter {
-      from { background:#5264AE; }
-      to 	{ width:0; background:transparent; }
-    }
+
   }
 
 }
@@ -323,10 +353,8 @@
         }
       }
     }
-  }
 
-
- // radiobutton and checkbox  styles
+   // radiobutton and checkbox  styles
  label {
 	display: inline-block;
 	cursor: pointer;
@@ -385,6 +413,35 @@ input[type=checkbox]:checked + label:before {
     font-size: 22px;
     line-height: 20px;
 }
+  }
+
+.modal {
+  position: absolute;
+  font-family: "Myriad Pro";
+  $header-height: 56rem;
+
+  .cross {
+    height: 25rem;
+    width: 25rem;
+    background-image: url('./../res/cross_active.svg');
+    display: inline-block;
+    line-height: $header-height;
+    vertical-align: middle;
+  }
+  .header {
+    height: $header-height;
+    line-height: $header-height;
+    background: $main-dark-color;
+    font-size: 18px;
+    color: #fff;
+    padding: 0 15rem;
+
+    .cross {
+      margin-right: 15rem;
+    }
+  }
+}
+
 
 
 
