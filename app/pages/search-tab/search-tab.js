@@ -8,17 +8,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var address_panel_1 = require('./../../components/address_panel');
 var map_1 = require('./../../components/map');
+var index_1 = require("ionic-angular/index");
+var popup_1 = require("./favorite_popup/popup");
 var SearchTabPage = (function () {
-    function SearchTabPage() {
+    function SearchTabPage(nav) {
+        this.nav = nav;
+        this.nav = nav;
     }
+    SearchTabPage.prototype.showRidesModal = function () {
+        this.nav.push(popup_1.FavoritePopup);
+    };
     SearchTabPage = __decorate([
         core_1.Component({
+            selector: 'search-tab-page',
             templateUrl: 'build/pages/search-tab/search-tab.html',
-            directives: [address_panel_1.Address, map_1.Map]
+            directives: [map_1.Map]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [index_1.NavController])
     ], SearchTabPage);
     return SearchTabPage;
 })();

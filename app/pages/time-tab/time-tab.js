@@ -36,6 +36,7 @@ var TimeTabPage = (function () {
     };
     TimeTabPage = __decorate([
         core_1.Component({
+            selector: 'time-tab-page',
             templateUrl: 'build/pages/time-tab/time-tab.html',
         }), 
         __metadata('design:paramtypes', [])

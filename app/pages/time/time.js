@@ -9,7 +9,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var ionic_angular_1 = require('ionic-angular');
-var address_panel_1 = require('./../../components/address_panel');
 var place_1 = require('./../../providers/place/place');
 /*
   Generated class for the TimePage page.
@@ -34,7 +33,6 @@ var TimePage = (function () {
     TimePage = __decorate([
         core_1.Component({
             templateUrl: 'build/pages/time/time.html',
-            directives: [address_panel_1.Address],
             providers: [place_1.Place]
         }), 
         __metadata('design:paramtypes', [ionic_angular_1.NavController])

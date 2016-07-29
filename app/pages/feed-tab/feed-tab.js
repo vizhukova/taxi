@@ -33,6 +33,7 @@ var FeedTabPage = (function () {
     };
     FeedTabPage = __decorate([
         core_1.Component({
+            selector: 'feed-tab-page',
             templateUrl: 'build/pages/feed-tab/feed-tab.html',
         }), 
         __metadata('design:paramtypes', [])

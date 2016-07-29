@@ -1,5 +1,5 @@
 ion-page.search-page {
-  .header {
+  .tab-header {
     height: 56px;
 
     .tab {
@@ -10,9 +10,21 @@ ion-page.search-page {
       line-height: 72px;
       text-align: center;
 
+      &.active {
+        color: $main-bright-color;
+      }
+
       ion-icon {
         font-size: 22rem;
       }
     }
+  }
+
+  > .content {
+    position: absolute;
+    bottom: 0;
+    top: 56px;
+    left: 0;
+    right: 0;
   }
 }

@@ -5,11 +5,11 @@
   <!--<ion-tab tabIcon="ios-plane" [root]="fly"></ion-tab>-->
 <!--</ion-tabs>-->
 
- <div class="header">
-   <div class="tab" (click)="changeTab('search')"><ion-icon md="ios-search"></ion-icon></div>
-   <div class="tab" (click)="changeTab('time')"><ion-icon md="ios-timer"></ion-icon></div>
-   <div class="tab" (click)="changeTab('favorite')"><ion-icon md="ios-star-outline"></ion-icon></div>
-   <div class="tab" (click)="changeTab('fly')"><ion-icon md="ios-plane"></ion-icon></div>
+ <div class="tab-header">
+    <div [ngClass]="setClasses('search')" (click)="changeTab('search')"><ion-icon md="ios-search"></ion-icon></div>
+    <div [ngClass]="setClasses('time')" (click)="changeTab('time')"><ion-icon md="ios-timer"></ion-icon></div>
+    <div [ngClass]="setClasses('favorite')" (click)="changeTab('favorite')"><ion-icon md="ios-star-outline"></ion-icon></div>
+    <div [ngClass]="setClasses('fly')" (click)="changeTab('fly')"><ion-icon md="ios-plane"></ion-icon></div>
  </div>
 <div class="content">
     <search-tab-page *ngIf="activeTab === 'search'"></search-tab-page>
