@@ -1,5 +1,5 @@
 .has-header {
-  margin-top: 97rem;
+  margin-top: 97px;
 }
 
 //address panel
@@ -34,8 +34,8 @@
         background: url('../res/icon_from.svg') no-repeat;
         background-size: contain;
         vertical-align: middle;
-        width: 16rem;
-        height: 22rem;
+        width: 16px;
+        height: 22px;
         position: relative;
 
         &:before {
@@ -73,14 +73,14 @@
         background: url("../res/icon_to.svg") no-repeat;
         background-size: 100% 100%;
         vertical-align: middle;
-        width: 10rem;
-        height: 10rem;
+        width: 10px;
+        height: 10px;
       }
     }
 
     span:not(.clear) {
-      width: 16rem;
-      height: 16rem;
+      width: 16px;
+      height: 16px;
       display: inline-block;
     }
 
@@ -101,9 +101,9 @@
       background: transparent;
       border: none;
       outline: none;
-      font-size: 18rem;
+      font-size: 18px;
       height: 100%;
-      margin-left: 24rem;
+      margin-left: 24px;
       width: 87%;
 
       &::-webkit-input-placeholder {color:#fff;}
@@ -281,15 +281,15 @@
 //block of cases in settings and etc
  .block {
     font-weight: 600;
-    font-size: 16rem;
+    font-size: 16px;
     border-bottom: solid 1px #c7cace;
 
     .header {
       color: $main-bright-color;
-      padding: 16rem;
+      padding: 16px;
       margin: 0;
       border-bottom: solid 1px #e1e4e9;
-      font-size: 14rem;
+      font-size: 14px;
 
       &.line-header {
         background-image: url("./../res/head_line.png");
@@ -299,7 +299,7 @@
     }
     .list {
       background: #f7f7f9;
-      padding: 0 36rem;
+      padding: 0 36px;
       .label {
         display: block;
         margin: 0;
@@ -333,13 +333,13 @@
           border-bottom: solid 1px #eef0f4;
           margin: 0;
           color: $main-dark-color;
-          line-height: 48rem;
+          line-height: 48px;
         }
         .price {
           color: #b2b2b2;
           text-transform: uppercase;
           float: right;
-          font-size: 13rem;
+          font-size: 13px;
 
           &.bright {
             color: $main-bright-color;
@@ -349,7 +349,7 @@
           float: right;
           color: #FF7431;
           text-transform: uppercase;
-          font-size: 13rem;
+          font-size: 13px;
         }
       }
     }
@@ -418,11 +418,11 @@ input[type=checkbox]:checked + label:before {
 .modal {
   position: absolute;
   font-family: "Myriad Pro";
-  $header-height: 56rem;
+  $header-height: 56px;
 
   .cross {
-    height: 25rem;
-    width: 25rem;
+    height: 25px;
+    width: 25px;
     background-image: url('./../res/cross_active.svg');
     display: inline-block;
     line-height: $header-height;
@@ -434,10 +434,10 @@ input[type=checkbox]:checked + label:before {
     background: $main-dark-color;
     font-size: 18px;
     color: #fff;
-    padding: 0 15rem;
+    padding: 0 15px;
 
     .cross {
-      margin-right: 15rem;
+      margin-right: 15px;
     }
   }
 }

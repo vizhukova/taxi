@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, PLATFORM_DIRECTIVES, provide} from '@angular/core';
 import { provideRouter, RouterConfig } from '@angular/router';
 import {Platform, ionicBootstrap} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';

@@ -43,12 +43,12 @@ html {
 }
 
 .tab-button-icon {
-  font-size: 22rem;
+  font-size: 22px;
 }
 
 .show-tabbar {
   background: #2c2c30;
-  height: 56rem;
+  height: 56px;
   .animate {
     display: none;
   }
@@ -62,21 +62,21 @@ html {
     height: 100%;
 
     .nav-panel {
-      bottom: 53rem;
+      bottom: 53px;
 
       .locate-button {
-        width: 55rem;
-        height: 55rem;
+        width: 55px;
+        height: 55px;
         background: url('../res/btn_locate.png') no-repeat;
         background-size: 100% 100%;
-        bottom: 60rem;
+        bottom: 60px;
       }
       .calcpath-button {
-        width: 55rem;
-        height: 55rem;
+        width: 55px;
+        height: 55px;
         background: url('../res/btn_calcpath.png') no-repeat;
         background-size: 100% 100%;
-        bottom: 60rem;
+        bottom: 60px;
       }
     }
   }
@@ -89,8 +89,8 @@ html {
 
     &.from {
       background: url("../res/icon_path_active.png") no-repeat;
-      width: 26rem;
-      height: 36rem;
+      width: 26px;
+      height: 36px;
       background-size: 100% 100%;
     }
 
@@ -102,8 +102,8 @@ html {
     left: 0;
     right: 0;
     margin: auto;
-    width: 20rem;
-    height: 20rem;
+    width: 20px;
+    height: 20px;
     background: url("../res/point.png") no-repeat;
     background-size: 100% 100%;
   }
@@ -113,7 +113,7 @@ html {
 .platform-android {
   &.platform-android6 {
     div.call {
-      line-height: 20rem!important;
+      line-height: 20px!important;
     }
   }
 }
