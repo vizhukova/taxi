@@ -7,7 +7,7 @@ import {Place} from './../providers/place/place';
 @Component({
     selector: 'map',
     template: `<div id="map-wrap">
-        <span [ngClass]="markerClasses()"></span>
+        <span [ngClass]="markerClasses()" *ngIf="editable"></span>
         <div id="{{selector}}"></div>
     </div>`
 })
