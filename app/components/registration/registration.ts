@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {  NavController } from 'ionic-angular';
-import {  Auth } from './../../providers/auth';
+import {  Auth } from './../../providers/auth/auth';
 
 @Component({
     templateUrl: 'build/components/registration/registration.html',
@@ -12,21 +12,30 @@ export class RegistrationModal {
    name: string;
    code: string;
    number: string;
-   nav: any;
+   key: string;
 
-    constructor(private AuthProvider: Auth, nav: NavController) {
-        this.nav = nav;
+    constructor(public nav: NavController, private AuthProvider: Auth) {
+
+    }
+
+     onPageWillEnter() {
+        //hide nav bar when we enter the page
+        (<HTMLScriptElement[]><any>document.getElementsByTagName('ion-tabbar'))[0].style.display = "none";
+    }
+    //show nav bar when we leave the page
+    onPageDidLeave() {
+       (<HTMLScriptElement[]><any>document.getElementsByTagName('ion-tabbar'))[0].style.display = "flex";
     }
 
     sentCode() {
         this.isCode = true;
-        console.log(this)
+        console.log(this);
         this.AuthProvider.register(this.name, this.code + this.number);
     }
 
     register() {
         if(this.isCode) {
-
+           this.AuthProvider.confirm(this.key, this.code + this.number);
         } else {
             this.nav.pop();
         }

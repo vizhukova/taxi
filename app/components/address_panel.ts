@@ -2,13 +2,17 @@ import {Component, Input } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import {Observable} from "rxjs/Rx";
 import {Place} from "../providers/place/place";
+import {GatherOrder} from './../providers/order/gather_order';
+
+
 import { NavController, Modal, ViewController } from 'ionic-angular';
 import {SearchPage} from "../pages/search/search";
 import {FavoritePopup} from "../pages/search-tab/favorite_popup/popup";
 
 @Component({
     selector: 'address',
-    templateUrl: 'build/templates/address_panel.html'
+    templateUrl: 'build/templates/address_panel.html',
+    providers: [GatherOrder]
 })
 export class Address {
 
@@ -23,7 +27,7 @@ export class Address {
     @Input() view: any;
 
 
-    constructor(private place: Place, private http: Http, private nav: NavController) {
+    constructor(public GatherOrderProvider: GatherOrder, private place: Place, private http: Http, private router: Router) {
 
         this.nav = nav;
         const self = this;
@@ -39,6 +43,12 @@ export class Address {
 
         place.address$.subscribe(newAdress => {
             self.address = newAdress;
+            if(newAdress.to) {
+                GatherOrderProvider.setDestination(newAdress.to);
+            }
+            if(newAdress.from) {
+                GatherOrderProvider.setSource(newAdress.from);
+            }
         });
 
         place.direction$.subscribe(newDirection => {
