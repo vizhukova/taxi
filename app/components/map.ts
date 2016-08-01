@@ -147,7 +147,9 @@ export class Map {
 
         let mapCoords = this.coords[this.direction].length ? this.coords[this.direction] : [58.5, 37.7];
 
-        this.map = new L.Map(this.selector, {center: mapCoords, zoom: 7, layers: [osmLayer], zoomControl: false});
+        if(!this.map){
+            this.map = new L.Map(this.selector, {center: mapCoords, zoom: 7, layers: [osmLayer], zoomControl: false});
+        }
 
         if (!this.editable) this.map.on('dragend', this.onDragEnd);
 
@@ -214,6 +216,10 @@ export class Map {
 
         this.map.invalidateSize(true)
 
+    }
+
+    public ngOnDestroy() {
+        this.map.destroy();
     }
 
 }

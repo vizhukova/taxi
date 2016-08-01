@@ -27,9 +27,8 @@ export class Address {
     @Input() view: any;
 
 
-    constructor(public GatherOrderProvider: GatherOrder, private place: Place, private http: Http, private router: Router) {
+    constructor(public nav: NavController, public GatherOrderProvider: GatherOrder, private place: Place, private http: Http) {
 
-        this.nav = nav;
         const self = this;
         this.address = {from: '', to: ''};
         this.direction = 'from';
@@ -186,6 +185,11 @@ export class Address {
     }
 
     onFocus(type: string): void {
+
+        if(this.direction === type){
+            this.nav.push(SearchPage)
+        }
+
         if(!this.editable[type]) return;
         this.place.changeDirection(type);
     }
