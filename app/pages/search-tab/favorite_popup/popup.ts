@@ -13,4 +13,8 @@ export class FavoritePopup {
 
     }
 
+    public addAddress(){
+        
+    }
+
 }

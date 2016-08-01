@@ -6,6 +6,7 @@ import { FlyTabPage } from '../../pages/fly-tab/fly-tab';
 import { NavController, Modal, ViewController } from 'ionic-angular';
 
 @Component({
+  selector: 'search-page',
   templateUrl: 'build/pages/search/search.html',
   directives: [SearchTabPage, TimeTabPage, FeedTabPage, FlyTabPage]
 })

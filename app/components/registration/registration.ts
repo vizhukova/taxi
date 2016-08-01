@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {  NavController } from 'ionic-angular';
 import {  Auth } from './../../providers/auth/auth';
+import {  Place } from './../../providers/place/place';
 
 @Component({
     templateUrl: 'build/components/registration/registration.html',
@@ -14,7 +15,7 @@ export class RegistrationModal {
    number: string;
    key: string;
 
-    constructor(public nav: NavController, private AuthProvider: Auth) {
+    constructor(public nav: NavController, private AuthProvider: Auth, private PlaceProvider: Place) {
 
     }
 
@@ -35,9 +36,12 @@ export class RegistrationModal {
 
     register() {
         if(this.isCode) {
-           this.AuthProvider.confirm(this.key, this.code + this.number);
+           this.AuthProvider.confirm(this.key, this.code + this.number).then(() => {
+               this.nav.pop();
+           });
+
         } else {
-            this.nav.pop();
+            this.PlaceProvider.reloadMap('homeMap');
         }
     }
 

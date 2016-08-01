@@ -1,42 +1,62 @@
 import {Geolocation} from 'ionic-native';
-import { Injectable, Output, EventEmitter } from '@angular/core';
-// import 'rxjs/add/operator/map';
-import { Subject, BehaviorSubject } from 'rxjs';
-import { Http, Response } from '@angular/http';
+import {Injectable, Output, EventEmitter} from '@angular/core';
+import {Subject, BehaviorSubject, Observable} from 'rxjs';
+import {Http, Response} from '@angular/http';
 
 @Injectable()
 export class Place {
 
     data:any;
-    address: any;
-    coords: any;
-    direction: string;
+    address:any;
+    coords:any;
+    direction:string;
+    cbs:Function[];
 
     // Observable data sources
     private addressSource = new BehaviorSubject<any>({from: '', to: ''});
     private coordsSource = new BehaviorSubject<any>({from: [], to: []});
     private directionSource = new BehaviorSubject<any>('from');
+    private reloadSource = new BehaviorSubject<any>(true);
+    private mapCreateSource = new BehaviorSubject<any>(null);
+    private mapDestroySource = new BehaviorSubject<any>(null);
 
     // Observable data streams
     address$ = this.addressSource.asObservable();
     coords$ = this.coordsSource.asObservable();
     direction$ = this.directionSource.asObservable();
+    reload$ = this.reloadSource.asObservable();
+    mapCreate$ = this.mapCreateSource.asObservable();
+    mapDestroy$ = this.mapDestroySource.asObservable();
 
     // Service message commands
-    changeAddress(address: string) {
+    changeAddress(address:string) {
         this.addressSource.next(address);
     }
 
-    changeCoords(coords: any) {
+    changeCoords(coords:any) {
         this.coordsSource.next(coords);
     }
-    
-    changeDirection(direction: any) {
+
+    changeDirection(direction:any) {
         this.direction = direction;
         this.directionSource.next(direction);
     }
 
-    constructor(private http: Http) {
+    public reloadMap(name) {
+        this.reloadSource.next(name);
+    }
+
+    public createMap(name) {
+        debugger;
+        this.mapCreateSource.next(name);
+    }
+
+    public destroyMap(name) {
+        debugger;
+        this.mapDestroySource.next(name);
+    }
+
+    constructor(private http:Http) {
         this.coords = {
             from: [],
             to: []
@@ -45,27 +65,30 @@ export class Place {
             from: '',
             to: ''
         };
-        this.direction = 'from'
+        this.direction = 'from';
+        this.cbs = []
     }
 
     public getPosition() {
         var self = this;
         return new Promise((resolve, reject) => {
             Geolocation.getCurrentPosition().then((resp) => {
-                self.coords[self.direction] =  resp.coords;
+                self.coords[self.direction] = resp.coords;
                 self.changeCoords(self.coords);
                 resolve(self.coords[self.direction]);
-            }, (err) => { reject(err); })
+            }, (err) => {
+                reject(err);
+            })
         })
 
     }
 
-    public get(property: string) {
+    public get(property:string) {
         return this[property]
     }
 
     public decodeGooglePolyline(str:string, precision?:number) {
-        
+
         var index = 0,
             lat = 0,
             lng = 0,
@@ -125,7 +148,7 @@ export class Place {
             self.http.get(`http://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.latitude},${coords.longitude}&sensor=true&language=ru`)
                 .subscribe((res:Response) => {
                     var data = res.json();
-                    self.address[self.direction] = `${data.results[0].address_components[1].long_name}, ${data.results[0].address_components[0].long_name}`
+                    self.address[self.direction] = `${data.results[0].address_components[1].long_name}, ${data.results[0].address_components[0].long_name}`;
                     self.changeAddress(self.address);
                 });
         })

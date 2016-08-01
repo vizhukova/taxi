@@ -5,7 +5,7 @@
         (click)="onFocus('from')"
     >
         <span class="icon"></span>
-        <input
+        <input #from
             [disabled]="editable.from"
             (keyup)="getAll(address.from)"
             type="text"
@@ -70,7 +70,7 @@
             </div>
             <div class="group nav">
                 <div class="btn favorite" (click)="showFavoritePopup()">В ИЗБРАННОЕ</div>
-                <div class="btn confirm" nav-pop>ОК</div>
+                <div class="btn confirm" (click)="onConfirm()">ОК</div>
             </div>
         </div>
     </div>

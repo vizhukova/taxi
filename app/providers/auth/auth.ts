@@ -7,10 +7,16 @@ import {URL} from './../../config';
 export class Auth {
 
     http:any;
-    apiId:string;
+    user:Object;
 
     constructor(http:Http) {
         this.http = http;
+
+        this.user = {
+            id: null,
+            name: null
+        }
+
     }
 
     public register(name:string, number:string) {
@@ -21,6 +27,10 @@ export class Auth {
             taxi: 'taxity',
             confirm: true
         };
+
+        this.user['name'] = name;
+
+        localStorage.setItem('user', JSON.stringify(this.user));
 
         return new Promise((resolve, reject) => {
             this.http.post(`${URL}/Register/Register`, JSON.stringify(body))
@@ -44,13 +54,19 @@ export class Auth {
             phone: number
         };
 
+        let self = this;
+
         return new Promise((resolve, reject) => {
             this.http.post(`${URL}/Register/Confirm`, JSON.stringify(body))
                 .subscribe((res:Response) => {
 
                     var data = res.json();
-                    this.apiId = data.apiId;
-                    resolve(data);
+
+                    self.user['id'] = data.apiId;
+
+                    localStorage.setItem('user', JSON.stringify(this.user));
+
+                    resolve();
 
                 }, (err) => {
 
@@ -58,6 +74,16 @@ export class Auth {
 
                 })
         });
+    }
+
+    public check(): boolean {
+        let data = localStorage.getItem('user');
+        if(data){
+            var user = JSON.parse(data)
+        }else{
+            return false
+        }
+        return !!user.id
     }
 
 }

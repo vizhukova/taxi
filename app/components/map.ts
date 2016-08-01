@@ -3,12 +3,13 @@ import {Input} from '@angular/core';
 import {Http, Response, RequestOptions, Headers} from '@angular/http';
 import * as L from 'leaflet'
 import {Place} from './../providers/place/place';
+import {Cost} from './../providers/cost/cost';
 
 @Component({
     selector: 'map',
     template: `<div id="map-wrap">
-        <span [ngClass]="markerClasses()" *ngIf="editable"></span>
-        <div id="{{selector}}"></div>
+        <span [ngClass]="markerClasses()"></span>
+        <div id="{{selector}}" *ngIf="isMarkerVisible === true"></div>
     </div>`
 })
 
@@ -23,6 +24,8 @@ export class Map {
     markerFrom:any;
     coords:any;
     direction:any;
+    isMarkerVisible:boolean;
+
 
     @Input() callback:Function;
     @Input() editable:boolean;
@@ -31,7 +34,7 @@ export class Map {
     @Input() callEnable:Function;
 
 
-    constructor(private PlaceProvider:Place, private http:Http) {
+    constructor(private PlaceProvider:Place, private http:Http, private cost: Cost) {
         this.onDragEnd = this.onDragEnd.bind(this);
 
         this.coords = {
@@ -40,6 +43,7 @@ export class Map {
         };
 
         this.direction = 'from';
+        this.isMarkerVisible = true;
 
         const self = this;
 
@@ -91,21 +95,38 @@ export class Map {
             self.coords = newCoords;
         });
 
+        PlaceProvider.reload$.subscribe(name => {
+            if(self.map && self.selector === name){
+                setTimeout(()=> {
+                    self.map.invalidateSize(true);
+                    self.locateMe();
+                }, 300);
+            }
+        });
+
         PlaceProvider.direction$.subscribe(newDirection => {
             this.direction = newDirection;
             if (this.map) this.bootMarkers(newDirection);
         });
+
+        PlaceProvider.mapCreate$.subscribe(name => {
+            self.createMap(name)
+        });
+
+        PlaceProvider.mapDestroy$.subscribe(name => {
+            self.destroyMap(name)
+        });
     }
 
 
-    markerClasses() {
+    markerClasses(): Object {
         return {
             marker: true,
             from: this.direction === 'from'
         }
     }
 
-    private bootMarkers(direction:string) {
+    private bootMarkers(direction:string): void {
 
         let markerFromCoords = this.coords.from.length ? this.coords.from : this.map.getCenter();
         let markerToCoords = this.coords.to.length ? this.coords.to : this.map.getCenter();
@@ -139,9 +160,15 @@ export class Map {
 
     public ngAfterViewInit():void {
 
-        let self = this;
+        this.createMap(this.selector);
 
-        var osmUrl = 'http://tiles.maps.sputnik.ru//{z}/{x}/{y}.png',
+    }
+
+    private createMap(name: string): void{
+
+        if(this.selector !== name) return;
+
+        const osmUrl = 'http://tiles.maps.sputnik.ru//{z}/{x}/{y}.png',
             osmAttribution = '',
             osmLayer = new L.TileLayer(osmUrl, {maxZoom: 18, attribution: osmAttribution});
 
@@ -163,10 +190,36 @@ export class Map {
             this.map.invalidateSize(true)
         }, 300);
 
-        if (this.coords && !this.coords.from && !this.coords.to) this.locateMe()
+        if (this.coords && !this.coords.from && !this.coords.to){
+            this.locateMe()
+        }
     }
 
-    private calcPolyline(coords:any) {
+    private destroyMap(name: string): void{
+
+        let map = this.map;
+
+        if(!map || this.selector !== name) return;
+
+        this.isMarkerVisible = false;
+
+        try{
+            map.clearAllEventListeners();
+
+            map.eachLayer(layer => {
+                map.removeLayer(layer);
+            });
+
+            map.remove();
+        }catch(e){
+        
+        }
+
+
+
+    }
+
+    private calcPolyline(coords:any): void {
 
         if (!coords.from || !coords.to) return;
 
@@ -181,9 +234,12 @@ export class Map {
 
                 this.markPolyline(this.PlaceProvider.decodeGooglePolyline(data.overviewPolyline))
             });
+
+        this.cost.getCost()
+
     }
 
-    private locateMe() {
+    private locateMe(): void {
         this.PlaceProvider.getPosition().then((data:any) => {
             this.map.setView(L.latLng(data.latitude, data.longitude), 16);
             this.onDragEnd()
@@ -192,17 +248,17 @@ export class Map {
         })
     }
 
-    private markPolyline(path:any) {
+    private markPolyline(path:any): void {
         this.polyline && this.removeLayer(this.polyline);
         this.polyline = L.polyline(path, {color: 'black'}).addTo(this.map);
-        this.callEnable();
+        this.callEnable(true);
     }
 
-    private removeLayer(layer) {
+    private removeLayer(layer): void {
         this.map.removeLayer(layer)
     }
 
-    private onDragEnd() {
+    private onDragEnd(): void {
 
         let zoom = this.map.getZoom();
         this.map.setZoom(Math.round(zoom));
@@ -214,12 +270,17 @@ export class Map {
             longitude: coords.lng
         });
 
+        if(this.polyline){
+            this.removeLayer(this.polyline);
+            this.callEnable(false);
+        }
+
         this.map.invalidateSize(true)
 
     }
 
-    public ngOnDestroy() {
-        this.map.destroy();
+    public ngOnDestroy(): void {
+        this.destroyMap(this.selector)
     }
 
 }

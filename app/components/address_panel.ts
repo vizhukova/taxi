@@ -1,4 +1,4 @@
-import {Component, Input } from '@angular/core';
+import {Component, Input, ViewChild} from '@angular/core';
 import { Http, Response } from '@angular/http';
 import {Observable} from "rxjs/Rx";
 import {Place} from "../providers/place/place";
@@ -8,10 +8,13 @@ import {GatherOrder} from './../providers/order/gather_order';
 import { NavController, Modal, ViewController } from 'ionic-angular';
 import {SearchPage} from "../pages/search/search";
 import {FavoritePopup} from "../pages/search-tab/favorite_popup/popup";
+import {MainTabs} from "../app";
+import {Nav} from "../providers/nav/nav";
 
 @Component({
     selector: 'address',
     templateUrl: 'build/templates/address_panel.html',
+    directives: [SearchPage],
     providers: [GatherOrder]
 })
 export class Address {
@@ -26,8 +29,10 @@ export class Address {
 
     @Input() view: any;
 
+    @ViewChild('from') vc;
 
-    constructor(public nav: NavController, public GatherOrderProvider: GatherOrder, private place: Place, private http: Http) {
+
+    constructor(public nav: NavController, public GatherOrderProvider: GatherOrder, private place: Place, private http: Http, private NavProvider: Nav) {
 
         const self = this;
         this.address = {from: '', to: ''};
@@ -64,6 +69,8 @@ export class Address {
             this.getAll(this.address[this.direction]);
             this.editable[this.direction] = false;
         }
+
+        this.vc.nativeElement.focus();
     }
 
     clearAddress() {
@@ -187,7 +194,18 @@ export class Address {
     onFocus(type: string): void {
 
         if(this.direction === type){
-            this.nav.push(SearchPage)
+            this.place.destroyMap('mapHome');
+
+            // debugger;
+
+            let last = this.nav.last();
+
+            if(last && last.componentType && last.componentType.name !== 'SearchPage'){
+                this.NavProvider.showTabs(SearchPage)
+            }
+
+
+
         }
 
         if(!this.editable[type]) return;
@@ -201,6 +219,12 @@ export class Address {
 
     showFavoritePopup() {
         this.nav.push(FavoritePopup);
+    }
+
+    onConfirm(){
+        this.place.destroyMap('searchMap');
+        // this.place.createMap('homeMap');
+        this.NavProvider.showTabs(MainTabs)
     }
 }
 
