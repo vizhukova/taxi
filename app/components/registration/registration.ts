@@ -21,11 +21,11 @@ export class RegistrationModal {
 
      onPageWillEnter() {
         //hide nav bar when we enter the page
-        (<HTMLScriptElement[]><any>document.getElementsByTagName('ion-tabbar'))[0].style.display = "none";
+        // (<HTMLScriptElement[]><any>document.getElementsByTagName('ion-tabbar'))[0].style.display = "none";
     }
     //show nav bar when we leave the page
     onPageDidLeave() {
-       (<HTMLScriptElement[]><any>document.getElementsByTagName('ion-tabbar'))[0].style.display = "flex";
+       // (<HTMLScriptElement[]><any>document.getElementsByTagName('ion-tabbar'))[0].style.display = "flex";
     }
 
     sentCode() {
@@ -41,6 +41,7 @@ export class RegistrationModal {
            });
 
         } else {
+            this.nav.pop();
             this.PlaceProvider.reloadMap('homeMap');
         }
     }

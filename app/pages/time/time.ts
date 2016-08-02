@@ -9,6 +9,7 @@ import {Place} from './../../providers/place/place';
   Ionic pages and navigation.
 */
 @Component({
+  selector: 'time-page',
   templateUrl: 'build/pages/time/time.html',
   providers: [Place]
 })

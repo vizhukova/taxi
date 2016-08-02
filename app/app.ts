@@ -11,6 +11,7 @@ import {RideProvider} from "./providers/ride/ride";
 import {Cost} from "./providers/cost/cost";
 import {Address} from './components/address_panel'
 import {SearchPage} from "./pages/search/search";
+import {MainPage} from "./pages/main/main";
 import {Nav} from "./providers/nav/nav";
 import {RegistrationModal} from "./components/registration/registration";
 import {Auth} from "./providers/auth/auth";
@@ -35,63 +36,37 @@ export class MainTabs {
 
     change: Function;
 
-    constructor(private nav: NavController, private AuthProvider: Auth){
+    constructor(private nav: NavController, private AuthProvider: Auth, private NavProvider: Nav){
+
+
 
     }
 
 
-    ngAfterViewInit(){
-        if(!this.AuthProvider.check()){
-            this.nav.push(RegistrationModal);
-        }
-    }
 
-}
-
-@Component({
-    selector: 'blank',
-    template: '<div class="app"></div>',
-})
-class Blank{
 
 }
 
 @Component({
     template: '<ion-nav #myNav [root]="rootPage"></ion-nav>',
     providers: [Place, Cost, Nav, Auth],
-    directives: [Blank]
+    directives: [MainPage]
 })
 export class App {
 
     @ViewChild('myNav') nav;
-    rootPage = Blank;
+    rootPage = MainPage;
 
     constructor(private platform: Platform, private place: Place, private NavProvider: Nav, private AuthProvider: Auth) {
         this.platform.ready().then(() => {
             StatusBar.styleDefault();
-        });
-        
-        let self = this;
-
-        NavProvider.tabChange$.subscribe((vc) => {
-            self.nav.pop()
-            self.nav.pop()
-            self.nav.push(vc)
         });
 
         // let nav = this.app.getComponent('nav');
 
     }
 
-    ngAfterViewInit() {
-
-        let self = this;
-        // Let's navigate from TabsPage to Page1
-        this.nav.push(MainTabs);
-
-
-
-    }
+    
 
     // showSearchTabs(){
     //     this.nav.push(SearchPage, {

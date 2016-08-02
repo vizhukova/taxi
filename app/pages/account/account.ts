@@ -6,6 +6,7 @@ import {RidesModal} from "./modal/rides";
 
 
 @Component({
+  selector: 'account-page',
   templateUrl: 'build/pages/account/account.html',
 })
 export class AccountPage {

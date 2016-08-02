@@ -13,19 +13,38 @@ import {Subject} from "rxjs/Rx";
 @Injectable()
 export class Nav {
 
-    private tabChangeSource = new Subject<any>(null);
+    tab: string;
+    tabSet: string;
 
-    tabChange$ = this.tabChangeSource.asObservable();
+    private tabSource = new Subject<any>(null);
+    private tabSetSource = new Subject<any>(null);
 
-    constructor(private http:Http) {
+    tab$ = this.tabSource.asObservable();
+    tabSet$ = this.tabSetSource.asObservable();
 
+    constructor() {
+
+        this.tab = 'home';
+        this.tabSet = 'main';
 
     }
 
-    showTabs(vc) {
+    public changeTab(tab): void {
+        this.tab = tab;
+        this.tabSource.next(tab);
+    }
 
-        this.tabChangeSource.next(vc)
+    public changeTabSet(tabSet): void {
+        this.tabSet = tabSet;
+        this.tabSetSource.next(tabSet);
+    }
 
+    public getCurrentTab(): string {
+        return this.tab;
+    }
+
+    public getCurrentTabSet(): string {
+        return this.tabSet;
     }
 
 }

@@ -4,6 +4,7 @@ import {Http, Response, RequestOptions, Headers} from '@angular/http';
 import * as L from 'leaflet'
 import {Place} from './../providers/place/place';
 import {Cost} from './../providers/cost/cost';
+import {Coordinates, PathCoordinates} from "../interfaces/coordinates";
 
 @Component({
     selector: 'map',
@@ -37,9 +38,9 @@ export class Map {
     constructor(private PlaceProvider:Place, private http:Http, private cost: Cost) {
         this.onDragEnd = this.onDragEnd.bind(this);
 
-        this.coords = {
-            from: [],
-            to: []
+        this.coords = <PathCoordinates>{
+            from: {latitude: 0, longitude: 0},
+            to: {latitude: 0, longitude: 0}
         };
 
         this.direction = 'from';
@@ -93,6 +94,17 @@ export class Map {
 
         PlaceProvider.coords$.subscribe(newCoords => {
             self.coords = newCoords;
+
+            if(this.map && newCoords && this.direction){
+
+                let currentCoordinates = newCoords[this.direction];
+
+                this.map.setView([
+                    currentCoordinates.latitude,
+                    currentCoordinates.longitude
+                ])
+            }
+
         });
 
         PlaceProvider.reload$.subscribe(name => {
@@ -175,7 +187,7 @@ export class Map {
         let mapCoords = this.coords[this.direction].length ? this.coords[this.direction] : [58.5, 37.7];
 
         if(!this.map){
-            this.map = new L.Map(this.selector, {center: mapCoords, zoom: 7, layers: [osmLayer], zoomControl: false});
+            this.map = new L.Map(this.selector, {center: mapCoords, zoom: 15, layers: [osmLayer], zoomControl: false});
         }
 
         if (!this.editable) this.map.on('dragend', this.onDragEnd);
@@ -223,9 +235,11 @@ export class Map {
 
         if (!coords.from || !coords.to) return;
 
-        let from = {Lat: coords.from[0], Lon: coords.from[1]};
+        let from = {Lat: coords.from.latitude, Lon: coords.from.longitude};
 
-        let to = {Lat: coords.to[0], Lon: coords.to[1]};
+        let to = {Lat: coords.to.latitude, Lon: coords.to.longitude};
+
+        if(!from.Lat || !from.Lon || !to.Lat || !to.Lon) return;
 
         this.http.post('http://ddtaxity.smarttaxi.ru:8000/1.x/route?taxiserviceid=taxity', [from, to])
 
@@ -240,7 +254,13 @@ export class Map {
     }
 
     private locateMe(): void {
+
+        debugger;
+
         this.PlaceProvider.getPosition().then((data:any) => {
+
+            debugger;
+
             this.map.setView(L.latLng(data.latitude, data.longitude), 16);
             this.onDragEnd()
         }).catch((err) => {
@@ -265,7 +285,7 @@ export class Map {
 
         const coords = this.map.getCenter();
 
-        this.PlaceProvider.getCurrentAddress({
+        this.PlaceProvider.getCurrentAddress(<Coordinates>{
             latitude: coords.lat,
             longitude: coords.lng
         });

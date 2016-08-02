@@ -10,6 +10,7 @@ import {SearchPage} from "../pages/search/search";
 import {FavoritePopup} from "../pages/search-tab/favorite_popup/popup";
 import {MainTabs} from "../app";
 import {Nav} from "../providers/nav/nav";
+import {PathCoordinates} from "../interfaces/coordinates";
 
 @Component({
     selector: 'address',
@@ -23,7 +24,7 @@ export class Address {
     direction: string;
     addresses: any;
     search: any;
-    coords: any;
+    coords: PathCoordinates;
     editable: any;
     detail: boolean;
 
@@ -41,8 +42,13 @@ export class Address {
         this.search = false;
         this.detail = false;
         this.editable = {
-            from: true,
-            to: true
+            from: false,
+            to: false
+        };
+
+        this.coords = <PathCoordinates>{
+            from: {latitude: 0, longitude: 0},
+            to: {latitude: 0, longitude: 0}
         };
 
         place.address$.subscribe(newAdress => {
@@ -65,29 +71,44 @@ export class Address {
     }
 
     ngAfterViewInit() {
-        if(this.view) {
-            this.getAll(this.address[this.direction]);
-            this.editable[this.direction] = false;
-        }
+        // if(this.view) {
+        //     this.getAll(this.address[this.direction]);
+        //     this.editable[this.direction] = false;
+        // }
 
         this.vc.nativeElement.focus();
     }
 
-    clearAddress() {
+    clearAddress(event) {
+
+        event.stopPropagation();
+
+        this.search = false;
+        this.detail = false;
+
         this.address[this.direction] = '';
-        this.place.changeAddress(this.address)
+        this.place.changeAddress(this.address);
+
+        this.NavProvider.changeTabSet('main');
     }
 
     confirmAddress(index: any) {
 
-        let newCoords = [this.addresses[index].geoPoint.lat, this.addresses[index].geoPoint.lon];
+        let address = this.addresses[index];
+        let addressCoordinates = address.geoPoint;
 
-        this.address[this.direction] = this.addresses[index].shortAddress;
+        let newCoords = {
+            latitude: addressCoordinates.lat,
+            longitude: addressCoordinates.lon
+        };
+
+        this.address[this.direction] = address.shortAddress;
         this.coords[this.direction] = newCoords;
         this.place.changeAddress(this.address);
         this.place.changeCoords(this.coords);
+        this.place.reloadMap('homeMap');
 
-        this.editable[this.direction] = true;
+        // this.editable[this.direction] = true;
         this.search = false;
         this.detail = true;
     }
@@ -125,7 +146,7 @@ export class Address {
 
         return this.http.get(url)
             .map(this.extractData)
-            .catch(this.handleError);
+            .catch(Address.handleError);
     }
 
 
@@ -176,15 +197,12 @@ export class Address {
         });
     }
 
-    enableEditable(direction: string) {
-    }
-
     private extractData(res: Response) {
         let body = res.json();
         return body || { };
     }
 
-    private handleError (error: any) {
+    private static handleError (error: any) {
         let errMsg = (error.message) ? error.message :
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         console.error(errMsg); // log to console instead
@@ -193,38 +211,24 @@ export class Address {
 
     onFocus(type: string): void {
 
-        if(this.direction === type){
-            this.place.destroyMap('mapHome');
-
-            // debugger;
-
-            let last = this.nav.last();
-
-            if(last && last.componentType && last.componentType.name !== 'SearchPage'){
-                this.NavProvider.showTabs(SearchPage)
-            }
-
-
-
+        if(this.direction === type && this.NavProvider.getCurrentTabSet() === 'main'){
+            this.NavProvider.changeTabSet('search')
         }
 
-        if(!this.editable[type]) return;
+        this.direction = type;
+
+        // if(!this.editable[type]) return;
         this.place.changeDirection(type);
     }
-
-    showSearchTabs() {
-        this.nav.push(SearchPage);
-    }
-
 
     showFavoritePopup() {
         this.nav.push(FavoritePopup);
     }
 
     onConfirm(){
-        this.place.destroyMap('searchMap');
-        // this.place.createMap('homeMap');
-        this.NavProvider.showTabs(MainTabs)
+        this.search = false;
+        this.detail = false;
+        this.NavProvider.changeTabSet('main');
     }
 }
 

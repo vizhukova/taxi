@@ -15,7 +15,7 @@
         <span
             class="clear"
             *ngIf="direction === 'from'"
-            (click)="clearAddress()"></span
+            (click)="clearAddress($event)"></span
         >
     </div>
     <div class="main"
@@ -34,7 +34,7 @@
         <span
             class="clear"
             *ngIf="direction === 'to'"
-            (click)="clearAddress()"
+            (click)="clearAddress($event)"
         ></span>
     </div>
     <div [ngClass]="setViewClasses()" *ngIf="search">

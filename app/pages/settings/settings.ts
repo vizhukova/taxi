@@ -12,6 +12,7 @@ import {GatherOrder} from './../../providers/order/gather_order';
   Ionic pages and navigation.
 */
 @Component({
+  selector: 'settings-page',
   templateUrl: 'build/pages/settings/settings.html',
   directives: [Address],
   providers: [Place, GatherOrder]

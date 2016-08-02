@@ -2,13 +2,14 @@ import {Geolocation} from 'ionic-native';
 import {Injectable, Output, EventEmitter} from '@angular/core';
 import {Subject, BehaviorSubject, Observable} from 'rxjs';
 import {Http, Response} from '@angular/http';
+import {Coordinates, PathCoordinates} from "../../interfaces/coordinates";
 
 @Injectable()
 export class Place {
 
     data:any;
     address:any;
-    coords:any;
+    coords:PathCoordinates;
     direction:string;
     cbs:Function[];
 
@@ -33,11 +34,11 @@ export class Place {
         this.addressSource.next(address);
     }
 
-    changeCoords(coords:any) {
+    changeCoords(coords:PathCoordinates) {
         this.coordsSource.next(coords);
     }
 
-    changeDirection(direction:any) {
+    changeDirection(direction:string) {
         this.direction = direction;
         this.directionSource.next(direction);
     }
@@ -46,20 +47,10 @@ export class Place {
         this.reloadSource.next(name);
     }
 
-    public createMap(name) {
-        debugger;
-        this.mapCreateSource.next(name);
-    }
-
-    public destroyMap(name) {
-        debugger;
-        this.mapDestroySource.next(name);
-    }
-
     constructor(private http:Http) {
-        this.coords = {
-            from: [],
-            to: []
+        this.coords = <PathCoordinates>{
+            from: {latitude: 0, longitude: 0},
+            to: {latitude: 0, longitude: 0}
         };
         this.address = {
             from: '',
@@ -70,10 +61,21 @@ export class Place {
     }
 
     public getPosition() {
+
+        debugger;
+
         var self = this;
         return new Promise((resolve, reject) => {
             Geolocation.getCurrentPosition().then((resp) => {
-                self.coords[self.direction] = resp.coords;
+
+                debugger;
+
+                let c = resp.coords;
+
+                self.coords[self.direction] = {
+                    latitude: c.latitude,
+                    longitude: c.longitude
+                };
                 self.changeCoords(self.coords);
                 resolve(self.coords[self.direction]);
             }, (err) => {
@@ -137,19 +139,23 @@ export class Place {
         return coordinates;
     }
 
-    public getCurrentAddress(coords:any) {
+    public getCurrentAddress(coords:Coordinates) {
 
         const self = this;
 
-        self.coords[self.direction] = [coords.latitude, coords.longitude];
+        self.coords[self.direction] = coords;
         self.changeCoords(self.coords);
 
         return new Promise((resolve, reject) => {
             self.http.get(`http://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.latitude},${coords.longitude}&sensor=true&language=ru`)
                 .subscribe((res:Response) => {
                     var data = res.json();
-                    self.address[self.direction] = `${data.results[0].address_components[1].long_name}, ${data.results[0].address_components[0].long_name}`;
-                    self.changeAddress(self.address);
+
+                    if(data.results.length){
+                        self.address[self.direction] = `${data.results[0].address_components[1].long_name}, ${data.results[0].address_components[0].long_name}`;
+                        self.changeAddress(self.address);
+                    }
+
                 });
         })
     }

@@ -9,6 +9,7 @@ import {NavController} from "ionic-angular/index";
 
 
 @Component({
+    selector: 'home-page',
     templateUrl: 'build/pages/home/home.html',
     directives: [Map],
 })
