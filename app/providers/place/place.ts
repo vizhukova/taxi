@@ -12,6 +12,7 @@ export class Place {
     coords:PathCoordinates;
     direction:string;
     cbs:Function[];
+    pathStatus: boolean;
 
     // Observable data sources
     private addressSource = new BehaviorSubject<any>({from: '', to: ''});
@@ -21,6 +22,8 @@ export class Place {
     private mapCreateSource = new BehaviorSubject<any>(null);
     private mapDestroySource = new BehaviorSubject<any>(null);
 
+    private pathSource = new BehaviorSubject<any>(true);
+
     // Observable data streams
     address$ = this.addressSource.asObservable();
     coords$ = this.coordsSource.asObservable();
@@ -28,6 +31,7 @@ export class Place {
     reload$ = this.reloadSource.asObservable();
     mapCreate$ = this.mapCreateSource.asObservable();
     mapDestroy$ = this.mapDestroySource.asObservable();
+    path$ = this.pathSource.asObservable();
 
     // Service message commands
     changeAddress(address:string) {
@@ -43,8 +47,17 @@ export class Place {
         this.directionSource.next(direction);
     }
 
+    changePathStatus(status: boolean) {
+        this.pathStatus = status;
+        this.pathSource.next(status);
+    }
+
     public reloadMap(name) {
         this.reloadSource.next(name);
+    }
+
+    public getCurrentCoords(){
+        return this.coords;
     }
 
     constructor(private http:Http) {
@@ -61,14 +74,10 @@ export class Place {
     }
 
     public getPosition() {
-
-        debugger;
-
+        
         var self = this;
         return new Promise((resolve, reject) => {
             Geolocation.getCurrentPosition().then((resp) => {
-
-                debugger;
 
                 let c = resp.coords;
 

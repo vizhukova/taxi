@@ -1,16 +1,14 @@
-import {Component, Input, ViewChild} from '@angular/core';
+import {Component, Input, ViewChild } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import {Observable} from "rxjs/Rx";
 import {Place} from "../providers/place/place";
 import {GatherOrder} from './../providers/order/gather_order';
-
-
-import { NavController, Modal, ViewController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import {SearchPage} from "../pages/search/search";
 import {FavoritePopup} from "../pages/search-tab/favorite_popup/popup";
-import {MainTabs} from "../app";
 import {Nav} from "../providers/nav/nav";
 import {PathCoordinates} from "../interfaces/coordinates";
+import {AddressItem} from "../interfaces/address";
 
 @Component({
     selector: 'address',
@@ -28,12 +26,18 @@ export class Address {
     editable: any;
     detail: boolean;
 
+    public test: any;
+
     @Input() view: any;
 
     @ViewChild('from') vc;
 
 
-    constructor(public nav: NavController, public GatherOrderProvider: GatherOrder, private place: Place, private http: Http, private NavProvider: Nav) {
+    constructor(public nav: NavController,
+                public GatherOrderProvider: GatherOrder,
+                private place: Place,
+                private http: Http,
+                private NavProvider: Nav) {
 
         const self = this;
         this.address = {from: '', to: ''};
@@ -46,18 +50,20 @@ export class Address {
             to: false
         };
 
+        this.test = Math.random();
+
         this.coords = <PathCoordinates>{
             from: {latitude: 0, longitude: 0},
             to: {latitude: 0, longitude: 0}
         };
 
-        place.address$.subscribe(newAdress => {
-            self.address = newAdress;
-            if(newAdress.to) {
-                GatherOrderProvider.setDestination(newAdress.to);
+        place.address$.subscribe(newAddress => {
+            self.address = newAddress;
+            if(newAddress.to) {
+                GatherOrderProvider.setDestination(newAddress.to);
             }
-            if(newAdress.from) {
-                GatherOrderProvider.setSource(newAdress.from);
+            if(newAddress.from) {
+                GatherOrderProvider.setSource(newAddress.from);
             }
         });
 
@@ -76,7 +82,7 @@ export class Address {
         //     this.editable[this.direction] = false;
         // }
 
-        this.vc.nativeElement.focus();
+        // this.vc.nativeElement.focus();
     }
 
     clearAddress(event) {
@@ -95,14 +101,14 @@ export class Address {
     confirmAddress(index: any) {
 
         let address = this.addresses[index];
-        let addressCoordinates = address.geoPoint;
+        let addressCoordinates = address['geoPoint'];
 
         let newCoords = {
             latitude: addressCoordinates.lat,
             longitude: addressCoordinates.lon
         };
 
-        this.address[this.direction] = address.shortAddress;
+        this.address[this.direction] = address['shortAddress'];
         this.coords[this.direction] = newCoords;
         this.place.changeAddress(this.address);
         this.place.changeCoords(this.coords);
@@ -145,7 +151,7 @@ export class Address {
         const url = `http://ddtaxity.smarttaxi.ru:8000/1.x/geocode?taxiServiceId=taxity&radius=2000&lat=${lat}&lon=${lon}&search=${search}`;
 
         return this.http.get(url)
-            .map(this.extractData)
+            .map(Address.extractData)
             .catch(Address.handleError);
     }
 
@@ -165,11 +171,11 @@ export class Address {
             )
     }
 
-    formatAddressesSearch(address: string, addresses: any) {
+    formatAddressesSearch(address: string, addresses: AddressItem[]) {
         return addresses.map(item => {
 
             if(item.street.toLowerCase().indexOf(address.toLowerCase()) < 0) {
-                item.street = [{text: item.street || item.shortAddress, class: 'white'}];
+                item.street = [{text: item.street || item['shortAddress'], className: 'white'}];
                 return item
             }
 
@@ -180,15 +186,15 @@ export class Address {
             let index = splited.indexOf('');
 
             if(index === 0) {
-                formated.push({text: address, class: 'orange'});
-                formated.push({text: splited[1], class: 'white'});
+                formated.push({text: address, className: 'orange'});
+                formated.push({text: splited[1], className: 'white'});
             } else if(index === 1) {
-                formated.push({text: splited[0], class: 'white'});
-                formated.push({text: address, class: 'orange'});
+                formated.push({text: splited[0], className: 'white'});
+                formated.push({text: address, className: 'orange'});
             } else {
-                formated.push({text: splited[0], class: 'white'});
-                formated.push({text: address, class: 'orange'});
-                formated.push({text: splited[1], class: 'white'});
+                formated.push({text: splited[0], className: 'white'});
+                formated.push({text: address, className: 'orange'});
+                formated.push({text: splited[1], className: 'white'});
             }
 
             item.street = formated;
@@ -197,7 +203,7 @@ export class Address {
         });
     }
 
-    private extractData(res: Response) {
+    private static extractData(res: Response) {
         let body = res.json();
         return body || { };
     }
@@ -205,7 +211,7 @@ export class Address {
     private static handleError (error: any) {
         let errMsg = (error.message) ? error.message :
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-        console.error(errMsg); // log to console instead
+        console.error(errMsg);
         return Observable.throw(errMsg);
     }
 
@@ -217,7 +223,6 @@ export class Address {
 
         this.direction = type;
 
-        // if(!this.editable[type]) return;
         this.place.changeDirection(type);
     }
 

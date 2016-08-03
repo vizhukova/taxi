@@ -10,8 +10,7 @@ import {Place} from './../../providers/place/place';
 */
 @Component({
   selector: 'time-page',
-  templateUrl: 'build/pages/time/time.html',
-  providers: [Place]
+  templateUrl: 'build/pages/time/time.html'
 })
 export class TimePage {
 

@@ -1,9 +1,13 @@
 .settings {
   background: #f7f7f9;
 
+  scroll-content{
+    padding-top: 97px;
+  }
+
   &>* {
     // TODO change calculating
-    height: calc(100% - 210rem);
+    height: calc(100% - 50px);
     background: $main-header-background;
   }
 

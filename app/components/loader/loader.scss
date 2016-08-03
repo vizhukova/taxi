@@ -1,5 +1,6 @@
 .loader-modal {
   background-image: url('./../res/background.png');
+  overflow-y: hidden;
 
   .loader-container {
     $width-loader: 8px;
@@ -91,12 +92,16 @@
 
 .loader-footer {
   div.call {
+    line-height: 60px;
+    text-align: center;
     &:before {
       content: "";
       position: absolute;
       background-image: url('./../res/cross.svg');
       width: 24px;
       height: 24px;
+      top: 15px;
+      left: 40px;
     }
   }
 }

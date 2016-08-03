@@ -15,7 +15,7 @@ import {GatherOrder} from './../../providers/order/gather_order';
   selector: 'settings-page',
   templateUrl: 'build/pages/settings/settings.html',
   directives: [Address],
-  providers: [Place, GatherOrder]
+  providers: [GatherOrder]
 })
 export class SettingsPage {
 

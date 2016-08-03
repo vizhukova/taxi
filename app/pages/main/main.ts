@@ -14,6 +14,9 @@ import {NavController, Modal, ViewController} from 'ionic-angular';
 import {Nav} from "../../providers/nav/nav";
 import {RegistrationModal} from "../../components/registration/registration";
 import {Auth} from "../../providers/auth/auth";
+import {Place} from "../../providers/place/place";
+import {Cost} from "../../providers/cost/cost";
+import {Loader} from "../../components/loader/loader";
 
 @Component({
   selector: 'search-page',
@@ -33,13 +36,30 @@ export class MainPage {
 
 
   activeTab: string;
-
   activeTabSet: string;
 
-  constructor(private nav: NavController, private NavProvider: Nav, private AuthProvider: Auth) {
+  direction: string;
+  status: Object;
+
+  pathStatus: boolean;
+
+  cost: any;
+
+  constructor(private nav: NavController,
+              private NavProvider: Nav,
+              private AuthProvider: Auth,
+              private PlaceProvider: Place,
+              private CostProvider: Cost) {
     this.nav = nav;
     this.activeTab = 'home';
     this.activeTabSet = 'main';
+
+    this.direction = 'from';
+
+    this.status = {
+      from: 'определение адреса подачи такси',
+      to: 'определение адреса поездки',
+    };
 
     NavProvider.tab$.subscribe(tab => {
       this.activeTab = tab;
@@ -47,10 +67,21 @@ export class MainPage {
 
     NavProvider.tabSet$.subscribe(tabSet => {
       this.activeTabSet = tabSet;
+    });
+
+    PlaceProvider.direction$.subscribe(direction => {
+      this.direction = direction;
+    });
+
+    PlaceProvider.path$.subscribe(status => {
+      this.pathStatus = status;
+    });
+
+    CostProvider.cost$.subscribe(cost => {
+      this.cost = cost;
     })
 
   }
-
 
   changeTab(newTab:string) {
     this.activeTab = newTab;
@@ -66,6 +97,12 @@ export class MainPage {
   ngAfterViewInit(){
     if(!this.AuthProvider.check()){
       this.nav.push(RegistrationModal);
+    }else{
+      this.PlaceProvider.changePathStatus(false)
     }
+  }
+
+  makeOrder() {
+    this.nav.push(Loader);
   }
 }

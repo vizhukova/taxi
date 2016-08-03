@@ -44,6 +44,8 @@ export class RegistrationModal {
             this.nav.pop();
             this.PlaceProvider.reloadMap('homeMap');
         }
+
+        this.PlaceProvider.changePathStatus(false);
     }
 
 }

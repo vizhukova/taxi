@@ -1,5 +1,3 @@
-
-
 <div class="tab-header" *ngIf="activeTabSet === 'main'">
   <div [ngClass]="setClasses('home')" (click)="changeTab('home')"><ion-icon md="ios-locate"></ion-icon></div>
   <div [ngClass]="setClasses('settings')" (click)="changeTab('settings')"><ion-icon md="ios-options"></ion-icon></div>
@@ -24,4 +22,15 @@
   <time-tab-page *ngIf="activeTab === 'time-tab'"></time-tab-page>
   <feed-tab-page *ngIf="activeTab === 'feed-tab'"></feed-tab-page>
   <fly-tab-page *ngIf="activeTab === 'fly-tab'"></fly-tab-page>
+
+  <div class="search" *ngIf="!pathStatus">{{status[direction]}}</div>
+
+  <div class="call" *ngIf="pathStatus" (click)="makeOrder()">
+    <div class="price">
+      <p class="text">{{cost}}<span class="currency">руб.</span></p>
+    </div>
+    <p class="title">Вызвать такси</p>
+  </div>
 </div>
+
+

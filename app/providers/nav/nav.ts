@@ -35,8 +35,10 @@ export class Nav {
     }
 
     public changeTabSet(tabSet): void {
+        this.tab = 'home';
         this.tabSet = tabSet;
         this.tabSetSource.next(tabSet);
+        this.tabSource.next(this.tab);
     }
 
     public getCurrentTab(): string {

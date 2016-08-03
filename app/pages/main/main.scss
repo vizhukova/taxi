@@ -1,3 +1,67 @@
 .main {
 
+
+
+}
+
+.main-page {
+  div.search {
+    color: #b2b2b2;
+    background: rgba(0, 0, 0, 0.9);
+    font-size: 19px;
+    line-height: 24px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 25px;
+    z-index: 2000;
+    text-align: center;
+  }
+
+  div.call {
+    left: 8px;
+    right: 8px;
+    bottom: 0;
+    margin: auto;
+    font-weight: 600;
+    text-transform: uppercase;
+    height: 57px;
+    line-height: 9px;
+    border-radius: 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    text-align: left;
+    font-size: 20px;
+    overflow: hidden;
+    background: url("../res/btn_price.png") no-repeat, url("../res/icon_arrow.png") no-repeat;
+    background-position: center center, right 10px center;
+    background-size: 100% 100%, 30px 30px;
+    position: absolute;
+    z-index: 2;
+
+    p.title {
+      display: inline-block;
+      color: #fbfbfb;
+      text-align: right;
+      margin-left: 9px
+    }
+
+    div.price {
+      display: inline-block;
+      height: 100%;
+      padding-left: 45px;
+      background: url("../res/btn_price_layer.png") left center no-repeat, url("../res/icon_coins.png") 15px center no-repeat;
+      background-size: 100% 100%, 23px 18px;
+      padding-right: 4px;
+      line-height: 52px;
+
+      span.currency {
+        vertical-align: super;
+        text-transform: capitalize;
+        font-size: 13px;
+        margin-left: 3px;
+      }
+    }
+
+  }
 }

@@ -35,7 +35,7 @@ export class Map {
     @Input() callEnable:Function;
 
 
-    constructor(private PlaceProvider:Place, private http:Http, private cost: Cost) {
+    constructor(private PlaceProvider:Place, private http:Http, private cost:Cost) {
         this.onDragEnd = this.onDragEnd.bind(this);
 
         this.coords = <PathCoordinates>{
@@ -52,7 +52,7 @@ export class Map {
             iconUrl: 'build/res/icon_path_active.png',
             iconSize: [26, 36], // size of the icon
             shadowSize: [26, 36], // size of the shadow
-            iconAnchor: [26, 36], // point of the icon which will correspond to marker's location
+            iconAnchor: [15, 19], // point of the icon which will correspond to marker's location
             shadowAnchor: [4, 36],  // the same for the shadow
             popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
         });
@@ -61,7 +61,7 @@ export class Map {
             iconUrl: 'build/res/point.png',
             iconSize: [20, 20], // size of the icon
             shadowSize: [20, 20], // size of the shadow
-            iconAnchor: [20, 20], // point of the icon which will correspond to marker's location
+            iconAnchor: [11, 11], // point of the icon which will correspond to marker's location
             shadowAnchor: [4, 20],  // the same for the shadow
             popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
         });
@@ -95,7 +95,7 @@ export class Map {
         PlaceProvider.coords$.subscribe(newCoords => {
             self.coords = newCoords;
 
-            if(this.map && newCoords && this.direction){
+            if (this.map && newCoords && this.direction) {
 
                 let currentCoordinates = newCoords[this.direction];
 
@@ -108,7 +108,7 @@ export class Map {
         });
 
         PlaceProvider.reload$.subscribe(name => {
-            if(self.map && self.selector === name){
+            if (self.map && self.selector === name) {
                 setTimeout(()=> {
                     self.map.invalidateSize(true);
                     self.locateMe();
@@ -131,23 +131,45 @@ export class Map {
     }
 
 
-    markerClasses(): Object {
+    markerClasses():Object {
         return {
             marker: true,
             from: this.direction === 'from'
         }
     }
 
-    private bootMarkers(direction:string): void {
+    private getCenter():Coordinates {
+        let center = this.map.getCenter();
 
-        let markerFromCoords = this.coords.from.length ? this.coords.from : this.map.getCenter();
-        let markerToCoords = this.coords.to.length ? this.coords.to : this.map.getCenter();
+        return <Coordinates>{
+            latitude: <number>center.lat,
+            longitude: <number>center.lng
+        }
+    }
+
+    private static coordinatesToArray(coordinates:Coordinates) {
+        return [coordinates.latitude || 0, coordinates.longitude || 0]
+    }
+
+    private isPointExist(name: string): boolean {
+        let point = this.coords[name];
+
+        return point.latitude !== 0 && point.longitude !== 0;
+    }
+
+    private bootMarkers(direction:string):void {
+
+        let markerFromCoords = this.coords.from.latitude !== 0 && this.coords.from.latitude !== 0 ? this.coords.from : this.getCenter();
+        let markerToCoords = this.coords.to.latitude !== 0 && this.coords.to.latitude !== 0 ? this.coords.to : this.getCenter();
+
+        markerFromCoords = Map.coordinatesToArray(markerFromCoords);
+        markerToCoords = Map.coordinatesToArray(markerToCoords);
 
         if (direction === 'to') {
             if (!this.map.hasLayer(this.markerFrom)) {
                 this.markerFrom = L.marker(markerFromCoords, {
                     icon: this.iconFrom,
-                    opacity: this.coords.from.length ? 1 : 0
+                    opacity: this.isPointExist('from') ? 1 : 0
                 }).addTo(this.map)
             } else {
                 this.markerFrom.setLatLng(markerFromCoords);
@@ -159,7 +181,7 @@ export class Map {
             if (!this.map.hasLayer(this.markerTo)) {
                 this.markerTo = L.marker(markerToCoords, {
                     icon: this.iconTo,
-                    opacity: this.coords.to.length ? 1 : 0
+                    opacity: this.isPointExist('to') ? 1 : 0
                 }).addTo(this.map)
             } else {
                 this.markerTo.setLatLng(markerToCoords);
@@ -176,9 +198,9 @@ export class Map {
 
     }
 
-    private createMap(name: string): void{
+    private createMap(name:string):void {
 
-        if(this.selector !== name) return;
+        if (this.selector !== name) return;
 
         const osmUrl = 'http://tiles.maps.sputnik.ru//{z}/{x}/{y}.png',
             osmAttribution = '',
@@ -186,7 +208,7 @@ export class Map {
 
         let mapCoords = this.coords[this.direction].length ? this.coords[this.direction] : [58.5, 37.7];
 
-        if(!this.map){
+        if (!this.map) {
             this.map = new L.Map(this.selector, {center: mapCoords, zoom: 15, layers: [osmLayer], zoomControl: false});
         }
 
@@ -202,20 +224,20 @@ export class Map {
             this.map.invalidateSize(true)
         }, 300);
 
-        if (this.coords && !this.coords.from && !this.coords.to){
+        if (this.coords && !this.coords.from && !this.coords.to) {
             this.locateMe()
         }
     }
 
-    private destroyMap(name: string): void{
+    private destroyMap(name:string):void {
 
         let map = this.map;
 
-        if(!map || this.selector !== name) return;
+        if (!map || this.selector !== name) return;
 
         this.isMarkerVisible = false;
 
-        try{
+        try {
             map.clearAllEventListeners();
 
             map.eachLayer(layer => {
@@ -223,15 +245,14 @@ export class Map {
             });
 
             map.remove();
-        }catch(e){
-        
-        }
+        } catch (e) {
 
+        }
 
 
     }
 
-    private calcPolyline(coords:any): void {
+    private calcPolyline(coords:any):void {
 
         if (!coords.from || !coords.to) return;
 
@@ -239,7 +260,7 @@ export class Map {
 
         let to = {Lat: coords.to.latitude, Lon: coords.to.longitude};
 
-        if(!from.Lat || !from.Lon || !to.Lat || !to.Lon) return;
+        if (!from.Lat || !from.Lon || !to.Lat || !to.Lon) return;
 
         this.http.post('http://ddtaxity.smarttaxi.ru:8000/1.x/route?taxiserviceid=taxity', [from, to])
 
@@ -253,14 +274,10 @@ export class Map {
 
     }
 
-    private locateMe(): void {
+    private locateMe():void {
 
-        debugger;
 
-        this.PlaceProvider.getPosition().then((data:any) => {
-
-            debugger;
-
+        this.PlaceProvider.getPosition().then((data:Coordinates) => {
             this.map.setView(L.latLng(data.latitude, data.longitude), 16);
             this.onDragEnd()
         }).catch((err) => {
@@ -268,17 +285,18 @@ export class Map {
         })
     }
 
-    private markPolyline(path:any): void {
+    private markPolyline(path:any):void {
         this.polyline && this.removeLayer(this.polyline);
         this.polyline = L.polyline(path, {color: 'black'}).addTo(this.map);
         this.callEnable(true);
+        this.PlaceProvider.changePathStatus(true);
     }
 
-    private removeLayer(layer): void {
+    private removeLayer(layer):void {
         this.map.removeLayer(layer)
     }
 
-    private onDragEnd(): void {
+    private onDragEnd():void {
 
         let zoom = this.map.getZoom();
         this.map.setZoom(Math.round(zoom));
@@ -290,8 +308,9 @@ export class Map {
             longitude: coords.lng
         });
 
-        if(this.polyline){
+        if (this.polyline) {
             this.removeLayer(this.polyline);
+            this.PlaceProvider.changePathStatus(false);
             this.callEnable(false);
         }
 
@@ -299,7 +318,7 @@ export class Map {
 
     }
 
-    public ngOnDestroy(): void {
+    public ngOnDestroy():void {
         this.destroyMap(this.selector)
     }
 

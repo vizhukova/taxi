@@ -16,7 +16,7 @@ export class Loader {
     onPageWillEnter() {
 
         //hide nav bar when we enter the page
-        (<HTMLScriptElement[]><any>document.getElementsByTagName('ion-tabbar'))[0].style.display = "none";
+        // (<HTMLScriptElement[]><any>document.getElementsByTagName('ion-tabbar'))[0].style.display = "none";
 
         window.addEventListener('resize', ()=> {
             this.changeLoaderPositions();
@@ -28,7 +28,7 @@ export class Loader {
 
     //show nav bar when we leave the page
     onPageDidLeave() {
-       (<HTMLScriptElement[]><any>document.getElementsByTagName('ion-tabbar'))[0].style.display = "flex";
+       // (<HTMLScriptElement[]><any>document.getElementsByTagName('ion-tabbar'))[0].style.display = "flex";
     }
 
     changeLoaderPositions() {

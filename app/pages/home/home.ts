@@ -58,7 +58,7 @@ export class HomePage {
 
     onDragendMap(coords) {
 
-        this.Place.getCurrentAddress({
+        this.Place.getCurrentAddress(<Coordinates>{
             latitude: coords.lat,
             longitude: coords.lng
         })

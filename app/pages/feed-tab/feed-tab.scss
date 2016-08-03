@@ -1,10 +1,11 @@
 .feed-tab-page {
 
-  $height-top-panel: 56rem;
+  $height-top-panel: 56px;
   background-color: $main-header-background;
 
-  scroll-content {
-    overflow: hidden;
+  scroll-content{
+    padding-bottom: 60px;
+
   }
 
   .header {
@@ -31,6 +32,7 @@
       font-weight: 600;
       text-transform: uppercase;
       display: inline-block;
+      width: 50%;
     }
 
     .lbl {
@@ -101,6 +103,7 @@
       top: 90px;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
+      padding-bottom: 60px;
 
       &.addresses {
         padding-left: 17%;
@@ -154,7 +157,7 @@
             .panel {
               position: relative;
               color: #ABADB1;
-              line-height: 48rem;
+              line-height: 48px;
               border-bottom: solid 1px $main-header-background;
 
               &.panel-title {
@@ -165,9 +168,9 @@
                   stroke: $main-bright-color;
                   background-repeat: no-repeat;
                   background-position: center center;
-                  background-size: 25rem;
-                  height: 48rem;
-                  width: 48rem;
+                  background-size: 25px;
+                  height: 48px;
+                  width: 48px;
                   content: "";
                   position: absolute;
                 }
@@ -175,9 +178,9 @@
                 //  background-image: url("./../res/more.png");
                 //  background-repeat: no-repeat;
                 //  background-position: center center;
-                //  background-size: 20rem;
-                //  height: 48rem;
-                //  width: 48rem;
+                //  background-size: 20px;
+                //  height: 48px;
+                //  width: 48px;
                 //  content: "";
                 //  position: absolute;
                 //  right: 0;
@@ -192,8 +195,8 @@
                 }
 
                 span {
-                  line-height: 48rem;
-                  padding-left: 48rem;
+                  line-height: 48px;
+                  padding-left: 48px;
                 }
               }
 
@@ -201,33 +204,33 @@
                 background: url("../res/icon_from.svg") no-repeat;
                 background-size: contain;
                 vertical-align: middle;
-                width: 16rem;
-                height: 22rem;
+                width: 16px;
+                height: 22px;
                 position: absolute;
-                margin: 14rem;
+                margin: 14px;
 
                 &:before {
                   position: absolute;
-                  border-right: 2rem dashed #a8bea1;
+                  border-right: 2px dashed #a8bea1;
                   display: block;
-                  height: 25rem;
-                  bottom: -25rem;
-                  width: 1rem;
+                  height: 25px;
+                  bottom: -25px;
+                  width: 1px;
                   left: 0;
                   right: 0;
                   margin: auto;
-                  border-right: 2rem dashed #a8bea1;
+                  border-right: 2px dashed #a8bea1;
                   content: "";
                 }
 
                 &:after {
                   background: url("../res/icon_to.svg") no-repeat;
-                  background-size: 18rem;
+                  background-size: 18px;
                   vertical-align: middle;
-                  width: 18rem;
-                  height: 18rem;
+                  width: 18px;
+                  height: 18px;
                   content: "";
-                  bottom: -45rem;
+                  bottom: -45px;
                   position: absolute;
                 }
               }
@@ -235,7 +238,7 @@
 
             span.panel {
               display: block;
-              margin: 0 15rem 0 48rem;
+              margin: 0 15px 0 48px;
               color: $main-dark-color;
               &:last-child {
                 border: none;

@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import {Http, Response} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {BehaviorSubject} from 'rxjs';
+import {Place} from "../place/place";
 
 
 @Injectable()
@@ -16,7 +17,7 @@ export class Cost {
     cost$ = this.costSource.asObservable();
 
 
-    constructor(private http:Http) {
+    constructor(private http:Http, private place: Place) {
 
     }
 
@@ -26,6 +27,8 @@ export class Cost {
     public getCost() {
 
         let self = this;
+        
+        let coords = this.place.getCurrentCoords();
 
         setTimeout(() => {
             self.cost = 300;
