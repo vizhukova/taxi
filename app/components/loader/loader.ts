@@ -15,7 +15,6 @@ export class Loader {
             this.GatherOrderProvider.getOrderStatus().then((data) => {
                 console.log('status: ', data['status']);
                 //условие, что заказ принят
-                // clearInterval(this.intervalId);
                 //this.close();
             })
         }, 10000);
@@ -60,12 +59,12 @@ export class Loader {
     }
 
     calcelOrder() {
-        clearInterval(this.intervalId);
         this.GatherOrderProvider.cancelOrder();
         this.close();
     }
 
     close() {
+        clearInterval(this.intervalId);
         this.nav.pop();
     }
 
