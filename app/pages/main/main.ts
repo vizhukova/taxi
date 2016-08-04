@@ -10,13 +10,14 @@ import { TimeTabPage } from '../../pages/time-tab/time-tab';
 import { FeedTabPage } from '../../pages/feed-tab/feed-tab';
 import { FlyTabPage } from '../../pages/fly-tab/fly-tab';
 
-import {NavController, Modal, ViewController} from 'ionic-angular';
+import {NavController} from 'ionic-angular';
 import {Nav} from "../../providers/nav/nav";
 import {RegistrationModal} from "../../components/registration/registration";
 import {Auth} from "../../providers/auth/auth";
 import {Place} from "../../providers/place/place";
 import {Cost} from "../../providers/cost/cost";
 import {Loader} from "../../components/loader/loader";
+import {CarOptions} from "../../providers/car-options/car-options";
 
 @Component({
   selector: 'search-page',
@@ -49,7 +50,8 @@ export class MainPage {
               private NavProvider: Nav,
               private AuthProvider: Auth,
               private PlaceProvider: Place,
-              private CostProvider: Cost) {
+              private CostProvider: Cost,
+              private CarOptionsProvider: CarOptions) {
     this.nav = nav;
     this.activeTab = 'home';
     this.activeTabSet = 'main';
@@ -79,7 +81,9 @@ export class MainPage {
 
     CostProvider.cost$.subscribe(cost => {
       this.cost = cost;
-    })
+    });
+
+    CarOptionsProvider.load()
 
   }
 
@@ -103,6 +107,12 @@ export class MainPage {
   }
 
   makeOrder() {
-    this.nav.push(Loader);
+
+    if(!this.AuthProvider.check()){
+      this.nav.push(RegistrationModal);
+    }else{
+      this.nav.push(Loader);
+    }
+    
   }
 }

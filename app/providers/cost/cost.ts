@@ -3,6 +3,7 @@ import {Http, Response} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {BehaviorSubject} from 'rxjs';
 import {Place} from "../place/place";
+import {URL} from './../../config';
 
 
 @Injectable()
@@ -27,13 +28,47 @@ export class Cost {
     public getCost() {
 
         let self = this;
+
+        self.clear();
         
         let coords = this.place.getCurrentCoords();
 
-        setTimeout(() => {
-            self.cost = 300;
-            self.emitUpdate();
-        }, 500)
+        let body = {
+            "adds" : ["simple_bagage", "pay_parking"],
+            "bookingTime" : "20",
+            "class" : "Com",
+            "destinations" : [
+                {
+                    "kind" : "street",
+                    "lat" : coords.to.latitude,
+                    "lon" : coords.to.longitude
+
+                }
+            ],
+            "source" :
+            {
+                "kind" : "district",
+                "lat" : coords.from.latitude,
+                "lon" : coords.from.longitude
+            },
+            "taxi" : "taxity"
+        };
+
+        return new Promise((resolve, reject) => {
+            this.http.post(`${URL}/Order/Cost`, body)
+                .subscribe((res:Response) => {
+
+                    var data = res.json();
+                    self.cost = Math.ceil(data.sum);
+                    self.emitUpdate();
+                    resolve(data);
+
+                }, (err) => {
+
+                    reject(err);
+
+                })
+        });
 
     }
 

@@ -6,8 +6,6 @@ import {  NavController } from 'ionic-angular';
 })
 export class Loader {
 
-    //getElementsByTagName(selectors: string): Element;
-
     constructor(public nav: NavController) {
 
     }
@@ -15,20 +13,18 @@ export class Loader {
 
     onPageWillEnter() {
 
-        //hide nav bar when we enter the page
-        // (<HTMLScriptElement[]><any>document.getElementsByTagName('ion-tabbar'))[0].style.display = "none";
-
-        window.addEventListener('resize', ()=> {
-            this.changeLoaderPositions();
-        });
+        window.addEventListener('resize', this.onResize.bind(this));
 
         this.changeLoaderPositions();
 
     }
 
-    //show nav bar when we leave the page
     onPageDidLeave() {
-       // (<HTMLScriptElement[]><any>document.getElementsByTagName('ion-tabbar'))[0].style.display = "flex";
+        window.removeEventListener('resize', this.onResize.bind(this))
+    }
+
+    onResize(){
+        this.changeLoaderPositions();
     }
 
     changeLoaderPositions() {

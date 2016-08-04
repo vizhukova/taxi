@@ -15,6 +15,8 @@ import {MainPage} from "./pages/main/main";
 import {Nav} from "./providers/nav/nav";
 import {RegistrationModal} from "./components/registration/registration";
 import {Auth} from "./providers/auth/auth";
+import {CarOptions} from "./providers/car-options/car-options";
+import {GatherOrder} from "./providers/order/gather_order";
 
 @Component({
     selector: 'main-tabs',
@@ -49,7 +51,7 @@ export class MainTabs {
 
 @Component({
     template: '<ion-nav #myNav [root]="rootPage"></ion-nav>',
-    providers: [Place, Cost, Nav, Auth],
+    providers: [Place, Cost, Nav, Auth, CarOptions, GatherOrder],
     directives: [MainPage]
 })
 export class App {

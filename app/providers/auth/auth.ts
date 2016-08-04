@@ -2,19 +2,33 @@ import {Injectable, Output, EventEmitter} from '@angular/core';
 import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {Ride} from './../../models/ride';
 import {URL} from './../../config';
+import {BehaviorSubject} from "rxjs/Rx";
 
 @Injectable()
 export class Auth {
 
     http:any;
-    user:Object;
+    user:any;
+
+    private userSource = new BehaviorSubject<any>({});
+
+    // Observable data streams
+    user$ = this.userSource.asObservable();
 
     constructor(http:Http) {
         this.http = http;
 
         this.user = {
             id: null,
-            name: null
+            name: null,
+            phone: null
+        };
+        
+        let user = localStorage.getItem('user');
+
+        if(user) {
+            this.user = JSON.parse(user);
+            this.emitUpdate();
         }
 
     }
@@ -29,6 +43,9 @@ export class Auth {
         };
 
         this.user['name'] = name;
+        this.user['phone'] = number;
+
+        this.emitUpdate();
 
         localStorage.setItem('user', JSON.stringify(this.user));
 
@@ -64,6 +81,8 @@ export class Auth {
 
                     self.user['id'] = data.apiId;
 
+                    this.emitUpdate();
+
                     localStorage.setItem('user', JSON.stringify(this.user));
 
                     resolve();
@@ -84,6 +103,14 @@ export class Auth {
             return false
         }
         return !!user.id
+    }
+
+    public getUser(){
+        return this.user;
+    }
+
+    private emitUpdate(){
+        this.userSource.next(this.user)
     }
 
 }

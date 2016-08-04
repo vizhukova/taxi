@@ -5,12 +5,14 @@ import { Ride } from './../../models/ride';
 @Injectable()
 export class RideProvider {
 
+    rides: Array<Ride>;
+
     constructor() {
 
     }
 
     public save(name: string, data: Array<Ride>) {
-
+        
         let dataToSave = JSON.stringify(data);
         localStorage.setItem(name, dataToSave);
 

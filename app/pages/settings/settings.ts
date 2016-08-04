@@ -4,6 +4,7 @@ import { Address } from './../../components/address_panel';
 import {Place} from './../../providers/place/place';
 import {Loader} from './../../components/loader/loader';
 import {GatherOrder} from './../../providers/order/gather_order';
+import {CarOptions} from "../../providers/car-options/car-options";
 
 /*
   Generated class for the SettingsPage page.
@@ -27,7 +28,9 @@ export class SettingsPage {
   paymentInput: string;
   serviceInput: Array<string> = [];
 
-  constructor(public GatherOrderProvider: GatherOrder, private nav: NavController) {
+  constructor(public GatherOrderProvider: GatherOrder,
+              private nav: NavController,
+              private CarOptionsProvider: CarOptions) {
     this.nav = nav;
     this.tariffs = [
       {name: 'Эконом', price: '50 руб'},
@@ -45,8 +48,16 @@ export class SettingsPage {
       {name: 'WI-FI', comment: ''}
     ];
 
-    this.changeTariff(this.tariffs[0]);
-    this.changePayment(this.payment[0]);
+    CarOptionsProvider.requirements$.subscribe(req => {
+      this.service = req;
+      this.changePayment(this.payment[0]);
+    });
+
+    CarOptionsProvider.carClasses$.subscribe(cars => {
+      this.tariffs = cars;
+      this.changeTariff(this.tariffs[0]);
+    });
+
   };
 
 

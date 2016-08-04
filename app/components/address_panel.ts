@@ -13,8 +13,7 @@ import {AddressItem} from "../interfaces/address";
 @Component({
     selector: 'address',
     templateUrl: 'build/templates/address_panel.html',
-    directives: [SearchPage],
-    providers: [GatherOrder]
+    directives: [SearchPage]
 })
 export class Address {
 

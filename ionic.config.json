@@ -5,7 +5,7 @@
     "proxies": [
         {
             "path": "/api",
-            "proxyUrl": "http://mdtaxiclub.smarttaxi.ru:5777"
+            "proxyUrl": "http://ddmdtaxiclub.smarttaxi.ru:5777"
         }
     ]
 }
