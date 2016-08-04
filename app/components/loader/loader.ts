@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {  NavController } from 'ionic-angular';
 import {GatherOrder} from "../../providers/order/gather_order";
+import {OrderHistory} from "../../providers/order/history";
 
 @Component({
     templateUrl: 'build/components/loader/loader.html',
@@ -9,13 +10,14 @@ export class Loader {
 
     intervalId: number;
 
-    constructor(public nav: NavController, public GatherOrderProvider: GatherOrder) {
+    constructor(public nav: NavController, public GatherOrderProvider: GatherOrder, public OrderHistoryProvider: OrderHistory) {
 
         this.intervalId = setInterval(() => {
             this.GatherOrderProvider.getOrderStatus().then((data) => {
-                console.log('status: ', data['status']);
+                console.log('status: ', data['response']['status']);
                 //условие, что заказ принят
                 //this.close();
+                this.OrderHistoryProvider.save(data['order']);
             })
         }, 10000);
 
