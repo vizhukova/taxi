@@ -1,12 +1,23 @@
 import { Component } from '@angular/core';
 import {  NavController } from 'ionic-angular';
+import {GatherOrder} from "../../providers/order/gather_order";
 
 @Component({
     templateUrl: 'build/components/loader/loader.html',
 })
 export class Loader {
 
-    constructor(public nav: NavController) {
+    intervalId: number;
+
+    constructor(public nav: NavController, public GatherOrderProvider: GatherOrder) {
+
+        this.intervalId = setInterval(() => {
+            this.GatherOrderProvider.getOrderStatus().then((data) => {
+                console.log('status: ', data['status']);
+                //условие, что заказ принят
+                //this.close();
+            })
+        }, 10000);
 
     }
 
@@ -47,7 +58,13 @@ export class Loader {
         else (elementSecond).style.top = `0px`;
     }
 
+    calcelOrder() {
+        this.GatherOrderProvider.cancelOrder();
+        this.close();
+    }
+
     close() {
+        clearInterval(this.intervalId);
         this.nav.pop();
     }
 

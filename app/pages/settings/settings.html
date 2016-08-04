@@ -10,7 +10,7 @@
                 <input type="radio"
                        name="tariff"
                        (click)="changeTariff(item)"
-                       [checked]="tariffInput===item"
+                       [checked]="tariffInput===item.value"
                        id="{{getId('tariff', num)}}" />
 
                 <label htmlFor="{{getId('tariff', num)}}">
@@ -52,8 +52,8 @@
                  <input type="checkbox"
                        name="service"
                        id="{{getId('service', num)}}"
-                       [checked]="isCheckedService(item)"
-                       (change)="changeService(item)"/>
+                       [checked]="isCheckedService(item.value)"
+                       (change)="changeService(item.value)"/>
 
                 <label htmlFor="{{getId('service', num)}}">
                     {{item.name}}

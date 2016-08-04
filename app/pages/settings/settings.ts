@@ -15,8 +15,7 @@ import {CarOptions} from "../../providers/car-options/car-options";
 @Component({
   selector: 'settings-page',
   templateUrl: 'build/pages/settings/settings.html',
-  directives: [Address],
-  providers: [GatherOrder]
+  directives: [Address]
 })
 export class SettingsPage {
 
@@ -24,7 +23,7 @@ export class SettingsPage {
   payment: Array<string>;
   service: Array<Object>;
 
-  tariffInput: any;
+  tariffInput: string;
   paymentInput: string;
   serviceInput: Array<string> = [];
 
@@ -38,25 +37,26 @@ export class SettingsPage {
       {name: 'Бизнесс', price: '200 руб'}
     ];
     this.payment = ['Наличными', 'Безналичными', 'Баллами'];
-    this.service = [
-      {name: 'Перевозки животных', comment: ''},
-      {name: 'Детское кресло', comment: '3 года'},
-      {name: 'Водитель не курит', comment: ''},
-      {name: 'Кондиционер', comment: ''},
-      {name: 'Универсал', comment: ''},
-      {name: 'Купон', comment: ''},
-      {name: 'WI-FI', comment: ''}
-    ];
+    //this.service = [
+    //  {name: 'Перевозки животных', comment: ''},
+    //  {name: 'Детское кресло', comment: '3 года'},
+    //  {name: 'Водитель не курит', comment: ''},
+    //  {name: 'Кондиционер', comment: ''},
+    //  {name: 'Универсал', comment: ''},
+    //  {name: 'Купон', comment: ''},
+    //  {name: 'WI-FI', comment: ''}
+    //];
 
     CarOptionsProvider.requirements$.subscribe(req => {
       this.service = req;
-      this.changePayment(this.payment[0]);
     });
 
     CarOptionsProvider.carClasses$.subscribe(cars => {
       this.tariffs = cars;
       this.changeTariff(this.tariffs[0]);
     });
+
+    this.changePayment(this.payment[0]);
 
   };
 
@@ -71,7 +71,8 @@ export class SettingsPage {
   }
 
   changeTariff(data:Object) {
-    this.tariffInput = data;
+    this.tariffInput = data['value'];
+    this.GatherOrderProvider.setVehicleClass(this.tariffInput);
   }
 
   changePayment(data: string) {
@@ -87,7 +88,6 @@ export class SettingsPage {
       this.serviceInput.push(data);
     }
     this.GatherOrderProvider.setRequirements(this.serviceInput);
-    console.log(this.GatherOrderProvider.get());
   }
 
   isCheckedService(data: string) {

@@ -13,6 +13,7 @@ export class Place {
     direction:string;
     cbs:Function[];
     pathStatus: boolean;
+    fullAddress: Object;
 
     // Observable data sources
     private addressSource = new BehaviorSubject<any>({from: '', to: ''});
@@ -68,6 +69,11 @@ export class Place {
         this.address = {
             from: '',
             to: ''
+        };
+
+        this.fullAddress = {
+            from: {},
+            to: {}
         };
         this.direction = 'from';
         this.cbs = []
@@ -162,10 +168,24 @@ export class Place {
 
                     if(data.results.length){
                         self.address[self.direction] = `${data.results[0].address_components[1].long_name}, ${data.results[0].address_components[0].long_name}`;
+                        self.fullAddress[self.direction] = data.results[0];
                         self.changeAddress(self.address);
                     }
 
                 });
         })
     }
+
+    public getFullAddress(direction: string) {
+        return {
+            city : this.fullAddress[direction].address_components[3].long_name,
+            country : this.fullAddress[direction].address_components[6].long_name,
+            fullAddress : this.fullAddress[direction].formatted_address,
+            shortAddress : this.address[direction],
+            lat : this.coords[direction].latitude,
+            lon : this.coords[direction].longitude
+        };
+    }
+
+
 }
