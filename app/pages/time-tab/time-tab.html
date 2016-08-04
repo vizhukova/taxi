@@ -18,10 +18,12 @@
 
         <div class="items addresses" *ngIf="!address" >
 
-            <div class="address-item" *ngFor="let item of addresses">
-                <span class="address">{{item.data.street}}</span>
+            <div class="address-block" *ngFor="let char of alphabet">
+                <span class="char">{{char}}</span>
+                <div class="address-item" *ngFor="let item of addresses[char]">
+                    <span class="address">{{item.data.street}}</span>
+                </div>
             </div>
-
         </div>
 
         <div class="items trips" *ngIf="address" >
