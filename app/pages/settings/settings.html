@@ -2,52 +2,54 @@
 
     <address></address>
 
-    <div class="block">
-        <p class="header line-header" (click)="func()">Тариф</p>
-        <div class="list radio">
-            <p *ngFor="let item of tariffs; let num = index" class="label">
+    <scroll-content>
 
-                <input type="radio"
-                       name="tariff"
-                       (click)="changeTariff(item)"
-                       [checked]="tariffInput===item.value"
-                       id="{{getId('tariff', num)}}" />
+        <div class="block">
+            <p class="header line-header" (click)="func()">Тариф</p>
+            <div class="list radio">
+                <p *ngFor="let item of tariffs; let num = index" class="label">
 
-                <label htmlFor="{{getId('tariff', num)}}">
-                    {{item.name}}
-                    <!--<span class="price">{{item.price}}</span>-->
-                </label>
-            </p>
+                    <input type="radio"
+                           name="tariff"
+                           (click)="changeTariff(item)"
+                           [checked]="tariffInput===item.value"
+                           id="{{getId('tariff', num)}}" />
+
+                    <label htmlFor="{{getId('tariff', num)}}">
+                        {{item.name}}
+                        <!--<span class="price">{{item.price}}</span>-->
+                    </label>
+                </p>
+            </div>
         </div>
-    </div>
 
-    <div class="block">
-        <p class="header">Оплата</p>
-        <div class="list checkbox">
-             <p *ngFor="let item of payment; let num = index" class="label">
+        <div class="block">
+            <p class="header">Оплата</p>
+            <div class="list checkbox">
+                <p *ngFor="let item of payment; let num = index" class="label">
 
-                 <input type="checkbox"
-                        name="payment"
-                       id="{{getId('payment', num)}}"
-                       [checked]="paymentInput===item"
-                       (change)="changePayment(item)"/>
+                    <input type="checkbox"
+                           name="payment"
+                           id="{{getId('payment', num)}}"
+                           [checked]="paymentInput===item"
+                           (change)="changePayment(item)"/>
 
-                <label htmlFor="{{getId('payment', num)}}">
-                    {{item}}
-                </label>
-            </p>
-             <p class="label">
-                <label class="add">
-                    Добавить систему оплаты
-            </label>
-            </p>
+                    <label htmlFor="{{getId('payment', num)}}">
+                        {{item}}
+                    </label>
+                </p>
+                <p class="label">
+                    <label class="add">
+                        Добавить систему оплаты
+                    </label>
+                </p>
+            </div>
         </div>
-    </div>
 
-     <div class="block">
-        <p class="header">Дополнительные услуги</p>
-          <div class="list checkbox">
-             <p *ngFor="let item of service; let num = index" class="label">
+        <div class="block">
+            <p class="header">Дополнительные услуги</p>
+            <div class="list checkbox">
+                <p *ngFor="let item of service; let num = index" class="label">
 
                  <input type="checkbox"
                        name="service"
@@ -55,12 +57,15 @@
                        [checked]="isCheckedService(item.value)"
                        (change)="changeService(item.value)"/>
 
-                <label htmlFor="{{getId('service', num)}}">
-                    {{item.name}}
-                    <span class="comment">{{item.comment}}</span>
-                </label>
-            </p>
+                    <label htmlFor="{{getId('service', num)}}">
+                        {{item.name}}
+                        <span class="comment">{{item.comment}}</span>
+                    </label>
+                </p>
+            </div>
         </div>
-    </div>
+
+    </scroll-content>
+
 
 </ion-content>

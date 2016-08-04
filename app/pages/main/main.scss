@@ -27,9 +27,9 @@
     text-align: left;
     font-size: 20px;
     overflow: hidden;
-    background: url("../res/btn_price.png") no-repeat, url("../res/icon_arrow.png") no-repeat;
-    background-position: center center, right 10px center;
-    background-size: 100% 100%, 30px 30px;
+    background: $main-bright-color url("../res/icon_arrow.png") no-repeat;
+    background-position: right 10px center;
+    background-size: 30px 30px;
     position: absolute;
     z-index: 2;
 

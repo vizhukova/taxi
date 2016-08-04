@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-// import _ from 'lodash'
+import * as _ from 'lodash'
 
 /*
   Generated class for the TimeTabPage page.
@@ -18,6 +18,7 @@ export class TimeTabPage {
   header: any = 'Прошлые поездки';
   addresses: any;
   trips: any;
+  alphabet: any;
 
   constructor() {
 
@@ -33,9 +34,11 @@ export class TimeTabPage {
       {title: "Детский сад", data: {street: 'Фетрозаводская 45'}}
     ];
 
-    // this.addresses = _.groupBy(this.addresses, (a)=>{
-    //   a.data.street.charAt(0)
-    // });
+    this.addresses = _.groupBy(this.addresses, (a:any) => {
+      return a.data.street.charAt(0).toUpperCase()
+    });
+
+    this.alphabet = Object.keys(this.addresses);
 
     this.trips = [
       {title: "Дом", data: {from: 'Комсомольская 69, п.1', to: 'Большая Серпуховская, 64'}},
@@ -44,23 +47,6 @@ export class TimeTabPage {
       {title: "Детский сад", data: {from: 'Петрозаводская 45', to: 'Большая Серпуховская, 64'}}
     ]
   }
-  
-  sortList(addresses: any) {
-    var sorted = addresses.sort((a, b) => {
-
-      if (a.data.street > b.data.street) return 1;
-      
-      if (a.data.street < b.data.street) return -1;
-      
-      return 0;
-      
-    });
-    
-    sorted.map(item => {
-      
-    })
-  }
-
 
   toggleView() {
     this.address = !this.address

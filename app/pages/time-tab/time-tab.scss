@@ -105,20 +105,35 @@
       padding-bottom: 60px;
 
       &.addresses {
-        padding-left: 17%;
         background: #f7f7f9;
 
-        > div {
-          height: 54px;
-          line-height: 54px;
-          padding-left: 5px;
-          width: 93%;
-          border-bottom: 1px solid #ebedf1;
+        > div.address-block {
+          padding-left: 17%;
+          position: relative;
 
-          span.address {
-            color: #575759;
-            font-size: 16px;
+          span.char {
+            position: absolute;
+            left: 9%;
+            top: 15px;
+            color: #e57339;
+            //font-family: MyriadPro;
+            font-size: 20px;
             font-weight: 600;
+          }
+
+
+          > div.address-item {
+            height: 54px;
+            line-height: 54px;
+            padding-left: 5px;
+            width: 93%;
+            border-bottom: 1px solid #ebedf1;
+
+            span.address {
+              color: #575759;
+              font-size: 16px;
+              font-weight: 600;
+            }
           }
         }
       }

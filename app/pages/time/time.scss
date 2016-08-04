@@ -9,6 +9,19 @@
     background: $main-header-background;
   }
 
+  .address-panel {
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: -7px;
+      left: 0;
+      height: 9px;
+      right: 0;
+      margin: auto;
+      background: url("../res/logo_line.png") right bottom no-repeat;
+    }
+  }
+
   .block {
     .content {
       background: #f7f7f9;
@@ -58,7 +71,7 @@
     .list{
       .label{
         .price{
-          width: 50%;
+          //width: 50%;
           text-align: right;
         }
       }
