@@ -4,6 +4,8 @@ import {NavParams} from "ionic-angular/index";
 import {Platform} from "ionic-angular/index";
 import {RidesModal} from "./modal/rides";
 import {Auth} from "../../providers/auth/auth";
+import {OrderHistory} from "../../providers/order/history";
+import {Order} from "../../interfaces/order";
 
 
 @Component({
@@ -13,8 +15,9 @@ import {Auth} from "../../providers/auth/auth";
 export class AccountPage {
   
   user:any;
+  lastRidesLenth: number;
 
-  constructor(private nav: NavController, private AuthProvider: Auth) {
+  constructor(private nav: NavController, private AuthProvider: Auth, public OrderHistoryProvider: OrderHistory) {
     this.nav = nav;
 
     this.user = {
@@ -22,6 +25,8 @@ export class AccountPage {
       id: null,
       phone: null
     };
+
+    this.lastRidesLenth = this.OrderHistoryProvider.get().length || 0;
 
     AuthProvider.user$.subscribe(user => {
       this.user = user;

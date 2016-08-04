@@ -1,29 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { OrderModel } from './../../models/order';
+import { Order } from './../../interfaces/order';
 
 
 @Injectable()
-export class Order {
-  data: any;
+export class OrderHistory {
 
-  constructor(private http: Http, private order: OrderModel) {
+  orders: Array<Order> = [];
 
-
-
+  constructor(private http: Http) {
+    this.getFromLS();
   }
 
-  create(){
+  public save(data: Order) {
 
+    this.orders.push(data);
+    localStorage.setItem('history', JSON.stringify(this.orders));
   }
 
-  setDestination(){
-
+  public get() {
+    return this.orders;
   }
 
-  setSource
-
+  getFromLS() {
+    let data = localStorage.getItem('history');
+    data = JSON.parse(data) || [];
+    this.orders = data;
+  }
 
 }
 

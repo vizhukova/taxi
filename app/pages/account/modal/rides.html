@@ -15,12 +15,12 @@
         <div class="block" *ngFor="let item of getArrayOfRides()">
             <div class="content">
                 <p class="panel panel-title">
-                   <span>{{item.time}}</span>
+                   <span>{{item.bookingDate}}</span>
                 </p>
                 <p class="panel">
                     <span class="route"></span>
-                    <span class="panel">{{item.from.street}}</span>
-                    <span class="panel">{{item.to.street}}</span>
+                    <span class="panel">{{item.source.shortAddress}}</span>
+                    <span class="panel">{{item.destinations[0].shortAddress}}</span>
                 </p>
                 <p></p>
                 <p></p>
