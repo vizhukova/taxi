@@ -82,7 +82,7 @@
 
   .content {
 
-    > .sub-header {
+      > .sub-header {
       height: 41px;
       line-height: 43px;
       color: $main-bright-color;
@@ -106,32 +106,19 @@
 
       &.addresses {
         padding-left: 17%;
+        background: #f7f7f9;
 
         > div {
           height: 54px;
-          border-bottom: 1px solid #e6e9ee;
-          padding-top: 11px;
+          line-height: 54px;
           padding-left: 5px;
           width: 93%;
+          border-bottom: 1px solid #ebedf1;
 
-          ion-icon {
-            display: inline-block;
-            font-size: 19.2em;
-            float: right;
-            color: #b3b3b3;
-            margin-top: 2px;
-          }
-
-          p.title {
+          span.address {
             color: #575759;
             font-size: 16px;
             font-weight: 600;
-          }
-
-          span.address {
-            color: #b2b2b2;
-            font-size: 14px;
-            font-weight: 400;
           }
         }
       }

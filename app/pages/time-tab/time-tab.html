@@ -13,14 +13,12 @@
 
     </div>
 
-    <div class="content">
+    <div class="content list">
         <div class="sub-header">{{header}}</div>
 
         <div class="items addresses" *ngIf="!address" >
 
             <div class="address-item" *ngFor="let item of addresses">
-                <ion-icon md="md-more"></ion-icon>
-                <p class="title">{{item.title}}</p>
                 <span class="address">{{item.data.street}}</span>
             </div>
 
