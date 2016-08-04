@@ -2,6 +2,12 @@ import { Injectable } from '@angular/core';
 import {Http, Response} from '@angular/http';
 import { OrderModel } from './../../models/order';
 import {Auth} from "../auth/auth";
+import {Place} from "../place/place";
+import {CarOptions} from "../car-options/car-options";
+import {Source} from "../../interfaces/order";
+import {Destination} from "../../interfaces/order";
+import {Order} from "../../interfaces/order";
+import {URL} from './../../config';
 
 
 @Injectable()
@@ -13,31 +19,51 @@ export class GatherOrder {
     status: string;
 
     data:any;
-    destinations:Array<Object>;//type KnopkaGeoPoint[]
-    source:Object;//type KnopkaGeoPoint
+
+    destinations:Array<Destination>;//type KnopkaGeoPoint[]
+    source:Source;//type KnopkaGeoPoint
     urgent:boolean = false;
-    requirements:Array<string>;
-    phone:string;
+    vehicleClass: string;
+    recipientBlackListed: string;
+    recipientLoyal : string;
+    recipientPhone : string;
+    requirements : Array<string>;
 
 
-    constructor(private http:Http, private AuthProvider: Auth) {
-        
+    constructor(private http:Http,
+                private AuthProvider: Auth,
+                private PlaceProvider: Place,
+                private CarOptionsProvider: CarOptions) {
+
     }
 
-    public setDestination(data: Object) {
+    public setDestination(data: Destination) {
         this.destinations = [data];
     }
-    public setSource(point: Object) {
-        this.destinations = [point];
+    public setSource(point: Source) {
+        this.source = point;
     }
-    public setUrgent(point: Object) {
-        this.destinations = [point];
+    public setUrgent(point: boolean) {
+        this.urgent = point;
     }
     public setRequirements(data: Array<string>) {
+        debugger
         this.requirements = data;
     }
     public setPhone(data: string) {
-        this.phone = data;
+        this.recipientPhone = data;
+    }
+
+    public setVehicleClass(data: string) {
+        debugger
+        this.vehicleClass = data;
+    }
+
+    public setRecipientBlackListed(data: string) {
+        this.recipientBlackListed = data;
+    }
+    public setRecipientLoyal(data: string) {
+        this.recipientLoyal = data;
     }
 
     public get() {
@@ -72,7 +98,8 @@ export class GatherOrder {
     public createOrder(){
 
         let user = this.AuthProvider.getUser();
-
+        let source = this.PlaceProvider.getFullAddress('from');
+        let destination = this.PlaceProvider.getFullAddress('to');
         /**
          * TODO Собрать заказ в нужном формате
          * @type {{}}
@@ -122,7 +149,26 @@ export class GatherOrder {
             }
          }
          */
-        let body = {};
+
+        this.apiId = user.id;
+
+        let body = {
+            apiId: user.id,
+            order: {
+                bookingDate : "27-05-2016 09:15",
+                bookmins : 20,
+                booktype : "exact",
+                destinations: [destination],
+                recipientBlackListed : "no",
+                recipientLoyal : "yes",
+                recipientPhone : user.phone,
+                requirements : this.requirements,
+                source: source,
+                urgent: this.urgent,
+                vehicleClass: this.vehicleClass
+            }
+        };
+        console.log(JSON.stringify(body));
 
 
         return new Promise((resolve, reject) => {
@@ -144,11 +190,11 @@ export class GatherOrder {
 
     public cancelOrder(){
 
-        let user = this.AuthProvider.getUser();
+        //let user = this.AuthProvider.getUser();
 
         let body = {
             orderId: this.currentOrderId,
-            apiId: user.apiId,
+            apiId: this.apiId,
             reason: ''
         };
 
@@ -175,8 +221,8 @@ export class GatherOrder {
 
         let body = {
             orderId: this.currentOrderId,
-            apiId: user.apiId,
-            lastDate: this.lastDate
+            apiId: user.apiId/*,
+            lastDate: this.lastDate*/
         };
 
         return new Promise((resolve, reject) => {

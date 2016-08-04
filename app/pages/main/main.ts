@@ -18,6 +18,7 @@ import {Place} from "../../providers/place/place";
 import {Cost} from "../../providers/cost/cost";
 import {Loader} from "../../components/loader/loader";
 import {CarOptions} from "../../providers/car-options/car-options";
+import {GatherOrder} from "../../providers/order/gather_order";
 
 @Component({
   selector: 'search-page',
@@ -51,7 +52,8 @@ export class MainPage {
               private AuthProvider: Auth,
               private PlaceProvider: Place,
               private CostProvider: Cost,
-              private CarOptionsProvider: CarOptions) {
+              private CarOptionsProvider: CarOptions,
+              private GatherOrderProvider: GatherOrder) {
     this.nav = nav;
     this.activeTab = 'home';
     this.activeTabSet = 'main';
@@ -111,7 +113,11 @@ export class MainPage {
     if(!this.AuthProvider.check()){
       this.nav.push(RegistrationModal);
     }else{
-      this.nav.push(Loader);
+
+      this.GatherOrderProvider.createOrder().then(() => {
+        this.nav.push(Loader);
+      });
+
     }
     
   }
