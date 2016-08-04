@@ -47,7 +47,6 @@ export class GatherOrder {
         this.urgent = point;
     }
     public setRequirements(data: Array<string>) {
-        debugger
         this.requirements = data;
     }
     public setPhone(data: string) {
@@ -55,7 +54,6 @@ export class GatherOrder {
     }
 
     public setVehicleClass(data: string) {
-        debugger
         this.vehicleClass = data;
     }
 
@@ -88,7 +86,7 @@ export class GatherOrder {
         };
 
         if(type === 'source') {
-            this.source = item;
+            this.source = <Source>item;
         }else if(type === 'destination') {
             this.destinations = [item];
         }

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ApplicationRef} from '@angular/core';
 import {Input} from '@angular/core';
 import {Http, Response, RequestOptions, Headers} from '@angular/http';
 import * as L from 'leaflet'
@@ -39,7 +39,7 @@ export class Map {
     @Input() callEnable:Function;
 
 
-    constructor(private PlaceProvider:Place, private http:Http, private cost:Cost) {
+    constructor(private PlaceProvider:Place, private http:Http, private cost:Cost, private ref: ApplicationRef) {
 
         this.onDragEnd = this.onDragEnd.bind(this);
         this.timeout = this.timeout.bind(this);
@@ -108,7 +108,10 @@ export class Map {
                 this.map.setView([
                     currentCoordinates.latitude,
                     currentCoordinates.longitude
-                ])
+                ]);
+
+                this.ref.tick();
+                this.map.invalidateSize(true);
             }
 
         });

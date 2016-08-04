@@ -42,7 +42,8 @@
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard",
-    "cordova-plugin-request-location-accuracy"
+    "cordova-plugin-request-location-accuracy",
+    "cordova-plugin-geolocation"
   ],
   "cordovaPlatforms": []
 }
