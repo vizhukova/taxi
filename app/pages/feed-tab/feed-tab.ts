@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {  OrderHistory } from './../../providers/order/history';
+
 
 @Component({
   selector: 'feed-tab-page',
@@ -14,7 +16,7 @@ export class FeedTabPage {
   addresses: any;
   trips: any;
 
-  constructor() {
+  constructor(public OrderHistoryProvider: OrderHistory) {
 
     this.addresses = [
       {title: "Дом", data: {street: 'Комсомольская 69, п.1'}},
@@ -23,12 +25,10 @@ export class FeedTabPage {
       {title: "Детский сад", data: {street: 'Петрозаводская 45'}}
     ];
     
-    this.trips = [
-      {title: "Дом", data: {from: 'Комсомольская 69, п.1', to: 'Большая Серпуховская, 64'}},
-      {title: "Моя работа", data: {from: 'Петрозаводская 45', to: 'Большая Серпуховская, 64'}},
-      {title: "Работа жены", data: {from: 'Комсомольская 69, п.1', to: 'Большая Серпуховская, 64'}},
-      {title: "Детский сад", data: {from: 'Петрозаводская 45', to: 'Большая Серпуховская, 64'}}
-    ]
+    this.trips = this.OrderHistoryProvider.get();
+
+
+
     
   }
 

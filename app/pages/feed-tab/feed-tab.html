@@ -30,13 +30,12 @@
             <div class="block" *ngFor="let item of trips">
                 <div class="content">
                     <p class="panel panel-title">
-                        <ion-icon md="md-more"></ion-icon>
-                        <span>{{item.title}}</span>
+                        <span>{{item.bookingDate}}</span>
                     </p>
                     <p class="panel">
                         <span class="route"></span>
-                        <span class="panel">{{item.data.from}}</span>
-                        <span class="panel">{{item.data.to}}</span>
+                        <span class="panel">{{item.source.shortAddress}}</span>
+                        <span class="panel">{{item.destinations[0].shortAddress}}</span>
                     </p>
                     <p></p>
                     <p></p>

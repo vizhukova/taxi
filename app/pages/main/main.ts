@@ -67,17 +67,21 @@ export class MainPage {
       to: 'определение адреса поездки',
     };
 
-     if(cordova){
-       cordova.plugins.locationAccuracy.canRequest(function(canRequest){
-         if(canRequest){
-           cordova.plugins.locationAccuracy.request(function(){
-             console.log("Successfully made request to invoke native Location Services dialog");
-           }, function(){
-             console.error("Failed to invoke native Location Services dialog");
-           });
-         }
-       });
-     }
+    setTimeout(() => {
+      if(cordova && cordova.plugins && cordova.plugins.locationAccuracy){
+        if(cordova){
+          cordova.plugins.locationAccuracy.canRequest(function(canRequest){
+            if(canRequest){
+              cordova.plugins.locationAccuracy.request(function(){
+                console.log("Successfully made request to invoke native Location Services dialog");
+              }, function(){
+                console.error("Failed to invoke native Location Services dialog");
+              });
+            }
+          });
+        }
+      }
+    }, 300);
 
 
 

@@ -18,25 +18,26 @@
 
         <div class="items addresses" *ngIf="!address" >
 
-            <div class="address-block" *ngFor="let char of alphabet">
+            <div class="address-block" *ngFor="let char of alphabet" >
                 <span class="char">{{char}}</span>
-                <div class="address-item" *ngFor="let item of addresses[char]">
+                <div class="address-item" *ngFor="let item of addresses[char]; let i=index" (click)="setAddress(i, char)">
                     <span class="address">{{item.data.street}}</span>
                 </div>
             </div>
         </div>
 
         <div class="items trips" *ngIf="address" >
-            <div class="block" *ngFor="let item of trips">
+            <div class="block"
+                 *ngFor="let item of trips;let i=index"
+                 >
                 <div class="content">
                     <p class="panel panel-title">
-                        <ion-icon md="md-more"></ion-icon>
-                        <span>{{item.title}}</span>
+                        <span>{{item.bookingDate}}</span>
                     </p>
                     <p class="panel">
                         <span class="route"></span>
-                        <span class="panel">{{item.data.from}}</span>
-                        <span class="panel">{{item.data.to}}</span>
+                        <span class="panel">{{item.source.shortAddress}}</span>
+                        <span class="panel">{{item.destinations[0].shortAddress}}</span>
                     </p>
                     <p></p>
                     <p></p>

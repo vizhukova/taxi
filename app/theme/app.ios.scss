@@ -29,3 +29,6 @@
 // App iOS Only Sass
 // --------------------------------------------------
 // CSS that should only apply to the iOS app
+ion-nav > ion-page > ion-content.statusbar-padding:first-child scroll-content{
+  padding-top: 0;
+}

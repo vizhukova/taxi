@@ -35,8 +35,12 @@ export class Place {
     path$ = this.pathSource.asObservable();
 
     // Service message commands
-    changeAddress(address:string) {
+    public changeAddress(address:string) {
         this.addressSource.next(address);
+    }
+
+    public getDirection(){
+        return this.direction;
     }
 
     changeCoords(coords:PathCoordinates) {

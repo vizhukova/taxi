@@ -5,6 +5,7 @@ import * as L from 'leaflet'
 import {Place} from './../providers/place/place';
 import {Cost} from './../providers/cost/cost';
 import {Coordinates, PathCoordinates} from "../interfaces/coordinates";
+declare var cordova: any;
 
 @Component({
     selector: 'map',
@@ -111,7 +112,10 @@ export class Map {
                 ]);
 
                 this.ref.tick();
-                this.map.invalidateSize(true);
+                setTimeout(() => {
+                    self.ref.tick();
+                    self.map.invalidateSize(true);
+                }, 300)
             }
 
         });
@@ -234,6 +238,20 @@ export class Map {
         if (!this.map) {
             this.map = new L.Map(this.selector, {center: mapCoords, zoom: 15, layers: [osmLayer], zoomControl: false});
         }
+
+        this.map.on('click', () => {
+            if(cordova){
+                cordova.plugins.Keyboard.close();
+            }
+        });
+
+        this.map.on('dragstart', () => {
+            if(cordova){
+                cordova.plugins.Keyboard.close();
+            }
+        })
+
+
 
         if (!this.editable) this.map.on('dragend', this.timeout);
 
