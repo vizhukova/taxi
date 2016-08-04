@@ -47,13 +47,13 @@
     <div [ngClass]="setDetailClasses()" *ngIf="detail">
         <div class="top">
             <div class="group house">
-                <input type="text" required>
+                <input type="text" [(ngModel)]="house" required>
                 <span class="highlight"></span>
                 <span class="bar"></span>
                 <label>номер дома</label>
             </div>
             <div class="group block">
-                <input type="text" required>
+                <input type="text" [(ngModel)]="block" required>
                 <span class="highlight"></span>
                 <span class="bar"></span>
                 <label>подъезд</label>
@@ -61,7 +61,7 @@
         </div>
         <div class="bottom">
             <div class="group comment">
-                <input type="text" required>
+                <input type="text" [(ngModel)]="comment" required>
                 <span class="highlight"></span>
                 <span class="bar"></span>
                 <label>Примечание</label>
