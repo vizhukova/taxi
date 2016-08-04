@@ -5,6 +5,7 @@ import {Place} from './../../providers/place/place';
 import {Cost} from './../../providers/cost/cost';
 import {RegistrationModal} from './../../components/registration/registration';
 import {NavController} from "ionic-angular/index";
+
 // import polyline from 'polyline'
 
 
@@ -42,6 +43,7 @@ export class HomePage {
             self.cost = cost;
         })
     }
+
 
     enableCall(value) {
         this.isAddress = value;

@@ -1,6 +1,6 @@
 import {Component, Input, ViewChild } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import {Observable} from "rxjs/Rx";
+//import {Observable} from "rxjs/Rx";
 import {Place} from "../providers/place/place";
 import {GatherOrder} from './../providers/order/gather_order';
 import { NavController } from 'ionic-angular';
@@ -8,7 +8,11 @@ import {SearchPage} from "../pages/search/search";
 import {FavoritePopup} from "../pages/search-tab/favorite_popup/popup";
 import {Nav} from "../providers/nav/nav";
 import {PathCoordinates} from "../interfaces/coordinates";
+//import {AddressItem} from "../interfaces/address";
+import {AddressProvider} from "../providers/address/address";
+import {Subject, BehaviorSubject, Observable} from 'rxjs'
 import {AddressItem} from "../interfaces/address";
+
 
 @Component({
     selector: 'address',
@@ -26,6 +30,10 @@ export class Address {
     editable: any;
     detail: boolean;
 
+    house: string;
+    block: string;
+    comment: string;
+
     public test: any;
 
     @Input() view: any;
@@ -35,6 +43,7 @@ export class Address {
 
     constructor(public nav: NavController,
                 public GatherOrderProvider: GatherOrder,
+                public AddressProvider: AddressProvider,
                 private place: Place,
                 private http: Http,
                 private NavProvider: Nav) {
@@ -227,6 +236,7 @@ export class Address {
     }
 
     showFavoritePopup() {
+        this.AddressProvider.changeFavoriteAddress({house: this.house, housing: this.block, description: this.comment});
         this.nav.push(FavoritePopup);
     }
 
