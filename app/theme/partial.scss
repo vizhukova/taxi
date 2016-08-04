@@ -13,7 +13,7 @@
     z-index: 2000;
 
   div.main {
-    padding-left: 9.6%;
+    padding-left: 10.9%;
     height: 50%;
     position: relative;
     color: #fff;
@@ -31,11 +31,11 @@
       }
 
       > span:not(.clear) {
-        background: url('../res/icon_from.svg') no-repeat;
+        background: url("../res/icon_path_from.png") center center no-repeat;
         background-size: contain;
         vertical-align: middle;
         width: 16px;
-        height: 22px;
+        height: 100%;
         position: relative;
 
         &:before {
@@ -43,7 +43,7 @@
           display: block;
           position: absolute;
           height: 23px;
-          bottom: -26px;
+          bottom: -15px;
           width: 1px;
           left: 0;
           right: 0;
@@ -70,17 +70,17 @@
       }
 
       > span {
-        background: url("../res/icon_to.svg") no-repeat;
-        background-size: 100% 100%;
+        background: url("../res/icon_path_to.png") center center no-repeat;
+        background-size: 10px 100%;
         vertical-align: middle;
-        width: 10px;
+        width: 16px;
         height: 10px;
       }
     }
 
     span:not(.clear) {
-      width: 16px;
-      height: 16px;
+      //width: 16px;
+      //height: 16px;
       display: inline-block;
     }
 

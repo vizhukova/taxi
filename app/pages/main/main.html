@@ -1,15 +1,15 @@
 <div class="tab-header" *ngIf="activeTabSet === 'main'">
-  <div [ngClass]="setClasses('home')" (click)="changeTab('home')"><ion-icon md="ios-locate"></ion-icon></div>
-  <div [ngClass]="setClasses('settings')" (click)="changeTab('settings')"><ion-icon md="ios-options"></ion-icon></div>
-  <div [ngClass]="setClasses('time')" (click)="changeTab('time')"><ion-icon md="ios-clock"></ion-icon></div>
-  <div [ngClass]="setClasses('account')" (click)="changeTab('account')"><ion-icon md="ios-person"></ion-icon></div>
+  <div [ngClass]="setClasses('home')" (click)="changeTab('home')"></div>
+  <div [ngClass]="setClasses('settings')" (click)="changeTab('settings')"></div>
+  <div [ngClass]="setClasses('time')" (click)="changeTab('time')"></div>
+  <div [ngClass]="setClasses('account')" (click)="changeTab('account')"></div>
 </div>
 
-<div class="tab-header" *ngIf="activeTabSet === 'search'">
-  <div [ngClass]="setClasses('home')" (click)="changeTab('home')"><ion-icon md="ios-search"></ion-icon></div>
-  <div [ngClass]="setClasses('time-tab')" (click)="changeTab('time-tab')"><ion-icon md="ios-timer"></ion-icon></div>
-  <div [ngClass]="setClasses('feed-tab')" (click)="changeTab('feed-tab')"><ion-icon md="ios-star-outline"></ion-icon></div>
-  <div [ngClass]="setClasses('fly-tab')" (click)="changeTab('fly-tab')"><ion-icon md="ios-plane"></ion-icon></div>
+<div class="tab-header searchtab" *ngIf="activeTabSet === 'search'">
+  <div [ngClass]="setClasses('home')" (click)="changeTab('home')"></div>
+  <div [ngClass]="setClasses('time-tab')" (click)="changeTab('time-tab')"></div>
+  <div [ngClass]="setClasses('feed-tab')" (click)="changeTab('feed-tab')"></div>
+  <div [ngClass]="setClasses('fly-tab')" (click)="changeTab('fly-tab')"></div>
 </div>
 
 <div class="content">
