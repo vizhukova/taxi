@@ -29,6 +29,8 @@ export class GatherOrder {
     recipientPhone : string;
     requirements : Array<string>;
 
+    order: Order;
+
 
     constructor(private http:Http,
                 private AuthProvider: Auth,
@@ -151,23 +153,25 @@ export class GatherOrder {
          */
 
         this.apiId = user.id;
+        this.order = {
+            bookingDate : "27-05-2016 09:15",
+            bookmins : 20,
+            booktype : "exact",
+            destinations: [destination],
+            recipientBlackListed : "no",
+            recipientLoyal : "yes",
+            recipientPhone : user.phone,
+            requirements : this.requirements,
+            source: source,
+            urgent: this.urgent,
+            vehicleClass: this.vehicleClass
+        };
 
         let body = {
             apiId: user.id,
-            order: {
-                bookingDate : "27-05-2016 09:15",
-                bookmins : 20,
-                booktype : "exact",
-                destinations: [destination],
-                recipientBlackListed : "no",
-                recipientLoyal : "yes",
-                recipientPhone : user.phone,
-                requirements : this.requirements,
-                source: source,
-                urgent: this.urgent,
-                vehicleClass: this.vehicleClass
-            }
+            order: this.order
         };
+
         console.log(JSON.stringify(body));
 
 
@@ -231,7 +235,7 @@ export class GatherOrder {
 
                     let data = res.json();
                     this.currentOrderId = data.orderId;
-                    resolve(data);
+                    resolve({order: this.order, response: data});
 
                 }, (err) => {
 

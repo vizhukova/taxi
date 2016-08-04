@@ -142,6 +142,11 @@
         display: block;
         margin: 0 15px 0 48px;
         color: $main-dark-color;
+        text-overflow: ellipsis;
+        word-wrap: inherit;
+        white-space: nowrap;
+        overflow: hidden;
+
         &:last-child {
           border: none;
         }

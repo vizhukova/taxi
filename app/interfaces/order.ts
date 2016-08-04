@@ -1,13 +1,13 @@
 export interface Source {
     city : string
-    closestStation : string
+    closestStation ?: string
     country : string
-    description : string
-    entrance : string
+    description ?: string
+    entrance ?: string
     fullAddress : string
-    housing : string
-    index : number
-    kind : string
+    housing ?: string
+    index ?: number
+    kind ?: string
     lat : number
     lon : number
     shortAddress : string
@@ -15,14 +15,14 @@ export interface Source {
 
 export interface Destination {
     city : string
-    closestStation : string
+    closestStation ?: string
     country : string
-    description : string
-    entrance : string
+    description ?: string
+    entrance ?: string
     fullAddress : string
-    housing : string
-    index : number
-    kind : string
+    housing ?: string
+    index ?: number
+    kind ?: string
     lat : number
     lon : number
     shortAddress : string
@@ -32,7 +32,7 @@ export interface Destination {
 export interface Order{
 
     bookingDate: string
-    bookmins: string
+    bookmins: number
     booktype: string
     destinations: Destination[]
     recipientBlackListed: string
