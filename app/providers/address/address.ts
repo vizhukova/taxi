@@ -19,8 +19,10 @@ export class AddressProvider {
     }
 
     public save(key: string, data: AddressItem) {
-        let dataToSave = JSON.stringify(data);
-        localStorage.setItem(key, dataToSave);
+
+        let dataToSave = localStorage.getItem('favorite') ? JSON.parse(localStorage.getItem('favorite')) : {};
+        dataToSave[key] = data;
+        localStorage.setItem('favorite', JSON.stringify(dataToSave));
     }
 
 
