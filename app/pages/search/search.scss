@@ -1,35 +1,3 @@
 .main-page {
-  .tab-header {
-    height: 56px;
 
-    .tab {
-      width: 25%;
-      float: left;
-      height: 100%;
-      background: #2c2c30;
-      line-height: 72px;
-      text-align: center;
-
-      &.active {
-
-        ion-icon{
-          color: $main-bright-color;
-        }
-
-      }
-
-      ion-icon {
-        font-size: 22px;
-        color: #a8bea1;
-      }
-    }
-  }
-
-  > .content {
-    position: absolute;
-    bottom: 0;
-    top: 56px;
-    left: 0;
-    right: 0;
-  }
 }
