@@ -5,6 +5,19 @@
     padding-top: 97px;
   }
 
+  .address-panel {
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: -7px;
+      left: 0;
+      height: 9px;
+      right: 0;
+      margin: auto;
+      background: url("../res/logo_line.png") right bottom no-repeat;
+    }
+  }
+
   &>* {
     // TODO change calculating
     height: calc(100% - 50px);
