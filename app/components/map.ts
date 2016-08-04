@@ -27,6 +27,10 @@ export class Map {
     direction:any;
     isMarkerVisible:boolean;
 
+    locateButton: any;
+    pathButton: any;
+    timer: any;
+
 
     @Input() callback:Function;
     @Input() editable:boolean;
@@ -36,7 +40,9 @@ export class Map {
 
 
     constructor(private PlaceProvider:Place, private http:Http, private cost:Cost) {
+
         this.onDragEnd = this.onDragEnd.bind(this);
+        this.timeout = this.timeout.bind(this);
 
         this.coords = <PathCoordinates>{
             from: {latitude: 0, longitude: 0},
@@ -75,13 +81,13 @@ export class Map {
             onAdd: function (map) {
 
                 var container = L.DomUtil.create('div', 'nav-panel');
-                var locate = L.DomUtil.create('div', 'locate-button', container);
-                var path = L.DomUtil.create('div', 'calcpath-button', container);
+                self.locateButton = L.DomUtil.create('div', 'locate-button', container);
+                self.pathButton = L.DomUtil.create('div', 'calcpath-button', container);
 
-                path.addEventListener('click', () => {
+                self.pathButton.addEventListener('click', () => {
                     self.calcPolyline(self.coords)
                 });
-                locate.addEventListener('click', () => {
+                self.locateButton.addEventListener('click', () => {
                     self.locateMe()
                 });
 
@@ -198,6 +204,20 @@ export class Map {
 
     }
 
+    private timeout(){
+
+        this.locateButton.classList.add('loading');
+
+        if(this.timer) clearTimeout(this.timer);
+
+        this.timer = setInterval(() => {
+            this.onDragEnd();
+            this.locateButton.classList.remove('loading');
+            clearTimeout(this.timer)
+        }, 1200)
+
+    }
+
     private createMap(name:string):void {
 
         if (this.selector !== name) return;
@@ -212,9 +232,9 @@ export class Map {
             this.map = new L.Map(this.selector, {center: mapCoords, zoom: 15, layers: [osmLayer], zoomControl: false});
         }
 
-        if (!this.editable) this.map.on('dragend', this.onDragEnd);
+        if (!this.editable) this.map.on('dragend', this.timeout);
 
-        if (!this.editable) this.map.on('zoomend', this.onDragEnd);
+        if (!this.editable) this.map.on('zoomend', this.timeout);
 
         if (!this.editable) this.map.addControl(new this.pathBtn());
 
@@ -262,12 +282,16 @@ export class Map {
 
         if (!from.Lat || !from.Lon || !to.Lat || !to.Lon) return;
 
+        this.pathButton.classList.add('loading');
+
         this.http.post('http://ddtaxity.smarttaxi.ru:8000/1.x/route?taxiserviceid=taxity', [from, to])
 
             .subscribe((res:Response) => {
                 var data = res.json();
 
-                this.markPolyline(this.PlaceProvider.decodeGooglePolyline(data.overviewPolyline))
+                this.markPolyline(this.PlaceProvider.decodeGooglePolyline(data.overviewPolyline));
+
+                this.pathButton.classList.remove('loading');
             });
 
         this.cost.getCost()
@@ -276,10 +300,13 @@ export class Map {
 
     private locateMe():void {
 
+        this.locateButton.classList.add('loading');
 
         this.PlaceProvider.getPosition().then((data:Coordinates) => {
             this.map.setView(L.latLng(data.latitude, data.longitude), 16);
-            this.onDragEnd()
+            this.map.invalidateSize(true);
+            this.onDragEnd();
+            this.locateButton.classList.remove('loading');
         }).catch((err) => {
             //debugger
         })

@@ -19,6 +19,8 @@ import {Cost} from "../../providers/cost/cost";
 import {Loader} from "../../components/loader/loader";
 import {CarOptions} from "../../providers/car-options/car-options";
 
+declare var cordova:any
+
 @Component({
   selector: 'search-page',
   templateUrl: 'build/pages/main/main.html',
@@ -62,6 +64,21 @@ export class MainPage {
       from: 'определение адреса подачи такси',
       to: 'определение адреса поездки',
     };
+
+    // if(cordova){
+    //   cordova.plugins.locationAccuracy.request(function (success){
+    //     console.log("Successfully requested accuracy: "+success.message);
+    //   }, function (error){
+    //     console.error("Accuracy request failed: error code="+error.code+"; error message="+error.message);
+    //     if(error.code !== cordova.plugins.locationAccuracy.ERROR_USER_DISAGREED){
+    //       if(window.confirm("Failed to automatically set Location Mode to 'High Accuracy'. Would you like to switch to the Location Settings page and do this manually?")){
+    //         cordova.plugins.diagnostic.switchToLocationSettings();
+    //       }
+    //     }
+    //   }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
+    // }
+
+
 
     NavProvider.tab$.subscribe(tab => {
       this.activeTab = tab;

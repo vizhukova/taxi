@@ -54,7 +54,7 @@ export class HomePage {
         this.Place.getPosition().then((coords:any) => {
             this.Place.getCurrentAddress(coords);
         }).catch((err) => {
-            debugger
+            console.log(err)
         })
     }
 

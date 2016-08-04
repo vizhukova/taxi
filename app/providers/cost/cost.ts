@@ -9,7 +9,7 @@ import {URL} from './../../config';
 @Injectable()
 export class Cost {
 
-    cost:number;
+    cost:any;
 
 
     private costSource = new BehaviorSubject<any>(null);
@@ -64,6 +64,9 @@ export class Cost {
                     resolve(data);
 
                 }, (err) => {
+
+                    self.cost = "---";
+                    self.emitUpdate();
 
                     reject(err);
 

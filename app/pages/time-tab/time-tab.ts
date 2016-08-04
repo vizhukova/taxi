@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import _ from 'lodash'
+// import _ from 'lodash'
 
 /*
   Generated class for the TimeTabPage page.
@@ -33,9 +33,9 @@ export class TimeTabPage {
       {title: "Детский сад", data: {street: 'Фетрозаводская 45'}}
     ];
 
-    this.addresses = _.groupBy(this.addresses, (a)=>{
-      a.data.street.charAt(0)
-    });
+    // this.addresses = _.groupBy(this.addresses, (a)=>{
+    //   a.data.street.charAt(0)
+    // });
 
     this.trips = [
       {title: "Дом", data: {from: 'Комсомольская 69, п.1', to: 'Большая Серпуховская, 64'}},
