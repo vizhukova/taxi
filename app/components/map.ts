@@ -11,7 +11,7 @@ declare var cordova: any;
     selector: 'map',
     template: `<div id="map-wrap">
         <span [ngClass]="markerClasses()"></span>
-        <div id="{{selector}}" *ngIf="isMarkerVisible === true"></div>
+        <div id="{{selector}}"></div>
     </div>`
 })
 
@@ -26,7 +26,6 @@ export class Map {
     markerFrom:any;
     coords:any;
     direction:any;
-    isMarkerVisible:boolean;
 
     locateButton: any;
     pathButton: any;
@@ -51,7 +50,6 @@ export class Map {
         };
 
         this.direction = 'from';
-        this.isMarkerVisible = true;
 
         const self = this;
 
@@ -239,17 +237,17 @@ export class Map {
             this.map = new L.Map(this.selector, {center: mapCoords, zoom: 15, layers: [osmLayer], zoomControl: false});
         }
 
-        this.map.on('click', () => {
-            if(cordova){
-                cordova.plugins.Keyboard.close();
-            }
-        });
+        // this.map.on('click', () => {
+        //     if(cordova){
+        //         cordova.plugins.Keyboard.close();
+        //     }
+        // });
 
-        this.map.on('dragstart', () => {
-            if(cordova){
-                cordova.plugins.Keyboard.close();
-            }
-        })
+        // this.map.on('dragstart', () => {
+        //     if(cordova){
+        //         cordova.plugins.Keyboard.close();
+        //     }
+        // })
 
 
 
@@ -275,8 +273,6 @@ export class Map {
         let map = this.map;
 
         if (!map || this.selector !== name) return;
-
-        this.isMarkerVisible = false;
 
         try {
             map.clearAllEventListeners();
@@ -325,8 +321,9 @@ export class Map {
 
         this.PlaceProvider.getPosition().then((data:Coordinates) => {
             this.map.setView(L.latLng(data.latitude, data.longitude), 16);
-            this.map.invalidateSize(true);
+            this.ref.tick();
             this.onDragEnd();
+            this.map.invalidateSize(true);
             this.locateButton.classList.remove('loading');
         }).catch((err) => {
             //debugger
