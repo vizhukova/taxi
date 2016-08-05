@@ -237,17 +237,17 @@ export class Map {
             this.map = new L.Map(this.selector, {center: mapCoords, zoom: 15, layers: [osmLayer], zoomControl: false});
         }
 
-        // this.map.on('click', () => {
-        //     if(cordova){
-        //         cordova.plugins.Keyboard.close();
-        //     }
-        // });
+        this.map.on('click', () => {
+            if(cordova){
+                cordova.plugins.Keyboard.close();
+            }
+        });
 
-        // this.map.on('dragstart', () => {
-        //     if(cordova){
-        //         cordova.plugins.Keyboard.close();
-        //     }
-        // })
+        this.map.on('dragstart', () => {
+            if(cordova){
+                cordova.plugins.Keyboard.close();
+            }
+        })
 
 
 
