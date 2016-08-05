@@ -1,9 +1,15 @@
 <ion-content class="modal register-modal">
    <div class="modal-body">
+
         <p class="modal-header">
             Регистрация терминала
         </p>
         <div class="content">
+
+
+            <hero-form></hero-form>
+
+
             <label class="name">
                 Введите ваше имя
                 <input type="text"  [(ngModel)]="name">
@@ -11,9 +17,16 @@
             <label class="code">
                 Код страны
                <span class="select-wrapper">
+
+                   <select class="form-control" required
+                           [(ngModel)]="model"
+                           name="power" >
+                       <option *ngFor="let p of powers" [value]="p">{{p}}</option>
+                   </select>
+
                     <select [(ngModel)]="code">
-                      <option>+ 7</option>
-                      <option>+ 38</option>
+                      <option [value]="+ 7">+ 7</option>
+                      <option [value]="+ 38">+ 38</option>
                     </select>
                </span>
             </label>

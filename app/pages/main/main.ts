@@ -121,6 +121,7 @@ export class MainPage {
   }
 
   ngAfterViewInit(){
+    debugger
     if(!this.AuthProvider.check()){
       this.nav.push(RegistrationModal);
     }else{
