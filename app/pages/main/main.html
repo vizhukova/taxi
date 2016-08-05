@@ -13,15 +13,15 @@
 </div>
 
 <div class="content">
-  <home-page *ngIf="activeTab === 'home'"></home-page>
+  <home-page [hidden]="activeTab !== 'home'"></home-page>
 
   <settings-page *ngIf="activeTab === 'settings'"></settings-page>
-  <time-page *ngIf="activeTab === 'time'"></time-page>
-  <account-page *ngIf="activeTab === 'account'"></account-page>
+  <time-page [hidden]="activeTab !== 'time'"></time-page>
+  <account-page [hidden]="activeTab !== 'account'"></account-page>
 
-  <time-tab-page *ngIf="activeTab === 'time-tab'"></time-tab-page>
-  <feed-tab-page *ngIf="activeTab === 'feed-tab'"></feed-tab-page>
-  <fly-tab-page *ngIf="activeTab === 'fly-tab'"></fly-tab-page>
+  <time-tab-page [hidden]="activeTab !== 'time-tab'"></time-tab-page>
+  <feed-tab-page [hidden]="activeTab !== 'feed-tab'"></feed-tab-page>
+  <fly-tab-page [hidden]="activeTab !== 'fly-tab'"></fly-tab-page>
 
   <div class="search" *ngIf="!pathStatus">{{status[direction]}}</div>
 
