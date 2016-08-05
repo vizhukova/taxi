@@ -42,7 +42,7 @@ export class MainTabs {
 
     constructor(private nav: NavController, private AuthProvider: Auth, private NavProvider: Nav){
 
-
+        debugger
 
     }
 
@@ -54,12 +54,12 @@ export class MainTabs {
 @Component({
     template: '<ion-nav #myNav [root]="rootPage"></ion-nav>',
     providers: [Place, Cost, Nav, Auth, AddressProvider, CarOptions, GatherOrder, OrderHistory],
-    directives: [MainPage]
+    directives: [MainPage, RegistrationModal]
 })
 export class App {
 
     @ViewChild('myNav') nav;
-    rootPage = MainPage;
+    rootPage = RegistrationModal;
 
     constructor(private platform: Platform, private place: Place, private NavProvider: Nav, private AuthProvider: Auth) {
         this.platform.ready().then(() => {
