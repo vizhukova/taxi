@@ -6,28 +6,24 @@
         </p>
         <div class="content">
 
-
-            <hero-form></hero-form>
-
-
             <label class="name">
                 Введите ваше имя
                 <input type="text"  [(ngModel)]="name">
             </label>
             <label class="code">
                 Код страны
+
                <span class="select-wrapper">
+                   <div class="input" (click)="showSelect(true)">{{code || "-"}}</div>
+                   <div class="panel" (click)="showSelect(false)" *ngIf="isShownInput">
+                       <span class="option" (click)="setCode('+ 7')">+ 7</span>
+                       <span class="option" (click)="setCode('+ 38')">+ 38</span>
+                   </div>
 
-                   <select class="form-control" required
-                           [(ngModel)]="model"
-                           name="power" >
-                       <option *ngFor="let p of powers" [value]="p">{{p}}</option>
-                   </select>
-
-                    <select [(ngModel)]="code">
-                      <option [value]="+ 7">+ 7</option>
-                      <option [value]="+ 38">+ 38</option>
-                    </select>
+                    <!--<select [(ngModel)]="code">-->
+                      <!--<option [value]="+ 7">+ 7</option>-->
+                      <!--<option [value]="+ 38">+ 38</option>-->
+                    <!--</select>-->
                </span>
             </label>
             <label class="number">

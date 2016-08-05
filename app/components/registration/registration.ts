@@ -19,6 +19,7 @@ export class RegistrationModal {
    code: string;
    number: string;
    key: string;
+   isShownInput: boolean;
     powers: Array<string> = ['Really Smart', 'Super Flexible',
         'Super Hot', 'Weather Changer'];
     model: string;
@@ -54,6 +55,14 @@ export class RegistrationModal {
         }
 
         this.PlaceProvider.changePathStatus(false);
+    }
+
+    showSelect(value) {
+        this.isShownInput = value;
+    }
+
+    setCode(value) {
+        this.code = value;
     }
 
 }
