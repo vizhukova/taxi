@@ -337,7 +337,9 @@ export class Map {
         this.polyline && this.removeLayer(this.polyline);
         this.polyline = L.polyline(path, {color: 'black'}).addTo(this.map);
         this.callEnable(true);
+        debugger
         this.PlaceProvider.changePathStatus(true);
+        console.log('PlaceProvider.changePathStatus(true)')
     }
 
     private removeLayer(layer):void {
