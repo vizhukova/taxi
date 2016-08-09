@@ -20,7 +20,7 @@ import {Loader} from "../../components/loader/loader";
 import {CarOptions} from "../../providers/car-options/car-options";
 import {GatherOrder} from "../../providers/order/gather_order";
 
-declare var cordova:any
+declare var cordova:any;
 
 @Component({
   selector: 'search-page',
@@ -116,17 +116,16 @@ export class MainPage {
   setClasses(active: string) {
     return {
       tab: true,
-      active: this.activeTab === active,
+      active: this.activeTab === active
     }
   }
 
   ngAfterViewInit(){
-    debugger
     if(!this.AuthProvider.check()){
       this.nav.push(RegistrationModal);
-    }else{
-      this.PlaceProvider.changePathStatus(false)
     }
+
+    this.PlaceProvider.changePathStatus(false);
   }
 
   makeOrder() {

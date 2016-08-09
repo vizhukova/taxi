@@ -20,6 +20,8 @@ import {GatherOrder} from "./providers/order/gather_order";
 import {AddressProvider} from "./providers/address/address";
 import {  OrderHistory } from './providers/order/history';
 
+declare var cordova: any;
+
 @Component({
     selector: 'main-tabs',
     template: `
@@ -42,7 +44,9 @@ export class MainTabs {
 
     constructor(private nav: NavController, private AuthProvider: Auth, private NavProvider: Nav){
 
-        debugger
+        //document.addEventListener("deviceready", () => {
+        //    cordova.plugins.Keyboard.disableScroll(true);
+        //});
 
     }
 
@@ -59,7 +63,7 @@ export class MainTabs {
 export class App {
 
     @ViewChild('myNav') nav;
-    rootPage = RegistrationModal;
+    rootPage = MainPage;
 
     constructor(private platform: Platform, private place: Place, private NavProvider: Nav, private AuthProvider: Auth) {
         this.platform.ready().then(() => {

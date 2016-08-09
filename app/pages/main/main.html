@@ -25,7 +25,7 @@
 
   <div class="search" *ngIf="!pathStatus">{{status[direction]}}</div>
 
-  <div class="call" *ngIf="pathStatus" (click)="makeOrder()">
+  <div class="call" *ngIf="pathStatus === true" (click)="makeOrder()">
     <div class="price">
       <p class="text">{{cost}}<span class="currency">руб.</span></p>
     </div>
