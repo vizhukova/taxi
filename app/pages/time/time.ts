@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Address } from './../../components/address_panel';
+
 import {Place} from './../../providers/place/place';
+import {CarOptions} from './../../providers/car-options/car-options';
 /*
   Generated class for the TimePage page.
 
@@ -20,7 +22,7 @@ export class TimePage {
   delayTime: string;
   timeInput: string;
 
-  constructor(private nav: NavController) {
+  constructor(private nav: NavController, private CarOptionsProvider: CarOptions) {
     this.nav = nav;
     //this.time = [
     //  {name: 'Сейчас', comment: '~5-20 мин'},
@@ -38,5 +40,6 @@ export class TimePage {
 
   public checkTime(value) {
     this.timeInput = value;
+    this.CarOptionsProvider.changerTime(value);
   }
 }

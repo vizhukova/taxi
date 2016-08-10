@@ -11,18 +11,25 @@ export class CarOptions {
   requirements: any = [];
   carClasses: any = [];
 
+  requirementsInput: Array<string>;
+  carClassInput: string;
+  timeInput: string;
+
+
   //requirementsInput: any = [];
   //carClassInput: string;
 
-  private requirementsInput = new BehaviorSubject<Array<any>>([]);
-  private carClassInput = new BehaviorSubject<string>('');
+  private requirementsInputSource = new BehaviorSubject<Array<any>>([]);
+  private carClassInputSource = new BehaviorSubject<string>('');
   private requirementsSource = new BehaviorSubject<any>(null);
   private carClassesSource = new BehaviorSubject<any>(null);
+  private timeSource = new BehaviorSubject<any>(null);
 
   requirements$ = this.requirementsSource.asObservable();
   carClasses$ = this.carClassesSource.asObservable();
-  requirementsInput$ = this.requirementsInput.asObservable();
-  carClassInput$ = this.carClassInput.asObservable();
+  requirementsInput$ = this.requirementsInputSource.asObservable();
+  carClassInput$ = this.carClassInputSource.asObservable();
+  timeInput$ = this.timeSource.asObservable();
 
 
 
@@ -50,13 +57,18 @@ export class CarOptions {
   }
 
   public changerRequirements(value: Array<string>) {
-    this.requirementsInput.next(value);
-    //this.requirementsInput = value;
+    this.requirementsInput = value;
+    this.requirementsInputSource.next(value);
   }
 
   public changerCarClass(value: string) {
-    //this.carClassInput = value;
-    this.carClassInput.next(value);
+    this.carClassInput = value;
+    this.carClassInputSource.next(value);
+  }
+
+  public changerTime(value: any) {
+    this.timeInput = value;
+    this.timeSource.next(value);
   }
 
   public getRequirements() {
@@ -65,6 +77,10 @@ export class CarOptions {
 
   public getCarClass() {
     return this.carClassInput;
+  }
+
+  public getTime() {
+    return this.timeInput;
   }
 
   /**
