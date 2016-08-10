@@ -5,7 +5,7 @@
     >
         <span class="icon"></span>
         <input #from
-            [disabled]="editable.from"
+            [disabled]="disabled.from"
             (keyup)="getAll(address.from)"
             type="text"
             [(ngModel)]="address.from"
@@ -13,7 +13,7 @@
         >
         <span
             class="clear"
-            *ngIf="direction === 'from'"
+            *ngIf="direction === 'from' && !disabled.from"
             (click)="clearAddress($event)"></span
         >
     </div>
@@ -23,7 +23,7 @@
     >
         <span class="icon"></span>
         <input
-            [disabled]="editable.to"
+            [disabled]="disabled.to"
             (keyup)="getAll(address.to)"
             type="text"
             [(ngModel)]="address.to"
@@ -31,7 +31,7 @@
         >
         <span
             class="clear"
-            *ngIf="direction === 'to'"
+            *ngIf="direction === 'to' && !disabled.to"
             (click)="clearAddress($event)"
         ></span>
     </div>

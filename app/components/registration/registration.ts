@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import {  NavController } from 'ionic-angular';
 import {  Auth } from './../../providers/auth/auth';
 import {  Place } from './../../providers/place/place';
+import { MapProvider } from './../../providers/map/map';
 //import {  Selecct } from './../select/select';
 import { NgForm }    from '@angular/forms';
 declare var cordova: any;
@@ -23,15 +24,22 @@ export class RegistrationModal {
         'Super Hot', 'Weather Changer'];
     model: string;
 
-    constructor(public nav: NavController, private AuthProvider: Auth, private PlaceProvider: Place) {
-        debugger
+    constructor(
+        public nav: NavController,
+        private AuthProvider: Auth,
+        private PlaceProvider: Place,
+        private MapProvider: MapProvider
+    ) {
         //cordova.plugins.Keyboard.disableScroll(true);
-
 
     }
 
+    ngOnDestroy() {
+        this.MapProvider.set('authorized', true);
+        console.log('Destroyed')
+    }
+
     closeKeyboard(event) {
-        debugger
         if(cordova && cordova.plugins && cordova.plugins.Keyboard && event.target.tagName !== 'INPUT'){
             //window.scrollTo(document.body.scrollLeft, document.body.scrollTop);
             //window.scrollTo(0, 0);

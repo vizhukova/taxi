@@ -113,6 +113,13 @@ body {
       background-size: 100% 100%;
     }
 
+    &.from.searching {
+      background: url("../res/icon_path_from_a.png") no-repeat;
+      width: 26px;
+      height: 36px;
+      background-size: 100% 100%;
+    }
+
     position: absolute;
     display: inline-block;
     z-index: 1;

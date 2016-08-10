@@ -3,6 +3,7 @@ import {Injectable, Output, EventEmitter} from '@angular/core';
 import {Subject, BehaviorSubject, Observable} from 'rxjs';
 import {Http, Response} from '@angular/http';
 import {Coordinates, PathCoordinates} from "../../interfaces/coordinates";
+import { MapProvider } from "../map/map";
 
 @Injectable()
 export class Place {
@@ -18,7 +19,6 @@ export class Place {
     // Observable data sources
     private addressSource = new BehaviorSubject<any>({from: '', to: ''});
     private coordsSource = new BehaviorSubject<any>({from: [], to: []});
-    private directionSource = new BehaviorSubject<any>('from');
     private reloadSource = new BehaviorSubject<any>(true);
     private mapCreateSource = new BehaviorSubject<any>(null);
     private mapDestroySource = new BehaviorSubject<any>(null);
@@ -28,7 +28,6 @@ export class Place {
     // Observable data streams
     address$ = this.addressSource.asObservable();
     coords$ = this.coordsSource.asObservable();
-    direction$ = this.directionSource.asObservable();
     reload$ = this.reloadSource.asObservable();
     mapCreate$ = this.mapCreateSource.asObservable();
     mapDestroy$ = this.mapDestroySource.asObservable();
@@ -36,6 +35,9 @@ export class Place {
 
     // Service message commands
     public changeAddress(address:string) {
+
+        this.MapProvider.set('searching', false);
+
         this.addressSource.next(address);
     }
 
@@ -45,11 +47,6 @@ export class Place {
 
     changeCoords(coords:PathCoordinates) {
         this.coordsSource.next(coords);
-    }
-
-    changeDirection(direction:string) {
-        this.direction = direction;
-        this.directionSource.next(direction);
     }
 
     changePathStatus(status: boolean) {
@@ -65,7 +62,7 @@ export class Place {
         return this.coords;
     }
 
-    constructor(private http:Http) {
+    constructor(private http:Http, private MapProvider:MapProvider) {
         this.coords = <PathCoordinates>{
             from: {latitude: 0, longitude: 0},
             to: {latitude: 0, longitude: 0}
@@ -79,7 +76,11 @@ export class Place {
             from: {},
             to: {}
         };
-        this.direction = 'from';
+
+        this.MapProvider.state$.subscribe(newState => {
+            this.direction = newState.direction;
+        });
+
         this.cbs = []
     }
 
@@ -159,6 +160,7 @@ export class Place {
     }
 
     public getCurrentAddress(coords:Coordinates) {
+        this.MapProvider.set('searching', true);
 
         const self = this;
 

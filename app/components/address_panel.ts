@@ -2,6 +2,7 @@ import {Component, Input, ViewChild } from '@angular/core';
 import { Http, Response } from '@angular/http';
 //import {Observable} from "rxjs/Rx";
 import {Place} from "../providers/place/place";
+import { MapProvider } from "../providers/map/map";
 import {GatherOrder} from './../providers/order/gather_order';
 import { NavController } from 'ionic-angular';
 import {SearchPage} from "../pages/search/search";
@@ -26,7 +27,7 @@ export class Address {
     addresses: any;
     search: any;
     coords: PathCoordinates;
-    editable: any;
+    disabled: any;
     detail: boolean;
 
     house: string;
@@ -43,6 +44,7 @@ export class Address {
     constructor(public nav: NavController,
                 public GatherOrderProvider: GatherOrder,
                 public AddressProvider: AddressProvider,
+                private MapProvider: MapProvider,
                 private place: Place,
                 private http: Http,
                 private NavProvider: Nav) {
@@ -53,9 +55,9 @@ export class Address {
         this.addresses = [];
         this.search = false;
         this.detail = false;
-        this.editable = {
-            from: false,
-            to: false
+        this.disabled = {
+            from: true,
+            to: true
         };
 
         this.test = Math.random();
@@ -75,8 +77,8 @@ export class Address {
             }
         });
 
-        place.direction$.subscribe(newDirection => {
-            self.direction = newDirection;
+        MapProvider.state$.subscribe(newState => {
+            self.direction = newState.direction;
         });
 
         place.coords$.subscribe(newCoords => {
@@ -225,13 +227,20 @@ export class Address {
 
     onFocus(type: string): void {
 
+        if(this.direction === type && this.detail) {
+            this.disabled[type] = false
+        }
+
         if(this.direction === type && this.NavProvider.getCurrentTabSet() === 'main'){
-            this.NavProvider.changeTabSet('search')
+            this.NavProvider.changeTabSet('search');
+            this.detail = true;
         }
 
         this.direction = type;
 
-        this.place.changeDirection(type);
+        this.MapProvider.set('direction', type);
+
+        //this.place.changeDirection(type);
     }
 
     showFavoritePopup() {
