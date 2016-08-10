@@ -1,9 +1,15 @@
 import { Component } from '@angular/core';
 import {  NavController } from 'ionic-angular';
-import {  RideProvider } from './../../../providers/ride/ride';
+
 import {  Ride } from './../../../models/ride';
-import {  OrderHistory } from './../../../providers/order/history';
 import {  Order } from './../../../interfaces/order';
+
+import {  RideProvider } from './../../../providers/ride/ride';
+import {  OrderHistory } from './../../../providers/order/history';
+import {  Place } from './../../../providers/place/place';
+import {  GatherOrder } from './../../../providers/order/gather_order';
+import {  Nav } from './../../../providers/nav/nav';
+import { CarOptions } from './../../../providers/car-options/car-options';
 
 @Component({
     templateUrl: 'build/pages/account/modal/rides.html',
@@ -16,7 +22,13 @@ export class RidesModal {
     tab: string = "future";
     tabDats: Object;
 
-    constructor(private nav: NavController, private RideProvider: RideProvider, public OrderHistoryProvider: OrderHistory) {
+    constructor(private nav: NavController,
+                private RideProvider: RideProvider,
+                public OrderHistoryProvider: OrderHistory,
+                public PlaceProvider: Place,
+                public GatherOrderProvider: GatherOrder,
+                public NavProvider: Nav,
+                public CarOptionsProvider: CarOptions) {
 
         this.nav = nav;
 
@@ -49,6 +61,20 @@ export class RidesModal {
 
     public getArrayOfRides() {
         return this.tab === 'future' ? this.futureRides : this.lastRides;
+    }
+
+    public setLastOrderOptions(order: Order) {
+
+        this.PlaceProvider.changeAddress({
+            to: order.destinations[0].shortAddress,
+            from: order.source.shortAddress
+        });
+
+        this.CarOptionsProvider.changerCarClass(order.vehicleClass);
+        this.CarOptionsProvider.changerRequirements(order.requirements);
+
+        this.nav.pop();
+        this.NavProvider.changeTab('home');
     }
 
 }

@@ -35,7 +35,7 @@ export class Place {
     path$ = this.pathSource.asObservable();
 
     // Service message commands
-    public changeAddress(address:string) {
+    public changeAddress(address:Object) {
         this.addressSource.next(address);
     }
 

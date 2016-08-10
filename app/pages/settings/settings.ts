@@ -29,7 +29,7 @@ export class SettingsPage {
 
   constructor(public GatherOrderProvider: GatherOrder,
               private nav: NavController,
-              private CarOptionsProvider: CarOptions) {
+              public CarOptionsProvider: CarOptions) {
     this.nav = nav;
     this.tariffs = [
       {name: 'Эконом', price: '50 руб'},
@@ -48,12 +48,21 @@ export class SettingsPage {
     //];
 
     CarOptionsProvider.requirements$.subscribe(req => {
-      this.service = req;
+      this.service = req || [];
     });
 
     CarOptionsProvider.carClasses$.subscribe(cars => {
-      this.tariffs = cars;
+      this.tariffs = cars || [];
       this.changeTariff(this.tariffs[0]);
+    });
+
+
+    CarOptionsProvider.requirementsInput$.subscribe(requirementsInput => {
+      this.serviceInput = requirementsInput || [];
+    });
+
+    CarOptionsProvider.carClassInput$.subscribe(carClassInput => {
+      this.tariffInput = carClassInput || '';
     });
 
     this.changePayment(this.payment[0]);
@@ -71,8 +80,9 @@ export class SettingsPage {
   }
 
   changeTariff(data:Object) {
-    this.tariffInput = data['value'];
-    this.GatherOrderProvider.setVehicleClass(this.tariffInput);
+    //this.tariffInput = data['value'];
+    //this.GatherOrderProvider.setVehicleClass(this.tariffInput);
+    this.CarOptionsProvider.changerCarClass(this.tariffInput);
   }
 
   changePayment(data: string) {
@@ -87,7 +97,8 @@ export class SettingsPage {
     }else {
       this.serviceInput.push(data);
     }
-    this.GatherOrderProvider.setRequirements(this.serviceInput);
+    //this.GatherOrderProvider.setRequirements(this.serviceInput);
+    this.CarOptionsProvider.changerRequirements(this.serviceInput);
   }
 
   isCheckedService(data: string) {
