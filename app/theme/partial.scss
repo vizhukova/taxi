@@ -451,6 +451,36 @@ input[type=checkbox]:checked + label:before {
   }
 }
 
+i.more-btn {
+  background-size: 150%;
+  float: right;
+  height: 50px;
+  width: 12px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-image: url('./../res/more.png');
+}
+
+ span.options {
+  background: #fff;
+  color: #2C2C30;
+  width: 80%;
+  margin: 5px 10px;
+  -webkit-transition: all 1s ease-out 0.5s;
+  transition: all 1s ease-out 0.5s;
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  top: 0;
+
+  span {
+    display: block;
+    line-height: 40px;
+    padding: 0 10px;
+  }
+}
+
 
 
 

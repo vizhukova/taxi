@@ -7,6 +7,8 @@ import {Cost} from './../providers/cost/cost';
 import {Coordinates, PathCoordinates} from "../interfaces/coordinates";
 declare var cordova: any;
 
+import {Nav} from "./../providers/nav/nav";
+
 @Component({
     selector: 'map',
     template: `<div id="map-wrap">
@@ -39,7 +41,7 @@ export class Map {
     @Input() callEnable:Function;
 
 
-    constructor(private PlaceProvider:Place, private http:Http, private cost:Cost, private ref: ApplicationRef) {
+    constructor(private PlaceProvider:Place, private http:Http, private cost:Cost, private ref: ApplicationRef, private NavProvider: Nav) {
 
         this.onDragEnd = this.onDragEnd.bind(this);
         this.timeout = this.timeout.bind(this);
@@ -237,17 +239,17 @@ export class Map {
             this.map = new L.Map(this.selector, {center: mapCoords, zoom: 15, layers: [osmLayer], zoomControl: false});
         }
 
-        this.map.on('click', () => {
-            if(cordova){
-                cordova.plugins.Keyboard.close();
-            }
-        });
-
-        this.map.on('dragstart', () => {
-            if(cordova){
-                cordova.plugins.Keyboard.close();
-            }
-        })
+        //this.map.on('click', () => {
+        //    if(cordova){
+        //        cordova.plugins.Keyboard.close();
+        //    }
+        //});
+        //
+        //this.map.on('dragstart', () => {
+        //    if(cordova){
+        //        cordova.plugins.Keyboard.close();
+        //    }
+        //})
 
 
 
@@ -301,6 +303,9 @@ export class Map {
 
         this.pathButton.classList.add('loading');
 
+        console.log(from, to);
+
+
         this.http.post('http://ddtaxity.smarttaxi.ru:8000/1.x/route?taxiserviceid=taxity', [from, to])
 
             .subscribe((res:Response) => {
@@ -310,6 +315,7 @@ export class Map {
 
                 this.pathButton.classList.remove('loading');
             });
+
 
         this.cost.getCost()
 
@@ -334,7 +340,6 @@ export class Map {
         this.polyline && this.removeLayer(this.polyline);
         this.polyline = L.polyline(path, {color: 'black'}).addTo(this.map);
         this.callEnable(true);
-        debugger
         this.PlaceProvider.changePathStatus(true);
         console.log('PlaceProvider.changePathStatus(true)')
     }

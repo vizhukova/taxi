@@ -15,7 +15,7 @@ export class RegistrationModal {
 
    isCode: boolean = false;
    name: string;
-   code: string;
+   code: string = '+7';
    number: string;
    key: string;
    isShownInput: boolean = false;
@@ -24,14 +24,11 @@ export class RegistrationModal {
     model: string;
 
     constructor(public nav: NavController, private AuthProvider: Auth, private PlaceProvider: Place) {
-        debugger
         //cordova.plugins.Keyboard.disableScroll(true);
-
-
+        this.PlaceProvider.changePathStatus(false);
     }
 
     closeKeyboard(event) {
-        debugger
         if(cordova && cordova.plugins && cordova.plugins.Keyboard && event.target.tagName !== 'INPUT'){
             //window.scrollTo(document.body.scrollLeft, document.body.scrollTop);
             //window.scrollTo(0, 0);
@@ -60,6 +57,7 @@ export class RegistrationModal {
     }
 
     register() {
+        debugger
         if(this.isCode) {
            this.AuthProvider.confirm(this.key, this.code + this.number).then(() => {
                this.nav.pop();

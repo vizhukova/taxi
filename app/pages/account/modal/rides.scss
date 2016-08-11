@@ -1,7 +1,7 @@
 .rides-modal {
   $height-top-panel: 56px;
 
-  .modal-header{
+  .modal-header {
     height: 56px;
     line-height: 56px;
     background-color: #2c2c30;
@@ -37,16 +37,16 @@
     }
 
     &.future-rides {
-     float: left;
-     background-image: url('./../res/future_rides.svg');
+      float: left;
+      background-image: url('./../res/future_rides.svg');
       &.active {
         background-image: url('./../res/future_rides_active.svg');
       }
     }
 
     &.last-rides {
-     float: right;
-     background-image: url('./../res/last_rides.svg');
+      float: right;
+      background-image: url('./../res/last_rides.svg');
       &.active {
         background-image: url('./../res/last_rides_active.svg');
       }
@@ -100,7 +100,7 @@
             line-height: 48px;
             padding-left: 48px;
           }
-         }
+        }
 
         .route {
           background: url("../res/icon_from.svg") no-repeat;
@@ -136,7 +136,7 @@
             position: absolute;
           }
         }
-        }
+      }
 
       span.panel {
         display: block;
@@ -151,9 +151,9 @@
           border: none;
         }
       }
-      }
-
     }
+
+  }
 
   .plane {
     .panel-title {

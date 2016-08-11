@@ -3,13 +3,13 @@
     <div class="header">
         <p class="title">В виде поездок</p>
 
-        <input
-                (change)="toggleView()"
+         <input
                 type="checkbox"
                 id="unchecked"
                 class="cbx hidden"
-        />
-        <label for="unchecked" class="lbl"></label>
+                [checked]="!address"
+            />
+        <label for="unchecked" class="lbl" (click)="toggleView()"></label>
 
     </div>
 
@@ -17,22 +17,32 @@
         <div class="sub-header">{{address ? header.address : header.trip}}</div>
 
         <div class="items addresses" *ngIf="address" >
-
-            <div class="address-item" *ngFor="let item of addresses">
-                <ion-icon md="md-more"></ion-icon>
-                <p class="title">{{item.title}}</p>
-                <span class="address">{{item.data.street}}</span>
+            <div class="address-item block" *ngFor="let key of getAddressKeys(); let num=index">
+                <!--<i class="more-btn" (click)="showOptions(a+num, $event)"></i>-->
+              <div class="content">
+                   <span class="options" *ngIf="a + num === optionDetails">
+                        <span>Изменить</span>
+                        <span>Удалить</span>
+                    </span>
+                    <ion-icon md="md-more" (click)="showOptions(a+num, $event)"></ion-icon>
+                <p class="title">{{addresses[key].description}}</p>
+                <span class="address">{{addresses[key].shortAddress}}</span>
+              </div>
             </div>
-
         </div>
 
         <div class="items trips" *ngIf="!address" >
-            <div class="block" *ngFor="let item of trips">
+            <div class="block" *ngFor="let item of trips; let num=index">
                 <div class="content">
                     <p class="panel panel-title">
                         <span>{{item.bookingDate}}</span>
+                        <i class="more-btn" (click)="showOptions(o+num, $event)"></i>
                     </p>
                     <p class="panel">
+                         <span class="options" *ngIf="o + num === optionDetails">
+                            <span>Изменить</span>
+                            <span>Удалить</span>
+                        </span>
                         <span class="route"></span>
                         <span class="panel">{{item.source.shortAddress}}</span>
                         <span class="panel">{{item.destinations[0].shortAddress}}</span>

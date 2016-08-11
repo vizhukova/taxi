@@ -181,6 +181,7 @@ export class Place {
     }
 
     public getFullAddress(direction: string) {
+
         return {
             city : this.fullAddress[direction].address_components[3].long_name,
             country : this.fullAddress[direction].address_components[6].long_name,

@@ -70,8 +70,13 @@ export class GatherOrder {
         return this;
     }
 
+    public getGatheredOrder() {
+        return this.order;
+    }
+
     public setAddress(type: string, address: any){
 
+        debugger
         let item = {
             city : address.city,
             closestStation : '',
@@ -149,7 +154,7 @@ export class GatherOrder {
             }
          }
          */
-
+        debugger
         this.apiId = user.id;
         this.order = {
             bookingDate : "27-05-2016 09:15",

@@ -11,14 +11,17 @@ import { FeedTabPage } from '../../pages/feed-tab/feed-tab';
 import { FlyTabPage } from '../../pages/fly-tab/fly-tab';
 
 import {NavController} from 'ionic-angular';
-import {Nav} from "../../providers/nav/nav";
+
 import {RegistrationModal} from "../../components/registration/registration";
+import {Loader} from "../../components/loader/loader";
+
+import {Nav} from "../../providers/nav/nav";
 import {Auth} from "../../providers/auth/auth";
 import {Place} from "../../providers/place/place";
 import {Cost} from "../../providers/cost/cost";
-import {Loader} from "../../components/loader/loader";
 import {CarOptions} from "../../providers/car-options/car-options";
 import {GatherOrder} from "../../providers/order/gather_order";
+import {OrderHistory} from "../../providers/order/history";
 
 declare var cordova:any;
 
@@ -55,7 +58,8 @@ export class MainPage {
               private PlaceProvider: Place,
               private CostProvider: Cost,
               private CarOptionsProvider: CarOptions,
-              private GatherOrderProvider: GatherOrder) {
+              private GatherOrderProvider: GatherOrder,
+              private OrderHistoryProvider: OrderHistory) {
     this.nav = nav;
     this.activeTab = 'home';
     this.activeTabSet = 'main';
@@ -123,9 +127,9 @@ export class MainPage {
   ngAfterViewInit(){
     if(!this.AuthProvider.check()){
       this.nav.push(RegistrationModal);
+    }else{
+      this.PlaceProvider.changePathStatus(false)
     }
-
-    this.PlaceProvider.changePathStatus(false);
   }
 
   makeOrder() {
@@ -134,8 +138,12 @@ export class MainPage {
       this.nav.push(RegistrationModal);
     }else{
 
-      this.GatherOrderProvider.createOrder().then(() => {
+      this.GatherOrderProvider.createOrder().then((data) => {
+
         this.nav.push(Loader);
+        this.OrderHistoryProvider.save(this.GatherOrderProvider.getGatheredOrder());
+
+
       }).catch((err) => {
         console.log(err.stack)
       });

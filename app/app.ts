@@ -7,7 +7,6 @@ import {SettingsPage} from './pages/settings/settings';
 import {TimePage} from './pages/time/time';
 import {AccountPage} from './pages/account/account';
 import {Place} from './providers/place/place';
-import {RideProvider} from "./providers/ride/ride";
 import {Cost} from "./providers/cost/cost";
 import {Address} from './components/address_panel'
 import {SearchPage} from "./pages/search/search";
@@ -19,6 +18,7 @@ import {CarOptions} from "./providers/car-options/car-options";
 import {GatherOrder} from "./providers/order/gather_order";
 import {AddressProvider} from "./providers/address/address";
 import {  OrderHistory } from './providers/order/history';
+import {  OrderFavorite } from './providers/order/favorites';
 
 declare var cordova: any;
 
@@ -57,7 +57,7 @@ export class MainTabs {
 
 @Component({
     template: '<ion-nav #myNav [root]="rootPage"></ion-nav>',
-    providers: [Place, Cost, Nav, Auth, AddressProvider, CarOptions, GatherOrder, OrderHistory],
+    providers: [Place, Cost, Nav, Auth, AddressProvider, CarOptions, GatherOrder, OrderHistory, OrderFavorite],
     directives: [MainPage, RegistrationModal]
 })
 export class App {
@@ -97,7 +97,6 @@ export class App {
 //noinspection TypeScriptValidateTypes
 ionicBootstrap(App, [
     // Place,
-    RideProvider,
     provide(PLATFORM_DIRECTIVES, {useValue: [Address], multi: true}),
 ], {
     tabbarPlacement: 'top',

@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import {  NavController } from 'ionic-angular';
-import {  RideProvider } from './../../../providers/ride/ride';
+
 import {  Ride } from './../../../models/ride';
-import {  OrderHistory } from './../../../providers/order/history';
 import {  Order } from './../../../interfaces/order';
 
+import {  OrderHistory } from './../../../providers/order/history';
+import {  OrderFavorite } from './../../../providers/order/favorites';
+
 @Component({
-    templateUrl: 'build/pages/account/modal/rides.html',
-    providers: [RideProvider]
+    templateUrl: 'build/pages/account/modal/rides.html'
 })
 export class RidesModal {
 
@@ -15,8 +16,9 @@ export class RidesModal {
     lastRides: Array<Order>;
     tab: string = "future";
     tabDats: Object;
+    optionDetails: string; //id of item
 
-    constructor(private nav: NavController, private RideProvider: RideProvider, public OrderHistoryProvider: OrderHistory) {
+    constructor(private nav: NavController, public OrderHistoryProvider: OrderHistory, public OrderFavoriteProvider: OrderFavorite) {
 
         this.nav = nav;
 
@@ -49,6 +51,16 @@ export class RidesModal {
 
     public getArrayOfRides() {
         return this.tab === 'future' ? this.futureRides : this.lastRides;
+    }
+
+    public showOptions(key: string, event: any) {
+        this.optionDetails = key;
+        event.stopPropagation();
+    }
+
+    public toFavorites(ride: Order, $event: any) {
+        this.showOptions('', $event);
+        this.OrderFavoriteProvider.save(ride);
     }
 
 }
