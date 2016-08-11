@@ -62,7 +62,10 @@ export class Place {
         return this.coords;
     }
 
-    constructor(private http:Http, private MapProvider:MapProvider) {
+    constructor(
+        private http:Http, 
+        private MapProvider:MapProvider
+    ) {
         this.coords = <PathCoordinates>{
             from: {latitude: 0, longitude: 0},
             to: {latitude: 0, longitude: 0}

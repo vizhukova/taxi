@@ -23,9 +23,9 @@
   <feed-tab-page [hidden]="activeTab !== 'feed-tab'"></feed-tab-page>
   <fly-tab-page [hidden]="activeTab !== 'fly-tab'"></fly-tab-page>
 
-  <div *ngIf="state.authorized" class="search" >{{status[state.direction]}}</div>
+  <div *ngIf="state.authorized" class="search">{{status[state.direction]}}</div>
 
-  <div *ngIf="state.authorized" class="call" (click)="makeOrder()">
+  <div *ngIf="state.authorized" [ngClass]="setCallClasses()" (click)="makeOrder()">
     <div class="price">
       <p class="text">{{cost}}<span class="currency">руб.</span></p>
     </div>

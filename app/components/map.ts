@@ -196,7 +196,7 @@ export class Map {
 
     private timeout(){
 
-        this.MapProvider.set('searching', true);
+        // this.MapProvider.set('searching', true);
 
         if(this.timer) clearTimeout(this.timer);
 
@@ -234,12 +234,26 @@ export class Map {
         //        cordova.plugins.Keyboard.close();
         //    }
         //})
+        //
+        //
 
 
+        this.map.on('click', ()=>{
+            this.MapProvider.set('clicked', !this.state.clicked)
+        });
 
+        if (!this.editable) this.map.on('dragstart', () =>{
+            this.MapProvider.set('searching', true)
+        });
+        
         if (!this.editable) this.map.on('dragend', this.timeout);
 
+        if (!this.editable) this.map.on('zoomstart', () =>{
+            this.MapProvider.set('searching', true)
+        });
+
         if (!this.editable) this.map.on('zoomend', this.timeout);
+
 
         //this.bootMarkers(this.direction);
 
@@ -293,9 +307,6 @@ export class Map {
 
                 this.pathButton.classList.remove('loading');
             });
-
-        this.cost.getCost()
-
     }
 
     private locateMe():void {
@@ -306,7 +317,6 @@ export class Map {
             this.map.setView(L.latLng(data.latitude, data.longitude), 16);
 
             this.MapProvider.set('searching', false);
-            this.cost.getCost();
 
             this.ref.tick();
             this.onDragEnd();

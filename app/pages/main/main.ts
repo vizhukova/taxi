@@ -121,6 +121,13 @@ export class MainPage {
     }
   }
 
+  setCallClasses() {
+    return {
+      call: true,
+      active: !this.state.searching
+    }
+  }  
+
   ngAfterViewInit(){
     if(!this.AuthProvider.check()){
       this.nav.push(RegistrationModal);

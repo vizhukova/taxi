@@ -13,6 +13,7 @@ import {PathCoordinates} from "../interfaces/coordinates";
 import {AddressProvider} from "../providers/address/address";
 import {Subject, BehaviorSubject, Observable} from 'rxjs'
 import {AddressItem} from "../interfaces/address";
+import {MapState} from "../interfaces/map";
 
 
 @Component({
@@ -25,14 +26,16 @@ export class Address {
     address: any;
     direction: string;
     addresses: any;
+    confirmedAddresses: any;
     search: any;
     coords: PathCoordinates;
     disabled: any;
     detail: boolean;
-
+    state: MapState;
     house: string;
     block: string;
     comment: string;
+    clicked: boolean;
 
     public test: any;
 
@@ -51,10 +54,13 @@ export class Address {
 
         const self = this;
         this.address = {from: '', to: ''};
+        this.confirmedAddresses = {from: '', to: ''};
         this.direction = 'from';
         this.addresses = [];
         this.search = false;
         this.detail = false;
+        this.clicked = false;
+        this.state = {};
         this.disabled = {
             from: true,
             to: true
@@ -79,6 +85,12 @@ export class Address {
 
         MapProvider.state$.subscribe(newState => {
             self.direction = newState.direction;
+
+            if(newState.clicked !== self.clicked && newState.editable) {
+                self.onConfirm()
+            }
+
+            self.clicked = newState.clicked;
         });
 
         place.coords$.subscribe(newCoords => {
@@ -87,25 +99,30 @@ export class Address {
     }
 
     ngAfterViewInit() {
+
         // if(this.view) {
         //     this.getAll(this.address[this.direction]);
         //     this.editable[this.direction] = false;
         // }
 
         // this.vc.nativeElement.focus();
+
+        document.addEventListener('backbutton', ()=>{
+            this.onConfirm();
+        }, false)
     }
 
     clearAddress(event) {
 
         event.stopPropagation();
 
-        this.search = false;
-        this.detail = false;
+        // this.search = false;
+        // this.detail = false;
 
         this.address[this.direction] = '';
         this.place.changeAddress(this.address);
 
-        this.NavProvider.changeTabSet('main');
+        // this.NavProvider.changeTabSet('main');
     }
 
     confirmAddress(index: any) {
@@ -120,13 +137,13 @@ export class Address {
 
         this.address[this.direction] = address['shortAddress'];
         this.coords[this.direction] = newCoords;
-        this.place.changeAddress(this.address);
-        this.place.changeCoords(this.coords);
+        // this.place.changeAddress(this.address);
+        // this.place.changeCoords(this.coords);
         this.place.reloadMap('homeMap');
 
         // this.editable[this.direction] = true;
         this.search = false;
-        this.detail = true;
+        // this.detail = true;
     }
 
 
@@ -225,14 +242,19 @@ export class Address {
         return Observable.throw(errMsg);
     }
 
-    onFocus(type: string): void {
+    onFocus(type: string, input: any): void {
 
         if(this.direction === type && this.detail) {
-            this.disabled[type] = false
+            this.disabled[type] = false;
+            setTimeout(()=>{
+                input.focus();
+            }, 100)
         }
 
         if(this.direction === type && this.NavProvider.getCurrentTabSet() === 'main'){
             this.NavProvider.changeTabSet('search');
+            this.MapProvider.set('editable', true);
+            this.MapProvider.set('searching', true);
             this.detail = true;
         }
 
@@ -251,8 +273,11 @@ export class Address {
     onConfirm(){
         this.search = false;
         this.detail = false;
+        this.disabled[this.direction] = true;
         this.NavProvider.changeTabSet('main');
+        this.MapProvider.set('searching', false);
     }
+
 }
 
 

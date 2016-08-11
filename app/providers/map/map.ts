@@ -12,6 +12,7 @@ export class MapProvider {
     private stateSource = new BehaviorSubject<MapState>({
         initial: true,
         searching: false,
+        clicked: false,
         direction: 'from'
     });
 

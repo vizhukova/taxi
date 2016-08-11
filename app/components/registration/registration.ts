@@ -5,7 +5,6 @@ import {  Auth } from './../../providers/auth/auth';
 import {  Place } from './../../providers/place/place';
 import { MapProvider } from './../../providers/map/map';
 //import {  Selecct } from './../select/select';
-import { NgForm }    from '@angular/forms';
 declare var cordova: any;
 
 @Component({
@@ -36,7 +35,6 @@ export class RegistrationModal {
 
     ngOnDestroy() {
         this.MapProvider.set('authorized', true);
-        console.log('Destroyed')
     }
 
     closeKeyboard(event) {
