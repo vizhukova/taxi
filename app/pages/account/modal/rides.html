@@ -14,7 +14,8 @@
 
         <div class="block" *ngFor="let item of getArrayOfRides(); let num = index">
             <div class="content">
-                <p class="panel panel-title"(click) = "showOptions(num, $event)">
+                <p class="panel panel-title">
+                    <i class="past-ride-icon" (click)="setLastOrderOptions(item)"></i>
                    <span>{{item.bookingDate}}</span>
                 </p>
                 <p class="panel">

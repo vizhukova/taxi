@@ -105,6 +105,8 @@ export class GatherOrder {
         let user = this.AuthProvider.getUser();
         let source = this.PlaceProvider.getFullAddress('from');
         let destination = this.PlaceProvider.getFullAddress('to');
+        let requirements = this.CarOptionsProvider.getRequirements();
+        let carClass = this.CarOptionsProvider.getCarClass();
         /**
          * TODO Собрать заказ в нужном формате
          * @type {{}}
@@ -164,10 +166,10 @@ export class GatherOrder {
             recipientBlackListed : "no",
             recipientLoyal : "yes",
             recipientPhone : user.phone,
-            requirements : this.requirements,
+            requirements : requirements,
             source: source,
             urgent: this.urgent,
-            vehicleClass: this.vehicleClass
+            vehicleClass: carClass
         };
 
         let body = {

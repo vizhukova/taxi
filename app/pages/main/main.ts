@@ -134,6 +134,7 @@ export class MainPage {
 
   makeOrder() {
 
+    debugger
     if(!this.AuthProvider.check()){
       this.nav.push(RegistrationModal);
     }else{

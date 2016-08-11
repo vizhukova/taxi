@@ -7,16 +7,30 @@ import {BehaviorSubject} from "rxjs/Rx";
 
 @Injectable()
 export class CarOptions {
-  options: any;
-  requirements: any;
-  carClasses: any;
+  options: any = [];
+  requirements: any = [];
+  carClasses: any = [];
+
+  requirementsInput: Array<string>;
+  carClassInput: string;
+  timeInput: string;
 
 
+  //requirementsInput: any = [];
+  //carClassInput: string;
+
+  private requirementsInputSource = new BehaviorSubject<Array<any>>([]);
+  private carClassInputSource = new BehaviorSubject<string>('');
   private requirementsSource = new BehaviorSubject<any>(null);
   private carClassesSource = new BehaviorSubject<any>(null);
+  private timeSource = new BehaviorSubject<any>(null);
 
   requirements$ = this.requirementsSource.asObservable();
   carClasses$ = this.carClassesSource.asObservable();
+  requirementsInput$ = this.requirementsInputSource.asObservable();
+  carClassInput$ = this.carClassInputSource.asObservable();
+  timeInput$ = this.timeSource.asObservable();
+
 
 
   constructor(private http: Http) {
@@ -30,7 +44,6 @@ export class CarOptions {
       this.http.get(`${URL}/Order/CarOptions`)
         .map(res => res.json())
         .subscribe(data => {
-
           this.options = data;
 
           this.requirements = CarOptions.parseRequirements(data);
@@ -41,6 +54,33 @@ export class CarOptions {
           resolve(this.options);
         });
     });
+  }
+
+  public changerRequirements(value: Array<string>) {
+    this.requirementsInput = value;
+    this.requirementsInputSource.next(value);
+  }
+
+  public changerCarClass(value: string) {
+    this.carClassInput = value;
+    this.carClassInputSource.next(value);
+  }
+
+  public changerTime(value: any) {
+    this.timeInput = value;
+    this.timeSource.next(value);
+  }
+
+  public getRequirements() {
+    return this.requirementsInput;
+  }
+
+  public getCarClass() {
+    return this.carClassInput;
+  }
+
+  public getTime() {
+    return this.timeInput;
   }
 
   /**

@@ -6,6 +6,11 @@ import {  Order } from './../../../interfaces/order';
 
 import {  OrderHistory } from './../../../providers/order/history';
 import {  OrderFavorite } from './../../../providers/order/favorites';
+import {  OrderHistory } from './../../../providers/order/history';
+import {  Place } from './../../../providers/place/place';
+import {  GatherOrder } from './../../../providers/order/gather_order';
+import {  Nav } from './../../../providers/nav/nav';
+import { CarOptions } from './../../../providers/car-options/car-options';
 
 @Component({
     templateUrl: 'build/pages/account/modal/rides.html'
@@ -18,7 +23,13 @@ export class RidesModal {
     tabDats: Object;
     optionDetails: string; //id of item
 
-    constructor(private nav: NavController, public OrderHistoryProvider: OrderHistory, public OrderFavoriteProvider: OrderFavorite) {
+    constructor(private nav: NavController,
+                public OrderHistoryProvider: OrderHistory,
+                public PlaceProvider: Place,
+                public GatherOrderProvider: GatherOrder,
+                public OrderFavoriteProvider: OrderFavorite,
+                public NavProvider: Nav,
+                public CarOptionsProvider: CarOptions) {
 
         this.nav = nav;
 
@@ -61,6 +72,20 @@ export class RidesModal {
     public toFavorites(ride: Order, $event: any) {
         this.showOptions('', $event);
         this.OrderFavoriteProvider.save(ride);
+    }
+
+    public setLastOrderOptions(order: Order) {
+
+        this.PlaceProvider.changeAddress({
+            to: order.destinations[0].shortAddress,
+            from: order.source.shortAddress
+        });
+
+        this.CarOptionsProvider.changerCarClass(order.vehicleClass);
+        this.CarOptionsProvider.changerRequirements(order.requirements);
+
+        this.nav.pop();
+        this.NavProvider.changeTab('home');
     }
 
 }

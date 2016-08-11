@@ -70,6 +70,13 @@
 
     .list{
       .label{
+
+        .ion-datetime {
+          float: right;
+          color: #FF7431;
+          border-bottom: none;
+        }
+
         .price{
           //width: 50%;
           text-align: right;
@@ -78,3 +85,4 @@
     }
   }
 }
+
