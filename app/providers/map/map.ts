@@ -31,6 +31,10 @@ export class MapProvider {
 
         this.update()
     }
+    
+    public getState() {
+        return this.state;
+    }
 
     public update(){
 

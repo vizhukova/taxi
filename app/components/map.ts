@@ -16,8 +16,10 @@ declare var cordova: any;
 @Component({
     selector: 'map',
     template: `<div id="map-wrap">
-        <span [ngClass]="markerClasses()"></span>
+        <span *ngIf="state.direction" [ngClass]="markerClasses()"></span>
         <div id="{{selector}}"></div>
+        <div class="btn locate" (click)="locateMe()"></div>
+        <div (click)="boundsPolyline()" *ngIf="coords.to.latitude" class="btn center"></div>
     </div>`
 })
 
@@ -60,6 +62,8 @@ export class Map {
 
         const self = this;
 
+        this.state = {direction: 'from'};
+
         this.iconFrom = L.icon({
             iconUrl: 'build/res/icon_path_active.png',
             iconSize: [26, 36], // size of the icon
@@ -78,34 +82,56 @@ export class Map {
             popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
         });
 
-        this.markerTo = L.marker([0, 0]);
-        this.markerFrom = L.marker([0, 0]);
+        this.markerTo = L.marker([0, 0], {icon: this.iconTo, opacity: 0});
+        this.markerFrom = L.marker([0, 0], {icon: this.iconFrom,  opacity: 0});
 
         MapProvider.state$.subscribe(newState => {
-            this.state = newState
+
+
+            if(newState.direction && this.state.direction !== newState.direction) {
+                this.addMarker((!this.state.direction ? 'old' : this.state.direction), newState.direction);
+            } else if(!newState.direction && this.state.direction) {
+                this.addMarker('');
+            } else if(!this.state.direction && newState.direction) {
+                this.addMarker('old', newState.direction);
+            }
+
+            this.state = _.assign({}, newState);
+
+            setTimeout(() => {
+                this.state = _.assign({}, MapProvider.getState())
+            }, 300);
+
+
         });
 
-        //PlaceProvider.coords$.subscribe(newCoords => {
-        //    self.coords = newCoords;
-        //
-        //    if (this.map && newCoords && this.direction) {
-        //
-        //        let currentCoordinates = newCoords[this.direction];
-        //
-        //        this.map.setView([
-        //            currentCoordinates.latitude,
-        //            currentCoordinates.longitude
-        //        ]);
-        //
-        //        this.ref.tick();
-        //        setTimeout(() => {
-        //            self.ref.tick();
-        //            self.map.invalidateSize(true);
-        //        }, 300)
-        //    }
-        //
-        //});
-        //
+        
+        PlaceProvider.coords$.subscribe(newCoords => {
+
+            this.MapProvider.set('searching', false);
+
+           self.coords = newCoords;
+
+            this.calcPolyline(newCoords);
+
+           // if (this.map && newCoords && this.direction) {
+           //
+           //     let currentCoordinates = newCoords[this.direction];
+           //
+           //     this.map.setView([
+           //         currentCoordinates.latitude,
+           //         currentCoordinates.longitude
+           //     ]);
+           //
+           //     this.ref.tick();
+           //     setTimeout(() => {
+           //         self.ref.tick();
+           //         self.map.invalidateSize(true);
+           //     }, 300)
+           // }
+
+        });
+
         //PlaceProvider.reload$.subscribe(name => {
         //    if (self.map && self.selector === name) {
         //        setTimeout(()=> {
@@ -126,26 +152,58 @@ export class Map {
         //});
     }
 
+    addMarker(direction: string, old ?: string) {
+
+        var coords;
+
+        if(direction && direction !== 'old') {
+            coords = this.coords[direction].latitude ?
+                     Map.coordinatesToArray(this.coords[direction]) :
+                     this.map.getCenter();
+        } else {
+            coords = Map.coordinatesToArray(this.coords.to)
+        }
+
+        switch(direction) {
+            case 'to':
+                this.markerFrom.setOpacity(0);
+                this.markerTo.setOpacity(1);
+                this.markerTo.setLatLng(coords);
+                break;
+            case 'from':
+                this.markerTo.setOpacity(0);
+                this.markerFrom.setOpacity(1);
+                this.markerFrom.setLatLng(coords);
+                break;
+            case 'old':
+                if(old === 'to') {
+                    this.markerTo.setOpacity(0);
+                    this.map.setView(this.markerTo.getLatLng())
+                } else {
+                    this.markerFrom.setOpacity(0);
+                    this.map.setView(this.markerFrom.getLatLng())
+                }
+
+                break;
+            case '':
+                this.markerTo.setLatLng(coords);
+                this.markerTo.setOpacity(1);
+
+        }
+    }
+
     markerClasses():Object {
         return {
             marker: true,
             from: this.state.direction === 'from',
-            searching: this.state.searching
+            searching: this.state.searching,
+            hide: this.state.direction === 'to' && !this.coords.to.latitude
         }
     }
 
-    //private getCenter():Coordinates {
-    //    let center = this.map.getCenter();
-    //
-    //    return <Coordinates>{
-    //        latitude: <number>center.lat,
-    //        longitude: <number>center.lng
-    //    }
-    //}
-    //
-    //private static coordinatesToArray(coordinates:Coordinates) {
-    //    return [coordinates.latitude || 0, coordinates.longitude || 0]
-    //}
+    private static coordinatesToArray(coordinates:Coordinates) {
+       return [coordinates.latitude || 0, coordinates.longitude || 0]
+    }
 
     //private isPointExist(name: string): boolean {
     //    let point = this.coords[name];
@@ -153,56 +211,20 @@ export class Map {
     //    return point.latitude !== 0 && point.longitude !== 0;
     //}
 
-    //private bootMarkers(direction:string):void {
-    //
-    //    let markerFromCoords = this.coords.from.latitude !== 0 && this.coords.from.latitude !== 0 ? this.coords.from : this.getCenter();
-    //    let markerToCoords = this.coords.to.latitude !== 0 && this.coords.to.latitude !== 0 ? this.coords.to : this.getCenter();
-    //
-    //    markerFromCoords = Map.coordinatesToArray(markerFromCoords);
-    //    markerToCoords = Map.coordinatesToArray(markerToCoords);
-    //
-    //    if (direction === 'to') {
-    //        if (!this.map.hasLayer(this.markerFrom)) {
-    //            this.markerFrom = L.marker(markerFromCoords, {
-    //                icon: this.iconFrom,
-    //                opacity: this.isPointExist('from') ? 1 : 0
-    //            }).addTo(this.map)
-    //        } else {
-    //            this.markerFrom.setLatLng(markerFromCoords);
-    //            this.markerTo.setOpacity(0);
-    //            this.markerFrom.setOpacity(1);
-    //            this.map.setView(markerToCoords)
-    //        }
-    //    } else if (direction === 'from') {
-    //        if (!this.map.hasLayer(this.markerTo)) {
-    //            this.markerTo = L.marker(markerToCoords, {
-    //                icon: this.iconTo,
-    //                opacity: this.isPointExist('to') ? 1 : 0
-    //            }).addTo(this.map)
-    //        } else {
-    //            this.markerTo.setLatLng(markerToCoords);
-    //            this.markerTo.setOpacity(1);
-    //            this.markerFrom.setOpacity(0);
-    //            this.map.setView(markerFromCoords)
-    //        }
-    //    }
-    //}
 
     public ngAfterViewInit():void {
-
         this.createMap(this.selector);
-
     }
 
     private timeout(){
 
-        // this.MapProvider.set('searching', true);
+        if(!this.coords.to.latitude && this.state.direction === 'to' ) return;
+        if(!this.state.direction) return;
 
         if(this.timer) clearTimeout(this.timer);
 
         this.timer = setInterval(() => {
             this.onDragEnd();
-            //this.locateButton.classList.remove('loading');
             clearTimeout(this.timer)
         }, 1200)
 
@@ -221,6 +243,9 @@ export class Map {
 
         if (!this.map) {
             this.map = new L.Map(this.selector, {center: mapCoords, zoom: 15, layers: [osmLayer], zoomControl: false});
+
+            this.markerFrom.addTo(this.map);
+            this.markerTo.addTo(this.map)
         }
 
         //this.map.on('click', () => {
@@ -236,7 +261,6 @@ export class Map {
         //})
         //
         //
-
 
         this.map.on('click', ()=>{
             this.MapProvider.set('clicked', !this.state.clicked)
@@ -296,20 +320,32 @@ export class Map {
 
         if (!from.Lat || !from.Lon || !to.Lat || !to.Lon) return;
 
-        this.pathButton.classList.add('loading');
+        // this.pathButton.classList.add('loading');
 
         this.http.post('http://ddtaxity.smarttaxi.ru:8000/1.x/route?taxiserviceid=taxity', [from, to])
 
             .subscribe((res:Response) => {
                 var data = res.json();
 
-                //this.markPolyline(this.PlaceProvider.decodeGooglePolyline(data.overviewPolyline));
-
-                this.pathButton.classList.remove('loading');
+                this.markPolyline(this.PlaceProvider.decodeGooglePolyline(data.overviewPolyline));
             });
     }
 
+    private markPolyline(path:any):void {
+        this.polyline && this.removeLayer(this.polyline);
+        this.polyline = L.polyline(path, {color: 'black'}).addTo(this.map);
+        this.callEnable(true);
+        // this.PlaceProvider.changePathStatus(true);
+    }
+
+    private boundsPolyline() {
+        this.MapProvider.set('direction', '');
+        this.map.fitBounds(this.polyline.getBounds(), {padding: [50, 50]});
+    }
+
     private locateMe():void {
+
+        if(!this.coords.to.latitude && this.state.direction === 'to') return
 
         this.MapProvider.set('searching', true);
 
@@ -326,16 +362,10 @@ export class Map {
         })
     }
 
-    //private markPolyline(path:any):void {
-    //    this.polyline && this.removeLayer(this.polyline);
-    //    this.polyline = L.polyline(path, {color: 'black'}).addTo(this.map);
-    //    this.callEnable(true);
-    //    this.PlaceProvider.changePathStatus(true);
-    //}
-    //
 
     private removeLayer(layer):void {
-        this.map.removeLayer(layer)
+        this.map.removeLayer(layer);
+        this.polyline = false;
     }
 
     private onDragEnd():void {

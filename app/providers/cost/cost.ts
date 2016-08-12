@@ -32,6 +32,8 @@ export class Cost {
      */
     public getCost(coords:PathCoordinates) {
 
+        if(!coords.from.latitude) return;
+
         let self = this;
 
         self.clear();

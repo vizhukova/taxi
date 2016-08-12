@@ -77,26 +77,37 @@ body {
     100% { transform: scale(1.2); }
   }
 
+  .btn {
+    width: 55px;
+    height: 55px;
+    position: absolute;
+    right: 5px;
+
+    &.locate {
+      background: url('../res/btn_locate.png') no-repeat;
+      background-size: 100% 100%;
+      bottom: 150px;
+    }
+
+    &.center {
+      background: url('../res/btn_calcpath.png') no-repeat;
+      background-size: 100% 100%;
+      bottom: 85px;
+
+    }
+  }
+
+
   #mapHome, #searchMap {
     height: 100%;
 
     .nav-panel {
-      bottom: 53px;
+      bottom: 84px;
+      position: absolute;
+      right: 0;
+      z-index: 1;
 
-      .locate-button {
-        width: 55px;
-        height: 55px;
-        background: url('../res/btn_locate.png') no-repeat;
-        background-size: 100% 100%;
-        bottom: 60px;
-      }
-      .calcpath-button {
-        width: 55px;
-        height: 55px;
-        background: url('../res/btn_calcpath.png') no-repeat;
-        background-size: 100% 100%;
-        bottom: 60px;
-      }
+
     }
   }
 
@@ -105,6 +116,10 @@ body {
   }
 
   span.marker {
+
+    &.hide {
+      display: none;
+    }
 
     &.from {
       background: url("../res/icon_path_active.png") no-repeat;

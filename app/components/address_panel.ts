@@ -15,7 +15,6 @@ import {Subject, BehaviorSubject, Observable} from 'rxjs'
 import {AddressItem} from "../interfaces/address";
 import {MapState} from "../interfaces/map";
 
-
 @Component({
     selector: 'address',
     templateUrl: 'build/templates/address_panel.html',
@@ -86,7 +85,7 @@ export class Address {
         MapProvider.state$.subscribe(newState => {
             self.direction = newState.direction;
 
-            if(newState.clicked !== self.clicked && newState.editable) {
+            if(newState.clicked !== self.clicked && newState.editable  && newState.searching) {
                 self.onConfirm()
             }
 
@@ -246,9 +245,12 @@ export class Address {
 
         if(this.direction === type && this.detail) {
             this.disabled[type] = false;
-            setTimeout(()=>{
-                input.focus();
-            }, 100)
+            setTimeout(()=>{ input.focus() }, 100)
+        } else if(type === 'to' && !this.address.to) {
+            this.NavProvider.changeTabSet('search');
+            this.MapProvider.set('editable', true);
+            this.MapProvider.set('searching', true);
+            this.detail = true;
         }
 
         if(this.direction === type && this.NavProvider.getCurrentTabSet() === 'main'){
@@ -269,6 +271,8 @@ export class Address {
         this.AddressProvider.changeFavoriteAddress({house: this.house, housing: this.block, description: this.comment});
         this.nav.push(FavoritePopup);
     }
+
+
 
     onConfirm(){
         this.search = false;

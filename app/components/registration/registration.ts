@@ -33,10 +33,6 @@ export class RegistrationModal {
 
     }
 
-    ngOnDestroy() {
-        this.MapProvider.set('authorized', true);
-    }
-
     closeKeyboard(event) {
         if(cordova && cordova.plugins && cordova.plugins.Keyboard && event.target.tagName !== 'INPUT'){
             //window.scrollTo(document.body.scrollLeft, document.body.scrollTop);
@@ -76,6 +72,7 @@ export class RegistrationModal {
             this.PlaceProvider.reloadMap('homeMap');
         }
 
+        this.MapProvider.set('authorized', true);
         this.PlaceProvider.changePathStatus(false);
     }
 

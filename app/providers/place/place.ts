@@ -35,8 +35,8 @@ export class Place {
 
     // Service message commands
     public changeAddress(address:string) {
+        console.log(Date.now(), 'address', address)
 
-        this.MapProvider.set('searching', false);
 
         this.addressSource.next(address);
     }
@@ -163,8 +163,6 @@ export class Place {
     }
 
     public getCurrentAddress(coords:Coordinates) {
-        this.MapProvider.set('searching', true);
-
         const self = this;
 
         self.coords[self.direction] = coords;
@@ -178,7 +176,10 @@ export class Place {
                     if(data.results.length){
                         self.address[self.direction] = `${data.results[0].address_components[1].long_name}, ${data.results[0].address_components[0].long_name}`;
                         self.fullAddress[self.direction] = data.results[0];
-                        self.changeAddress(self.address);
+                        setTimeout(() => {
+                            self.changeAddress(self.address);
+                        }, 300)
+
                     }
 
                 });
