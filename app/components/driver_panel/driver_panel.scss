@@ -1,0 +1,78 @@
+.driver-panel {
+
+  .top-panel {
+    background: #2e2e35;
+    padding: 15px;
+    position: relative;
+
+      &:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      height: 9px;
+      right: 0;
+      margin: auto;
+      bottom: -7px;
+      background: url("../res/logo_line.png") right bottom no-repeat;
+     }
+
+    img {
+      height: 65px;
+      width: 65px;
+    }
+
+    .block-left {
+      display: inline-block;
+      width: 25%;
+      vertical-align: top;
+    }
+
+    .block-right {
+      display: inline-block;
+      width: 72%;
+      vertical-align: top;
+      text-align: left;
+
+      .car-type {
+        display: inline-block;
+        max-width: 80%;
+        font-size: 13px;
+        color: #9b9b9c;
+        vertical-align: top;
+        line-height: 13px;
+        padding: 0;
+      }
+
+      .car-name {
+        color: #fff;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 11px;
+        text-transform: uppercase;
+      }
+
+      .car-status {
+        color: $main-bright-color;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
+        text-transform: uppercase;
+        position: absolute;
+        bottom: 11px;
+        padding: 0 10px;
+
+        &:before {
+          content: "•";
+          position: absolute;
+          margin-left: -10px;
+        }
+      }
+
+      .stars {
+        float: right;
+        line-height: 13px;
+      }
+    }
+
+  }
+}

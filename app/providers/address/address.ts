@@ -30,6 +30,12 @@ export class AddressProvider {
         localStorage.setItem('favorite_address', JSON.stringify(dataToSave));
     }
 
+    public saveObject(data: Object) {
+
+        localStorage.setItem('favorite_address', JSON.stringify(data));
+    }
+
+
 
 
 }

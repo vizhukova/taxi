@@ -19,8 +19,9 @@ import {Auth} from "./providers/auth/auth";
 import {CarOptions} from "./providers/car-options/car-options";
 import {GatherOrder} from "./providers/order/gather_order";
 import {AddressProvider} from "./providers/address/address";
-import {  OrderHistory } from './providers/order/history';
-import {  OrderFavorite } from './providers/order/favorites';
+import { OrderHistory } from './providers/order/history';
+import { OrderFavorite } from './providers/order/favorites';
+import { TimeProvider } from './providers/time/time';
 
 declare var cordova: any;
 
@@ -59,7 +60,7 @@ export class MainTabs {
 
 @Component({
     template: '<ion-nav #myNav [root]="rootPage"></ion-nav>',
-    providers: [Place, Cost, Nav, Auth, AddressProvider, CarOptions, GatherOrder, OrderHistory, OrderFavorite],
+    providers: [Place, Cost, Nav, Auth, AddressProvider, CarOptions, GatherOrder, OrderHistory, OrderFavorite, TimeProvider],
     directives: [MainPage, RegistrationModal]
 })
 export class App {

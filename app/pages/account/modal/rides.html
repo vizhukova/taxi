@@ -17,10 +17,14 @@
                 <p class="panel panel-title">
                     <i class="past-ride-icon" (click)="setLastOrderOptions(item)"></i>
                    <span>{{item.bookingDate}}</span>
+                    <i class="more-btn" (click)="showOptions(num, $event)"></i>
                 </p>
                 <p class="panel">
                      <span class="options" *ngIf="num === optionDetails">
-                        <span (click)="toFavorites(item, $event)">В избранные</span>
+                         <span>Повторить</span>
+                         <span>Скрыть</span>
+                         <span>Удалить</span>
+                         <span (click)="toFavorites(item, $event)">В избранные</span>
                     </span>
                     <span class="route"></span>
                     <span class="panel">{{item.source.shortAddress}}</span>

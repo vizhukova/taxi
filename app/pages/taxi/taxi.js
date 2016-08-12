@@ -8,31 +8,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var rxjs_1 = require('rxjs');
-var TimeProvider = (function () {
-    function TimeProvider() {
-        // Observable data sources
-        this.timeSource = new rxjs_1.BehaviorSubject(null);
-        // Observable data streams
-        this.time$ = this.timeSource.asObservable();
-        this.time = {
-            string: new Date().toISOString(),
-            key: 'now',
-            value: ''
-        };
+var driver_panel_1 = require('./../../components/driver_panel/driver_panel');
+var TaxiPage = (function () {
+    function TaxiPage() {
     }
-    // Service message commands
-    TimeProvider.prototype.change = function (time) {
-        this.time = time;
-        this.timeSource.next(time);
-    };
-    TimeProvider.prototype.get = function () {
-        return this.time;
-    };
-    TimeProvider = __decorate([
-        core_1.Injectable(), 
+    TaxiPage = __decorate([
+        core_1.Component({
+            selector: 'taxi-page',
+            templateUrl: 'build/pages/taxi/taxi.html',
+            directives: [driver_panel_1.DriverPanel]
+        }), 
         __metadata('design:paramtypes', [])
-    ], TimeProvider);
-    return TimeProvider;
+    ], TaxiPage);
+    return TaxiPage;
 })();
-exports.TimeProvider = TimeProvider;
+exports.TaxiPage = TaxiPage;

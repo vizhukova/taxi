@@ -8,6 +8,7 @@
 // App Shared Sass variables belong in app.variables.scss.
 
 @import "./partial";
+
 @import "../pages/search-tab/search-tab";
 @import "../pages/search/search";
 @import "../pages/feed-tab/feed-tab";
@@ -18,8 +19,13 @@
 @import "../pages/time/time";
 @import "../pages/account/account";
 @import "../pages/account/modal/rides";
+@import "../pages/taxi/taxi";
+@import "../pages/like/like";
+@import "../pages/money/money";
+
 @import "../components/registration/registration";
 @import "../components/loader/loader";
+@import "../components/driver_panel/driver_panel";
 
 @font-face {
   font-family: "Myriad Pro";
@@ -41,7 +47,7 @@
 }
 
 html {
-  font-size: 1px;
+  font-size: 14px;
 }
 
 body {
@@ -143,5 +149,9 @@ body {
       font-size: 14px !important;
       padding: 5px;
     }
+  }
+
+  .picker-opts {
+    min-width: 65px;
   }
 }

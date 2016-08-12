@@ -23,13 +23,16 @@ export class SettingsPage {
   payment: Array<string>;
   service: Array<Object>;
 
-  tariffInput: string;
+  tariffInput: string; //value
   paymentInput: string;
   serviceInput: Array<string> = [];
 
   constructor(public GatherOrderProvider: GatherOrder,
               private nav: NavController,
               public CarOptionsProvider: CarOptions) {
+
+    let self = this;
+
     this.nav = nav;
     this.tariffs = [
       {name: 'Эконом', price: '50 руб'},
@@ -37,6 +40,9 @@ export class SettingsPage {
       {name: 'Бизнесс', price: '200 руб'}
     ];
     this.payment = ['Наличными', 'Безналичными', 'Баллами'];
+
+    this.tariffInput = this.CarOptionsProvider.getCarClass();
+
     //this.service = [
     //  {name: 'Перевозки животных', comment: ''},
     //  {name: 'Детское кресло', comment: '3 года'},
@@ -53,7 +59,7 @@ export class SettingsPage {
 
     CarOptionsProvider.carClasses$.subscribe(cars => {
       this.tariffs = cars || [];
-      this.changeTariff(this.tariffs[0]);
+        self.tariffInput = self.tariffInput || cars[0]['value'];
     });
 
 
@@ -62,7 +68,7 @@ export class SettingsPage {
     });
 
     CarOptionsProvider.carClassInput$.subscribe(carClassInput => {
-      this.tariffInput = carClassInput || '';
+      this.tariffInput = carClassInput || this.tariffInput;
     });
 
     this.changePayment(this.payment[0]);
@@ -79,10 +85,9 @@ export class SettingsPage {
     this.nav.push(Loader);
   }
 
-  changeTariff(data:Object) {
-    //this.tariffInput = data['value'];
-    //this.GatherOrderProvider.setVehicleClass(this.tariffInput);
-    this.CarOptionsProvider.changerCarClass(this.tariffInput);
+  changeTariff(data:string) {
+    this.tariffInput = data;
+    this.CarOptionsProvider.changerCarClass(data);
   }
 
   changePayment(data: string) {
@@ -97,7 +102,6 @@ export class SettingsPage {
     }else {
       this.serviceInput.push(data);
     }
-    //this.GatherOrderProvider.setRequirements(this.serviceInput);
     this.CarOptionsProvider.changerRequirements(this.serviceInput);
   }
 

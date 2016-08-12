@@ -1,4 +1,4 @@
-<div class="feed-tab-page">
+<div class="feed-tab-page" (click)="hideOptionDetails()">
 
     <div class="header">
         <p class="title">В виде поездок</p>
@@ -18,13 +18,13 @@
 
         <div class="items addresses" *ngIf="address" >
             <div class="address-item block" *ngFor="let key of getAddressKeys(); let num=index">
-                <!--<i class="more-btn" (click)="showOptions(a+num, $event)"></i>-->
+                <i class="more-btn" (click)="showOptions(num, $event)"></i>
               <div class="content">
-                   <span class="options" *ngIf="a + num === optionDetails">
-                        <span>Изменить</span>
-                        <span>Удалить</span>
+                   <span class="options" *ngIf="num === optionDetails">
+                        <span>Повторить</span>
+                        <span>Скрыть</span>
+                        <span (click)="deleteAddress(key)">Удалить</span>
                     </span>
-                    <ion-icon md="md-more" (click)="showOptions(a+num, $event)"></ion-icon>
                 <p class="title">{{addresses[key].description}}</p>
                 <span class="address">{{addresses[key].shortAddress}}</span>
               </div>
@@ -34,14 +34,15 @@
         <div class="items trips" *ngIf="!address" >
             <div class="block" *ngFor="let item of trips; let num=index">
                 <div class="content">
-                    <p class="panel panel-title">
+                    <p class="panel panel-title" (click)="showOptions(num, $event)">
                         <span>{{item.bookingDate}}</span>
-                        <i class="more-btn" (click)="showOptions(o+num, $event)"></i>
+                        <i class="more-btn" (click)="showOptions(num, $event)"></i>
                     </p>
                     <p class="panel">
-                         <span class="options" *ngIf="o + num === optionDetails">
-                            <span>Изменить</span>
-                            <span>Удалить</span>
+                         <span class="options" *ngIf="num === optionDetails">
+                                <span>Повторить</span>
+                                 <span>Скрыть</span>
+                                 <span (click)="deleteTrip(num)">Удалить</span>
                         </span>
                         <span class="route"></span>
                         <span class="panel">{{item.source.shortAddress}}</span>

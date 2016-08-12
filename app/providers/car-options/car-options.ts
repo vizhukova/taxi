@@ -35,6 +35,7 @@ export class CarOptions {
 
   constructor(private http: Http) {
     this.options = null;
+    this.carClassInput = null;
   }
 
   load() {
@@ -49,6 +50,8 @@ export class CarOptions {
           this.requirements = CarOptions.parseRequirements(data);
           this.carClasses = CarOptions.parseCarClasses(data);
 
+          this.carClassInput =  this.carClasses[0];
+
           this.emitUpdate();
 
           resolve(this.options);
@@ -61,7 +64,7 @@ export class CarOptions {
     this.requirementsInputSource.next(value);
   }
 
-  public changerCarClass(value: string) {
+  public changerCarClass(value: string) { //name, value
     this.carClassInput = value;
     this.carClassInputSource.next(value);
   }

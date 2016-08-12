@@ -80,9 +80,27 @@
         .price{
           //width: 50%;
           text-align: right;
+          }
         }
       }
     }
+   .select-wrapper {
+  position: relative;
+
+  div.panel {
+      background: #E4E7EC;
+      width: 102px;
+      position: absolute;
+      right: -26px;
+      z-index: 2;
+
+    span {
+      display: block;
+      text-align: center;
+    }
+    }
   }
-}
+  }
+
+
 

@@ -1,16 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Order } from './../../interfaces/order';
-
+import {BehaviorSubject} from "rxjs/Rx";
 
 @Injectable()
 export class OrderFavorite {
 
   orders: Array<Order> = [];
 
+  private ordersSource = new BehaviorSubject<Array<Order>>([]);
+  orders$ = this.ordersSource.asObservable();
+
   constructor(private http: Http) {
     this.getFromLS();
   }
+
+   changeOrders(value) {
+      this.ordersSource.next(value);
+    }
 
   public save(data: Order) {
 
@@ -25,6 +32,13 @@ export class OrderFavorite {
 
     this.orders.push(data);
     localStorage.setItem('favorite_order', JSON.stringify(this.orders));
+    this.changeOrders(this.orders);
+  }
+
+  public saveNewArray(data: Array<Order>) {
+    this.orders = data;
+    localStorage.setItem('favorite_order', JSON.stringify(data));
+    this.changeOrders(this.orders);
   }
 
   public get() {
@@ -35,6 +49,7 @@ export class OrderFavorite {
     let data = localStorage.getItem('favorite_order');
     data = JSON.parse(data) || [];
     this.orders = data;
+    this.changeOrders(this.orders);
   }
 
 }

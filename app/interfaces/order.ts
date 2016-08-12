@@ -1,3 +1,5 @@
+import { Time } from './time';
+
 export interface Source {
     city : string
     closestStation ?: string
@@ -42,5 +44,6 @@ export interface Order{
     source: Source
     urgent: boolean
     vehicleClass: string
+    bookingObj? : Time
 
 }

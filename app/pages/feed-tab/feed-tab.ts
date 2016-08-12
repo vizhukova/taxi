@@ -31,7 +31,11 @@ export class FeedTabPage {
 
 
     this.addresses = this.AddressProvider.getFavoriteAddresses();
-    this.trips = this.OrderFavoriteProvider.get();
+    //this.trips = this.OrderFavoriteProvider.get();
+
+     OrderFavoriteProvider.orders$.subscribe(orders => {
+      this.trips = orders;
+    });
 
   }
 
@@ -44,7 +48,31 @@ export class FeedTabPage {
   }
 
   public showOptions(key: string, event: any) {
-    this.optionDetails = key;
+    this.optionDetails = this.optionDetails === key ? '-1' : key;
     event.stopPropagation();
+  }
+
+  editTrip(num: string) {
+
+  }
+
+  deleteTrip(num: string) {
+    this.trips = this.trips.filter((item, index) => index != num);
+    this.OrderFavoriteProvider.saveNewArray(this.trips);
+    this.optionDetails = '-1';
+  }
+
+  editAddress(key: string) {
+
+  }
+
+  deleteAddress(key: string) {
+    delete this.addresses[key];
+    this.AddressProvider.saveObject(this.addresses);
+    this.optionDetails = '-1';
+  }
+
+  hideOptionDetails() {
+    this.optionDetails = '-1';
   }
 }

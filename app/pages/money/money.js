@@ -8,31 +8,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var rxjs_1 = require('rxjs');
-var TimeProvider = (function () {
-    function TimeProvider() {
-        // Observable data sources
-        this.timeSource = new rxjs_1.BehaviorSubject(null);
-        // Observable data streams
-        this.time$ = this.timeSource.asObservable();
-        this.time = {
-            string: new Date().toISOString(),
-            key: 'now',
-            value: ''
-        };
+var MoneyPage = (function () {
+    function MoneyPage() {
     }
-    // Service message commands
-    TimeProvider.prototype.change = function (time) {
-        this.time = time;
-        this.timeSource.next(time);
-    };
-    TimeProvider.prototype.get = function () {
-        return this.time;
-    };
-    TimeProvider = __decorate([
-        core_1.Injectable(), 
+    MoneyPage = __decorate([
+        core_1.Component({
+            selector: 'money-page',
+            templateUrl: 'build/pages/money/money.html',
+        }), 
         __metadata('design:paramtypes', [])
-    ], TimeProvider);
-    return TimeProvider;
+    ], MoneyPage);
+    return MoneyPage;
 })();
-exports.TimeProvider = TimeProvider;
+exports.MoneyPage = MoneyPage;

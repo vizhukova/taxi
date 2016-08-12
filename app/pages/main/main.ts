@@ -10,6 +10,10 @@ import { TimeTabPage } from '../../pages/time-tab/time-tab';
 import { FeedTabPage } from '../../pages/feed-tab/feed-tab';
 import { FlyTabPage } from '../../pages/fly-tab/fly-tab';
 
+import { TaxiPage } from '../../pages/taxi/taxi';
+import { LikePage } from '../../pages/like/like';
+import { MoneyPage } from '../../pages/money/money';
+
 import {NavController} from 'ionic-angular';
 
 import {RegistrationModal} from "../../components/registration/registration";
@@ -36,7 +40,10 @@ declare var cordova:any;
     SearchTabPage,
     TimeTabPage,
     FeedTabPage,
-    FlyTabPage
+    FlyTabPage,
+    TaxiPage,
+    LikePage,
+    MoneyPage
   ]
 })
 export class MainPage {
@@ -95,6 +102,7 @@ export class MainPage {
 
     NavProvider.tabSet$.subscribe(tabSet => {
       this.activeTabSet = tabSet;
+      debugger
     });
 
     PlaceProvider.direction$.subscribe(direction => {
@@ -117,6 +125,7 @@ export class MainPage {
     this.activeTab = newTab;
   }
 
+
   setClasses(active: string) {
     return {
       tab: true,
@@ -134,7 +143,6 @@ export class MainPage {
 
   makeOrder() {
 
-    debugger
     if(!this.AuthProvider.check()){
       this.nav.push(RegistrationModal);
     }else{
@@ -143,6 +151,7 @@ export class MainPage {
 
         this.nav.push(Loader);
         this.OrderHistoryProvider.save(this.GatherOrderProvider.getGatheredOrder());
+        this.NavProvider.changeTabSet('order');
 
 
       }).catch((err) => {

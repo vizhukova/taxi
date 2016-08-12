@@ -1,5 +1,5 @@
-<ion-content class="has-footer time">
-     <address></address>
+<ion-content class="has-footer time" (click)="hideSelect()">
+    <address></address>
 
     <scroll-content>
 
@@ -10,7 +10,7 @@
                 <p class="label" (click)="checkTime(time[0])">
                     <input type="radio"
                            name="time"
-                           [checked]="time[0] === timeInput" />
+                           [checked]="time[0] === timeInput"/>
                     <label>
                         Сейчас
                         <span class="price">~ 5 - 10 мин</span>
@@ -20,10 +20,17 @@
                 <p class="label" (click)="checkTime(time[1])">
                     <input type="radio"
                            name="time"
-                           [checked]="time[1] === timeInput" />
+                           [checked]="time[1] === timeInput"/>
                     <label>
                         Через
-                        <span class="price bright">~ 5 - 10 мин</span>
+                        <span class="price bright">
+                            <span class="select-wrapper">
+                               <div class="input" (click)="showSelect(true, $event)">{{delay}} мин</div>
+                               <div class="panel" (click)="showSelect(false, $event)" *ngIf="isShownInput">
+                                   <span class="option" (click)="setDelay(delay)" *ngFor="let delay of delayArray">{{delay}} мин</span>
+                               </div>
+                           </span>
+                        </span>
                     </label>
                 </p>
 
@@ -39,7 +46,7 @@
                                       cancelText="Отмена"
                                       doneText="Готово"
                                       class="ion-datetime"
-                                      (click)="checkTime(time[2])"
+                                      (ionChange)="checkTime(time[2])"
                         ></ion-datetime>
                     </label>
                 </p>
@@ -47,19 +54,20 @@
                 <p class="label">
                     <input type="radio"
                            name="time"
-                           [checked]="time[3] === timeInput" />
+                           [checked]="time[3] === timeInput"/>
                     <label>
                         Отложить
-                        <span *ngIf="!repeatTime" class="price bright">-</span>
+                        <span *ngIf="!delayTime" class="price bright">-- - -- - ---- -- : --</span>
                         <ion-datetime
-                                displayFormat="DD MMM YYYY  HH:mm"
+                                displayFormat="DD-MM-YYYY  HH:mm"
                                 [(ngModel)]="delayTime"
-                                monthShortNames="янв, фев, мар, апр, май, июн, июл, авг, сен, окт, ноя, фев"
                                 cancelText="Отмена"
                                 doneText="Готово"
                                 class="ion-datetime"
-                                (click)="checkTime(time[3])"
+                                (ionChange)="checkTime(time[3])"
+                                min={{getMinTime()}}
                         ></ion-datetime>
+                        <!--monthShortNames="янв, фев, мар, апр, май, июн, июл, авг, сен, окт, ноя, фев"-->
                     </label>
                 </p>
 

@@ -1,0 +1,84 @@
+.taxi-page {
+  background: #e4e7ec;
+  padding-bottom: 50px;
+
+  scroll-content{
+    padding-bottom: 60px;
+  }
+
+  //.header {
+  //  &.line-header {
+  //    position: relative;
+  //    &:before {
+  //    content: "";
+  //    position: absolute;
+  //    left: 0;
+  //    height: 9px;
+  //    right: 0;
+  //    margin: auto;
+  //    top: -2px;
+  //    background: url("../res/logo_line.png") right bottom no-repeat;
+  //   }
+  //  }
+  //}
+
+  .edit {
+    background-color: $main-bright-color;
+    background-image: url('./../res/call.svg');
+    width: 45px;
+    height: 45px;
+    background-size: 28px;
+    border-radius: 50%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    position: absolute;
+    right: 18px;
+    top: 74px;
+    z-index: 1;
+  }
+
+  .content {
+    background: #f7f7f9;
+    padding: 0 36px 35px 28px;
+
+    hr {
+      margin-top: 40px;
+    }
+
+    label {
+      color: #565659;
+      font-size: 12px;
+      width: 100%;
+      font-weight: 100;
+      margin: 15px 0;
+      padding-top: 8px;
+      padding-left: 55px;
+
+      &.name {
+        &:before {
+          background-image: url("./../res/icon_account.png");
+        }
+      }
+
+       &:before {
+          border: none;
+          position: absolute;
+          width: 35px;
+          height: 35px;
+          background-repeat: no-repeat;
+          background-size: 35px;
+        }
+
+      span {
+        color: $main-dark-color;
+        font-size: 16px;
+        font-weight: 600;
+        text-transform: uppercase;
+        width: 100%;
+        border-bottom: solid 2px #E4E7EC;
+        padding: 8px 0 0 0;
+        line-height: 20px;
+      }
+    }
+  }
+}

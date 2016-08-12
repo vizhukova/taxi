@@ -184,7 +184,7 @@ export class Place {
 
         return {
             city : this.fullAddress[direction].address_components[3].long_name,
-            country : this.fullAddress[direction].address_components[6].long_name,
+            country : this.fullAddress[direction].address_components[ this.fullAddress[direction].address_components.length - 1 ].long_name,
             fullAddress : this.fullAddress[direction].formatted_address,
             shortAddress : this.address[direction],
             lat : this.coords[direction].latitude,

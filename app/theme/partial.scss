@@ -459,26 +459,58 @@ i.more-btn {
   background-repeat: no-repeat;
   background-position: center center;
   background-image: url('./../res/more.png');
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto 5px;
+}
+
+
+
+i.star-fill, i.star-empty {
+  height: 15px;
+  width: 15px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  display: inline-block;
+}
+
+i.star-fill {
+  background-size: 100%;
+ background-image: url('./../res/star_fill.svg');
+}
+
+i.star-empty {
+  background-size: 125%;
+  background-image: url('./../res/star_empty.svg');
 }
 
  span.options {
-  background: #fff;
-  color: #2C2C30;
-  width: 80%;
-  margin: 5px 10px;
-  -webkit-transition: all 1s ease-out 0.5s;
-  transition: all 1s ease-out 0.5s;
-  box-sizing: border-box;
-  position: absolute;
-  z-index: 2;
-  right: 0;
-  top: 0;
+    background: #fff;
+    color: #2C2C30;
+    width: 133px;
+    margin: 5px 10px;
+    padding: 20px 10px;
+    -webkit-transition: all 1s ease-out 0.5s;
+    transition: all 1s ease-out 0.5s;
+    box-sizing: border-box;
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    top: 0;
+    text-align: center;
+    border-radius: 5px;
+}
 
   span {
     display: block;
     line-height: 40px;
     padding: 0 10px;
-  }
+
+    &:hover, &:active, &:focus  {
+     color: $main-bright-color;
+    }
 }
 
 

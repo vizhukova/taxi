@@ -75,6 +75,7 @@
 
         &.panel-title {
           font-weight: 100;
+          position: relative;
           //&:before {
           //  background-image: url("./../res/future_rides_active.svg");
           //  background-repeat: no-repeat;
@@ -85,17 +86,18 @@
           //  content: "";
           //  position: absolute;
           //}
-          &:after {
-            background-image: url("./../res/more.png");
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: 20px;
-            height: 48px;
-            width: 48px;
-            content: "";
-            position: absolute;
-            right: 0;
-          }
+          //&:after {
+          //  background-image: url("./../res/more.png");
+          //  background-repeat: no-repeat;
+          //  background-position: center center;
+          //  background-size: 20px;
+          //  height: 48px;
+          //  width: 48px;
+          //  content: "";
+          //  position: absolute;
+          //  right: 0;
+          //  top: 0;
+          //}
 
           i.past-ride-icon {
             background-image: url("./../res/future_rides_active.svg");
@@ -110,6 +112,7 @@
           span {
             line-height: 48px;
             padding-left: 48px;
+            display: block;
           }
         }
 
