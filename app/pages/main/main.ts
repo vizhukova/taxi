@@ -10,17 +10,26 @@ import { TimeTabPage } from '../../pages/time-tab/time-tab';
 import { FeedTabPage } from '../../pages/feed-tab/feed-tab';
 import { FlyTabPage } from '../../pages/fly-tab/fly-tab';
 
+import { TaxiPage } from '../../pages/taxi/taxi';
+import { LikePage } from '../../pages/like/like';
+import { MoneyPage } from '../../pages/money/money';
+
 import {NavController} from 'ionic-angular';
-import {Nav} from "../../providers/nav/nav";
+
 import {RegistrationModal} from "../../components/registration/registration";
+import {Loader} from "../../components/loader/loader";
+
+import {Nav} from "../../providers/nav/nav";
 import {Auth} from "../../providers/auth/auth";
 import {Place} from "../../providers/place/place";
 import {Cost} from "../../providers/cost/cost";
-import {Loader} from "../../components/loader/loader";
 import {CarOptions} from "../../providers/car-options/car-options";
 import {GatherOrder} from "../../providers/order/gather_order";
+import {OrderHistory} from "../../providers/order/history";
 import {MapProvider} from "../../providers/map/map";
 import {MapState} from "../../interfaces/map";
+
+
 
 declare var cordova:any;
 
@@ -35,7 +44,10 @@ declare var cordova:any;
     SearchTabPage,
     TimeTabPage,
     FeedTabPage,
-    FlyTabPage
+    FlyTabPage,
+    TaxiPage,
+    LikePage,
+    MoneyPage
   ]
 })
 export class MainPage {
@@ -58,7 +70,8 @@ export class MainPage {
               private PlaceProvider: Place,
               private CostProvider: Cost,
               private CarOptionsProvider: CarOptions,
-              private GatherOrderProvider: GatherOrder) {
+              private GatherOrderProvider: GatherOrder,
+              private OrderHistoryProvider: OrderHistory) {
     this.nav = nav;
     this.activeTab = 'home';
     this.activeTabSet = 'main';
@@ -90,8 +103,9 @@ export class MainPage {
       this.activeTab = tab;
     });
 
+
     MapProvider.state$.subscribe(newState => {
-      this.state = newState
+      this.state = newState;
     });
 
     NavProvider.tabSet$.subscribe(tabSet => {
@@ -114,6 +128,7 @@ export class MainPage {
     this.activeTab = newTab;
   }
 
+
   setClasses(active: string) {
     return {
       tab: true,
@@ -131,19 +146,26 @@ export class MainPage {
   ngAfterViewInit(){
     if(!this.AuthProvider.check()){
       this.nav.push(RegistrationModal);
+    }else{
+      this.PlaceProvider.changePathStatus(false);
+      this.MapProvider.set('authorized', true);
     }
-
-    this.PlaceProvider.changePathStatus(false);
   }
 
   makeOrder() {
+    debugger
 
     if(!this.AuthProvider.check()){
       this.nav.push(RegistrationModal);
     }else{
 
-      this.GatherOrderProvider.createOrder().then(() => {
+      this.GatherOrderProvider.createOrder().then((data) => {
+
         this.nav.push(Loader);
+        this.OrderHistoryProvider.save(this.GatherOrderProvider.getGatheredOrder());
+        //this.NavProvider.changeTabSet('order');
+
+
       }).catch((err) => {
         console.log(err.stack)
       });

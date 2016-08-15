@@ -15,7 +15,7 @@ export class RegistrationModal {
 
    isCode: boolean = false;
    name: string;
-   code: string;
+   code: string = '+7';
    number: string;
    key: string;
    isShownInput: boolean = false;
@@ -31,7 +31,7 @@ export class RegistrationModal {
     ) {
         //cordova.plugins.Keyboard.disableScroll(true);
         this.MapProvider.set('authorized', false);
-
+        this.PlaceProvider.changePathStatus(false);
     }
 
     closeKeyboard(event) {
@@ -63,6 +63,7 @@ export class RegistrationModal {
     }
 
     register() {
+        debugger
         if(this.isCode) {
            this.AuthProvider.confirm(this.key, this.code + this.number).then(() => {
                this.nav.pop();

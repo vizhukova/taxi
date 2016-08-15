@@ -23,13 +23,16 @@ export class SettingsPage {
   payment: Array<string>;
   service: Array<Object>;
 
-  tariffInput: string;
+  tariffInput: string; //value
   paymentInput: string;
   serviceInput: Array<string> = [];
 
   constructor(public GatherOrderProvider: GatherOrder,
               private nav: NavController,
-              private CarOptionsProvider: CarOptions) {
+              public CarOptionsProvider: CarOptions) {
+
+    let self = this;
+
     this.nav = nav;
     this.tariffs = [
       {name: 'Эконом', price: '50 руб'},
@@ -37,6 +40,9 @@ export class SettingsPage {
       {name: 'Бизнесс', price: '200 руб'}
     ];
     this.payment = ['Наличными', 'Безналичными', 'Баллами'];
+
+    this.tariffInput = this.CarOptionsProvider.getCarClass();
+
     //this.service = [
     //  {name: 'Перевозки животных', comment: ''},
     //  {name: 'Детское кресло', comment: '3 года'},
@@ -48,12 +54,21 @@ export class SettingsPage {
     //];
 
     CarOptionsProvider.requirements$.subscribe(req => {
-      this.service = req;
+      this.service = req || [];
     });
 
     CarOptionsProvider.carClasses$.subscribe(cars => {
-      this.tariffs = cars;
-      this.changeTariff(this.tariffs[0]);
+      this.tariffs = cars || [];
+        self.tariffInput = self.tariffInput || cars[0]['value'];
+    });
+
+
+    CarOptionsProvider.requirementsInput$.subscribe(requirementsInput => {
+      this.serviceInput = requirementsInput || [];
+    });
+
+    CarOptionsProvider.carClassInput$.subscribe(carClassInput => {
+      this.tariffInput = carClassInput || this.tariffInput;
     });
 
     this.changePayment(this.payment[0]);
@@ -70,9 +85,9 @@ export class SettingsPage {
     this.nav.push(Loader);
   }
 
-  changeTariff(data:Object) {
-    this.tariffInput = data['value'];
-    this.GatherOrderProvider.setVehicleClass(this.tariffInput);
+  changeTariff(data:string) {
+    this.tariffInput = data;
+    this.CarOptionsProvider.changerCarClass(data);
   }
 
   changePayment(data: string) {
@@ -87,7 +102,7 @@ export class SettingsPage {
     }else {
       this.serviceInput.push(data);
     }
-    this.GatherOrderProvider.setRequirements(this.serviceInput);
+    this.CarOptionsProvider.changerRequirements(this.serviceInput);
   }
 
   isCheckedService(data: string) {

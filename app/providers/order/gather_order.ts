@@ -7,6 +7,7 @@ import {CarOptions} from "../car-options/car-options";
 import {Source} from "../../interfaces/order";
 import {Destination} from "../../interfaces/order";
 import {Order} from "../../interfaces/order";
+import {TimeProvider} from "../../providers/time/time";
 import {URL} from './../../config';
 
 
@@ -35,7 +36,8 @@ export class GatherOrder {
     constructor(private http:Http,
                 private AuthProvider: Auth,
                 private PlaceProvider: Place,
-                private CarOptionsProvider: CarOptions) {
+                private CarOptionsProvider: CarOptions,
+                private TimeProvider: TimeProvider) {
 
     }
 
@@ -70,8 +72,13 @@ export class GatherOrder {
         return this;
     }
 
+    public getGatheredOrder() {
+        return this.order;
+    }
+
     public setAddress(type: string, address: any){
 
+        debugger
         let item = {
             city : address.city,
             closestStation : '',
@@ -100,6 +107,11 @@ export class GatherOrder {
         let user = this.AuthProvider.getUser();
         let source = this.PlaceProvider.getFullAddress('from');
         let destination = this.PlaceProvider.getFullAddress('to');
+        let requirements = this.CarOptionsProvider.getRequirements();
+        let carClass = this.CarOptionsProvider.getCarClass()['value'];
+        let time = this.TimeProvider.get();
+        debugger
+
         /**
          * TODO Собрать заказ в нужном формате
          * @type {{}}
@@ -149,20 +161,20 @@ export class GatherOrder {
             }
          }
          */
-
+        debugger
         this.apiId = user.id;
         this.order = {
-            bookingDate : "27-05-2016 09:15",
+            bookingDate : time.string,
             bookmins : 20,
             booktype : "exact",
             destinations: [destination],
             recipientBlackListed : "no",
             recipientLoyal : "yes",
             recipientPhone : user.phone,
-            requirements : this.requirements,
+            requirements : requirements,
             source: source,
             urgent: this.urgent,
-            vehicleClass: this.vehicleClass
+            vehicleClass: carClass
         };
 
         let body = {
@@ -179,6 +191,9 @@ export class GatherOrder {
 
                     let data = res.json();
                     this.currentOrderId = data.orderId;
+
+                    this.order.bookingObj = time;
+
                     resolve(data);
 
                 }, (err) => {

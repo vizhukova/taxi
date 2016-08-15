@@ -107,6 +107,16 @@
 
       &.addresses {
         padding-left: 17%;
+        background: #f7f7f9;
+
+        .address-item {
+          position: relative;
+        }
+
+        i.more-btn {
+          height: 32px;
+        }
+
 
         > div {
           height: 54px;
@@ -162,6 +172,7 @@
 
               &.panel-title {
                 font-weight: 100;
+                position: relative;
 
                 &:before {
                   background-image: url("./../res/icon_star.svg");
