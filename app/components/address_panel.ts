@@ -86,9 +86,10 @@ export class Address {
         MapProvider.state$.subscribe(newState => {
             self.direction = newState.direction;
 
-            if(newState.clicked !== self.clicked && newState.editable  && newState.searching) {
-                self.onConfirm()
-            }
+            //TODO map onClick
+            // if(newState.clicked !== self.clicked && newState.editable  && newState.searching) {
+            //     self.onConfirm()
+            // }
 
             self.clicked = newState.clicked;
         });
@@ -106,23 +107,21 @@ export class Address {
         // }
 
         // this.vc.nativeElement.focus();
-
-        document.addEventListener('backbutton', ()=>{
-            this.onConfirm();
-        }, false)
+        //TODO back button
+        // document.addEventListener('backbutton', ()=>{
+        //     this.onConfirm();
+        // }, false)
     }
 
     clearAddress(event) {
 
-        event.stopPropagation();
-
-        // this.search = false;
-        // this.detail = false;
-
         this.address[this.direction] = '';
-        this.place.changeAddress(this.address);
 
-        // this.NavProvider.changeTabSet('main');
+        // this.coords[this.direction] = {latitude: 0, longitude: 0};
+
+
+        this.search = false;
+
     }
 
     confirmAddress(index: any) {
@@ -152,6 +151,13 @@ export class Address {
             from: direction === 'from',
             to: direction === 'to',
             active: this.direction === direction
+        }
+    }
+
+    setClassesIcon(direction:string) {
+        return {
+            icon: true,
+            active: !this.disabled[direction] && this.direction === direction
         }
     }
     
@@ -248,7 +254,7 @@ export class Address {
         return Observable.throw(errMsg);
     }
 
-    onFocus(type: string, input: any): void {
+    onFocus(type: string, input ?: any): void {
 
         if(this.direction === type && this.detail) {
             this.disabled[type] = false;
@@ -284,10 +290,19 @@ export class Address {
 
 
 
-    onConfirm(){
-        this.search = false;
-        this.detail = false;
+    onConfirm(direction:string){
+
         this.disabled[this.direction] = true;
+
+        if(direction === 'to' && !this.address.to) {
+            this.coords[this.direction] = {latitude: 0, longitude: 0};
+            this.place.changeCoords(this.coords);
+            this.place.changeAddress(this.address);
+            this.MapProvider.set('direction', 'from');
+        } else {
+            this.search = false;
+            this.detail = false;
+        }
         this.NavProvider.changeTabSet('main');
         this.MapProvider.set('searching', false);
     }

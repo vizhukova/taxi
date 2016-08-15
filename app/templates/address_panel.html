@@ -3,7 +3,7 @@
         [ngClass]="setClasses('from')"
         (click)="onFocus('from', from)"
     >
-        <span class="icon"></span>
+        <span [ngClass]="setClassesIcon('from')"></span>
         <input
             #from
             [disabled]="disabled.from"
@@ -17,7 +17,7 @@
         [ngClass]="setClasses('to')"
         (click)="onFocus('to', to)"
     >
-        <span class="icon"></span>
+        <span [ngClass]="setClassesIcon('to')"></span>
         <input
             #to
             [disabled]="disabled.to"
@@ -69,7 +69,7 @@
             </div>
             <div class="group nav">
                 <div class="btn favorite" (click)="showFavoritePopup()">В ИЗБРАННОЕ</div>
-                <div class="btn confirm" (click)="onConfirm()">ОК</div>
+                <div class="btn confirm" (click)="onConfirm(direction)">ОК</div>
             </div>
         </div>
     </div>
