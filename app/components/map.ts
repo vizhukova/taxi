@@ -6,12 +6,11 @@ import * as _ from 'lodash'
 import {Place} from './../providers/place/place';
 import {Cost} from './../providers/cost/cost';
 import { MapProvider } from './../providers/map/map';
+import {Nav} from "./../providers/nav/nav";
 
 import {Coordinates, PathCoordinates} from "../interfaces/coordinates";
 import { MapState } from "../interfaces/map";
 declare var cordova: any;
-
-
 
 @Component({
     selector: 'map',
@@ -49,7 +48,8 @@ export class Map {
         private MapProvider:MapProvider,
         private http:Http,
         private cost:Cost,
-        private ref: ApplicationRef
+        private ref: ApplicationRef,
+        private NavProvider: Nav
     ) {
 
         this.onDragEnd = this.onDragEnd.bind(this);
@@ -280,7 +280,7 @@ export class Map {
         if (!this.editable) this.map.on('dragstart', () =>{
             if(this.state.direction) this.MapProvider.set('searching', true)
         });
-        
+
         if (!this.editable) this.map.on('dragend', this.timeout);
 
         if (!this.editable) this.map.on('zoomstart', () =>{
@@ -333,6 +333,9 @@ export class Map {
 
         // this.pathButton.classList.add('loading');
 
+        console.log(from, to);
+
+
         this.http.post('http://ddtaxity.smarttaxi.ru:8000/1.x/route?taxiserviceid=taxity', [from, to])
 
             .subscribe((res:Response) => {
@@ -340,13 +343,6 @@ export class Map {
 
                 this.markPolyline(this.PlaceProvider.decodeGooglePolyline(data.overviewPolyline));
             });
-    }
-
-    private markPolyline(path:any):void {
-        this.polyline && this.removeLayer(this.polyline);
-        this.polyline = L.polyline(path, {color: 'black'}).addTo(this.map);
-        this.callEnable(true);
-        // this.PlaceProvider.changePathStatus(true);
     }
 
     private boundsPolyline() {
@@ -383,6 +379,16 @@ export class Map {
         })
     }
 
+        //this.cost.getCost()
+
+
+    private markPolyline(path:any):void {
+        this.polyline && this.removeLayer(this.polyline);
+        this.polyline = L.polyline(path, {color: 'black'}).addTo(this.map);
+        this.callEnable(true);
+        this.PlaceProvider.changePathStatus(true);
+        console.log('PlaceProvider.changePathStatus(true)')
+    }
 
     private removeLayer(layer):void {
         this.map.removeLayer(layer);

@@ -1,18 +1,76 @@
-<ion-content class="has-footer time">
-     <address></address>
+<ion-content class="has-footer time" (click)="hideSelect()">
+    <address></address>
 
     <scroll-content>
 
         <div class="block">
             <p class="header line-header">Время подачи такси</p>
             <div class="list radio">
-                <p *ngFor="let item of time; let num = index" class="label">
-                    <input type="radio" name="time" id="{{getId('time', num)}}" />
-                    <label htmlFor="{{getId('time', num)}}">
-                        {{item.name}}
-                        <span  [ngClass]="{'price': true, 'bright': num > 0}">{{item.comment}}</span>
+
+                <p class="label" (click)="checkTime(time[0])">
+                    <input type="radio"
+                           name="time"
+                           [checked]="time[0] === timeInput"/>
+                    <label>
+                        Сейчас
+                        <span class="price">~ 5 - 10 мин</span>
                     </label>
                 </p>
+
+                <p class="label" (click)="checkTime(time[1])">
+                    <input type="radio"
+                           name="time"
+                           [checked]="time[1] === timeInput"/>
+                    <label>
+                        Через
+                        <span class="price bright">
+                            <span class="select-wrapper">
+                               <div class="input" (click)="showSelect(true, $event)">{{delay}} мин</div>
+                               <div class="panel" (click)="showSelect(false, $event)" *ngIf="isShownInput">
+                                   <span class="option" (click)="setDelay(delay)" *ngFor="let delay of delayArray">{{delay}} мин</span>
+                               </div>
+                           </span>
+                        </span>
+                    </label>
+                </p>
+
+                <p class="label">
+                    <input type="radio"
+                           name="time"
+                           [checked]="time[2] === timeInput"/>
+                    <label>
+                        Повторять
+                        <span *ngIf="!repeatTime" class="price bright">-- : --</span>
+                        <ion-datetime displayFormat="HH:mm"
+                                      [(ngModel)]="repeatTime"
+                                      cancelText="Отмена"
+                                      doneText="Готово"
+                                      class="ion-datetime"
+                                      (ionChange)="checkTime(time[2])"
+                        ></ion-datetime>
+                    </label>
+                </p>
+
+                <p class="label">
+                    <input type="radio"
+                           name="time"
+                           [checked]="time[3] === timeInput"/>
+                    <label>
+                        Отложить
+                        <span *ngIf="!delayTime" class="price bright">-- - -- - ---- -- : --</span>
+                        <ion-datetime
+                                displayFormat="DD-MM-YYYY  HH:mm"
+                                [(ngModel)]="delayTime"
+                                cancelText="Отмена"
+                                doneText="Готово"
+                                class="ion-datetime"
+                                (ionChange)="checkTime(time[3])"
+                                min={{getMinTime()}}
+                        ></ion-datetime>
+                        <!--monthShortNames="янв, фев, мар, апр, май, июн, июл, авг, сен, окт, ноя, фев"-->
+                    </label>
+                </p>
+
             </div>
         </div>
 

@@ -284,7 +284,13 @@ export class Address {
     }
 
     showFavoritePopup() {
-        this.AddressProvider.changeFavoriteAddress({house: this.house, housing: this.block, description: this.comment});
+        let addressTosend = this.addresses[0];
+
+        addressTosend.house = this.house;
+        addressTosend.housing = this.block;
+        addressTosend.description = this.comment;
+
+        this.AddressProvider.changeFavoriteAddress(addressTosend);
         this.nav.push(FavoritePopup);
     }
 

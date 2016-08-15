@@ -1,4 +1,4 @@
-<ion-content class="modal rides-modal">
+<ion-content class="modal rides-modal" (click)="showOptions('-1', $event)">
     <p class="modal-header">
         <span class="cross" nav-pop></span>
         {{tabDats[tab]}}
@@ -12,12 +12,20 @@
             <p class="header line-header">Мои поездки</p>
         </div>
 
-        <div class="block" *ngFor="let item of getArrayOfRides()">
+        <div class="block" *ngFor="let item of getArrayOfRides(); let num = index">
             <div class="content">
                 <p class="panel panel-title">
+                    <i class="past-ride-icon" (click)="setLastOrderOptions(item)"></i>
                    <span>{{item.bookingDate}}</span>
+                    <i class="more-btn" (click)="showOptions(num, $event)"></i>
                 </p>
                 <p class="panel">
+                     <span class="options" *ngIf="num === optionDetails">
+                         <span>Повторить</span>
+                         <span>Скрыть</span>
+                         <span (click)="delete(num, $event)">Удалить</span>
+                         <span (click)="toFavorites(item, $event)">В избранные</span>
+                    </span>
                     <span class="route"></span>
                     <span class="panel">{{item.source.shortAddress}}</span>
                     <span class="panel">{{item.destinations[0].shortAddress}}</span>

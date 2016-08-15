@@ -34,10 +34,10 @@ export class Place {
     path$ = this.pathSource.asObservable();
 
     // Service message commands
-    public changeAddress(address:string) {
-        console.log(Date.now(), 'address', address)
+    //public changeAddress(address:string) {
+    //    console.log(Date.now(), 'address', address)
 
-
+    public changeAddress(address:Object) {
         this.addressSource.next(address);
     }
 
@@ -191,10 +191,17 @@ export class Place {
     }
 
     public getFullAddress(direction: string) {
+
         return {
-            city : this.fullAddress[direction].address_components[3].long_name,
-            country : this.fullAddress[direction].address_components[6].long_name,
-            fullAddress : this.fullAddress[direction].formatted_address,
+            city : this.fullAddress[direction].address_components
+                ? this.fullAddress[direction].address_components[3].long_name
+                : this.address[direction],
+
+            country : this.fullAddress[direction].address_components
+                ? this.fullAddress[direction].address_components[ this.fullAddress[direction].address_components.length - 1 ].long_name
+                : '',
+
+            fullAddress : this.fullAddress[direction].formatted_address || '',
             shortAddress : this.address[direction],
             lat : this.coords[direction].latitude,
             lon : this.coords[direction].longitude

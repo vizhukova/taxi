@@ -19,12 +19,23 @@ export class AddressProvider {
         this.addressFavoriteSource.next(address);
     }
 
+    public getFavoriteAddresses() {
+        let data = localStorage.getItem('favorite_address') ? JSON.parse(localStorage.getItem('favorite_address')) : {};
+        return data;
+    }
+
     public save(key: string, data: AddressItem) {
 
-        let dataToSave = localStorage.getItem('favorite') ? JSON.parse(localStorage.getItem('favorite')) : {};
+        let dataToSave = this.getFavoriteAddresses();
         dataToSave[key] = data;
-        localStorage.setItem('favorite', JSON.stringify(dataToSave));
+        localStorage.setItem('favorite_address', JSON.stringify(dataToSave));
     }
+
+    public saveObject(data: Object) {
+
+        localStorage.setItem('favorite_address', JSON.stringify(data));
+    }
+
 
 
 

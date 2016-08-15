@@ -6,20 +6,23 @@ import {HomePage} from './pages/home/home';
 import {SettingsPage} from './pages/settings/settings';
 import {TimePage} from './pages/time/time';
 import {AccountPage} from './pages/account/account';
-import {Place} from './providers/place/place';
-import {RideProvider} from "./providers/ride/ride";
-import {Cost} from "./providers/cost/cost";
+
 import {Address} from './components/address_panel'
 import {SearchPage} from "./pages/search/search";
 import {MainPage} from "./pages/main/main";
-import {Nav} from "./providers/nav/nav";
 import {RegistrationModal} from "./components/registration/registration";
+
+import {Place} from './providers/place/place';
+import {Cost} from "./providers/cost/cost";
+import {Nav} from "./providers/nav/nav";
 import {Auth} from "./providers/auth/auth";
 import {CarOptions} from "./providers/car-options/car-options";
 import {GatherOrder} from "./providers/order/gather_order";
 import {AddressProvider} from "./providers/address/address";
 import { OrderHistory } from './providers/order/history';
 import { MapProvider } from './providers/map/map';
+import { OrderFavorite } from './providers/order/favorites';
+import { TimeProvider } from './providers/time/time';
 
 declare var cordova: any;
 
@@ -58,7 +61,7 @@ export class MainTabs {
 
 @Component({
     template: '<ion-nav #myNav [root]="rootPage"></ion-nav>',
-    providers: [Place, Cost, Nav, Auth, AddressProvider, CarOptions, GatherOrder, OrderHistory, MapProvider],
+    providers: [Place, Cost, Nav, Auth, AddressProvider, CarOptions, GatherOrder, OrderHistory, MapProvider, OrderFavorite, TimeProvider],
     directives: [MainPage, RegistrationModal]
 })
 export class App {
@@ -98,7 +101,6 @@ export class App {
 //noinspection TypeScriptValidateTypes
 ionicBootstrap(App, [
     // Place,
-    RideProvider,
     provide(PLATFORM_DIRECTIVES, {useValue: [Address], multi: true}),
 ], {
     tabbarPlacement: 'top',
