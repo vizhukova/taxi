@@ -19,6 +19,7 @@ declare var cordova: any;
         <div id="{{selector}}"></div>
         <div class="btn locate" *ngIf="state.direction === 'from'" (click)="locateMe()"></div>
         <div (click)="boundsPolyline()" *ngIf="coords.to.latitude" class="btn center"></div>
+        <div *ngIf="state.error" class="error-wrap">Ошибка цены <span (click)="hideError()" class="hide">OK</span></div>
     </div>`
 })
 
@@ -31,6 +32,7 @@ export class Map {
     markerTo:any;
     markerFrom:any;
     coords:any;
+    error: boolean;
     state: MapState;
     pathButton: any;
     timer: any;
@@ -115,7 +117,7 @@ export class Map {
             if(this.polyline && newCoords.to.latitude === 0) {
                 this.removeLayer(this.polyline);
                 this.removeLayer(this.markerTo);
-                this.map.setView(this.markerFrom.getLatLng())
+                this.map.setView(this.markerFrom.getLatLng());
                 return;
             }
 
@@ -129,25 +131,9 @@ export class Map {
                     currentCoordinates.latitude,
                     currentCoordinates.longitude
                 ]);
-
-                //this.ref.tick();
-                //setTimeout(() => {
-                //    self.ref.tick();
-                //    self.map.invalidateSize(true);
-                //}, 300)
             }
 
         });
-
-        //PlaceProvider.reload$.subscribe(name => {
-        //    if (self.map && self.selector === name) {
-        //        setTimeout(()=> {
-        //            self.map.invalidateSize(true);
-        //            self.locateMe();
-        //        }, 300);
-        //    }
-        //});
-        //
 
         //
         //PlaceProvider.mapCreate$.subscribe(name => {
@@ -159,6 +145,10 @@ export class Map {
         //});
     }
 
+    hideError() {
+        this.MapProvider.set('error', false);
+    }
+    
     addMarker(direction: string) {
 
 
@@ -183,6 +173,12 @@ export class Map {
                      Map.coordinatesToArray(this.coords[direction]) :
                      this.map.getCenter();
 
+        if(!coords[0]) {
+            this.map.removeLayer(this.markerFrom);
+            this.map.removeLayer(this.markerTo);
+            return;
+        }
+
         switch(direction) {
             case 'to':
                 //this.markerFrom.setOpacity(0);
@@ -202,7 +198,7 @@ export class Map {
                 break;
         }
     }
-
+    
     markerClasses():Object {
         return {
             marker: true,
@@ -216,15 +212,10 @@ export class Map {
        return [coordinates.latitude || 0, coordinates.longitude || 0]
     }
 
-    //private isPointExist(name: string): boolean {
-    //    let point = this.coords[name];
-    //
-    //    return point.latitude !== 0 && point.longitude !== 0;
-    //}
-
-
     public ngAfterViewInit():void {
-        this.createMap(this.selector);
+        setTimeout(()=>{
+            this.createMap(this.selector);
+        }, 300)
     }
 
     private timeout(){
@@ -273,18 +264,24 @@ export class Map {
         //
         //
 
-        this.map.on('click', ()=>{
-            this.MapProvider.set('clicked', !this.state.clicked)
-        });
+        // this.map.on('click', ()=>{
+        //     this.MapProvider.set('clicked', !this.state.clicked)
+        // });
 
         if (!this.editable) this.map.on('dragstart', () =>{
-            if(this.state.direction) this.MapProvider.set('searching', true)
+            if(this.state.direction) {
+                this.MapProvider.set('cost', false);
+                this.MapProvider.set('searching', true)
+            }
         });
 
         if (!this.editable) this.map.on('dragend', this.timeout);
 
         if (!this.editable) this.map.on('zoomstart', () =>{
-            if(this.state.direction) this.MapProvider.set('searching', true)
+            if(this.state.direction) {
+                this.MapProvider.set('cost', false);
+                this.MapProvider.set('searching', true)
+            }
         });
 
         if (!this.editable) this.map.on('zoomend', this.timeout);
@@ -342,11 +339,14 @@ export class Map {
                 var data = res.json();
 
                 this.markPolyline(this.PlaceProvider.decodeGooglePolyline(data.overviewPolyline));
-            });
+            });                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
     }
 
     private boundsPolyline() {
-        if(!this.state.direction) return;
+        if(!this.state.direction) {
+            this.map.fitBounds(this.polyline.getBounds(), {padding: [30, 30]});
+            return
+        }
         if(this.state.direction === 'to') {
             this.markerTo.setLatLng(this.map.getCenter());
             //this.markerTo.setOpacity(1);

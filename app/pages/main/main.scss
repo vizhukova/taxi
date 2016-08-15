@@ -20,7 +20,7 @@
     font-weight: 600;
     text-transform: uppercase;
     height: 57px;
-    line-height: 9px;
+    line-height: 52px;
     border-radius: 0;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -48,22 +48,32 @@
 
     div.price {
       display: inline-block;
-      height: 100%;
       padding-left: 45px;
       background: url("../res/btn_price_layer.png") left center no-repeat, url("../res/icon_coins.png") 15px center no-repeat;
       background-size: 100% 100%, 23px 18px;
       padding-right: 4px;
-      line-height: 52px;
 
-      span.currency {
-        vertical-align: super;
-        text-transform: capitalize;
-        font-size: 13px;
-        margin-left: 3px;
+      p {
+        &:after {
+          content: "руб";
+          vertical-align: super;
+          text-transform: capitalize;
+          font-size: 13px;
+          margin-left: 3px;
+        }
       }
+
+      //span.currency {
+      //  vertical-align: super;
+      //  text-transform: capitalize;
+      //  font-size: 13px;
+      //  margin-left: 3px;
+      //}
     }
 
   }
+
+
 
   .tab-header {
     height: 56px;

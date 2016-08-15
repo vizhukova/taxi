@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ApplicationRef } from '@angular/core';
 
 import { AccountPage } from '../../pages/account/account';
 import { HomePage } from '../../pages/home/home';
@@ -68,6 +68,7 @@ export class MainPage {
               private MapProvider: MapProvider,
               private AuthProvider: Auth,
               private PlaceProvider: Place,
+              private ref: ApplicationRef,
               private CostProvider: Cost,
               private CarOptionsProvider: CarOptions,
               private GatherOrderProvider: GatherOrder,
@@ -112,13 +113,17 @@ export class MainPage {
       this.activeTabSet = tabSet;
     });
 
+    
     PlaceProvider.path$.subscribe(status => {
       this.pathStatus = status;
     });
 
     CostProvider.cost$.subscribe(cost => {
       this.cost = cost;
+        this.MapProvider.set('cost', true);
+      // this.ref.tick();
     });
+
 
     CarOptionsProvider.load()
 
@@ -139,7 +144,7 @@ export class MainPage {
   setCallClasses() {
     return {
       call: true,
-      active: !this.state.searching
+      active: !this.state.searching && this.state.cost
     }
   }  
 

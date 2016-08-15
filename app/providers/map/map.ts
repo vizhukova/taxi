@@ -13,7 +13,8 @@ export class MapProvider {
         initial: true,
         searching: false,
         clicked: false,
-        direction: 'from'
+        direction: 'from',
+        error: false
     });
 
     state$ = this.stateSource.asObservable();

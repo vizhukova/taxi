@@ -68,13 +68,44 @@ body {
     display: none;
   }
 }
+
+
 map {
   position: absolute;
   bottom: 0;
   top: 97px;
   left: 0;
   right: 0;
+
+
 }
+
+div.error-wrap {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background: #323238;
+  right: 0;
+  margin: auto;
+  color: #fff;
+  width: 220px;
+  height: 90px;
+  z-index: 2;
+  font-size: 27px;
+  display: inline-block;
+  padding: 10px;
+  text-align: center;
+
+  span {
+    font-size: 30px;
+    display: block !important;
+    color: #ff7431;
+    margin-top: 4px;
+  }
+}
+
+
 #map-wrap {
   width: 100%;
   height: 100%;
@@ -166,7 +197,7 @@ map {
 .platform-android {
   &.platform-android6 {
     div.call {
-      line-height: 20px!important;
+      line-height: 62px!important;
     }
   }
 }

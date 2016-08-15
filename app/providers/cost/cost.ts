@@ -3,6 +3,7 @@ import {Http, Response} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {BehaviorSubject} from 'rxjs';
 import {Place} from "../place/place";
+import {MapProvider} from "../map/map";
 import {PathCoordinates} from "../../interfaces/coordinates";
 import {URL} from './../../config';
 
@@ -19,7 +20,7 @@ export class Cost {
     cost$ = this.costSource.asObservable();
 
 
-    constructor(private http:Http, private place: Place) {
+    constructor(private http:Http, private place: Place, private MapProvider:MapProvider) {
 
         place.coords$.subscribe((newCoords)=>{
             this.getCost(newCoords)
@@ -33,6 +34,7 @@ export class Cost {
     public getCost(coords:PathCoordinates) {
 
         if(!coords.from.latitude) return;
+
 
         let self = this;
 
@@ -67,9 +69,8 @@ export class Cost {
                     self.cost = coords.to.longitude === 0? Math.ceil(data.min) : Math.ceil(data.sum);
                     self.emitUpdate();
                     resolve(data);
-
                 }, (err) => {
-
+                    self.MapProvider.set('error', true);
                     self.cost = "---";
                     self.emitUpdate();
 
@@ -82,7 +83,7 @@ export class Cost {
 
     public clear() {
         this.cost = null;
-        this.emitUpdate();
+        // this.emitUpdate();
     }
 
     private emitUpdate(){

@@ -4,7 +4,9 @@ export interface MapState {
     authorized ?: boolean,
     direction ?: string,
     clicked ?: boolean,
-    editable ?: boolean
+    editable ?: boolean,
+    cost ?: boolean,
+    error ?: boolean
 }
 
 // initial - is it initial load of map

@@ -47,8 +47,7 @@
           height: 23px;
           bottom: -15px;
           width: 1px;
-          left: 0;
-          right: 0;
+          left: 8px;
           margin: auto;
           border-right: 2px dashed #a8bea1;
         }
@@ -517,15 +516,15 @@ i.star-empty {
     border-radius: 5px;
 }
 
-  span {
-    display: block;
-    line-height: 40px;
-    padding: 0 10px;
-
-    &:hover, &:active, &:focus  {
-     color: $main-bright-color;
-    }
-}
+//  span {
+//    display: block;
+//    //line-height: 40px;
+//    //padding: 0 10px;
+//
+//    &:hover, &:active, &:focus  {
+//     color: $main-bright-color;
+//    }
+//}
 
 
 
