@@ -14,6 +14,7 @@ import {AddressProvider} from "../providers/address/address";
 import {Subject, BehaviorSubject, Observable} from 'rxjs'
 import {AddressItem} from "../interfaces/address";
 import {MapState} from "../interfaces/map";
+declare var cordova: any;
 
 @Component({
     selector: 'address',
@@ -136,8 +137,8 @@ export class Address {
 
         this.address[this.direction] = address['shortAddress'];
         this.coords[this.direction] = newCoords;
-        // this.place.changeAddress(this.address);
-        // this.place.changeCoords(this.coords);
+         this.place.changeAddress(this.address);
+         this.place.changeCoords(this.coords);
         this.place.reloadMap('homeMap');
 
         // this.editable[this.direction] = true;
@@ -171,8 +172,8 @@ export class Address {
     }
 
     getAddresses(search: string): Observable<any> {
-        let lat = this.coords[this.direction][0];
-        let lon = this.coords[this.direction][1];
+        let lat = this.coords[this.direction].latitude;
+        let lon = this.coords[this.direction].longitude;
 
         const url = `http://ddtaxity.smarttaxi.ru:8000/1.x/geocode?taxiServiceId=taxity&radius=2000&lat=${lat}&lon=${lon}&search=${search}`;
 
@@ -187,14 +188,20 @@ export class Address {
 
         const self = this;
 
-        this.getAddresses(address)
-            .subscribe(
-                (addresses) => {
-                    self.addresses = self.formatAddressesSearch(address, addresses);
-                    self.search = true;
-                },
-                error => console.log(error)
-            )
+        self.addresses = self.formatAddressesSearch(address, [{"geoPoint":{"lon":37.358859,"lat":55.835406},"fullAddress":"Россия, Московская область," +
+        " Москва," +
+        " Генерала Белобородова ул.","shortAddress":"Генерала Белобородова ул.","placeType":"Unknown","title":"","country":"Россия","region":"Московская" +
+        " область","county":"","city":"Москва","district":"","street":"Генерала Белобородова ул.","house":"","housing":"","structure":"","porch":""}]);
+        self.search = true;
+
+        //this.getAddresses(address)
+        //    .subscribe(
+        //        (addresses) => {
+        //            self.addresses = self.formatAddressesSearch(address, addresses);
+        //            self.search = true;
+        //        },
+        //        error => console.log(error)
+        //    )
     }
 
     formatAddressesSearch(address: string, addresses: AddressItem[]) {
@@ -245,7 +252,10 @@ export class Address {
 
         if(this.direction === type && this.detail) {
             this.disabled[type] = false;
-            setTimeout(()=>{ input.focus() }, 100)
+            setTimeout(()=>{
+                input.focus();
+                if(cordova) cordova.plugins.Keyboard.show()
+            }, 150)
         } else if(type === 'to' && !this.address.to) {
             this.NavProvider.changeTabSet('search');
             this.MapProvider.set('editable', true);

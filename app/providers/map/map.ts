@@ -38,7 +38,8 @@ export class MapProvider {
 
     public update(){
 
-        this.stateSource.next(this.state)
+        this.stateSource.next(this.state);
+        console.log('new mapprovider', this.state)
     }
 
 }

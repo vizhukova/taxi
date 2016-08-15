@@ -30,6 +30,7 @@ export class RegistrationModal {
         private MapProvider: MapProvider
     ) {
         //cordova.plugins.Keyboard.disableScroll(true);
+        this.MapProvider.set('authorized', false);
 
     }
 

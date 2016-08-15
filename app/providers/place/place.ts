@@ -165,6 +165,10 @@ export class Place {
     public getCurrentAddress(coords:Coordinates) {
         const self = this;
 
+        if(!self.address[self.direction] && self.direction === 'to') {
+            console.log('Catch')
+            return;
+        }
         self.coords[self.direction] = coords;
         self.changeCoords(self.coords);
 
