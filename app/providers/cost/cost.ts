@@ -3,6 +3,7 @@ import {Http, Response} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {BehaviorSubject} from 'rxjs';
 import {Place} from "../place/place";
+import {PathCoordinates} from "../../interfaces/coordinates";
 import {URL} from './../../config';
 
 
@@ -20,19 +21,23 @@ export class Cost {
 
     constructor(private http:Http, private place: Place) {
 
+        place.coords$.subscribe((newCoords)=>{
+            this.getCost(newCoords)
+        })
+
     }
 
     /**
      * Make server connect
      */
-    public getCost() {
+    public getCost(coords:PathCoordinates) {
+
+        if(!coords.from.latitude) return;
 
         let self = this;
 
         self.clear();
         
-        let coords = this.place.getCurrentCoords();
-
         let body = {
             "adds" : ["simple_bagage", "pay_parking"],
             "bookingTime" : "20",
@@ -40,16 +45,16 @@ export class Cost {
             "destinations" : [
                 {
                     "kind" : "street",
-                    "lat" : coords.to.latitude,
-                    "lon" : coords.to.longitude
+                    "lat" : coords.from.latitude,
+                    "lon" : coords.from.longitude
 
                 }
             ],
             "source" :
             {
                 "kind" : "district",
-                "lat" : coords.from.latitude,
-                "lon" : coords.from.longitude
+                "lat" : coords.to.latitude ? coords.to.latitude : coords.from.latitude,
+                "lon" : coords.to.longitude ? coords.to.longitude : coords.from.longitude
             },
             "taxi" : "taxity"
         };
@@ -59,7 +64,7 @@ export class Cost {
                 .subscribe((res:Response) => {
 
                     var data = res.json();
-                    self.cost = Math.ceil(data.sum);
+                    self.cost = coords.to.longitude === 0? Math.ceil(data.min) : Math.ceil(data.sum);
                     self.emitUpdate();
                     resolve(data);
 

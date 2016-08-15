@@ -36,7 +36,7 @@ export class HomePage {
             to: 'определение адреса поездки',
         };
         
-        this.makeRequest();
+        //this.makeRequest();
         this.isAddress = false;
 
         CostProvider.cost$.subscribe(cost => {

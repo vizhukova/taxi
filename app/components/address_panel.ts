@@ -2,6 +2,7 @@ import {Component, Input, ViewChild } from '@angular/core';
 import { Http, Response } from '@angular/http';
 //import {Observable} from "rxjs/Rx";
 import {Place} from "../providers/place/place";
+import { MapProvider } from "../providers/map/map";
 import {GatherOrder} from './../providers/order/gather_order';
 import { NavController } from 'ionic-angular';
 import {SearchPage} from "../pages/search/search";
@@ -12,7 +13,8 @@ import {PathCoordinates} from "../interfaces/coordinates";
 import {AddressProvider} from "../providers/address/address";
 import {Subject, BehaviorSubject, Observable} from 'rxjs'
 import {AddressItem} from "../interfaces/address";
-
+import {MapState} from "../interfaces/map";
+declare var cordova: any;
 
 @Component({
     selector: 'address',
@@ -24,14 +26,16 @@ export class Address {
     address: any;
     direction: string;
     addresses: any;
+    confirmedAddresses: any;
     search: any;
     coords: PathCoordinates;
-    editable: any;
+    disabled: any;
     detail: boolean;
-
+    state: MapState;
     house: string;
     block: string;
     comment: string;
+    clicked: boolean;
 
     public test: any;
 
@@ -43,19 +47,23 @@ export class Address {
     constructor(public nav: NavController,
                 public GatherOrderProvider: GatherOrder,
                 public AddressProvider: AddressProvider,
+                private MapProvider: MapProvider,
                 private place: Place,
                 private http: Http,
                 private NavProvider: Nav) {
 
         const self = this;
         this.address = {from: '', to: ''};
+        this.confirmedAddresses = {from: '', to: ''};
         this.direction = 'from';
         this.addresses = [];
         this.search = false;
         this.detail = false;
-        this.editable = {
-            from: false,
-            to: false
+        this.clicked = false;
+        this.state = {};
+        this.disabled = {
+            from: true,
+            to: true
         };
 
         this.test = Math.random();
@@ -75,8 +83,14 @@ export class Address {
             }
         });
 
-        place.direction$.subscribe(newDirection => {
-            self.direction = newDirection;
+        MapProvider.state$.subscribe(newState => {
+            self.direction = newState.direction;
+
+            if(newState.clicked !== self.clicked && newState.editable  && newState.searching) {
+                self.onConfirm()
+            }
+
+            self.clicked = newState.clicked;
         });
 
         place.coords$.subscribe(newCoords => {
@@ -85,25 +99,30 @@ export class Address {
     }
 
     ngAfterViewInit() {
+
         // if(this.view) {
         //     this.getAll(this.address[this.direction]);
         //     this.editable[this.direction] = false;
         // }
 
         // this.vc.nativeElement.focus();
+
+        document.addEventListener('backbutton', ()=>{
+            this.onConfirm();
+        }, false)
     }
 
     clearAddress(event) {
 
         event.stopPropagation();
 
-        this.search = false;
-        this.detail = false;
+        // this.search = false;
+        // this.detail = false;
 
         this.address[this.direction] = '';
         this.place.changeAddress(this.address);
 
-        this.NavProvider.changeTabSet('main');
+        // this.NavProvider.changeTabSet('main');
     }
 
     confirmAddress(index: any) {
@@ -118,13 +137,13 @@ export class Address {
 
         this.address[this.direction] = address['shortAddress'];
         this.coords[this.direction] = newCoords;
-        this.place.changeAddress(this.address);
-        this.place.changeCoords(this.coords);
+         this.place.changeAddress(this.address);
+         this.place.changeCoords(this.coords);
         this.place.reloadMap('homeMap');
 
         // this.editable[this.direction] = true;
         this.search = false;
-        this.detail = true;
+        // this.detail = true;
     }
 
 
@@ -153,10 +172,10 @@ export class Address {
     }
 
     getAddresses(search: string): Observable<any> {
-        let lat = this.coords[this.direction][0];
-        let lon = this.coords[this.direction][1];
+        let lat = this.coords[this.direction].latitude;
+        let lon = this.coords[this.direction].longitude;
 
-        const url = `http://ddtaxity.smarttaxi.ru:8000/1.x/geocode?taxiServiceId=taxity&radius=2000&lat=${lat}&lon=${lon}&search=${search}`;
+        const url = `http://ddtaxity.smarttaxi.ru:8000/1.x/geocode?taxiServiceId=taxity_mobile&radius=2000&lat=${lat}&lon=${lon}&search=${search}`;
 
         return this.http.get(url)
             .map(Address.extractData)
@@ -169,14 +188,20 @@ export class Address {
 
         const self = this;
 
+        // self.addresses = self.formatAddressesSearch(address, [{"geoPoint":{"lon":37.358859,"lat":55.835406},"fullAddress":"Россия, Московская область," +
+        // " Москва," +
+        // " Генерала Белобородова ул.","shortAddress":"Генерала Белобородова ул.","placeType":"Unknown","title":"","country":"Россия","region":"Московская" +
+        // " область","county":"","city":"Москва","district":"","street":"Генерала Белобородова ул.","house":"","housing":"","structure":"","porch":""}]);
+        // self.search = true;
+
         this.getAddresses(address)
-            .subscribe(
-                (addresses) => {
-                    self.addresses = self.formatAddressesSearch(address, addresses);
-                    self.search = true;
-                },
-                error => console.log(error)
-            )
+           .subscribe(
+               (addresses) => {
+                   self.addresses = self.formatAddressesSearch(address, addresses);
+                   self.search = true;
+               },
+               error => console.log(error)
+           )
     }
 
     formatAddressesSearch(address: string, addresses: AddressItem[]) {
@@ -223,15 +248,33 @@ export class Address {
         return Observable.throw(errMsg);
     }
 
-    onFocus(type: string): void {
+    onFocus(type: string, input: any): void {
+
+        if(this.direction === type && this.detail) {
+            this.disabled[type] = false;
+            setTimeout(()=>{
+                input.focus();
+                if(cordova) cordova.plugins.Keyboard.show()
+            }, 150)
+        } else if(type === 'to' && !this.address.to) {
+            this.NavProvider.changeTabSet('search');
+            this.MapProvider.set('editable', true);
+            this.MapProvider.set('searching', true);
+            this.detail = true;
+        }
 
         if(this.direction === type && this.NavProvider.getCurrentTabSet() === 'main'){
-            this.NavProvider.changeTabSet('search')
+            this.NavProvider.changeTabSet('search');
+            this.MapProvider.set('editable', true);
+            this.MapProvider.set('searching', true);
+            this.detail = true;
         }
 
         this.direction = type;
 
-        this.place.changeDirection(type);
+        this.MapProvider.set('direction', type);
+
+        //this.place.changeDirection(type);
     }
 
     showFavoritePopup() {
@@ -239,11 +282,16 @@ export class Address {
         this.nav.push(FavoritePopup);
     }
 
+
+
     onConfirm(){
         this.search = false;
         this.detail = false;
+        this.disabled[this.direction] = true;
         this.NavProvider.changeTabSet('main');
+        this.MapProvider.set('searching', false);
     }
+
 }
 
 

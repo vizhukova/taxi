@@ -1,26 +1,35 @@
 <ion-content class="modal register-modal">
-   <div class="modal-body">
+   <div class="modal-body" (click)="closeKeyboard($event)">
+
         <p class="modal-header">
             Регистрация терминала
         </p>
         <div class="content">
+
             <label class="name">
                 Введите ваше имя
                 <input type="text"  [(ngModel)]="name">
             </label>
             <label class="code">
                 Код страны
+
                <span class="select-wrapper">
-                    <select [(ngModel)]="code">
-                      <option>+ 7</option>
-                      <option>+ 38</option>
-                    </select>
+                   <div class="input" (click)="showSelect(true)">{{code || "+ 7"}}</div>
+                   <div class="panel" (click)="showSelect(false)" *ngIf="isShownInput">
+                       <span class="option" (click)="setCode('+ 7')">+ 7</span>
+                       <span class="option" (click)="setCode('+ 38')">+ 38</span>
+                   </div>
+
+                    <!--<select [(ngModel)]="code">-->
+                      <!--<option [value]="+ 7">+ 7</option>-->
+                      <!--<option [value]="+ 38">+ 38</option>-->
+                    <!--</select>-->
                </span>
             </label>
             <label class="number">
                 Номер телефона
                 <input type="text" [(ngModel)]="number">
-                <i class="cross"></i>
+                <i class="cross" (click)="clearNumber()"></i>
             </label>
 
             <button class="sent" (click)="sentCode()" [ngClass]="{code: isCode}">{{isCode ? "Повторно выслать код" : "Выслать код"}}</button>

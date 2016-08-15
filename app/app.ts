@@ -18,7 +18,10 @@ import {Auth} from "./providers/auth/auth";
 import {CarOptions} from "./providers/car-options/car-options";
 import {GatherOrder} from "./providers/order/gather_order";
 import {AddressProvider} from "./providers/address/address";
-import {  OrderHistory } from './providers/order/history';
+import { OrderHistory } from './providers/order/history';
+import { MapProvider } from './providers/map/map';
+
+declare var cordova: any;
 
 @Component({
     selector: 'main-tabs',
@@ -42,7 +45,9 @@ export class MainTabs {
 
     constructor(private nav: NavController, private AuthProvider: Auth, private NavProvider: Nav){
 
-
+        //document.addEventListener("deviceready", () => {
+        //    cordova.plugins.Keyboard.disableScroll(true);
+        //});
 
     }
 
@@ -53,8 +58,8 @@ export class MainTabs {
 
 @Component({
     template: '<ion-nav #myNav [root]="rootPage"></ion-nav>',
-    providers: [Place, Cost, Nav, Auth, AddressProvider, CarOptions, GatherOrder, OrderHistory],
-    directives: [MainPage]
+    providers: [Place, Cost, Nav, Auth, AddressProvider, CarOptions, GatherOrder, OrderHistory, MapProvider],
+    directives: [MainPage, RegistrationModal]
 })
 export class App {
 

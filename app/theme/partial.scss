@@ -115,16 +115,18 @@
   }
 
   .searchView {
-    position: absolute;
+    position: fixed;
     width: 100%;
     background: #323238;
-    top: 48.5px;
+    top: 104.5px;
     overflow: auto;
     padding-left: 14.4%;
-    height: 420px;
+    bottom: 0;
+    margin: auto;
+    //max-height: 420px;
 
     &.to {
-      top: 97px;
+      top: 153px;
     }
 
     div.search-item {

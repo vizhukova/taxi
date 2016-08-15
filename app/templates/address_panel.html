@@ -1,29 +1,26 @@
 <div class="address-panel">
     <div class="main"
         [ngClass]="setClasses('from')"
-        (click)="onFocus('from')"
+        (click)="onFocus('from', from)"
     >
         <span class="icon"></span>
-        <input #from
-            [disabled]="editable.from"
+        <input
+            #from
+            [disabled]="disabled.from"
             (keyup)="getAll(address.from)"
             type="text"
             [(ngModel)]="address.from"
             placeholder="Откуда ..."
         >
-        <span
-            class="clear"
-            *ngIf="direction === 'from'"
-            (click)="clearAddress($event)"></span
-        >
     </div>
     <div class="main"
         [ngClass]="setClasses('to')"
-        (click)="onFocus('to')"
+        (click)="onFocus('to', to)"
     >
         <span class="icon"></span>
         <input
-            [disabled]="editable.to"
+            #to
+            [disabled]="disabled.to"
             (keyup)="getAll(address.to)"
             type="text"
             [(ngModel)]="address.to"
@@ -31,10 +28,12 @@
         >
         <span
             class="clear"
-            *ngIf="direction === 'to'"
+            *ngIf="direction === 'to' && !disabled.to"
             (click)="clearAddress($event)"
         ></span>
     </div>
+
+
     <div [ngClass]="setViewClasses()" *ngIf="search">
         <div
             class="search-item"
@@ -44,7 +43,9 @@
             <span *ngFor="let text of item.street" [ngClass]="{orange: text.className ==='orange'}">{{text.text}}</span><p>{{item.city}}</p>
         </div>
     </div>
-    <div [ngClass]="setDetailClasses()" *ngIf="detail">
+
+
+    <div [ngClass]="setDetailClasses()" *ngIf="detail && !search">
         <div class="top">
             <div class="group house">
                 <input type="text" [(ngModel)]="house" required>

@@ -113,22 +113,53 @@
     }
 
     .select-wrapper {
-      &:before {
-        content: "";
+
+      div.input {
+        border-bottom: solid 1px #e4e7ec;
+        width: 100%;
+        color: #565659;
+        font-size: 18px;
+        font-weight: 600;
+        padding: 7px 0;
+        background: transparent;
+        position: relative;
+
+        &:after {
+          content: "";
+          position: absolute;
+          width: 11px;
+          height: 6px;
+          display: inline-block;
+          background-image: url("./../res/arrow_drop_down.png");
+          background-size: 100%;
+          bottom: 15px;
+          right: 5px;
+        }
+      }
+
+      .panel {
         position: absolute;
-        width: 11px;
-        height: 6px;
-        display: inline-block;
-        background-image: url("./../res/arrow_drop_down.png");
-        background-size: 100%;
-        bottom: 15px;
-        right: 5px;
+        z-index: 2;
+        background: #fff;
+        left: 0;
+        right: 0;
+        max-height: 100px;
+        overflow: scroll;
+
+         span.option {
+          display: block;
+          text-align: center;
+          line-height: 28px;
+          font-size: 14px;
+        }
       }
-      select {
-        appearance: none;
-        -moz-appearance: none; /* Firefox */
-        -webkit-appearance: none; /* Safari and Chrome */
-      }
+
+
+      //select {
+      //  appearance: none;
+      //  -moz-appearance: none; /* Firefox */
+      //  -webkit-appearance: none; /* Safari and Chrome */
+      //}
     }
 
     button {

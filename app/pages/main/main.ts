@@ -19,8 +19,10 @@ import {Cost} from "../../providers/cost/cost";
 import {Loader} from "../../components/loader/loader";
 import {CarOptions} from "../../providers/car-options/car-options";
 import {GatherOrder} from "../../providers/order/gather_order";
+import {MapProvider} from "../../providers/map/map";
+import {MapState} from "../../interfaces/map";
 
-declare var cordova:any
+declare var cordova:any;
 
 @Component({
   selector: 'search-page',
@@ -41,7 +43,7 @@ export class MainPage {
 
   activeTab: string;
   activeTabSet: string;
-
+  state: MapState;
   direction: string;
   status: Object;
 
@@ -51,6 +53,7 @@ export class MainPage {
 
   constructor(private nav: NavController,
               private NavProvider: Nav,
+              private MapProvider: MapProvider,
               private AuthProvider: Auth,
               private PlaceProvider: Place,
               private CostProvider: Cost,
@@ -59,8 +62,6 @@ export class MainPage {
     this.nav = nav;
     this.activeTab = 'home';
     this.activeTabSet = 'main';
-
-    this.direction = 'from';
 
     this.status = {
       from: 'определение адреса подачи такси',
@@ -89,12 +90,12 @@ export class MainPage {
       this.activeTab = tab;
     });
 
-    NavProvider.tabSet$.subscribe(tabSet => {
-      this.activeTabSet = tabSet;
+    MapProvider.state$.subscribe(newState => {
+      this.state = newState
     });
 
-    PlaceProvider.direction$.subscribe(direction => {
-      this.direction = direction;
+    NavProvider.tabSet$.subscribe(tabSet => {
+      this.activeTabSet = tabSet;
     });
 
     PlaceProvider.path$.subscribe(status => {
@@ -116,16 +117,23 @@ export class MainPage {
   setClasses(active: string) {
     return {
       tab: true,
-      active: this.activeTab === active,
+      active: this.activeTab === active
     }
   }
+
+  setCallClasses() {
+    return {
+      call: true,
+      active: !this.state.searching
+    }
+  }  
 
   ngAfterViewInit(){
     if(!this.AuthProvider.check()){
       this.nav.push(RegistrationModal);
-    }else{
-      this.PlaceProvider.changePathStatus(false)
     }
+
+    this.PlaceProvider.changePathStatus(false);
   }
 
   makeOrder() {
