@@ -50,7 +50,7 @@ export class CarOptions {
           this.requirements = CarOptions.parseRequirements(data);
           this.carClasses = CarOptions.parseCarClasses(data);
 
-          this.carClassInput =  this.carClasses[0];
+          this.carClassInput =  this.carClasses[0].value;
 
           this.emitUpdate();
 
