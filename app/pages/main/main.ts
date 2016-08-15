@@ -151,7 +151,7 @@ export class MainPage {
 
         this.nav.push(Loader);
         this.OrderHistoryProvider.save(this.GatherOrderProvider.getGatheredOrder());
-        this.NavProvider.changeTabSet('order');
+        //this.NavProvider.changeTabSet('order');
 
 
       }).catch((err) => {
