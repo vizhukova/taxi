@@ -175,7 +175,7 @@ export class Address {
         let lat = this.coords[this.direction].latitude;
         let lon = this.coords[this.direction].longitude;
 
-        const url = `http://ddtaxity.smarttaxi.ru:8000/1.x/geocode?taxiServiceId=taxity&radius=2000&lat=${lat}&lon=${lon}&search=${search}`;
+        const url = `http://ddtaxity.smarttaxi.ru:8000/1.x/geocode?taxiServiceId=taxity_mobile&radius=2000&lat=${lat}&lon=${lon}&search=${search}`;
 
         return this.http.get(url)
             .map(Address.extractData)
@@ -188,20 +188,20 @@ export class Address {
 
         const self = this;
 
-        self.addresses = self.formatAddressesSearch(address, [{"geoPoint":{"lon":37.358859,"lat":55.835406},"fullAddress":"Россия, Московская область," +
-        " Москва," +
-        " Генерала Белобородова ул.","shortAddress":"Генерала Белобородова ул.","placeType":"Unknown","title":"","country":"Россия","region":"Московская" +
-        " область","county":"","city":"Москва","district":"","street":"Генерала Белобородова ул.","house":"","housing":"","structure":"","porch":""}]);
-        self.search = true;
+        // self.addresses = self.formatAddressesSearch(address, [{"geoPoint":{"lon":37.358859,"lat":55.835406},"fullAddress":"Россия, Московская область," +
+        // " Москва," +
+        // " Генерала Белобородова ул.","shortAddress":"Генерала Белобородова ул.","placeType":"Unknown","title":"","country":"Россия","region":"Московская" +
+        // " область","county":"","city":"Москва","district":"","street":"Генерала Белобородова ул.","house":"","housing":"","structure":"","porch":""}]);
+        // self.search = true;
 
-        //this.getAddresses(address)
-        //    .subscribe(
-        //        (addresses) => {
-        //            self.addresses = self.formatAddressesSearch(address, addresses);
-        //            self.search = true;
-        //        },
-        //        error => console.log(error)
-        //    )
+        this.getAddresses(address)
+           .subscribe(
+               (addresses) => {
+                   self.addresses = self.formatAddressesSearch(address, addresses);
+                   self.search = true;
+               },
+               error => console.log(error)
+           )
     }
 
     formatAddressesSearch(address: string, addresses: AddressItem[]) {
