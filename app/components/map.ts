@@ -7,7 +7,6 @@ import {Place} from './../providers/place/place';
 import {Cost} from './../providers/cost/cost';
 import { MapProvider } from './../providers/map/map';
 import {Nav} from "./../providers/nav/nav";
-
 import {Coordinates, PathCoordinates} from "../interfaces/coordinates";
 import { MapState } from "../interfaces/map";
 declare var cordova: any;
@@ -242,9 +241,14 @@ export class Map {
 
         // Город родной - Питер я твой! [59.928848, 30.311303]
         let mapCoords = this.coords[this.state.direction].length ? this.coords[this.state.direction] : [59.928848, 30.311303];
-
+        
+        let options = {center: mapCoords, zoom: 15, layers: [osmLayer], zoomControl: false, tap: true};
+        
+        
+        
         if (!this.map) {
-            this.map = new L.Map(this.selector, {center: mapCoords, zoom: 15, layers: [osmLayer], zoomControl: false});
+            
+            this.map = new L.Map(this.selector, options);
 
             //this.markerFrom.addTo(this.map);
             //this.markerTo.addTo(this.map)
@@ -275,7 +279,7 @@ export class Map {
             }
         });
 
-        if (!this.editable) this.map.on('dragend', this.timeout);
+        if (!this.editable) this.map.on('moveend', this.timeout);
 
         if (!this.editable) this.map.on('zoomstart', () =>{
             if(this.state.direction) {

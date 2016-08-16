@@ -82,8 +82,20 @@ export class MainPage {
       to: 'определение адреса поездки',
     };
 
+    // cordova.plugins.locationAccuracy.request(
+    //     (success)=>{console.log('success', success)},
+    //     (error)=>{
+    //       if(error.code !== cordova.plugins.locationAccuracy.ERROR_USER_DISAGREED){
+    //         if(window.confirm("Failed to automatically set Location Mode to 'High Accuracy'. Would you like to switch to the Location Settings page and do this manually?")){
+    //           cordova.plugins.diagnostic.switchToLocationSettings();
+    //         }
+    //       }
+    //     },
+    //     cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
+    //
     // setTimeout(() => {
     //   if(cordova && cordova.plugins && cordova.plugins.locationAccuracy){
+    //     console.log(cordova)
     //     if(cordova){
     //       cordova.plugins.locationAccuracy.canRequest(function(canRequest){
     //         if(canRequest){

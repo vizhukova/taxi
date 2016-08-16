@@ -4,6 +4,7 @@ import {Subject, BehaviorSubject, Observable} from 'rxjs';
 import {Http, Response} from '@angular/http';
 import {Coordinates, PathCoordinates} from "../../interfaces/coordinates";
 import { MapProvider } from "../map/map";
+declare var cordova:any;
 
 @Injectable()
 export class Place {
@@ -90,20 +91,53 @@ export class Place {
     public getPosition() {
         
         var self = this;
-        return new Promise((resolve, reject) => {
-            Geolocation.getCurrentPosition().then((resp) => {
 
-                let c = resp.coords;
+
+        return new Promise((resolve, reject) => {
+
+            var onSuccess = (position:any)=>{
+                console.log('Position', position)
+                let c = position.coords;
 
                 self.coords[self.direction] = {
                     latitude: c.latitude,
                     longitude: c.longitude
                 };
+               
                 self.changeCoords(self.coords);
                 resolve(self.coords[self.direction]);
-            }, (err) => {
-                reject(err);
-            })
+            };
+
+            var onError = (err)=>{
+                console.log('Error', err)
+            };
+
+            cordova.plugins.locationAccuracy.request(
+                (success)=>{
+                    console.log('success', success)
+                    Geolocation.getCurrentPosition({enableHighAccuracy: true, timeout: 20000}).then((resp) => {
+                        console.log('Position', resp)
+                        let c = resp.coords;
+
+                        self.coords[self.direction] = {
+                            latitude: c.latitude,
+                            longitude: c.longitude
+                        };
+
+                        self.changeCoords(self.coords);
+                        resolve(self.coords[self.direction]);
+                    })
+                    // navigator.geolocation.getCurrentPosition(onSuccess, onError);
+                },
+                (error)=>{
+                    if(error.code !== cordova.plugins.locationAccuracy.ERROR_USER_DISAGREED){
+                        if(window.confirm("Failed to automatically set Location Mode to 'High Accuracy'. Would you like to switch to the Location Settings page and do this manually?")){
+                            cordova.plugins.diagnostic.switchToLocationSettings();
+                        }
+                    }
+                },
+                cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
+
         })
 
     }
