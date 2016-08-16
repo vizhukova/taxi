@@ -241,8 +241,10 @@ export class Map {
 
         // Город родной - Питер я твой! [59.928848, 30.311303]
         let mapCoords = this.coords[this.state.direction].length ? this.coords[this.state.direction] : [59.928848, 30.311303];
+
+
         
-        let options = {center: mapCoords, zoom: 15, layers: [osmLayer], zoomControl: false, tap: true};
+        let options = {center: mapCoords, zoom: 15, layers: [osmLayer], zoomControl: false, tap: true, inertia: true, boxZoom: false, doubleClickZoom:false};
         
         
         
@@ -272,23 +274,23 @@ export class Map {
         //     this.MapProvider.set('clicked', !this.state.clicked)
         // });
 
-        if (!this.editable) this.map.on('dragstart', () =>{
-            if(this.state.direction) {
-                this.MapProvider.set('cost', false);
-                this.MapProvider.set('searching', true)
-            }
-        });
-
-        if (!this.editable) this.map.on('moveend', this.timeout);
-
-        if (!this.editable) this.map.on('zoomstart', () =>{
-            if(this.state.direction) {
-                this.MapProvider.set('cost', false);
-                this.MapProvider.set('searching', true)
-            }
-        });
-
-        if (!this.editable) this.map.on('zoomend', this.timeout);
+        //if (!this.editable) this.map.on('dragstart', () =>{
+        //    if(this.state.direction) {
+        //        this.MapProvider.set('cost', false);
+        //        this.MapProvider.set('searching', true)
+        //    }
+        //});
+        //
+        //if (!this.editable) this.map.on('moveend', this.timeout);
+        //
+        //if (!this.editable) this.map.on('zoomstart', () =>{
+        //    if(this.state.direction) {
+        //        this.MapProvider.set('cost', false);
+        //        this.MapProvider.set('searching', true)
+        //    }
+        //});
+        //
+        //if (!this.editable) this.map.on('zoomend', this.timeout);
 
 
         //this.bootMarkers(this.direction);

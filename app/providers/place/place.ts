@@ -89,55 +89,39 @@ export class Place {
     }
 
     public getPosition() {
-        
+        console.log('Position get!!!!!!')
         var self = this;
 
 
         return new Promise((resolve, reject) => {
 
-            var onSuccess = (position:any)=>{
-                console.log('Position', position)
+            var onSuccess = (position:any) => {
                 let c = position.coords;
 
                 self.coords[self.direction] = {
                     latitude: c.latitude,
                     longitude: c.longitude
                 };
-               
+
                 self.changeCoords(self.coords);
                 resolve(self.coords[self.direction]);
             };
 
-            var onError = (err)=>{
-                console.log('Error', err)
-            };
-
             cordova.plugins.locationAccuracy.request(
                 (success)=>{
-                    console.log('success', success)
-                    Geolocation.getCurrentPosition({enableHighAccuracy: true, timeout: 20000}).then((resp) => {
-                        console.log('Position', resp)
-                        let c = resp.coords;
-
-                        self.coords[self.direction] = {
-                            latitude: c.latitude,
-                            longitude: c.longitude
-                        };
-
-                        self.changeCoords(self.coords);
-                        resolve(self.coords[self.direction]);
-                    })
-                    // navigator.geolocation.getCurrentPosition(onSuccess, onError);
+                    Geolocation.getCurrentPosition({enableHighAccuracy: true, timeout: 20000}).then(onSuccess)
                 },
                 (error)=>{
                     if(error.code !== cordova.plugins.locationAccuracy.ERROR_USER_DISAGREED){
                         if(window.confirm("Failed to automatically set Location Mode to 'High Accuracy'. Would you like to switch to the Location Settings page and do this manually?")){
                             cordova.plugins.diagnostic.switchToLocationSettings();
                         }
+                    } else if(error==="Location services is already enabled") {
+                        Geolocation.getCurrentPosition({enableHighAccuracy: true, timeout: 20000}).then(onSuccess)
                     }
                 },
-                cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
-
+                cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY
+            );
         })
 
     }
@@ -195,6 +179,8 @@ export class Place {
 
         return coordinates;
     }
+
+
 
     public getCurrentAddress(coords:Coordinates) {
         const self = this;
