@@ -32,13 +32,12 @@
   <feed-tab-page [hidden]="activeTab !== 'feed-tab'"></feed-tab-page>
   <fly-tab-page [hidden]="activeTab !== 'fly-tab'"></fly-tab-page>
 
-  <div *ngIf="state.authorized" class="search">{{status[state.direction]}}</div>
   <taxi-page [hidden]="activeTab !== 'taxi'"></taxi-page>
   <like-page [hidden]="activeTab !== 'like'"></like-page>
   <!--<money-page [hidden]="activeTab !== 'money'"></money-page>-->
 
-  <!--<div class="search" *ngIf="!pathStatus">{{status[direction]}}</div>-->
-<!--&gt;>>>>>> origin/dev-example-->
+
+  <div *ngIf="state.authorized" class="search">{{status[state.direction]}}</div>
 
   <div *ngIf="state.authorized" [ngClass]="setCallClasses()" (click)="makeOrder()">
     <div class="price">

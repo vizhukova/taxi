@@ -14,7 +14,6 @@ export class Place {
     coords:PathCoordinates;
     direction:string;
     cbs:Function[];
-    pathStatus: boolean;
     fullAddress: Object;
 
     // Observable data sources
@@ -24,7 +23,6 @@ export class Place {
     private mapCreateSource = new BehaviorSubject<any>(null);
     private mapDestroySource = new BehaviorSubject<any>(null);
 
-    private pathSource = new BehaviorSubject<any>(true);
 
     // Observable data streams
     address$ = this.addressSource.asObservable();
@@ -32,7 +30,6 @@ export class Place {
     reload$ = this.reloadSource.asObservable();
     mapCreate$ = this.mapCreateSource.asObservable();
     mapDestroy$ = this.mapDestroySource.asObservable();
-    path$ = this.pathSource.asObservable();
 
     // Service message commands
     //public changeAddress(address:string) {
@@ -48,11 +45,6 @@ export class Place {
 
     changeCoords(coords:PathCoordinates) {
         this.coordsSource.next(coords);
-    }
-
-    changePathStatus(status: boolean) {
-        this.pathStatus = status;
-        this.pathSource.next(status);
     }
 
     public reloadMap(name) {
@@ -89,7 +81,6 @@ export class Place {
     }
 
     public getPosition() {
-        console.log('Position get!!!!!!')
         var self = this;
 
 

@@ -22,7 +22,7 @@ export class HomePage {
     cost: number;
 
     ngOnInit() {
-        this.callEnable = this.enableCall.bind(this);
+        //this.callEnable = this.enableCall.bind(this);
     }
 
     constructor(private Place:Place, private nav:NavController, private CostProvider: Cost) {
@@ -45,26 +45,26 @@ export class HomePage {
     }
 
 
-    enableCall(value) {
-        this.isAddress = value;
-    }
-
-
-    makeRequest():void {
-        this.Place.getPosition().then((coords:any) => {
-            this.Place.getCurrentAddress(coords);
-        }).catch((err) => {
-            console.log(err)
-        })
-    }
-
-    onDragendMap(coords) {
-
-        this.Place.getCurrentAddress(<Coordinates>{
-            latitude: coords.lat,
-            longitude: coords.lng
-        })
-    }
+    //enableCall(value) {
+    //    this.isAddress = value;
+    //}
+    //
+    //
+    //makeRequest():void {
+    //    this.Place.getPosition().then((coords:any) => {
+    //        this.Place.getCurrentAddress(coords);
+    //    }).catch((err) => {
+    //        console.log(err)
+    //    })
+    //}
+    //
+    //onDragendMap(coords) {
+    //
+    //    this.Place.getCurrentAddress(<Coordinates>{
+    //        latitude: coords.lat,
+    //        longitude: coords.lng
+    //    })
+    //}
 }
 
 

@@ -71,11 +71,11 @@ body {
 
 
 map {
-  //position: absolute;
-  //bottom: 0;
-  //top: 97px;
-  //left: 0;
-  //right: 0;
+  position: absolute;
+  bottom: 0;
+  top: 97px;
+  left: 0;
+  right: 0;
 
 
 }
@@ -179,11 +179,11 @@ div.error-wrap {
       background-size: 100% 100%;
     }
 
-    position: fixed;
+    position: absolute;
     display: inline-block;
     z-index: 50;
-    //top: 0;
-    bottom: 37%;
+    top: 0;
+    bottom: 0;
     left: 0;
     right: 0;
     margin: auto;

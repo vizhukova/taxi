@@ -58,9 +58,6 @@ export class MainPage {
   state: MapState;
   direction: string;
   status: Object;
-
-  pathStatus: boolean;
-
   cost: any;
 
   constructor(private nav: NavController,
@@ -125,15 +122,9 @@ export class MainPage {
       this.activeTabSet = tabSet;
     });
 
-    
-    PlaceProvider.path$.subscribe(status => {
-      this.pathStatus = status;
-    });
-
     CostProvider.cost$.subscribe(cost => {
       this.cost = cost;
-        this.MapProvider.set('cost', true);
-      // this.ref.tick();
+      this.MapProvider.set('cost', true);
     });
 
 
@@ -164,14 +155,11 @@ export class MainPage {
     if(!this.AuthProvider.check()){
       this.nav.push(RegistrationModal);
     }else{
-      this.PlaceProvider.changePathStatus(false);
       this.MapProvider.set('authorized', true);
     }
   }
 
   makeOrder() {
-    debugger
-
     if(!this.AuthProvider.check()){
       this.nav.push(RegistrationModal);
     }else{

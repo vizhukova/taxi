@@ -41,7 +41,7 @@ export class Map {
     @Input() editable:boolean;
     @Input() path:any;
     @Input() selector:string;
-    @Input() callEnable:Function;
+    //@Input() callEnable:Function;
 
 
     constructor(
@@ -243,14 +243,14 @@ export class Map {
         let mapCoords = this.coords[this.state.direction].length ? this.coords[this.state.direction] : [59.928848, 30.311303];
 
 
-        
-        let options = {center: mapCoords, zoom: 15, layers: [osmLayer], zoomControl: false, tap: true, inertia: true, boxZoom: false, doubleClickZoom:false};
+        let options = {center: mapCoords, zoom: 15, layers: [osmLayer], zoomControl: false, tap: false, inertia: true, inertiaThreshold:32};
         
         
         
         if (!this.map) {
             
             this.map = new L.Map(this.selector, options);
+
 
             //this.markerFrom.addTo(this.map);
             //this.markerTo.addTo(this.map)
@@ -267,30 +267,30 @@ export class Map {
         //        cordova.plugins.Keyboard.close();
         //    }
         //})
-        //
-        //
 
-        // this.map.on('click', ()=>{
-        //     this.MapProvider.set('clicked', !this.state.clicked)
-        // });
 
-        //if (!this.editable) this.map.on('dragstart', () =>{
-        //    if(this.state.direction) {
-        //        this.MapProvider.set('cost', false);
-        //        this.MapProvider.set('searching', true)
-        //    }
-        //});
-        //
-        //if (!this.editable) this.map.on('moveend', this.timeout);
-        //
-        //if (!this.editable) this.map.on('zoomstart', () =>{
-        //    if(this.state.direction) {
-        //        this.MapProvider.set('cost', false);
-        //        this.MapProvider.set('searching', true)
-        //    }
-        //});
-        //
-        //if (!this.editable) this.map.on('zoomend', this.timeout);
+
+         this.map.on('click', ()=>{
+             this.MapProvider.set('clicked', !this.state.clicked)
+         });
+
+        if (!this.editable) this.map.on('dragstart', () =>{
+            if(this.state.direction) {
+                this.MapProvider.set('cost', false);
+                this.MapProvider.set('searching', true)
+            }
+        });
+
+        if (!this.editable) this.map.on('moveend', this.timeout);
+
+        if (!this.editable) this.map.on('zoomstart', () =>{
+            if(this.state.direction) {
+                this.MapProvider.set('cost', false);
+                this.MapProvider.set('searching', true)
+            }
+        });
+
+        if (!this.editable) this.map.on('zoomend', this.timeout);
 
 
         //this.bootMarkers(this.direction);
@@ -391,9 +391,6 @@ export class Map {
     private markPolyline(path:any):void {
         this.polyline && this.removeLayer(this.polyline);
         this.polyline = L.polyline(path, {color: 'black'}).addTo(this.map);
-        this.callEnable(true);
-        this.PlaceProvider.changePathStatus(true);
-        console.log('PlaceProvider.changePathStatus(true)')
     }
 
     private removeLayer(layer):void {
@@ -415,8 +412,6 @@ export class Map {
 
         if (this.polyline) {
             this.removeLayer(this.polyline);
-            this.PlaceProvider.changePathStatus(false);
-            this.callEnable(false);
         }
 
         this.map.invalidateSize(true)

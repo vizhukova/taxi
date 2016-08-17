@@ -47,7 +47,7 @@
           height: 23px;
           bottom: -15px;
           width: 1px;
-          left: 8px;
+          left: 6px;
           margin: auto;
           border-right: 2px dashed #a8bea1;
         }
@@ -117,6 +117,11 @@
       height: 100%;
       margin-left: 5%;
       width: 87%;
+      -webkit-appearance: none;
+
+      &:disabled {
+        opacity: 1;
+      }
 
       &::-webkit-input-placeholder {color:#fff;}
       &::-moz-placeholder          {color:#fff;}/* Firefox 19+ */
@@ -142,10 +147,11 @@
 
     div.search-item {
       background: #323238;
-      height: 48.5px;
+      //height: 48.5px;
       font-size: 18px;
       padding-top: 10px;
-      line-height: 16px;
+      padding-bottom: 10px;
+      //line-height: 16px;
       cursor: default;
       border-bottom: 1px solid #505054;
       width: 90%;

@@ -31,7 +31,6 @@ export class RegistrationModal {
     ) {
         //cordova.plugins.Keyboard.disableScroll(true);
         this.MapProvider.set('authorized', false);
-        this.PlaceProvider.changePathStatus(false);
     }
 
     closeKeyboard(event) {
@@ -41,6 +40,8 @@ export class RegistrationModal {
             //setTimeout(cordova.plugins.Keyboard.close(), 500);
             cordova.plugins.Keyboard.close();
         }
+
+        cordova.plugins.Keyboard.shrinkView(false);
 
         if(event.target.className !== 'input') {
             this.isShownInput = false;
@@ -63,7 +64,8 @@ export class RegistrationModal {
     }
 
     register() {
-        debugger
+        var self = this;
+
         if(this.isCode) {
            this.AuthProvider.confirm(this.key, this.code + this.number).then(() => {
                this.nav.pop();
@@ -74,8 +76,10 @@ export class RegistrationModal {
             this.PlaceProvider.reloadMap('homeMap');
         }
 
-        this.MapProvider.set('authorized', true);
-        this.PlaceProvider.changePathStatus(false);
+        setTimeout(()=>{
+            self.MapProvider.set('authorized', true);
+        }, 1000);
+
     }
 
     showSelect(value) {

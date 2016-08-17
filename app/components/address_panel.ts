@@ -300,10 +300,12 @@ export class Address {
             this.place.changeAddress(this.address);
             this.MapProvider.set('direction', 'from');
             this.place.changeCoords(this.coords);
+            this.detail = false;
         } else {
             this.search = false;
             this.detail = false;
         }
+
         this.NavProvider.changeTabSet('main');
         this.MapProvider.set('searching', false);
     }

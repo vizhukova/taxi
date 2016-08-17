@@ -27,9 +27,9 @@
     text-align: left;
     font-size: 20px;
     overflow: hidden;
-    background: $main-bright-color url("../res/icon_arrow.png") no-repeat;
-    background-position: right 10px center;
-    background-size: 30px 30px;
+    background: url("../res/icon_arrow.png") no-repeat, url("../res/btn_price.png") no-repeat;
+    background-position:right 10px center, center center;
+    background-size: 30px 30px, 100% 100%;
     position: absolute;
     z-index: 2;
     transition: bottom 700ms linear;
@@ -57,7 +57,6 @@
         &:after {
           content: "руб";
           vertical-align: super;
-          text-transform: capitalize;
           font-size: 13px;
           margin-left: 3px;
         }
