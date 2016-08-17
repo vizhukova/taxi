@@ -21,11 +21,11 @@
                 <i class="more-btn" (click)="showOptions(num, $event)"></i>
               <div class="content">
                    <span class="options" *ngIf="num === optionDetails">
-                        <span>Повторить</span>
+                        <span (click)="setLastAddress(key)">Повторить</span>
                         <span>Скрыть</span>
                         <span (click)="deleteAddress(key)">Удалить</span>
                     </span>
-                <p class="title">{{addresses[key].description}}</p>
+                <p class="title">{{key}}</p>
                 <span class="address">{{addresses[key].shortAddress}}</span>
               </div>
             </div>
@@ -40,7 +40,7 @@
                     </p>
                     <p class="panel">
                          <span class="options" *ngIf="num === optionDetails">
-                                <span>Повторить</span>
+                                <span (click)="setLastOrderOptions(item)">Повторить</span>
                                  <span>Скрыть</span>
                                  <span (click)="deleteTrip(num)">Удалить</span>
                         </span>

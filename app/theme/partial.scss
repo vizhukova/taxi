@@ -514,17 +514,19 @@ i.star-empty {
     top: 0;
     text-align: center;
     border-radius: 5px;
+
+   span {
+    display: block;
+     line-height: 3rem;
+    //line-height: 40px;
+    //padding: 0 10px;
+
+    &:hover, &:active, &:focus  {
+     color: $main-bright-color;
+    }
 }
 
-//  span {
-//    display: block;
-//    //line-height: 40px;
-//    //padding: 0 10px;
-//
-//    &:hover, &:active, &:focus  {
-//     color: $main-bright-color;
-//    }
-//}
+}
 
 
 
