@@ -196,6 +196,13 @@
       background-color: #2c2c30;
       line-height: 72px;
       text-align: center;
+      &.disabled{
+        opacity: 0.2;
+      }
+
+      &.active {
+        opacity: 1!important;
+      }
 
       &:nth-child(1) {
         background: #2c2c30 url('../res/icon_locate.png') center 18px no-repeat;

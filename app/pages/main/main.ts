@@ -133,6 +133,7 @@ export class MainPage {
   }
 
   changeTab(newTab:string) {
+    if(this.state.searching) return;
     this.activeTab = newTab;
   }
 
@@ -140,7 +141,8 @@ export class MainPage {
   setClasses(active: string) {
     return {
       tab: true,
-      active: this.activeTab === active
+      active: this.activeTab === active,
+      disabled: this.state.searching
     }
   }
 

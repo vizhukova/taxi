@@ -107,12 +107,9 @@ export class Map {
 
         
         PlaceProvider.coords$.subscribe(newCoords => {
-
-
-            this.MapProvider.set('searching', false);
-
-           self.coords = newCoords;
             
+           self.coords = newCoords;
+
             if(this.polyline && newCoords.to.latitude === 0) {
                 this.removeLayer(this.polyline);
                 this.removeLayer(this.markerTo);
@@ -281,7 +278,7 @@ export class Map {
             }
         });
 
-        if (!this.editable) this.map.on('moveend', this.timeout);
+        if (!this.editable) this.map.on('dragend', this.timeout);
 
         if (!this.editable) this.map.on('zoomstart', () =>{
             if(this.state.direction) {

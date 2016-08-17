@@ -14,6 +14,7 @@ import {AddressProvider} from "../providers/address/address";
 import {Subject, BehaviorSubject, Observable} from 'rxjs'
 import {AddressItem} from "../interfaces/address";
 import {MapState} from "../interfaces/map";
+import * as _ from 'lodash';
 declare var cordova: any;
 
 @Component({
@@ -75,6 +76,7 @@ export class Address {
 
         place.address$.subscribe(newAddress => {
             self.address = newAddress;
+            self.MapProvider.set('searching', false)
             if(newAddress.to) {
                 GatherOrderProvider.setDestination(newAddress.to);
             }
@@ -92,6 +94,7 @@ export class Address {
             // }
 
             self.clicked = newState.clicked;
+            self.state = _.assign({}, newState)
         });
 
         place.coords$.subscribe(newCoords => {
@@ -177,11 +180,22 @@ export class Address {
         }
     }
 
+    setInputClasses() {
+        return {
+            opacity: this.state.searching
+        }
+    }
+
     getAddresses(search: string): Observable<any> {
         let lat = this.coords[this.direction].latitude;
         let lon = this.coords[this.direction].longitude;
+        
+        if(!lat && !lon) {
+            lat = this.coords.from.latitude;
+            lon = this.coords.from.longitude;
+        }
 
-        const url = `http://ddtaxity.smarttaxi.ru:8000/1.x/geocode?taxiServiceId=taxity_mobile&radius=2000&lat=${lat}&lon=${lon}&search=${search}`;
+        const url = `http://ddtaxity.smarttaxi.ru:8000/1.x/geocode?taxiServiceId=taxity_mobile&radius=200000&lat=${lat}&lon=${lon}&search=${search}`;
         this.search = true;
         return this.http.get(url)
             .map(Address.extractData)
@@ -250,24 +264,34 @@ export class Address {
     }
 
     onFocus(type: string, input ?: any): void {
+        this.disabled.to = true;
+        this.disabled.from = true;
+
+
+        if(this.state.searching) return;
 
         if(this.direction === type && this.detail) {
             this.disabled[type] = false;
             setTimeout(()=>{
+                if(cordova) cordova.plugins.Keyboard.show();
                 input.focus();
-                if(cordova) cordova.plugins.Keyboard.show()
             }, 150)
         } else if(type === 'to' && !this.address.to) {
             this.NavProvider.changeTabSet('search');
             this.MapProvider.set('editable', true);
-            this.MapProvider.set('searching', true);
+            // this.MapProvider.set('searching', true);
             this.detail = true;
+            this.disabled[type] = false;
+            setTimeout(()=>{
+                if(cordova) cordova.plugins.Keyboard.show();
+                input.focus();
+            }, 150)
         }
 
         if(this.direction === type && this.NavProvider.getCurrentTabSet() === 'main'){
             this.NavProvider.changeTabSet('search');
             this.MapProvider.set('editable', true);
-            this.MapProvider.set('searching', true);
+            // this.MapProvider.set('searching', true);
             this.detail = true;
         }
 

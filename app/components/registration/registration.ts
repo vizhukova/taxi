@@ -41,7 +41,6 @@ export class RegistrationModal {
             cordova.plugins.Keyboard.close();
         }
 
-        cordova.plugins.Keyboard.shrinkView(false);
 
         if(event.target.className !== 'input') {
             this.isShownInput = false;

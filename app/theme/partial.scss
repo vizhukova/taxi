@@ -119,9 +119,9 @@
       width: 87%;
       -webkit-appearance: none;
 
-      &:disabled {
-        opacity: 1;
-      }
+     &.opacity {
+       opacity: .2;
+     }
 
       &::-webkit-input-placeholder {color:#fff;}
       &::-moz-placeholder          {color:#fff;}/* Firefox 19+ */

@@ -177,7 +177,6 @@ export class Place {
         const self = this;
 
         if(!self.address[self.direction] && self.direction === 'to') {
-            console.log('Catch')
             return;
         }
         self.coords[self.direction] = coords;

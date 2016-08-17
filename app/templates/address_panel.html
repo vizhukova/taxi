@@ -6,6 +6,7 @@
         <span [ngClass]="setClassesIcon('from')"></span>
         <input
             #from
+            [ngClass]="setInputClasses()"
             [disabled]="disabled.from"
             (keyup)="getAll(address.from)"
             type="text"
@@ -20,6 +21,7 @@
         <span [ngClass]="setClassesIcon('to')"></span>
         <input
             #to
+            [ngClass]="setInputClasses()"
             [disabled]="disabled.to"
             (keyup)="getAll(address.to)"
             type="text"
