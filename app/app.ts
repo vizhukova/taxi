@@ -25,6 +25,7 @@ import { OrderFavorite } from './providers/order/favorites';
 import { TimeProvider } from './providers/time/time';
 
 declare var cordova: any;
+declare var document: any;
 
 @Component({
     selector: 'main-tabs',
@@ -46,7 +47,12 @@ export class MainTabs {
 
     change: Function;
 
-    constructor(private nav: NavController, private AuthProvider: Auth, private NavProvider: Nav){
+    constructor(
+        private nav: NavController,
+        private AuthProvider: Auth,
+        private platform: Platform,
+        private NavProvider: Nav
+    ){
 
         //document.addEventListener("deviceready", () => {
         //    cordova.plugins.Keyboard.disableScroll(true);
@@ -73,13 +79,25 @@ export class App {
         this.platform.ready().then(() => {
             StatusBar.styleDefault();
         });
+        
+        var self = this;
 
-        // let nav = this.app.getComponent('nav');
+        platform.registerBackButtonAction((e)=>{
+            // if(self.NavProvider.getCurrentTabSet()==='main' && self.NavProvider.getCurrentTab()==='home') {
+            //     e.preventDefault();
+            // } else if(self.NavProvider.getCurrentTabSet()==='main' && self.NavProvider.getCurrentTab()!=='home'){
+            //     self.NavProvider.changeTab('home');
+            // } else {
+            //     self.NavProvider.changeTabSet('main');
+            // };
 
+            e.preventDefault();
+
+        }, 100);
     }
 
     
-
+    
     // showSearchTabs(){
     //     this.nav.push(SearchPage, {
     //         change: this.showMainTabs.bind(this)

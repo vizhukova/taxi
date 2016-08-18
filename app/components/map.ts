@@ -16,7 +16,7 @@ declare var cordova: any;
     template: `<div id="map-wrap">
         <span *ngIf="state.direction" [ngClass]="markerClasses()"></span>
         <div id="{{selector}}"></div>
-        <div class="btn locate" *ngIf="state.direction === 'from'" (click)="locateMe()"></div>
+        <div class="btn locate" (click)="locateMe()"></div>
         <div (click)="boundsPolyline()" *ngIf="coords.to.latitude" class="btn center"></div>
         <div *ngIf="state.error" class="error-wrap">Ошибка цены <span (click)="hideError()" class="hide">OK</span></div>
     </div>`
@@ -346,6 +346,7 @@ export class Map {
     }
 
     private boundsPolyline() {
+        if(this.state.searching) return;
         if(!this.state.direction) {
             this.map.fitBounds(this.polyline.getBounds(), {padding: [30, 30]});
             return
@@ -365,7 +366,7 @@ export class Map {
 
     private locateMe():void {
 
-        if(!this.coords.to.latitude && this.state.direction === 'to') return;
+        // if(!this.coords.to.latitude && this.state.direction === 'to') return;
 
         this.MapProvider.set('searching', true);
 

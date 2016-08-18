@@ -13,6 +13,11 @@
             [(ngModel)]="address.from"
             placeholder="Откуда ..."
         >
+        <span
+                class="clear"
+                *ngIf="direction === 'from' && !disabled.from"
+                (click)="clearAddress('from')"
+        ></span>
     </div>
     <div class="main"
         [ngClass]="setClasses('to')"
@@ -31,7 +36,7 @@
         <span
             class="clear"
             *ngIf="direction === 'to' && !disabled.to"
-            (click)="clearAddress($event)"
+            (click)="clearAddress('to')"
         ></span>
     </div>
 
@@ -70,6 +75,7 @@
                 <label>Примечание</label>
             </div>
             <div class="group nav">
+                <div class="btn onmap" (click)="showMap()">УКАЗАТЬ НА КАРТЕ</div>
                 <div class="btn favorite" (click)="showFavoritePopup()">В ИЗБРАННОЕ</div>
                 <div class="btn confirm" (click)="onConfirm(direction)">ОК</div>
             </div>

@@ -27,7 +27,7 @@ export class TimePage {
 
     delayArray: Array<number>;
     isShownInput: boolean;
-    delay: number = 5;
+    delay: number = 20;
 
     constructor(private nav:NavController, private CarOptionsProvider:CarOptions, private TimeProvider:TimeProvider) {
         this.nav = nav;
@@ -39,7 +39,7 @@ export class TimePage {
         //];
 
         this.time = ['now', 'in', 'repeat', 'delay'];
-        this.delayArray = [5, 10, 15, 20];
+        this.delayArray = [20, 30, 40, 50];
 
         this.timeInput = this.TimeProvider.get() ? this.TimeProvider.get().key : this.time[0];
 

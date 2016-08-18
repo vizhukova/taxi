@@ -116,14 +116,12 @@ export class Address {
         // }, false)
     }
 
-    clearAddress(event) {
+    clearAddress(direction) {
 
-        this.address[this.direction] = '';
+        this.address[direction] = '';
 
-        // this.coords[this.direction] = {latitude: 0, longitude: 0};
-
-
-        this.search = false;
+        if(direction==='to') this.search = false;
+        else this.search = true
 
     }
 
@@ -279,7 +277,6 @@ export class Address {
         } else if(type === 'to' && !this.address.to) {
             this.NavProvider.changeTabSet('search');
             this.MapProvider.set('editable', true);
-            // this.MapProvider.set('searching', true);
             this.detail = true;
             this.disabled[type] = false;
             setTimeout(()=>{
@@ -291,7 +288,6 @@ export class Address {
         if(this.direction === type && this.NavProvider.getCurrentTabSet() === 'main'){
             this.NavProvider.changeTabSet('search');
             this.MapProvider.set('editable', true);
-            // this.MapProvider.set('searching', true);
             this.detail = true;
         }
 
@@ -299,7 +295,20 @@ export class Address {
 
         this.MapProvider.set('direction', type);
 
-        //this.place.changeDirection(type);
+    }
+
+    showMap() {
+        if(this.state.direction === 'to' && !this.address.to) {
+            this.coords[this.direction] = this.coords.from;
+            this.address[this.direction] = this.address.from;
+            this.place.changeAddress(this.address);
+            this.place.changeCoords(this.coords);
+            this.detail = false;
+        } else {
+            this.search = false;
+            this.detail = false;
+        }
+        this.NavProvider.changeTabSet('main');
     }
 
     showFavoritePopup() {
@@ -312,8 +321,6 @@ export class Address {
         this.AddressProvider.changeFavoriteAddress(addressTosend);
         this.nav.push(FavoritePopup);
     }
-
-
 
     onConfirm(direction:string){
 
