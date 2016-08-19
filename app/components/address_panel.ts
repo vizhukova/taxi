@@ -54,7 +54,7 @@ export class Address {
                 private NavProvider: Nav) {
 
         const self = this;
-        this.address = {from: '', to: ''};
+        this.address = {from: '', to: '', fromDetail: {}, toDetail: {}};
         this.confirmedAddresses = {from: '', to: ''};
         this.direction = 'from';
         this.addresses = [];
@@ -126,6 +126,8 @@ export class Address {
     }
 
     confirmAddress(index: any) {
+
+        this.detail = false;
 
         let address = this.addresses[index];
         let addressCoordinates = address['geoPoint'];
@@ -220,14 +222,14 @@ export class Address {
     formatAddressesSearch(address: string, addresses: AddressItem[]) {
         return addresses.map(item => {
 
-            if(item.street.toLowerCase().indexOf(address.toLowerCase()) < 0) {
-                item.street = [{text: item.street || item['shortAddress'], className: 'white'}];
+            if(item.shortAddress.toLowerCase().indexOf(address.toLowerCase()) < 0) {
+                item.format = [{text: item['shortAddress'], className: 'white'}];
                 return item
             }
 
             let formated = [];
 
-            let splited = item.street.toLowerCase().split(address.toLowerCase());
+            let splited = item.shortAddress.toLowerCase().split(address.toLowerCase());
 
             let index = splited.indexOf('');
 
@@ -243,7 +245,7 @@ export class Address {
                 formated.push({text: splited[1], className: 'white'});
             }
 
-            item.street = formated;
+            item.format = formated;
 
             return item;
         });
@@ -268,28 +270,33 @@ export class Address {
 
         if(this.state.searching) return;
 
-        if(this.direction === type && this.detail) {
-            this.disabled[type] = false;
-            setTimeout(()=>{
-                if(cordova) cordova.plugins.Keyboard.show();
-                input.focus();
-            }, 150)
-        } else if(type === 'to' && !this.address.to) {
-            this.NavProvider.changeTabSet('search');
-            this.MapProvider.set('editable', true);
-            this.detail = true;
-            this.disabled[type] = false;
-            setTimeout(()=>{
-                if(cordova) cordova.plugins.Keyboard.show();
-                input.focus();
-            }, 150)
-        }
+        // if(this.direction === type) {
+        //     this.disabled[type] = false;
+        //     setTimeout(()=>{
+        //         if(cordova) cordova.plugins.Keyboard.show();
+        //         input.focus();
+        //     }, 150)
+        // } else if(type === 'to' && !this.address.to) {
+        //     this.NavProvider.changeTabSet('search');
+        //     this.MapProvider.set('editable', true);
+        //     this.detail = true;
+        //     this.disabled[type] = false;
+        //     setTimeout(()=>{
+        //         if(cordova) cordova.plugins.Keyboard.show();
+        //         input.focus();
+        //     }, 150)
+        // }
 
-        if(this.direction === type && this.NavProvider.getCurrentTabSet() === 'main'){
-            this.NavProvider.changeTabSet('search');
-            this.MapProvider.set('editable', true);
-            this.detail = true;
-        }
+        // if(this.direction === type && this.NavProvider.getCurrentTabSet() === 'main'){
+        this.disabled[type] = false;
+        if(this.NavProvider.getCurrentTabSet() === 'main') this.NavProvider.changeTabSet('search');
+        this.MapProvider.set('editable', true);
+        this.detail = true;
+        setTimeout(()=>{
+            if(cordova) cordova.plugins.Keyboard.show();
+            input.focus();
+        }, 150)
+        // }
 
         this.direction = type;
 

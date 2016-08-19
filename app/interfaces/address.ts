@@ -15,4 +15,5 @@ export interface AddressItem {
     structure ?: any
     title ?: any
     description ?: any
+    format ?: any
 }

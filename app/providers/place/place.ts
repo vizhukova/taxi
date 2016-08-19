@@ -97,8 +97,8 @@ export class Place {
                 self.changeCoords(self.coords);
                 resolve(self.coords[self.direction]);
             };
-
-            cordova.plugins.locationAccuracy.request(
+            
+            cordova && cordova.plugins.locationAccuracy.request(
                 (success)=>{
                     Geolocation.getCurrentPosition({enableHighAccuracy: true, timeout: 20000}).then(onSuccess)
                 },
@@ -183,13 +183,20 @@ export class Place {
         self.changeCoords(self.coords);
 
         return new Promise((resolve, reject) => {
-            self.http.get(`http://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.latitude},${coords.longitude}&sensor=true&language=ru`)
-                .subscribe((res:Response) => {
-                    var data = res.json();
 
-                    if(data.results.length){
-                        self.address[self.direction] = `${data.results[0].address_components[1].long_name}, ${data.results[0].address_components[0].long_name}`;
-                        self.fullAddress[self.direction] = data.results[0];
+            // var google = `http://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.latitude},${coords.longitude}&sensor=true&language=ru`
+
+
+            self.http.get(`http://ddtaxity.smarttaxi.ru:8000/1.x/reversegeocode?taxiServiceId=taxity&lat=${coords.latitude}&lon=${coords.longitude}`)
+                .subscribe((res:Response) => {
+                    var data = res.json()[0];
+
+                    if(data){
+
+                        self.address[self.direction] = data.shortAddress;
+
+                        // self.address[self.direction] = `${data.results[0].address_components[1].long_name}, ${data.results[0].address_components[0].long_name}`;
+                        // self.fullAddress[self.direction] = data.results[0];
                         setTimeout(() => {
                             self.changeAddress(self.address);
                         }, 300)
