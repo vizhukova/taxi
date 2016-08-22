@@ -8,9 +8,9 @@
             #from
             [ngClass]="setInputClasses()"
             [disabled]="disabled.from"
-            (keyup)="getAll(address.from)"
+            (keyup)="getAll(from)"
             type="text"
-            [(ngModel)]="address.from"
+            [(ngModel)]="detail ? detailCopy.from.street: detailCopy.from.shortAddress"
             placeholder="Откуда ..."
         >
         <span
@@ -28,9 +28,9 @@
             #to
             [ngClass]="setInputClasses()"
             [disabled]="disabled.to"
-            (keyup)="getAll(address.to)"
+            (keyup)="getAll(to)"
             type="text"
-            [(ngModel)]="address.to"
+            [(ngModel)]="detail ? detailCopy.to.street: detailCopy.to.shortAddress"
             placeholder="Куда ?"
         >
         <span
@@ -55,13 +55,13 @@
     <div [ngClass]="setDetailClasses()" *ngIf="detail && !search">
         <div class="top">
             <div class="group house">
-                <input type="text" [(ngModel)]="house" required>
+                <input type="text" [(ngModel)]="detailAddress[direction].house" required>
                 <span class="highlight"></span>
                 <span class="bar"></span>
                 <label>номер дома</label>
             </div>
             <div class="group block">
-                <input type="text" [(ngModel)]="block" required>
+                <input type="text" [(ngModel)]="detailAddress[direction].housing" required>
                 <span class="highlight"></span>
                 <span class="bar"></span>
                 <label>подъезд</label>
@@ -69,7 +69,7 @@
         </div>
         <div class="bottom">
             <div class="group comment">
-                <input type="text" [(ngModel)]="comment" required>
+                <input type="text" [(ngModel)]="detailAddress[direction].description" required>
                 <span class="highlight"></span>
                 <span class="bar"></span>
                 <label>Примечание</label>

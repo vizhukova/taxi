@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild } from '@angular/core';
+import {Component, Input, ViewChild, ApplicationRef } from '@angular/core';
 import { Http, Response } from '@angular/http';
 //import {Observable} from "rxjs/Rx";
 import {Place} from "../providers/place/place";
@@ -27,7 +27,8 @@ export class Address {
     address: any;
     direction: string;
     addresses: any;
-    confirmedAddresses: any;
+    detailAddress: any;
+    detailCopy: any;
     search: any;
     coords: PathCoordinates;
     disabled: any;
@@ -51,11 +52,14 @@ export class Address {
                 private MapProvider: MapProvider,
                 private place: Place,
                 private http: Http,
-                private NavProvider: Nav) {
+                private NavProvider: Nav,
+                private ref: ApplicationRef
+    ) {
 
         const self = this;
-        this.address = {from: '', to: '', fromDetail: {}, toDetail: {}};
-        this.confirmedAddresses = {from: '', to: ''};
+        this.address = {from: '', to: ''};
+        this.detailAddress = {from: '', to: ''};
+        this.detailCopy = {from: '', to: ''};
         this.direction = 'from';
         this.addresses = [];
         this.search = false;
@@ -76,13 +80,25 @@ export class Address {
 
         place.address$.subscribe(newAddress => {
             self.address = newAddress;
-            self.MapProvider.set('searching', false)
+            self.MapProvider.set('searching', false);
             if(newAddress.to) {
                 GatherOrderProvider.setDestination(newAddress.to);
             }
             if(newAddress.from) {
                 GatherOrderProvider.setSource(newAddress.from);
             }
+        });
+
+        place.coords$.subscribe(newCoords => {
+            self.coords = newCoords;
+        });
+
+        place.detailAddress$.subscribe(newDetail => {
+            self.detailAddress = newDetail;
+            self.detailCopy = _.assign({}, newDetail);
+            setTimeout(()=>{
+                self.ref.tick();
+            }, 300)
         });
 
         MapProvider.state$.subscribe(newState => {
@@ -97,9 +113,7 @@ export class Address {
             self.state = _.assign({}, newState)
         });
 
-        place.coords$.subscribe(newCoords => {
-            self.coords = newCoords;
-        })
+
     }
 
     ngAfterViewInit() {
@@ -118,11 +132,15 @@ export class Address {
 
     clearAddress(direction) {
 
-        this.address[direction] = '';
 
         if(direction==='to') this.search = false;
-        else this.search = true
+        else {
+            this.addresses = this.formatAddressesSearch(this.address[direction], [this.detailAddress[direction]]);
+            this.search = true
+        }
 
+        this.detailCopy[direction] = {};
+        this.address[direction] = '';
     }
 
     confirmAddress(index: any) {
@@ -130,6 +148,7 @@ export class Address {
         this.detail = false;
 
         let address = this.addresses[index];
+
         let addressCoordinates = address['geoPoint'];
 
         let newCoords = {
@@ -137,15 +156,17 @@ export class Address {
             longitude: addressCoordinates.lon
         };
 
+
         this.address[this.direction] = address['shortAddress'];
         this.coords[this.direction] = newCoords;
-         this.place.changeAddress(this.address);
-         this.place.changeCoords(this.coords);
+        this.detailAddress[this.direction] = address;
+        this.detailCopy[this.direction] = this.detailAddress[this.direction];
+        this.place.changeAddress(this.address);
+        this.place.changeDetail(this.detailAddress[this.direction]);
+        this.place.changeCoords(this.coords);
         this.place.reloadMap('homeMap');
 
-        // this.editable[this.direction] = true;
         this.search = false;
-        // this.detail = true;
     }
 
 
@@ -186,7 +207,7 @@ export class Address {
         }
     }
 
-    getAddresses(search: string): Observable<any> {
+    getAddresses(search: any): Observable<any> {
         let lat = this.coords[this.direction].latitude;
         let lon = this.coords[this.direction].longitude;
         
@@ -203,16 +224,16 @@ export class Address {
     }
 
 
-    getAll(address: string) {
-        if(address.length < 3) return;
+    getAll(address: any) {
+        if(address.value.length < 3) return;
 
         const self = this;
 
 
-        this.getAddresses(address)
+        this.getAddresses(address.value)
            .subscribe(
                (addresses) => {
-                   self.addresses = self.formatAddressesSearch(address, addresses);
+                   self.addresses = self.formatAddressesSearch(address.value, addresses);
                    self.search = true;
                },
                error => console.log(error)
@@ -266,28 +287,8 @@ export class Address {
     onFocus(type: string, input ?: any): void {
         this.disabled.to = true;
         this.disabled.from = true;
-
-
         if(this.state.searching) return;
 
-        // if(this.direction === type) {
-        //     this.disabled[type] = false;
-        //     setTimeout(()=>{
-        //         if(cordova) cordova.plugins.Keyboard.show();
-        //         input.focus();
-        //     }, 150)
-        // } else if(type === 'to' && !this.address.to) {
-        //     this.NavProvider.changeTabSet('search');
-        //     this.MapProvider.set('editable', true);
-        //     this.detail = true;
-        //     this.disabled[type] = false;
-        //     setTimeout(()=>{
-        //         if(cordova) cordova.plugins.Keyboard.show();
-        //         input.focus();
-        //     }, 150)
-        // }
-
-        // if(this.direction === type && this.NavProvider.getCurrentTabSet() === 'main'){
         this.disabled[type] = false;
         if(this.NavProvider.getCurrentTabSet() === 'main') this.NavProvider.changeTabSet('search');
         this.MapProvider.set('editable', true);
@@ -295,8 +296,7 @@ export class Address {
         setTimeout(()=>{
             if(cordova) cordova.plugins.Keyboard.show();
             input.focus();
-        }, 150)
-        // }
+        }, 150);
 
         this.direction = type;
 
@@ -319,11 +319,11 @@ export class Address {
     }
 
     showFavoritePopup() {
-        let addressTosend = this.addresses[0];
+        let addressTosend = this.detailAddress[this.direction];
 
-        addressTosend.house = this.house;
-        addressTosend.housing = this.block;
-        addressTosend.description = this.comment;
+        addressTosend.house = this.detailAddress[this.direction].house;
+        addressTosend.housing = this.detailAddress[this.direction].housing;
+        addressTosend.description = this.detailAddress[this.direction].description;
 
         this.AddressProvider.changeFavoriteAddress(addressTosend);
         this.nav.push(FavoritePopup);

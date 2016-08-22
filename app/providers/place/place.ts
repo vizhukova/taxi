@@ -4,6 +4,7 @@ import {Subject, BehaviorSubject, Observable} from 'rxjs';
 import {Http, Response} from '@angular/http';
 import {Coordinates, PathCoordinates} from "../../interfaces/coordinates";
 import { MapProvider } from "../map/map";
+import  * as _ from 'lodash'
 declare var cordova:any;
 
 @Injectable()
@@ -18,6 +19,7 @@ export class Place {
 
     // Observable data sources
     private addressSource = new BehaviorSubject<any>({from: '', to: ''});
+    private detailAddressSource = new BehaviorSubject<any>({from: '', to: ''});
     private coordsSource = new BehaviorSubject<any>({from: [], to: []});
     private reloadSource = new BehaviorSubject<any>(true);
     private mapCreateSource = new BehaviorSubject<any>(null);
@@ -26,6 +28,7 @@ export class Place {
 
     // Observable data streams
     address$ = this.addressSource.asObservable();
+    detailAddress$ = this.detailAddressSource.asObservable();
     coords$ = this.coordsSource.asObservable();
     reload$ = this.reloadSource.asObservable();
     mapCreate$ = this.mapCreateSource.asObservable();
@@ -37,6 +40,16 @@ export class Place {
 
     public changeAddress(address:Object) {
         this.addressSource.next(address);
+    }
+
+
+    public changeDetail(address:Object) {
+
+        let value = this.detailAddressSource.getValue();
+
+        value[this.direction] = address;
+
+        this.detailAddressSource.next(value);
     }
 
     public getDirection(){
@@ -194,11 +207,10 @@ export class Place {
                     if(data){
 
                         self.address[self.direction] = data.shortAddress;
-
-                        // self.address[self.direction] = `${data.results[0].address_components[1].long_name}, ${data.results[0].address_components[0].long_name}`;
-                        // self.fullAddress[self.direction] = data.results[0];
+                        
                         setTimeout(() => {
                             self.changeAddress(self.address);
+                            self.changeDetail(data);
                         }, 300)
 
                     }
