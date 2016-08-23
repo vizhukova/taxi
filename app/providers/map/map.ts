@@ -14,7 +14,8 @@ export class MapProvider {
         searching: false,
         clicked: false,
         direction: 'from',
-        error: false
+        error: false,
+        onmapsearch: false
     });
 
     state$ = this.stateSource.asObservable();

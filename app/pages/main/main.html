@@ -37,9 +37,9 @@
   <!--<money-page [hidden]="activeTab !== 'money'"></money-page>-->
 
 
-  <div *ngIf="state.authorized" class="search">{{status[state.direction]}}</div>
+  <div *ngIf="state.authorized && !state.onmapsearch" class="search">{{status[state.direction]}}</div>
 
-  <div *ngIf="state.authorized" [ngClass]="setCallClasses()" (click)="makeOrder()">
+  <div *ngIf="state.authorized  && !state.onmapsearch" [ngClass]="setCallClasses()" (click)="makeOrder()">
     <div class="price">
       <p class="text">{{cost}}</p>
     </div>

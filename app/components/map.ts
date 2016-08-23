@@ -17,8 +17,11 @@ declare var cordova: any;
         <span *ngIf="state.direction" [ngClass]="markerClasses()"></span>
         <div id="{{selector}}"></div>
         <div class="btn locate" (click)="locateMe()"></div>
-        <div (click)="boundsPolyline()" *ngIf="coords.to.latitude" class="btn center"></div>
+        <div (click)="boundsPolyline()" *ngIf="coords.to.latitude && !state.onmapsearch" class="btn center"></div>
         <div *ngIf="state.error" class="error-wrap">Ошибка цены <span (click)="hideError()" class="hide">OK</span></div>
+        <div *ngIf="state.onmapsearch && !state.searching" [ngClass]="setCallClasses()" (click)="onMapsearchOff()">
+            <p class="title">Далее</p>
+        </div>
     </div>`
 })
 
@@ -95,6 +98,11 @@ export class Map {
                 this.addMarker(this.state.direction);
             }
 
+            if(this.state.onmapsearch && !newState.onmapsearch) {
+                this.state = _.assign({}, newState);
+                this.calcPolyline(this.coords)
+            }
+
             this.state = _.assign({}, newState);
 
             setTimeout(() => {
@@ -144,6 +152,8 @@ export class Map {
     hideError() {
         this.MapProvider.set('error', false);
     }
+    
+    
     
     addMarker(direction: string) {
 
@@ -202,6 +212,19 @@ export class Map {
             searching: this.state.searching,
             hide: this.state.direction === 'to' && !this.coords.to.latitude
         }
+    }
+
+
+    setCallClasses() {
+        return {
+            call: true,
+            active: !this.state.searching && this.state.cost && !this.state.onmapsearch,
+            next: this.state.onmapsearch
+        }
+    }
+
+    onMapsearchOff() {
+        this.MapProvider.set('onmapsearch', false);
     }
 
     private static coordinatesToArray(coordinates:Coordinates) {
@@ -323,18 +346,13 @@ export class Map {
 
     private calcPolyline(coords:any):void {
 
-        if (!coords.from || !coords.to) return;
+        if (!coords.from || !coords.to || this.state.onmapsearch) return;
 
         let from = {Lat: coords.from.latitude, Lon: coords.from.longitude};
 
         let to = {Lat: coords.to.latitude, Lon: coords.to.longitude};
 
         if (!from.Lat || !from.Lon || !to.Lat || !to.Lon) return;
-
-        // this.pathButton.classList.add('loading');
-
-        console.log(from, to);
-
 
         this.http.post('http://ddtaxity.smarttaxi.ru:8000/1.x/route?taxiserviceid=taxity', [from, to])
 

@@ -133,7 +133,7 @@ export class MainPage {
   }
 
   changeTab(newTab:string) {
-    if(this.state.searching) return;
+    if(this.state.searching || this.state.onmapsearch) return;
     this.activeTab = newTab;
   }
 
@@ -142,14 +142,15 @@ export class MainPage {
     return {
       tab: true,
       active: this.activeTab === active,
-      disabled: this.state.searching
+      disabled: (this.state.searching || this.state.onmapsearch)
     }
   }
 
   setCallClasses() {
     return {
       call: true,
-      active: !this.state.searching && this.state.cost
+      active: !this.state.searching && this.state.cost && !this.state.onmapsearch,
+      next: this.state.onmapsearch
     }
   }  
 

@@ -130,7 +130,8 @@ export class Address {
         // }, false)
     }
 
-    clearAddress(direction) {
+
+    clearAddress(direction, input?:any) {
 
 
         if(direction==='to') this.search = false;
@@ -139,7 +140,9 @@ export class Address {
             this.search = true
         }
 
-        this.detailCopy[direction] = {};
+
+        input.value = '';
+        this.detailCopy[direction] = '';
         this.address[direction] = '';
     }
 
@@ -285,19 +288,25 @@ export class Address {
     }
 
     onFocus(type: string, input ?: any): void {
+        if(this.state.searching) return;
+        if(this.direction === type && this.detail) return;
+        if(this.state.onmapsearch && this.direction !== type) return;
+
         this.disabled.to = true;
         this.disabled.from = true;
-        if(this.state.searching) return;
 
-        this.disabled[type] = false;
-        if(this.NavProvider.getCurrentTabSet() === 'main') this.NavProvider.changeTabSet('search');
-        this.MapProvider.set('editable', true);
-        this.detail = true;
-        setTimeout(()=>{
-            if(cordova) cordova.plugins.Keyboard.show();
-            input.focus();
-        }, 150);
+        if((!this.detail && this.direction === type) || (type === 'to' && !this.coords.to.latitude)) {
+            this.disabled[type] = false;
+            if(this.NavProvider.getCurrentTabSet() === 'main') this.NavProvider.changeTabSet('search');
+            this.MapProvider.set('editable', true);
+            this.detail = true;
+            setTimeout(()=>{
+                if(cordova) cordova.plugins.Keyboard.show();
+                input.focus();
+            }, 150);
 
+        }
+     
         this.direction = type;
 
         this.MapProvider.set('direction', type);
@@ -315,6 +324,8 @@ export class Address {
             this.search = false;
             this.detail = false;
         }
+        this.MapProvider.set('searching', true);
+        this.MapProvider.set('onmapsearch', true);
         this.NavProvider.changeTabSet('main');
     }
 
@@ -336,6 +347,8 @@ export class Address {
         if(direction === 'to' && !this.address.to) {
             this.coords[this.direction] = {latitude: 0, longitude: 0};
             this.place.changeAddress(this.address);
+            this.place.changeDetail("");
+            this.detailCopy[this.direction] = "";
             this.MapProvider.set('direction', 'from');
             this.place.changeCoords(this.coords);
             this.detail = false;

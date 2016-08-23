@@ -6,7 +6,8 @@ export interface MapState {
     clicked ?: boolean,
     editable ?: boolean,
     cost ?: boolean,
-    error ?: boolean
+    error ?: boolean,
+    onmapsearch ?: boolean
 }
 
 // initial - is it initial load of map

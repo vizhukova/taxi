@@ -15,8 +15,8 @@
         >
         <span
                 class="clear"
-                *ngIf="direction === 'from' && !disabled.from"
-                (click)="clearAddress('from')"
+                *ngIf="direction === 'from' && !disabled.from && !state.onmapsearch"
+                (click)="clearAddress('from', from)"
         ></span>
     </div>
     <div class="main"
@@ -35,8 +35,8 @@
         >
         <span
             class="clear"
-            *ngIf="direction === 'to' && !disabled.to"
-            (click)="clearAddress('to')"
+            *ngIf="direction === 'to' && !disabled.to && !state.onmapsearch"
+            (click)="clearAddress('to', to)"
         ></span>
     </div>
 
@@ -55,13 +55,13 @@
     <div [ngClass]="setDetailClasses()" *ngIf="detail && !search">
         <div class="top">
             <div class="group house">
-                <input type="text" [(ngModel)]="detailAddress[direction].house" required>
+                <input type="text" [(ngModel)]="detailCopy[direction].house" required>
                 <span class="highlight"></span>
                 <span class="bar"></span>
                 <label>номер дома</label>
             </div>
             <div class="group block">
-                <input type="text" [(ngModel)]="detailAddress[direction].housing" required>
+                <input type="text" [(ngModel)]="detailCopy[direction].housing" required>
                 <span class="highlight"></span>
                 <span class="bar"></span>
                 <label>подъезд</label>
@@ -69,7 +69,7 @@
         </div>
         <div class="bottom">
             <div class="group comment">
-                <input type="text" [(ngModel)]="detailAddress[direction].description" required>
+                <input type="text" [(ngModel)]="detailCopy[direction].description" required>
                 <span class="highlight"></span>
                 <span class="bar"></span>
                 <label>Примечание</label>
