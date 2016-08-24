@@ -291,7 +291,7 @@ export class Address {
         if(this.state.searching) return;
         if(this.direction === type && this.detail) return;
         if(this.state.onmapsearch && this.direction !== type) return;
-
+        if(this.direction === 'to' && 'to' !== type && this.detail) return
         this.disabled.to = true;
         this.disabled.from = true;
 

@@ -212,7 +212,6 @@
       }
 
       &.block {
-        margin-left: 9%;
         width: 37%
       }
 
@@ -446,7 +445,6 @@ input[type=checkbox]:checked + label:before {
 
 .modal {
   position: absolute;
-  font-family: "Myriad Pro";
   $header-height: 56px;
 
   .cross {

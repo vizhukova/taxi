@@ -10,13 +10,13 @@
             [disabled]="disabled.from"
             (keyup)="getAll(from)"
             type="text"
-            [(ngModel)]="detail ? detailCopy.from.street: detailCopy.from.shortAddress"
+            [(ngModel)]="detailCopy.from.shortAddress"
             placeholder="Откуда ..."
         >
         <span
-                class="clear"
-                *ngIf="direction === 'from' && !disabled.from && !state.onmapsearch"
-                (click)="clearAddress('from', from)"
+            class="clear"
+            *ngIf="direction === 'from' && !disabled.from && !state.onmapsearch"
+            (click)="clearAddress('from', from)"
         ></span>
     </div>
     <div class="main"
@@ -30,7 +30,7 @@
             [disabled]="disabled.to"
             (keyup)="getAll(to)"
             type="text"
-            [(ngModel)]="detail ? detailCopy.to.street: detailCopy.to.shortAddress"
+            [(ngModel)]="detailCopy.to.shortAddress"
             placeholder="Куда ?"
         >
         <span
@@ -54,12 +54,12 @@
 
     <div [ngClass]="setDetailClasses()" *ngIf="detail && !search">
         <div class="top">
-            <div class="group house">
-                <input type="text" [(ngModel)]="detailCopy[direction].house" required>
-                <span class="highlight"></span>
-                <span class="bar"></span>
-                <label>номер дома</label>
-            </div>
+            <!--<div class="group house">-->
+                <!--<input type="text" [(ngModel)]="detailCopy[direction].house" required>-->
+                <!--<span class="highlight"></span>-->
+                <!--<span class="bar"></span>-->
+                <!--<label>номер дома</label>-->
+            <!--</div>-->
             <div class="group block">
                 <input type="text" [(ngModel)]="detailCopy[direction].housing" required>
                 <span class="highlight"></span>
