@@ -65,12 +65,16 @@
           display: inline-block;
           padding: 0;
           color: #636368;
-          line-height: 10px;
+          line-height: 17px;
+          font-size: 15px;
+          width: 59%;
         }
 
         .date {
           float: right;
           color: #dededf;
+          font-size: 14px;
+          width: 70px;
         }
 
         .stars {
@@ -81,6 +85,13 @@
           color: $main-dark-color;
         }
       }
+    }
+
+    .set-comment {
+      background: #a0bfa1;
+      text-align: center;
+      color: #fff;
+      position: fixed;
     }
 
     //hr {

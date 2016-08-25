@@ -60,6 +60,12 @@
         }
       }
 
+      &.nick {
+        &:before {
+          background-image: url("./../res/icon_nickname.png");
+        }
+      }
+
        &:before {
           border: none;
           position: absolute;
@@ -78,6 +84,7 @@
         border-bottom: solid 2px #E4E7EC;
         padding: 8px 0 0 0;
         line-height: 20px;
+        display: block;
       }
     }
   }
