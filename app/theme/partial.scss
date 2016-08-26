@@ -192,7 +192,6 @@
     }
 
     div.top {
-      display: inline-block;
       background: url("./../res/icon_home.svg") no-repeat;
       background-size: 6%;
       background-position: left 2px;
@@ -200,7 +199,6 @@
     }
 
     div.bottom {
-      display: inline-block;
       background: url("./../res/icon_comment.svg") no-repeat;
       background-size: 6%;
       background-position: left 5px;
@@ -214,7 +212,7 @@
       display: inline-block;
 
       &.house {
-        width: 44%
+        width: 50%
       }
 
       &.block {
@@ -222,14 +220,15 @@
       }
 
       &.comment {
-        width: 52%;
+        width: 100%;
       }
 
       &.nav {
-        width: 90%;
+        width: 100%;
         margin-bottom: 0px;
       }
     }
+
 
     input               {
       font-size:18px;
@@ -293,14 +292,21 @@
       display: inline-block;
       line-height: 30px;
       text-align: center;
+      //margin-right: 10px;
 
       &.onmap {
-        padding: 0px 9% 0 0;
         color: $main-bright-color;
+        width: 50%;
       }
+
+      &.favorite {
+        width: 34%;
+      }
+
       &.confirm {
-        float: right;
-        text-align: right;
+        //float: right;
+        //text-align: right;
+        width: 10%;
       }
     }
 
