@@ -1,19 +1,18 @@
 <ion-content class="modal like-modal" (click)="closeModal()">
 
     <div class="content" (click)="canselCloseModal($event)">
-         <h4>Оценка поездки</h4>
+         <h4>{{ !mark ? 'Спасибо за поездку' : "Оценка поездки" }}</h4>
         <input type="text" placeholder="Текст отзыва">
 
         <span class="star-label">Ваша оценка за поездку</span>
-         <p class="stars">
-            <i class="star-fill"></i>
-            <i class="star-fill"></i>
-            <i class="star-fill"></i>
-            <i class="star-fill"></i>
-            <i class="star-empty"></i>
-         </p>
-
-        <button>Отправить</button>
+        <p class="stars" (click)="setMark($event)">
+            <i data-num="1" [ngClass]="getStarClass(1)"></i>
+            <i data-num="2" [ngClass]="getStarClass(2)"></i>
+            <i data-num="3" [ngClass]="getStarClass(3)"></i>
+            <i data-num="4" [ngClass]="getStarClass(4)"></i>
+            <i data-num="5" [ngClass]="getStarClass(5)"></i>
+        </p>
+        <button (click)="closeModal()" [ngClass]="{'close': !mark}">{{ !mark ? 'Закрыть' : 'Отправить'}}</button>
     </div>
 
 </ion-content>

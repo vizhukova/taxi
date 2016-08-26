@@ -1,5 +1,64 @@
-<ion-content class="money-page">
+<ion-content class="money-page" (click)="closeSelect()">
 
-money
+    <div class="top-panel">
+        <div class="coin"></div>
+        <div class="content">
+            <span class="label">К оплате:</span>
+            <span class="price">
+                <span>{{cost || '-- --'}}</span>
+                <span>руб</span>
+            </span>
+        </div>
+    </div>
+
+    <div class="block">
+        <p class="header line-header">Способ оплаты</p>
+        <div class="list radio">
+            <p *ngFor="let item of payments; let num = index" class="label">
+                <input type="radio"
+                       name="payment"
+                       [checked]="paymentInput===item"
+                       />
+
+                <label (click)="changePayment(item)">
+                    <span>
+                        {{item.name}}
+                        <span class="comment">{{item.comment}}</span>
+                    </span>
+                    <span>{{item.price}}</span>
+                </label>
+            </p>
+
+             <p class="label bank">
+                <input type="radio"
+                       name="payment"
+                       [checked]="paymentInput===bank"
+                       />
+
+                <label (click)="setIsOpenSelect($event, true)">
+                    <span>
+                        {{bank.name}}
+                        <span class="comment">{{bank.comment}}</span>
+                    </span>
+                    <span></span>
+                </label>
+
+                 <span class="select-content" *ngIf="isOpenSelect">
+                    <span *ngFor="let item of cards" (click)="setCard(item)">
+                        <span>{{item.name}}</span>
+                        <span class="comment">{{item.comment}}</span>
+                    </span>
+                 </span>
+            </p>
+
+              <p class="label">
+                <label class="add">
+                    Добавить систему оплаты
+                </label>
+            </p>
+        </div>
+    </div>
+
+     <div class="call active pay-ride" (click)="openModal()">Оплатить поездку</div>
 
 </ion-content>

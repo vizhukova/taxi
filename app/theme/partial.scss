@@ -480,25 +480,6 @@ i.more-btn {
 }
 
 
-
-i.star-fill, i.star-empty {
-  height: 15px;
-  width: 15px;
-  background-repeat: no-repeat;
-  background-position: center center;
-  display: inline-block;
-}
-
-i.star-fill {
-  background-size: 100%;
- background-image: url('./../res/star_fill.svg');
-}
-
-i.star-empty {
-  background-size: 125%;
-  background-image: url('./../res/star_empty.svg');
-}
-
  span.options {
     background: #fff;
     color: #2C2C30;
@@ -526,6 +507,26 @@ i.star-empty {
     }
 }
 
+}
+
+ p.stars {
+  i.star-fill, i.star-empty {
+    height: 15px;
+    width: 15px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    display: inline-block;
+  }
+
+  i.star-fill {
+    background-size: 100%;
+   background-image: url('./../res/star_fill.svg');
+  }
+
+  i.star-empty {
+    background-size: 125%;
+    background-image: url('./../res/star_empty.svg');
+  }
 }
 
 

@@ -3,7 +3,7 @@
 
   .content {
     width: 90%;
-    height: 400px;
+    height: 375px;
     background: #fff;
     position: absolute;
     top: 0;
@@ -12,6 +12,9 @@
     left: 0;
     margin: auto;
     padding: 10px 30px;
+    -webkit-box-shadow: 3px 3px 19px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 3px 3px 19px 0px rgba(0,0,0,0.75);
+    box-shadow: 3px 3px 19px 0px rgba(0,0,0,0.75);
 
     h4 {
       color: $main-bright-color;
@@ -28,6 +31,10 @@
       margin: 0;
       border-radius: 0;
       background: $main-bright-color;
+
+      &.close {
+        background: #afaeae;
+      }
     }
 
     input {
@@ -50,9 +57,9 @@
     .stars{
       text-align: center;
       &>* {
-        height: 50px;
-        width: 50px;
-        margin: 0 10px 0 0;
+        height: 37px;
+        width: 37px;
+        margin: 0 5px 0 0;
       }
 
       &:last-child {

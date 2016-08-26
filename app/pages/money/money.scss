@@ -1,3 +1,146 @@
 .money-page {
+  background: #e4e7ec;
+  .top-panel {
+    background: #2e2e35;
+    padding: 15px;
+    position: relative;
 
+    .coin {
+      background: url('../res/icon_money.svg') no-repeat;
+      background-size: contain;
+      width: 45px;
+      height: 30px;
+      display: inline-block;
+    }
+
+    .content {
+      display: inline-block;
+
+      span.label {
+        font-size: 12px;
+        vertical-align: top;
+        display: block;
+        line-height: 25px;
+        color: #c1c1c5;
+      }
+
+      .price {
+        display: block;
+        font-size: 38px;
+
+        &:after {
+          content: '';
+          background: url(../res/arrow_down.png) no-repeat;
+          background-size: contain;
+          position: absolute;
+          width: 12px;
+          height: 9px;
+          right: 20px;
+          top: 22px;
+          bottom: 0;
+          margin: auto;
+        }
+
+        &>:nth-child(1) {
+          color: $main-bright-color;
+          font-weight: 800;
+        }
+        &>:nth-child(2) {
+          color: #fff;
+        }
+      }
+    }
+
+  }
+
+  .block {
+    .line-header {
+      background-image: url("./../res/head_line.png");
+      background-repeat: no-repeat;
+      background-position-y: -1px;
+    }
+
+    .list {
+      padding: 0 12px 0 36px;
+
+      .label {
+
+        &.bank {
+          &>label {
+            position: relative;
+            &:after {
+              content: "";
+              background: url(../res/arrow_drop_down.png);
+              position: absolute;
+              width: 11px;
+              height: 6px;
+              right: 0;
+              top: 0;
+              bottom: 0;
+              margin: auto;
+            }
+          }
+        }
+
+        &>label {
+          &>span {
+            display: inline-block;
+            &:last-child {
+              float: right;
+              color: $main-bright-color;
+            }
+          }
+        }
+
+        .comment {
+          font-size: 11px;
+          text-align: left;
+          display: block;
+          line-height: 0px;
+          color: inherit;
+          text-transform: initial;
+          float: initial;
+          width: 100%;
+        }
+
+        .select-content {
+          background: #fff;
+          display: block;
+          width: 70%;
+          float: right;
+          font-size: 13px;
+          color: #313133;
+          padding: 10px;
+          position: absolute;
+          z-index: 3;
+          right: 10px;
+          margin-bottom: 10px;
+
+          span {
+            display: block;
+          }
+
+          &>span {
+            line-height: 28px;
+            height: 45px;
+          }
+
+          .comment {
+            line-height: 11px;
+            font-weight: 100;
+            font-size: 11px;
+          }
+        }
+      }
+    }
+  }
+
+  div.pay-ride {
+    text-align: center;
+    color: #fff;
+    position: fixed;
+    background-image: url('./../res/icon_confirm.svg');
+    background-position: 27px 34%;
+    background-size: 24px;
+  }
 }
