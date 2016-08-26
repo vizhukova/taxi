@@ -123,9 +123,9 @@
         opacity: 1;
       }
 
-      &.opacity {
-        opacity: .2;
-      }
+     &.opacity {
+       opacity: .2;
+     }
 
       &::-webkit-input-placeholder {color:#fff;}
       &::-moz-placeholder          {color:#fff;}/* Firefox 19+ */
@@ -192,6 +192,7 @@
     }
 
     div.top {
+      display: inline-block;
       background: url("./../res/icon_home.svg") no-repeat;
       background-size: 6%;
       background-position: left 2px;
@@ -199,13 +200,14 @@
     }
 
     div.bottom {
+      display: inline-block;
       background: url("./../res/icon_comment.svg") no-repeat;
       background-size: 6%;
       background-position: left 5px;
       padding-left: 8.4%;
     }
 
-    .group            {
+    .group {
       position:relative;
       margin-bottom: 15px;
       border: none;
@@ -216,11 +218,11 @@
       }
 
       &.block {
-        width: 37%
+        width: 29%
       }
 
       &.comment {
-        width: 90%;
+        width: 52%;
       }
 
       &.nav {
