@@ -179,7 +179,9 @@ div.error-wrap {
     position: fixed;
     display: inline-block;
     z-index: 100;
-    bottom: 30%;
+    top: 97px;
+    bottom: 0;
+    //bottom: 30%;
     left: 0;
     right: 0;
     margin: auto;

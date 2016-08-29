@@ -263,7 +263,17 @@ export class Map {
         let mapCoords = this.coords[this.state.direction].length ? this.coords[this.state.direction] : [59.928848, 30.311303];
 
 
-        let options = {center: mapCoords, zoom: 15, layers: [osmLayer], zoomControl: false, tap: false, inertia: true, inertiaThreshold:32};
+        let options = {
+            center: mapCoords,
+            zoom: 15,
+            layers: [osmLayer],
+            zoomControl: false,
+            dragging: true,
+            worldCopyJump: true,
+            tap: true,
+            inertia: true,
+            inertiaThreshold:32
+        };
         
         
         
@@ -289,10 +299,14 @@ export class Map {
         //})
 
 
-
-         this.map.on('click', ()=>{
-             this.MapProvider.set('clicked', !this.state.clicked)
-         });
+         //
+         //this.map.on('click', ()=>{
+         //    this.MapProvider.set('clicked', !this.state.clicked)
+         //});
+         //
+         //this.map.on('mouseup', ()=>{
+         //    this.timeout()
+         //});
 
         if (!this.editable) this.map.on('dragstart', () =>{
             if(this.state.direction) {
@@ -302,6 +316,10 @@ export class Map {
         });
 
         if (!this.editable) this.map.on('dragend', this.timeout);
+
+        this.map.on('drag', ()=>{
+            this.map.invalidateSize(true)
+        })
 
         if (!this.editable) this.map.on('zoomstart', () =>{
             if(this.state.direction) {
@@ -397,7 +415,6 @@ export class Map {
             this.onDragEnd();
             this.map.invalidateSize(true);
         }).catch((err) => {
-            //debugger
         })
     }
 
