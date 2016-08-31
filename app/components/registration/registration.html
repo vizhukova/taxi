@@ -6,12 +6,15 @@
         </p>
         <div class="content">
 
-            <label class="name">
-                Введите ваше имя
-                <input type="text"  [(ngModel)]="name">
-            </label>
-            <label class="code">
-                Код страны
+            <div class="wrap">
+                <div class="group name">
+                    <input type="text" [(ngModel)]="name" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Введите ваше имя</label>
+                </div>
+                <label class="code">
+                    Код страны
 
                <span class="select-wrapper">
                    <div class="input" (click)="showSelect(true)">{{code || "+ 7"}}</div>
@@ -25,18 +28,22 @@
                       <!--<option [value]="+ 38">+ 38</option>-->
                     <!--</select>-->
                </span>
-            </label>
-            <label class="number">
-                Номер телефона
-                <input type="text" [(ngModel)]="number">
-                <i class="cross" (click)="clearNumber()"></i>
-            </label>
+                </label>
+                <div class="group number">
+                    <input type="number" [(ngModel)]="number" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Номер телефона</label>
+                    <i class="cross" (click)="clearNumber()"></i>
+                </div>
+            </div>
 
-            <button class="sent" (click)="sentCode()" [ngClass]="{code: isCode}">{{isCode ? "Повторно выслать код" : "Выслать код"}}</button>
+            <button class="sent" *ngIf="!timer" (click)="sentCode()" [ngClass]="{code: isCode}">{{isCode ? "Повторно выслать код" : "Выслать код"}}</button>
+            <button class="sent opacity" *ngIf="timer">Повторить через 00:{{timeout}}</button>
 
             <label class="sms">
                 <span *ngIf="isCode">Код из SMS</span>
-                <input type="text" placeholder="Код из SMS" [(ngModel)]="key">
+                <input type="number" placeholder="Код из SMS" [(ngModel)]="key">
             </label>
         </div>
 

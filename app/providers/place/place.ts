@@ -16,6 +16,7 @@ export class Place {
     direction:string;
     cbs:Function[];
     fullAddress: Object;
+    dragStart:boolean;
 
     // Observable data sources
     private addressSource = new BehaviorSubject<any>({from: '', to: ''});
@@ -88,6 +89,7 @@ export class Place {
 
         this.MapProvider.state$.subscribe(newState => {
             this.direction = newState.direction;
+            this.dragStart = newState.dragStart;
         });
 
         this.cbs = []
@@ -101,14 +103,14 @@ export class Place {
 
             var onSuccess = (position:any) => {
                 let c = position.coords;
-
-                self.coords[self.direction] = {
-                    latitude: c.latitude,
-                    longitude: c.longitude
-                };
-
-                self.changeCoords(self.coords);
-                resolve(self.coords[self.direction]);
+                //
+                //self.coords[self.direction] = {
+                //    latitude: c.latitude,
+                //    longitude: c.longitude
+                //};
+                //
+                //self.changeCoords(self.coords);
+                resolve(position.coords);
             };
             
             cordova && cordova.plugins.locationAccuracy.request(
@@ -193,7 +195,6 @@ export class Place {
             return;
         }
         self.coords[self.direction] = coords;
-        self.changeCoords(self.coords);
 
         return new Promise((resolve, reject) => {
 
@@ -204,13 +205,16 @@ export class Place {
                 .subscribe((res:Response) => {
                     var data = res.json()[0];
 
-                    if(data){
+                    if(data && !this.dragStart){
 
                         self.address[self.direction] = data.shortAddress;
                         
                         setTimeout(() => {
                             self.changeAddress(self.address);
                             self.changeDetail(data);
+                            self.changeCoords(self.coords);
+                            self.MapProvider.set('searching', false);
+
                         }, 300)
 
                     }

@@ -23,9 +23,13 @@
     box-shadow: 0px 6px 16px -2px rgba(0, 0, 0, 0.75);
 
     .content {
-      margin: 0 52px;
       position: relative;
       height: 84%;
+
+
+      div.wrap {
+        margin: 0 52px;
+      }
     }
 
     .modal-header {
@@ -36,6 +40,79 @@
       text-align: center;
       margin: 18px 0 38px 0;
     }
+
+    .group {
+      position: relative;
+
+      &.name {
+        margin-bottom: 30px;
+      }
+
+      &.number {
+        width: 60%;
+        float: right;
+        margin-top: 15px;
+      }
+
+      /* LABEL ======================================= */
+      label                {
+        color: #565659;
+        font-size: 12px;
+        font-weight: 400;
+        position:absolute;
+        pointer-events:none;
+        top:15px;
+        left: 0;
+        transition:0.2s ease all;
+        -moz-transition:0.2s ease all;
+        -webkit-transition:0.2s ease all;
+        padding-left: 0;
+
+        &:before {
+          display: none;
+        }
+      }
+      input {
+        -webkit-appearance: none;
+        -webkit-border-radius:0;
+        border-radius:0;
+      }
+
+      /* active state */
+      input:focus ~ label, input:valid ~ label        {
+        top:-15px;
+        font-size:12px;
+        color:#565659;
+      }
+
+      .bar:before {
+        left:50%;
+      }
+      .bar:after {
+        right:50%;
+      }
+
+      /* active state */
+      input:focus ~ .bar:before, input:focus ~ .bar:after {
+        width:50%;
+      }
+
+      input:focus ~ i.cross {
+        display: inline-block;
+      }
+
+      .cross {
+        background-image: url("./../res/cross.svg");
+        position: absolute;
+        right: 0;
+        bottom: 10px;
+        width: 18px;
+        height: 18px;
+        background-size: 18px;
+        display: none;
+      }
+    }
+
 
     label {
       color: $main-dark-color;
@@ -75,8 +152,8 @@
         bottom: 90px;
         text-align: center;
         margin: auto;
-        left: 0;
-        right: 0;
+        left: 52px;
+        right: 52px;
 
         input {
           border-color: #d8dadc;
@@ -173,9 +250,15 @@
       font-size: 16px;
       font-weight: 600;
       text-transform: uppercase;
-      width: 100%;
+      width: 84%;
+      margin: auto;
+      display: block;
       height: 40px;
       background: #a0bfa1;
+
+      &.opacity {
+        opacity: 0.5;
+      }
       &.activated {
         background: #849C85;
       }

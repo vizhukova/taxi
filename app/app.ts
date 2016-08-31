@@ -1,5 +1,5 @@
 import {Component, PLATFORM_DIRECTIVES, PLATFORM_COMMON_PROVIDERS, provide, ViewChild} from '@angular/core';
-import {provideRouter, RouterConfig} from '@angular/router';
+//import {provideRouter, RouterConfig} from '@angular/router';
 import {Platform, ionicBootstrap, NavController, NavParams} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {HomePage} from './pages/home/home';

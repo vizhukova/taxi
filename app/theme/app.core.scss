@@ -128,6 +128,10 @@ div.error-wrap {
       background: url('../res/btn_locate.png') no-repeat;
       background-size: 100% 100%;
       bottom: 150px;
+
+      &.opacity {
+        opacity: 0.2;
+      }
     }
 
     &.center {
@@ -135,6 +139,9 @@ div.error-wrap {
       background-size: 100% 100%;
       bottom: 85px;
 
+      &.opacity {
+        opacity: 0.2;
+      }
     }
   }
 
@@ -179,7 +186,7 @@ div.error-wrap {
     position: fixed;
     display: inline-block;
     z-index: 100;
-    top: 97px;
+    top: 152px;
     bottom: 0;
     //bottom: 30%;
     left: 0;

@@ -28,7 +28,7 @@ import {GatherOrder} from "../../providers/order/gather_order";
 import {OrderHistory} from "../../providers/order/history";
 import {MapProvider} from "../../providers/map/map";
 import {MapState} from "../../interfaces/map";
-
+import * as _ from 'lodash'
 
 
 declare var cordova:any;
@@ -115,7 +115,7 @@ export class MainPage {
 
 
     MapProvider.state$.subscribe(newState => {
-      this.state = newState;
+      this.state = _.assign({}, newState);
     });
 
     NavProvider.tabSet$.subscribe(tabSet => {
@@ -133,8 +133,9 @@ export class MainPage {
   }
 
   changeTab(newTab:string) {
-    if(this.state.searching || this.state.onmapsearch) return;
+    if(this.state.searching || this.state.onmapsearch) {return};
     this.activeTab = newTab;
+    this.ref.tick()
   }
 
 

@@ -78,7 +78,6 @@ export class GatherOrder {
 
     public setAddress(type: string, address: any){
 
-        debugger
         let item = {
             city : address.city,
             closestStation : '',
@@ -110,7 +109,6 @@ export class GatherOrder {
         let requirements = this.CarOptionsProvider.getRequirements();
         let carClass = this.CarOptionsProvider.getCarClass()['value'];
         let time = this.TimeProvider.get();
-        debugger
 
         /**
          * TODO Собрать заказ в нужном формате
@@ -161,7 +159,6 @@ export class GatherOrder {
             }
          }
          */
-        debugger
         this.apiId = user.id;
         this.order = {
             bookingDate : time.string,

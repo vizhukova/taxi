@@ -42,6 +42,7 @@ export class AccountPage {
     //this.lastRidesLenth = this.OrderHistoryProvider.get().length || 0;
     //debugger
 
+
     AuthProvider.user$.subscribe(user => {
       this.user = user;
     });

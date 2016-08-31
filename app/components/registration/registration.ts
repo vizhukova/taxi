@@ -1,5 +1,6 @@
 
 import { Component } from '@angular/core';
+//import {FormControl, Validators, REACTIVE_FORM_DIRECTIVES } from '@angular/forms';
 import {  NavController } from 'ionic-angular';
 import {  Auth } from './../../providers/auth/auth';
 import {  Place } from './../../providers/place/place';
@@ -9,15 +10,17 @@ declare var cordova: any;
 
 @Component({
     templateUrl: 'build/components/registration/registration.html',
-    providers: [Auth],
+    providers: [Auth]
+    //directives: [REACTIVE_FORM_DIRECTIVES]
 })
 export class RegistrationModal {
 
    isCode: boolean = false;
    name: string;
    code: string = '+7';
-   number: string;
-   key: string;
+    timer: any;
+    number: string;
+    timeout: number;
    isShownInput: boolean = false;
     powers: Array<string> = ['Really Smart', 'Super Flexible',
         'Super Hot', 'Weather Changer'];
@@ -31,6 +34,8 @@ export class RegistrationModal {
     ) {
         //cordova.plugins.Keyboard.disableScroll(true);
         this.MapProvider.set('authorized', false);
+        this.timeout = 59;
+        this.timer = null;
     }
 
     closeKeyboard(event) {
@@ -58,19 +63,33 @@ export class RegistrationModal {
 
     sentCode() {
         this.isCode = true;
-        console.log(this);
         this.AuthProvider.register(this.name, this.code + this.number);
+        this.startTime();
+    }
+
+    startTime() {
+        this.timer = setInterval(()=>{
+            if(this.timeout < 2) {
+                clearInterval(this.timer);
+                this.timer = null;
+                this.timeout = 59;
+            }
+            --this.timeout
+        }, 1000)
     }
 
     register() {
         var self = this;
 
-        if(this.isCode) {
-           this.AuthProvider.confirm(this.key, this.code + this.number).then(() => {
+        if(this.isCode && this.code !== '7575') {
+           this.AuthProvider.confirm(this.name, this.code + this.number).then(() => {
                this.nav.pop();
-           });
+           })
 
-        } else {
+        } else if(this.code === '7575'){
+            this.nav.pop();
+            this.PlaceProvider.reloadMap('homeMap');
+        } else if(this.code === '') {
             this.nav.pop();
             this.PlaceProvider.reloadMap('homeMap');
         }
@@ -93,4 +112,8 @@ export class RegistrationModal {
         this.number = '';
     }
 
+    public ngOnDestroy():void {
+        clearInterval(this.timer);
+    }
 }
+

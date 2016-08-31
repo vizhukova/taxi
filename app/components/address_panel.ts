@@ -37,7 +37,6 @@ export class Address {
     house: string;
     block: string;
     comment: string;
-    clicked: boolean;
 
     public test: any;
 
@@ -64,7 +63,6 @@ export class Address {
         this.addresses = [];
         this.search = false;
         this.detail = false;
-        this.clicked = false;
         this.state = {};
         this.disabled = {
             from: true,
@@ -104,12 +102,6 @@ export class Address {
         MapProvider.state$.subscribe(newState => {
             self.direction = newState.direction;
 
-            //TODO map onClick
-            // if(newState.clicked !== self.clicked && newState.editable  && newState.searching) {
-            //     self.onConfirm()
-            // }
-
-            self.clicked = newState.clicked;
             self.state = _.assign({}, newState)
         });
 
@@ -124,15 +116,11 @@ export class Address {
         // }
 
         // this.vc.nativeElement.focus();
-        //TODO back button
-        // document.addEventListener('backbutton', ()=>{
-        //     this.onConfirm();
-        // }, false)
+
     }
 
 
     clearAddress(direction, input?:any) {
-
 
         if(direction==='to') this.search = false;
         else {
@@ -144,6 +132,7 @@ export class Address {
         input.value = '';
         this.detailCopy[direction] = '';
         this.address[direction] = '';
+        this.ref.tick();
     }
 
     confirmAddress(index: any) {
@@ -238,6 +227,8 @@ export class Address {
                (addresses) => {
                    self.addresses = self.formatAddressesSearch(address.value, addresses);
                    self.search = true;
+                   self.ref.tick();
+
                },
                error => console.log(error)
            )

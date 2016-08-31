@@ -70,7 +70,6 @@ export class RidesModal {
     }
 
     public showOptions(key: string, event: any) {
-        debugger
         this.optionDetails =  this.optionDetails === key ? '-1' : key;
         event.stopPropagation();
     }

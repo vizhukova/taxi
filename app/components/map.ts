@@ -16,8 +16,8 @@ declare var cordova: any;
     template: `<div id="map-wrap">
         <span *ngIf="state.direction" [ngClass]="markerClasses()"></span>
         <div id="{{selector}}"></div>
-        <div class="btn locate" (click)="locateMe()"></div>
-        <div (click)="boundsPolyline()" *ngIf="coords.to.latitude && !state.onmapsearch" class="btn center"></div>
+        <div *ngIf="state.direction" [ngClass]="setBtnClasses()" class="btn locate" (click)="locateMe()"></div>
+        <div [ngClass]="setBoundsClasses()" (click)="boundsPolyline()" *ngIf="coords.to.latitude && !state.onmapsearch" class="btn center"></div>
         <div *ngIf="state.error" class="error-wrap">Ошибка цены <span (click)="hideError()" class="hide">OK</span></div>
         <div *ngIf="state.onmapsearch && !state.searching" [ngClass]="setCallClasses()" (click)="onMapsearchOff()">
             <p class="title">Далее</p>
@@ -204,6 +204,14 @@ export class Map {
                 break;
         }
     }
+
+    setBoundsClasses() {
+        return {
+            btn: true,
+            center: true,
+            opacity: this.state.searching
+        }
+    }
     
     markerClasses():Object {
         return {
@@ -214,6 +222,13 @@ export class Map {
         }
     }
 
+    setBtnClasses() {
+        return {
+            btn: true,
+            locale: true,
+            opacity: this.state.searching
+        }
+    }
 
     setCallClasses() {
         return {
@@ -244,7 +259,7 @@ export class Map {
 
         if(this.timer) clearTimeout(this.timer);
 
-        this.timer = setInterval(() => {
+        this.timer = setTimeout(() => {
             this.onDragEnd();
             clearTimeout(this.timer)
         }, 1200)
@@ -267,59 +282,24 @@ export class Map {
             center: mapCoords,
             zoom: 15,
             layers: [osmLayer],
-            zoomControl: false,
-            dragging: true,
-            worldCopyJump: true,
-            tap: true,
-            inertia: true,
-            inertiaThreshold:32
+            zoomControl: false
         };
         
-        
-        
-        if (!this.map) {
-            
-            this.map = new L.Map(this.selector, options);
-
-
-            //this.markerFrom.addTo(this.map);
-            //this.markerTo.addTo(this.map)
-        }
-
-        //this.map.on('click', () => {
-        //    if(cordova){
-        //        cordova.plugins.Keyboard.close();
-        //    }
-        //});
-        //
-        //this.map.on('dragstart', () => {
-        //    if(cordova){
-        //        cordova.plugins.Keyboard.close();
-        //    }
-        //})
-
-
-         //
-         //this.map.on('click', ()=>{
-         //    this.MapProvider.set('clicked', !this.state.clicked)
-         //});
-         //
-         //this.map.on('mouseup', ()=>{
-         //    this.timeout()
-         //});
+        if (!this.map) this.map = new L.Map(this.selector, options);
 
         if (!this.editable) this.map.on('dragstart', () =>{
             if(this.state.direction) {
+                //this.MapProvider.set('dragStart', true);
                 this.MapProvider.set('cost', false);
-                this.MapProvider.set('searching', true)
+                this.MapProvider.set('searching', true);
+                clearTimeout(this.timer)
             }
         });
 
-        if (!this.editable) this.map.on('dragend', this.timeout);
-
-        this.map.on('drag', ()=>{
-            this.map.invalidateSize(true)
-        })
+        if (!this.editable) this.map.on('dragend', ()=>{
+            //this.MapProvider.set('dragStart', false);
+            this.timeout()
+        });
 
         if (!this.editable) this.map.on('zoomstart', () =>{
             if(this.state.direction) {
@@ -329,9 +309,6 @@ export class Map {
         });
 
         if (!this.editable) this.map.on('zoomend', this.timeout);
-
-
-        //this.bootMarkers(this.direction);
 
         setTimeout(()=> {
             this.map.invalidateSize(true)
@@ -387,6 +364,7 @@ export class Map {
             this.map.fitBounds(this.polyline.getBounds(), {padding: [30, 30]});
             return
         }
+
         if(this.state.direction === 'to') {
             this.markerTo.setLatLng(this.map.getCenter());
             //this.markerTo.setOpacity(1);
@@ -396,8 +374,11 @@ export class Map {
             //this.markerFrom.setOpacity(1);
             this.markerFrom.addTo(this.map);
         }
+
         this.MapProvider.set('direction', '');
-        this.map.fitBounds(this.polyline.getBounds(), {padding: [30, 30]});
+        setTimeout(()=>{
+            this.map.fitBounds(this.polyline.getBounds(), {padding: [30, 30]});
+        }, 300)
     }
 
     private locateMe():void {
@@ -406,20 +387,11 @@ export class Map {
 
         this.MapProvider.set('searching', true);
 
-        this.PlaceProvider.getPosition().then((data:Coordinates) => {
-            this.map.setView(L.latLng(data.latitude, data.longitude), 16);
 
-            this.MapProvider.set('searching', false);
-
-            this.ref.tick();
-            this.onDragEnd();
-            this.map.invalidateSize(true);
-        }).catch((err) => {
-        })
+        this.PlaceProvider.getPosition()
+            .then((data:Coordinates)=>{this.PlaceProvider.getCurrentAddress(data)})
+            .catch((err) => {})
     }
-
-        //this.cost.getCost()
-
 
     private markPolyline(path:any):void {
         this.polyline && this.removeLayer(this.polyline);
