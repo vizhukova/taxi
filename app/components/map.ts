@@ -38,6 +38,7 @@ export class Map {
     state: MapState;
     pathButton: any;
     timer: any;
+    dragstart: boolean;
 
 
     @Input() callback:Function;
@@ -130,8 +131,10 @@ export class Map {
             if (this.map && newCoords && this.state.direction) {
 
                 let currentCoordinates = newCoords[this.state.direction];
+                
+                
 
-                this.map.setView([
+                if(!this.dragstart) this.map.setView([
                     currentCoordinates.latitude,
                     currentCoordinates.longitude
                 ]);
@@ -289,7 +292,8 @@ export class Map {
 
         if (!this.editable) this.map.on('dragstart', () =>{
             if(this.state.direction) {
-                this.MapProvider.set('dragStart', true);
+                this.dragstart = true;
+                // this.MapProvider.set('dragStart', true);
                 this.MapProvider.set('cost', false);
                 this.MapProvider.set('searching', true);
                 clearTimeout(this.timer)
@@ -297,7 +301,8 @@ export class Map {
         });
 
         if (!this.editable) this.map.on('dragend', ()=>{
-            this.MapProvider.set('dragStart', false);
+            this.dragstart = false;
+            // this.MapProvider.set('dragStart', false);
             this.timeout()
         });
 
@@ -335,8 +340,6 @@ export class Map {
         } catch (e) {
 
         }
-
-
     }
 
     private calcPolyline(coords:any):void {

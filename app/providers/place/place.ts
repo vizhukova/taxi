@@ -88,6 +88,7 @@ export class Place {
         };
 
         this.MapProvider.state$.subscribe(newState => {
+            console.log('Update mapprovider', newState.dragStart)
             this.direction = newState.direction;
             this.dragStart = newState.dragStart;
         });
@@ -196,14 +197,15 @@ export class Place {
                 .subscribe((res:Response) => {
                     var data = res.json()[0];
 
-                    if(data && !this.dragStart){
+                    if(data){
 
                         self.address[self.direction] = data.shortAddress;
                         
                         setTimeout(() => {
+                            console.log('change sata', this.dragStart)
                             self.changeAddress(self.address);
                             self.changeDetail(data);
-                            self.changeCoords(self.coords);
+                            if(!self.dragStart) self.changeCoords(self.coords);
                             self.MapProvider.set('searching', false);
 
                         }, 300)
