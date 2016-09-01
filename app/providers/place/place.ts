@@ -178,8 +178,6 @@ export class Place {
         return coordinates;
     }
 
-
-
     public getCurrentAddress(coords:Coordinates) {
         const self = this;
 
@@ -202,12 +200,10 @@ export class Place {
                         self.address[self.direction] = data.shortAddress;
                         
                         setTimeout(() => {
-                            console.log('change sata', this.dragStart)
                             self.changeAddress(self.address);
                             self.changeDetail(data);
-                            if(!self.dragStart) self.changeCoords(self.coords);
+                            self.changeCoords(self.coords);
                             self.MapProvider.set('searching', false);
-
                         }, 300)
 
                     }

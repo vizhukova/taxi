@@ -19,8 +19,8 @@
                <span class="select-wrapper">
                    <div class="input" (click)="showSelect(true)">{{code || "+ 7"}}</div>
                    <div class="panel" (click)="showSelect(false)" *ngIf="isShownInput">
-                       <span class="option" (click)="setCode('+ 7')">+ 7</span>
-                       <span class="option" (click)="setCode('+ 38')">+ 38</span>
+                       <span class="option" (click)="setCode('+7')">+ 7</span>
+                       <span class="option" (click)="setCode('+38')">+ 38</span>
                    </div>
 
                     <!--<select [(ngModel)]="code">-->
@@ -38,8 +38,10 @@
                 </div>
             </div>
 
-            <button class="sent" *ngIf="!timer" (click)="sentCode()" [ngClass]="{code: isCode}">{{isCode ? "Повторно выслать код" : "Выслать код"}}</button>
+            <button *ngIf="!timer" (click)="sentCode()" [ngClass]="setClasses()">{{isCode ? "Повторно выслать код" : "Выслать код"}}</button>
             <button class="sent opacity" *ngIf="timer">Повторить через 00:{{timeout}}</button>
+
+            <div *ngIf="wrongKey" class="status">НЕПРАВИЛЬНЫЙ КОД</div>
 
             <label class="sms">
                 <span *ngIf="isCode">Код из SMS</span>

@@ -18,9 +18,11 @@ export class RegistrationModal {
    isCode: boolean = false;
    name: string;
    code: string = '+7';
+    key: any;
     timer: any;
     number: string;
     timeout: number;
+    wrongKey: boolean;
    isShownInput: boolean = false;
     powers: Array<string> = ['Really Smart', 'Super Flexible',
         'Super Hot', 'Weather Changer'];
@@ -36,6 +38,8 @@ export class RegistrationModal {
         this.MapProvider.set('authorized', false);
         this.timeout = 59;
         this.timer = null;
+        this.wrongKey = false;
+        this.number = '';
     }
 
     closeKeyboard(event) {
@@ -61,7 +65,17 @@ export class RegistrationModal {
        // (<HTMLScriptElement[]><any>document.getElementsByTagName('ion-tabbar'))[0].style.display = "flex";
     }
 
+    setClasses() {
+        console.log(this.number.toString().length)
+        return {
+            sent: true,
+            code: true,
+            green: this.number.toString().length === 10
+        }
+    }
+
     sentCode() {
+        if(this.number.length < 10 && this.number.length > 10) return;
         this.isCode = true;
         this.AuthProvider.register(this.name, this.code + this.number);
         this.startTime();
@@ -91,18 +105,28 @@ export class RegistrationModal {
     register() {
         var self = this;
 
-        if(this.code === '7575') {
+
+
+
+        if(this.key === 7575) {
             this.nav.pop();
             this.PlaceProvider.reloadMap('homeMap');
             setTimeout(()=>{
                 self.MapProvider.set('authorized', true);
             }, 1000);
-        } else if(this.isCode && this.code) {
-            this.AuthProvider.confirm(this.name, this.code + this.number).then(() => {
-                this.nav.pop();
-                setTimeout(()=>{
-                    self.MapProvider.set('authorized', true);
-                }, 1000);
+        } else if(this.isCode && this.key) {
+            this.AuthProvider.confirm(this.key, this.code + this.number).then((data) => {
+                if(data !== 'WRONGKEY')  {
+                    self.nav.pop();
+                    setTimeout(()=>{
+                        self.MapProvider.set('authorized', true);
+                    }, 1000);
+                } else if(data === 'WRONGKEY'){
+                    self.wrongKey = true;
+                    setTimeout(()=>{ self.wrongKey = true }, 3000)
+                } else {
+                    console.log(data)
+                }
             })
         }
     }
