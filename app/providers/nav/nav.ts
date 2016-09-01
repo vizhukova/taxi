@@ -23,10 +23,8 @@ export class Nav {
     tabSet$ = this.tabSetSource.asObservable();
 
     constructor() {
-
         this.tab = 'home';
         this.tabSet = 'main';
-
     }
 
     public changeTab(tab): void {

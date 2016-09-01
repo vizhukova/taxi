@@ -289,7 +289,7 @@ export class Map {
 
         if (!this.editable) this.map.on('dragstart', () =>{
             if(this.state.direction) {
-                //this.MapProvider.set('dragStart', true);
+                this.MapProvider.set('dragStart', true);
                 this.MapProvider.set('cost', false);
                 this.MapProvider.set('searching', true);
                 clearTimeout(this.timer)
@@ -297,7 +297,7 @@ export class Map {
         });
 
         if (!this.editable) this.map.on('dragend', ()=>{
-            //this.MapProvider.set('dragStart', false);
+            this.MapProvider.set('dragStart', false);
             this.timeout()
         });
 
@@ -359,7 +359,7 @@ export class Map {
     }
 
     private boundsPolyline() {
-        if(this.state.searching) return;
+        if(this.state.searching || !this.polyline) return;
         if(!this.state.direction) {
             this.map.fitBounds(this.polyline.getBounds(), {padding: [30, 30]});
             return

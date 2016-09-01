@@ -98,18 +98,9 @@ export class Place {
     public getPosition() {
         var self = this;
 
-
         return new Promise((resolve, reject) => {
 
             var onSuccess = (position:any) => {
-                let c = position.coords;
-                //
-                //self.coords[self.direction] = {
-                //    latitude: c.latitude,
-                //    longitude: c.longitude
-                //};
-                //
-                //self.changeCoords(self.coords);
                 resolve(position.coords);
             };
             

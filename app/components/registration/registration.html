@@ -47,6 +47,7 @@
             </label>
         </div>
 
-         <button class="skip" (click)="register()" [ngClass]="{code: isCode}">{{isCode ? "Зарегистрироваться" : "Пропустить регистрацию"}}</button>
+         <button *ngIf="isCode" class="skip" (click)="register()" [ngClass]="{code: isCode}">{{"Зарегистрироваться"}}</button>
+         <button *ngIf="!isCode" class="skip" (click)="skipRegister()" [ngClass]="{code: isCode}">{{"Пропустить регистрацию"}}</button>
    </div>
 </ion-content>

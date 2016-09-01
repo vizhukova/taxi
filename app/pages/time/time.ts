@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Address } from './../../components/address_panel';
 
-import {Place} from './../../providers/place/place';
 import {CarOptions} from './../../providers/car-options/car-options';
 import {TimeProvider} from './../../providers/time/time';
 
@@ -13,9 +12,14 @@ import {TimeProvider} from './../../providers/time/time';
  See http://ionicframework.com/docs/v2/components/#navigation for more info on
  Ionic pages and navigation.
  */
+
+
+
+
 @Component({
     selector: 'time-page',
-    templateUrl: 'build/pages/time/time.html'
+    templateUrl: 'build/pages/time/time.html',
+    directives: [Address]
 })
 export class TimePage {
 

@@ -78,26 +78,33 @@ export class RegistrationModal {
         }, 1000)
     }
 
-    register() {
+    skipRegister() {
         var self = this;
-
-        if(this.isCode && this.code !== '7575') {
-           this.AuthProvider.confirm(this.name, this.code + this.number).then(() => {
-               this.nav.pop();
-           })
-
-        } else if(this.code === '7575'){
-            this.nav.pop();
-            this.PlaceProvider.reloadMap('homeMap');
-        } else if(this.code === '') {
-            this.nav.pop();
-            this.PlaceProvider.reloadMap('homeMap');
-        }
-
+        this.nav.pop();
+        this.PlaceProvider.reloadMap('homeMap');
         setTimeout(()=>{
             self.MapProvider.set('authorized', true);
         }, 1000);
+    }
 
+
+    register() {
+        var self = this;
+
+        if(this.code === '7575') {
+            this.nav.pop();
+            this.PlaceProvider.reloadMap('homeMap');
+            setTimeout(()=>{
+                self.MapProvider.set('authorized', true);
+            }, 1000);
+        } else if(this.isCode && this.code) {
+            this.AuthProvider.confirm(this.name, this.code + this.number).then(() => {
+                this.nav.pop();
+                setTimeout(()=>{
+                    self.MapProvider.set('authorized', true);
+                }, 1000);
+            })
+        }
     }
 
     showSelect(value) {
