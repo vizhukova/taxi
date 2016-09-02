@@ -1,17 +1,16 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Platform } from 'ionic-angular';
 import {DatePicker} from 'ionic-native';
 import { Address } from './../../components/address_panel';
 
 import {Place} from './../../providers/place/place';
 import {CarOptions} from './../../providers/car-options/car-options';
 import {TimeProvider} from './../../providers/time/time';
-
 import * as moment from 'moment';
 import 'moment/locale/ru';
 declare var device: any;
 
-var platform = device.platform;
+//var platform = device.platform;
 
 //import {moment} from 'moment';
 /*
@@ -24,6 +23,8 @@ var platform = device.platform;
     selector: 'time-page',
     templateUrl: 'build/pages/time/time.html'
 })
+
+
 export class TimePage {
 
     //time: Array<Object>;
@@ -31,16 +32,16 @@ export class TimePage {
     repeatTime:string;
     delayTime:string;
     timeInput:string;
-
+    platform: any;
     delayArray: Array<number>;
     isShownInput: boolean;
     delay: number = 20;
     datePickerTime: string;
 
-    minDate: number | string;
-    maxDate: number | string;
+    minDate: number | string = 0;
+    maxDate: number | string = 0;
 
-    constructor(private nav:NavController, private CarOptionsProvider:CarOptions, private TimeProvider:TimeProvider) {
+    constructor(platform: Platform, private nav:NavController, private CarOptionsProvider:CarOptions, private TimeProvider:TimeProvider) {
         this.nav = nav;
         //this.time = [
         //  {name: 'Сейчас', comment: '~5-20 мин'},
@@ -48,7 +49,8 @@ export class TimePage {
         //  {name: 'Повторять', comment: '10:23'},
         //  {name: 'Другое', comment: 'чт, 7 июля 2016 10:23'}
         //];
-
+        this.platform = platform;
+console.log(this.platform)
         moment.locale('ru');
 
         this.time = ['now', 'in', 'repeat', 'delay'];
@@ -97,11 +99,11 @@ export class TimePage {
 
     public showDateModal() {
 
-        if(platform === 'Android') {
+        if( this.platform.is('android') ) {
             this.minDate = Date.parse(moment().toString());
             this.maxDate = Date.parse(moment().add(6, 'd').toString());
             console.log(this.minDate, this.maxDate)
-        } else if(platform === 'iOS') {
+        } else if( this.platform.is('ios') ) {
             this.minDate = moment().toString();
             this.maxDate = moment().add(6, 'd').toString();
         }
