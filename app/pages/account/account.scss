@@ -129,7 +129,7 @@
           background-image: url('./../res/card.svg');
       }
       &.call:before {
-          background-image: url('./../res/call.svg');
+          background-image: url('./../res/call_a.svg');
       }
       &.settings:before {
           background-image: url('./../res/settings.svg');
@@ -141,6 +141,12 @@
           background-image: url('./../res/car.png');
           background-size: 19px;
       }
+    }
+  }
+
+  .block {
+    .header {
+      font-size: 17px;
     }
   }
 }

@@ -92,8 +92,17 @@
 
 .loader-footer {
   div.call {
+    left: 8px;
+    right: 8px;
+    bottom: 0;
+    margin: auto;
+    position: absolute;
     line-height: 60px;
     text-align: center;
+    color: #fff!important;
+    text-transform: uppercase;
+    background: url('./../res/btn_price_dark.png') center center no-repeat;
+    background-size: 100% 100%;
     &:before {
       content: "";
       position: absolute;

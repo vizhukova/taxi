@@ -88,6 +88,7 @@ export class Place {
         };
 
         this.MapProvider.state$.subscribe(newState => {
+            console.log('Update mapprovider', newState.dragStart)
             this.direction = newState.direction;
             this.dragStart = newState.dragStart;
         });
@@ -98,18 +99,9 @@ export class Place {
     public getPosition() {
         var self = this;
 
-
         return new Promise((resolve, reject) => {
 
             var onSuccess = (position:any) => {
-                let c = position.coords;
-                //
-                //self.coords[self.direction] = {
-                //    latitude: c.latitude,
-                //    longitude: c.longitude
-                //};
-                //
-                //self.changeCoords(self.coords);
                 resolve(position.coords);
             };
             
@@ -186,8 +178,6 @@ export class Place {
         return coordinates;
     }
 
-
-
     public getCurrentAddress(coords:Coordinates) {
         const self = this;
 
@@ -205,7 +195,7 @@ export class Place {
                 .subscribe((res:Response) => {
                     var data = res.json()[0];
 
-                    if(data && !this.dragStart){
+                    if(data){
 
                         self.address[self.direction] = data.shortAddress;
                         
@@ -214,7 +204,6 @@ export class Place {
                             self.changeDetail(data);
                             self.changeCoords(self.coords);
                             self.MapProvider.set('searching', false);
-
                         }, 300)
 
                     }

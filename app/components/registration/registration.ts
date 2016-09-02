@@ -9,8 +9,7 @@ import { MapProvider } from './../../providers/map/map';
 declare var cordova: any;
 
 @Component({
-    templateUrl: 'build/components/registration/registration.html',
-    providers: [Auth]
+    templateUrl: 'build/components/registration/registration.html'
     //directives: [REACTIVE_FORM_DIRECTIVES]
 })
 export class RegistrationModal {
@@ -18,9 +17,11 @@ export class RegistrationModal {
    isCode: boolean = false;
    name: string;
    code: string = '+7';
+    key: any;
     timer: any;
     number: string;
     timeout: number;
+    wrongKey: boolean;
    isShownInput: boolean = false;
     powers: Array<string> = ['Really Smart', 'Super Flexible',
         'Super Hot', 'Weather Changer'];
@@ -36,6 +37,8 @@ export class RegistrationModal {
         this.MapProvider.set('authorized', false);
         this.timeout = 59;
         this.timer = null;
+        this.wrongKey = false;
+        this.number = '';
     }
 
     closeKeyboard(event) {
@@ -61,7 +64,20 @@ export class RegistrationModal {
        // (<HTMLScriptElement[]><any>document.getElementsByTagName('ion-tabbar'))[0].style.display = "flex";
     }
 
+    setClasses() {
+
+
+
+        return {
+            sent: true,
+            code: true,
+            green: this.number.length === 10
+        }
+    }
+
     sentCode() {
+        //TODO number.length
+        if(this.number.length < 3 && this.number.length > 10) return;
         this.isCode = true;
         this.AuthProvider.register(this.name, this.code + this.number);
         this.startTime();
@@ -78,26 +94,43 @@ export class RegistrationModal {
         }, 1000)
     }
 
-    register() {
+    skipRegister() {
         var self = this;
-
-        if(this.isCode && this.code !== '7575') {
-           this.AuthProvider.confirm(this.name, this.code + this.number).then(() => {
-               this.nav.pop();
-           })
-
-        } else if(this.code === '7575'){
-            this.nav.pop();
-            this.PlaceProvider.reloadMap('homeMap');
-        } else if(this.code === '') {
-            this.nav.pop();
-            this.PlaceProvider.reloadMap('homeMap');
-        }
-
+        this.nav.pop();
+        this.PlaceProvider.reloadMap('homeMap');
         setTimeout(()=>{
             self.MapProvider.set('authorized', true);
         }, 1000);
+    }
 
+
+    register() {
+        var self = this;
+
+
+
+
+        if(this.key === 7575) {
+            this.nav.pop();
+            this.PlaceProvider.reloadMap('homeMap');
+            setTimeout(()=>{
+                self.MapProvider.set('authorized', true);
+            }, 1000);
+        } else if(this.isCode && this.key) {
+            this.AuthProvider.confirm(this.key, this.code + this.number).then((data) => {
+                if(data !== 'WRONGKEY')  {
+                    self.nav.pop();
+                    setTimeout(()=>{
+                        self.MapProvider.set('authorized', true);
+                    }, 1000);
+                } else if(data === 'WRONGKEY'){
+                    self.wrongKey = true;
+                    setTimeout(()=>{ self.wrongKey = true }, 3000)
+                } else {
+                    console.log(data)
+                }
+            })
+        }
     }
 
     showSelect(value) {

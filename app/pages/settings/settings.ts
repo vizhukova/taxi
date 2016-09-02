@@ -18,7 +18,6 @@ import {CarOptions} from "../../providers/car-options/car-options";
   directives: [Address]
 })
 export class SettingsPage {
-
   tariffs: Array<Object>;
   payment: Array<string>;
   service: Array<Object>;

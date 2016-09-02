@@ -57,7 +57,7 @@
       /* LABEL ======================================= */
       label                {
         color: #565659;
-        font-size: 12px;
+        font-size: 16px;
         font-weight: 400;
         position:absolute;
         pointer-events:none;
@@ -250,10 +250,12 @@
       font-size: 16px;
       font-weight: 600;
       text-transform: uppercase;
+      text-align: center;
       width: 84%;
       margin: auto;
       display: block;
       height: 40px;
+      line-height: 40px;
       background: #a0bfa1;
 
       &.opacity {
@@ -264,7 +266,15 @@
       }
 
       &.code {
-        background: #b3b3b3;
+        background: #a0bfa1;
+        opacity: 0.5;
+        color: #f7f7f9;
+        &.green {
+          color: #f7f7f9;
+          background: #438037;
+          opacity: 1;
+
+        }
         &.activated {
           background: #b3b3b3;
         }
@@ -294,6 +304,15 @@
         }
       }
 
+    }
+
+    div.status {
+      margin: auto;
+      color: red;
+      font-size: 15px;
+      font-weight: bold;
+      margin-top: 6px;
+      text-align: center;
     }
   }
 

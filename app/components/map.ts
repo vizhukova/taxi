@@ -38,6 +38,7 @@ export class Map {
     state: MapState;
     pathButton: any;
     timer: any;
+    dragCoordsChange: boolean;
 
 
     @Input() callback:Function;
@@ -109,8 +110,6 @@ export class Map {
                 self.state = _.assign({}, MapProvider.getState());
                      self.ref.tick();
             }, 300);
-
-
         });
 
         
@@ -131,10 +130,14 @@ export class Map {
 
                 let currentCoordinates = newCoords[this.state.direction];
 
-                this.map.setView([
-                    currentCoordinates.latitude,
-                    currentCoordinates.longitude
-                ]);
+                if(!this.dragCoordsChange) {
+                    this.map.setView([
+                        currentCoordinates.latitude,
+                        currentCoordinates.longitude
+                    ]);
+
+                }
+                this.dragCoordsChange = false;
             }
 
         });
@@ -289,22 +292,27 @@ export class Map {
 
         if (!this.editable) this.map.on('dragstart', () =>{
             if(this.state.direction) {
-                //this.MapProvider.set('dragStart', true);
+                clearTimeout(this.timer);
                 this.MapProvider.set('cost', false);
                 this.MapProvider.set('searching', true);
-                clearTimeout(this.timer)
             }
         });
 
         if (!this.editable) this.map.on('dragend', ()=>{
-            //this.MapProvider.set('dragStart', false);
             this.timeout()
         });
 
+        if (!this.editable) this.map.on('drag', ()=>{
+            if(this.state.direction) {
+                this.MapProvider.set('searching', true)
+            }
+        });
+
+
         if (!this.editable) this.map.on('zoomstart', () =>{
             if(this.state.direction) {
+                clearTimeout(this.timer);
                 this.MapProvider.set('cost', false);
-                this.MapProvider.set('searching', true)
             }
         });
 
@@ -335,8 +343,6 @@ export class Map {
         } catch (e) {
 
         }
-
-
     }
 
     private calcPolyline(coords:any):void {
@@ -359,7 +365,7 @@ export class Map {
     }
 
     private boundsPolyline() {
-        if(this.state.searching) return;
+        if(this.state.searching || !this.polyline) return;
         if(!this.state.direction) {
             this.map.fitBounds(this.polyline.getBounds(), {padding: [30, 30]});
             return
@@ -410,6 +416,7 @@ export class Map {
 
         const coords = this.map.getCenter();
 
+        this.dragCoordsChange = true;
         this.PlaceProvider.getCurrentAddress(<Coordinates>{
             latitude: coords.lat,
             longitude: coords.lng

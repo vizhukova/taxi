@@ -157,9 +157,10 @@ export class Address {
         this.place.changeDetail(this.detailAddress[this.direction]);
         this.place.changeCoords(this.coords);
         this.place.reloadMap('homeMap');
-
+        this.NavProvider.changeTabSet('main');
         this.search = false;
     }
+
 
 
     setClasses(direction: string) {
@@ -271,7 +272,7 @@ export class Address {
         return body || { };
     }
 
-    private static handleError (error: any) {
+    private static handleError(error: any) {
         let errMsg = (error.message) ? error.message :
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         console.error(errMsg);
@@ -283,17 +284,22 @@ export class Address {
         if(this.direction === type && this.detail) return;
         if(this.state.onmapsearch && this.direction !== type) return;
         if(this.direction === 'to' && 'to' !== type && this.detail) return
+        var self = this;
         this.disabled.to = true;
         this.disabled.from = true;
 
         if((!this.detail && this.direction === type) || (type === 'to' && !this.coords.to.latitude)) {
             this.disabled[type] = false;
             if(this.NavProvider.getCurrentTabSet() === 'main') this.NavProvider.changeTabSet('search');
+            //if(this.NavProvider.getCurrentTab() === 'settings' || this.NavProvider.getCurrentTab() === 'time') {
+            //
+            //}
             this.MapProvider.set('editable', true);
             this.detail = true;
             setTimeout(()=>{
                 if(cordova) cordova.plugins.Keyboard.show();
                 input.focus();
+                self.ref.tick()
             }, 150);
 
         }

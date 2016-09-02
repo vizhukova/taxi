@@ -68,8 +68,10 @@ export class Auth {
 
         let body = {
             key: key,
-            phone: number
+            phone: number,
+            taxi: 'taxity'
         };
+
 
         let self = this;
 
@@ -83,7 +85,8 @@ export class Auth {
 
                     this.emitUpdate();
 
-                    localStorage.setItem('user', JSON.stringify(this.user));
+                    localStorage.setItem('user', JSON.stringify(self.user));
+                    debugger;
 
                     resolve();
 
