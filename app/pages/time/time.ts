@@ -37,6 +37,9 @@ export class TimePage {
     delay: number = 20;
     datePickerTime: string;
 
+    minDate: number | string;
+    maxDate: number | string;
+
     constructor(private nav:NavController, private CarOptionsProvider:CarOptions, private TimeProvider:TimeProvider) {
         this.nav = nav;
         //this.time = [
@@ -79,12 +82,12 @@ export class TimePage {
           date: new Date(),
           mode: 'time',
           androidTheme: 3,
+          minDate: this.minDate || 0,
           is24Hour: true,
           okText: 'Готово',
           cancelText: 'Отмена',
           doneButtonLabel: 'Готово',
-          cancelButtonLabel: 'Отмена',
-          // allowOldDates: false
+          cancelButtonLabel: 'Отмена'
         }).then(
           date => this.onGetTime(date),
           err => console.log("Error occurred while getting date:", err)
@@ -94,31 +97,26 @@ export class TimePage {
 
     public showDateModal() {
 
-
-        var minDate;
-        var maxDate;
-
         if(platform === 'Android') {
-            var minDate = Date.parse(moment().toString());
-            var maxDate = Date.parse(moment().add(7, 'd').toString());
-            console.log(minDate, maxDate)
+            this.minDate = Date.parse(moment().toString());
+            this.maxDate = Date.parse(moment().add(6, 'd').toString());
+            console.log(this.minDate, this.maxDate)
         } else if(platform === 'iOS') {
-            var minDate = moment().toString();
-            var maxDate = moment().add(6, 'd').toString();
+            this.minDate = moment().toString();
+            this.maxDate = moment().add(6, 'd').toString();
         }
 
         DatePicker.show({
           date: new Date(),
           mode: 'datetime',
           androidTheme: 3,
-          minDate: minDate || 0,
-          maxDate: maxDate || 0,
+          minDate: this.minDate || 0,
+          maxDate: this.maxDate || 0,
           is24Hour: true,
           okText: 'Готово',
           cancelText: 'Отмена',
           doneButtonLabel: 'Готово',
           cancelButtonLabel: 'Отмена'
-          // allowOldDates: false
         }).then(
           date => this.onGetDate(date),
           err => console.log("Error occurred while getting date:", err)
