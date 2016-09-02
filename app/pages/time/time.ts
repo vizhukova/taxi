@@ -138,6 +138,7 @@ console.log(this.platform)
         this.checkTime(this.time[3]);
     }
 
+
     public getId(name:string, id:number):string {
         return name + id;
     }
