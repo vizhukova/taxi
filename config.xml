@@ -47,7 +47,5 @@
     <plugin name="cordova-plugin-splashscreen" spec="~3.2.2" />
     <plugin name="cordova-plugin-statusbar" spec="~2.1.3" />
     <plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
-    <plugin name="de.websector.datepicker" spec="https://github.com/sectore/phonegap3-ios-datepicker-plugin" />
-    <plugin name="com.bikasv.plugins.datepicker" spec="https://github.com/bikasv/cordova-android-plugins.git" />
     <plugin name="cordova-plugin-datepicker" spec="~0.9.3" />
 </widget>

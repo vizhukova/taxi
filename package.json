@@ -46,14 +46,6 @@
     "cordova-plugin-request-location-accuracy",
     "cordova-plugin-geolocation",
     "cordova-plugin-compat",
-    {
-      "locator": "https://github.com/sectore/phonegap3-ios-datepicker-plugin",
-      "id": "de.websector.datepicker"
-    },
-    {
-      "locator": "https://github.com/bikasv/cordova-android-plugins.git",
-      "id": "com.bikasv.plugins.datepicker"
-    },
     "cordova-plugin-datepicker"
   ],
   "cordovaPlatforms": [

@@ -137,7 +137,7 @@ console.log(this.platform)
     }
 
     onGetDate(data) {
-        this.delayTime = moment(data).format('DD MMM YYYY, HH:mm');
+        this.delayTime = moment(data).format('DD.MM.YYYY HH:mm');
         this.datePickerTime = data;
         this.checkTime(this.time[3]);
     }
