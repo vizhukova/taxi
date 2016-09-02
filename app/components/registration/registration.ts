@@ -9,8 +9,7 @@ import { MapProvider } from './../../providers/map/map';
 declare var cordova: any;
 
 @Component({
-    templateUrl: 'build/components/registration/registration.html',
-    providers: [Auth]
+    templateUrl: 'build/components/registration/registration.html'
     //directives: [REACTIVE_FORM_DIRECTIVES]
 })
 export class RegistrationModal {

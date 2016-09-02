@@ -107,9 +107,9 @@ export class GatherOrder {
         let source = this.PlaceProvider.getFullAddress('from');
         let destination = this.PlaceProvider.getFullAddress('to');
         let requirements = this.CarOptionsProvider.getRequirements();
-        let carClass = this.CarOptionsProvider.getCarClass()['value'];
+        let carClass = this.CarOptionsProvider.getCarClass();
         let time = this.TimeProvider.get();
-
+debugger;
         /**
          * TODO Собрать заказ в нужном формате
          * @type {{}}
@@ -181,9 +181,9 @@ export class GatherOrder {
 
         console.log(JSON.stringify(body));
 
-
         return new Promise((resolve, reject) => {
-            this.http.post(`${URL}/Order/Create`, body)
+            debugger;
+            this.http.post(`${URL}/Order/Create?taxi=taxity`, body)
                 .subscribe((res:Response) => {
 
                     let data = res.json();

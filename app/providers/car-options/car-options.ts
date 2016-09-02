@@ -11,7 +11,7 @@ export class CarOptions {
   requirements: any = [];
   carClasses: any = [];
 
-  requirementsInput: Array<string>;
+  requirementsInput: Array<string> = [];
   carClassInput: string;
   timeInput: string;
 
@@ -79,6 +79,7 @@ export class CarOptions {
   }
 
   public getCarClass() {
+    debugger
     return this.carClassInput;
   }
 

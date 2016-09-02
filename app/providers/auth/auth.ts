@@ -85,7 +85,8 @@ export class Auth {
 
                     this.emitUpdate();
 
-                    localStorage.setItem('user', JSON.stringify(this.user));
+                    localStorage.setItem('user', JSON.stringify(self.user));
+                    debugger;
 
                     resolve();
 

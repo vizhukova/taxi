@@ -18,6 +18,20 @@
     }
   }
 
+  .block {
+    .header {
+      font-size: 17px;
+    }
+
+    label {
+      font-size: 17px;
+
+      &.add {
+        text-transform: none!important;
+      }
+    }
+  }
+
   &>* {
     // TODO change calculating
     height: calc(100% - 50px);
