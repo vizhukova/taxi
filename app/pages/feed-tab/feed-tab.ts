@@ -5,8 +5,7 @@ import {  AddressProvider } from './../../providers/address/address';
 
 @Component({
   selector: 'feed-tab-page',
-  templateUrl: 'build/pages/feed-tab/feed-tab.html',
-  providers: [AddressProvider]
+  templateUrl: 'build/pages/feed-tab/feed-tab.html'
 })
 export class FeedTabPage {
 
@@ -30,8 +29,13 @@ export class FeedTabPage {
 
 
 
-    this.addresses = this.AddressProvider.getFavoriteAddresses();
+    this.AddressProvider.getFavoriteAddresses();
     //this.trips = this.OrderFavoriteProvider.get();
+
+    AddressProvider.addressesFavorite$.subscribe(addresses => {
+      debugger
+      this.addresses = addresses;
+    });
 
      OrderFavoriteProvider.orders$.subscribe(orders => {
       this.trips = orders;

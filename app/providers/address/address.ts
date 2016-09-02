@@ -8,8 +8,10 @@ import {AddressItem} from "./../../interfaces/address";
 export class AddressProvider {
 
      private addressFavoriteSource = new BehaviorSubject<any>({});
-    
      addressFavorite$ = this.addressFavoriteSource.asObservable();
+
+    private addressesFavoriteSource = new BehaviorSubject<any>({});
+     addressesFavorite$ = this.addressesFavoriteSource.asObservable();
 
     constructor() {
 
@@ -19,8 +21,13 @@ export class AddressProvider {
         this.addressFavoriteSource.next(address);
     }
 
+    public changeFavoriteAddresses(addresses:Array<AddressItem>) {
+        this.addressesFavoriteSource.next(addresses);
+    }
+
     public getFavoriteAddresses() {
         let data = localStorage.getItem('favorite_address') ? JSON.parse(localStorage.getItem('favorite_address')) : {};
+        this.changeFavoriteAddresses(data);
         return data;
     }
 
@@ -29,6 +36,7 @@ export class AddressProvider {
         let dataToSave = this.getFavoriteAddresses();
         dataToSave[key] = data;
         localStorage.setItem('favorite_address', JSON.stringify(dataToSave));
+        this.changeFavoriteAddresses(dataToSave);
     }
 
     public saveObject(data: Object) {

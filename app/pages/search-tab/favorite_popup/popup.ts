@@ -20,6 +20,7 @@ export class FavoritePopup {
     }
 
     addAddress(){
+        debugger
         this.addressProvider.save(this.name, this.address);
     }
 
