@@ -1,10 +1,17 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import {DatePicker} from 'ionic-native';
 import { Address } from './../../components/address_panel';
 
 import {Place} from './../../providers/place/place';
 import {CarOptions} from './../../providers/car-options/car-options';
 import {TimeProvider} from './../../providers/time/time';
+
+import * as moment from 'moment';
+import 'moment/locale/ru';
+declare var device: any;
+
+var platform = device.platform;
 
 //import {moment} from 'moment';
 /*
@@ -28,6 +35,7 @@ export class TimePage {
     delayArray: Array<number>;
     isShownInput: boolean;
     delay: number = 20;
+    datePickerTime: string;
 
     constructor(private nav:NavController, private CarOptionsProvider:CarOptions, private TimeProvider:TimeProvider) {
         this.nav = nav;
@@ -37,6 +45,8 @@ export class TimePage {
         //  {name: 'Повторять', comment: '10:23'},
         //  {name: 'Другое', comment: 'чт, 7 июля 2016 10:23'}
         //];
+
+        moment.locale('ru');
 
         this.time = ['now', 'in', 'repeat', 'delay'];
         this.delayArray = [20, 30, 40, 50];
@@ -63,6 +73,71 @@ export class TimePage {
 
     }
 
+    public showTimeModal() {
+
+        DatePicker.show({
+          date: new Date(),
+          mode: 'time',
+          androidTheme: 3,
+          is24Hour: true,
+          okText: 'Готово',
+          cancelText: 'Отмена',
+          doneButtonLabel: 'Готово',
+          cancelButtonLabel: 'Отмена',
+          // allowOldDates: false
+        }).then(
+          date => this.onGetTime(date),
+          err => console.log("Error occurred while getting date:", err)
+        );
+
+    }
+
+    public showDateModal() {
+
+
+        var minDate;
+        var maxDate;
+
+        if(platform === 'Android') {
+            var minDate = Date.parse(moment().toString());
+            var maxDate = Date.parse(moment().add(7, 'd').toString());
+            console.log(minDate, maxDate)
+        } else if(platform === 'iOS') {
+            var minDate = moment().toString();
+            var maxDate = moment().add(6, 'd').toString();
+        }
+
+        DatePicker.show({
+          date: new Date(),
+          mode: 'datetime',
+          androidTheme: 3,
+          minDate: minDate || 0,
+          maxDate: maxDate || 0,
+          is24Hour: true,
+          okText: 'Готово',
+          cancelText: 'Отмена',
+          doneButtonLabel: 'Готово',
+          cancelButtonLabel: 'Отмена'
+          // allowOldDates: false
+        }).then(
+          date => this.onGetDate(date),
+          err => console.log("Error occurred while getting date:", err)
+        );
+
+    }
+
+    onGetTime(data) {
+        this.repeatTime = moment(data).format('HH:mm');
+        this.datePickerTime = data;
+        this.checkTime(this.time[2]);
+    }
+
+    onGetDate(data) {
+        this.delayTime = moment(data).format('DD MMM YYYY, HH:mm');
+        this.datePickerTime = data;
+        this.checkTime(this.time[3]);
+    }
+
     public getId(name:string, id:number):string {
         return name + id;
     }
@@ -78,20 +153,20 @@ export class TimePage {
         }
     }
 
-    private getTimeString(time:Object) {
-
-        let day = time['curr_date'] < 10 ? `0${time['curr_date']}` : time['curr_date'];
-        let month = time['curr_month'] < 10 ? `0${time['curr_month']}` : time['curr_month'];
-        let year = time['curr_year'];
-        let hours = time['curr_hours'] < 10 ? `0${time['curr_hours']}` : time['curr_hours'];
-        ;
-        let minutes = time['curr_minutes'] < 10 ? `0${time['curr_minutes']}` : time['curr_minutes'];
-        ;
-        let seconds = time['curr_seconds'] < 10 ? `0${time['curr_seconds']}` : time['curr_seconds'];
-        ;
-
-        return `${day}-${month}-${year} ${hours}:${minutes}`;
-    }
+    // private getTimeString(time:Object) {
+    //
+    //     let day = time['curr_date'] < 10 ? `0${time['curr_date']}` : time['curr_date'];
+    //     let month = time['curr_month'] < 10 ? `0${time['curr_month']}` : time['curr_month'];
+    //     let year = time['curr_year'];
+    //     let hours = time['curr_hours'] < 10 ? `0${time['curr_hours']}` : time['curr_hours'];
+    //     ;
+    //     let minutes = time['curr_minutes'] < 10 ? `0${time['curr_minutes']}` : time['curr_minutes'];
+    //     ;
+    //     let seconds = time['curr_seconds'] < 10 ? `0${time['curr_seconds']}` : time['curr_seconds'];
+    //     ;
+    //
+    //     return `${day}-${month}-${year} ${hours}:${minutes}`;
+    // }
 
     public checkTime(value) {
 
@@ -101,30 +176,20 @@ export class TimePage {
         this.timeInput = value;
 
         if (value == this.time[0]) {
-            //time = moment().format('DD-MM-YYYY HH:mm');
-            let timeObj = this.getTime(new Date());
-            time = this.getTimeString(timeObj);
+            time = moment().format('DD-MM-YYYY HH:mm');
         }
         else if (value == this.time[1]) {
-            //time = moment(moment().add(20, 'm')).format('DD-MM-YYYY HH:mm');
-            let timeObj = this.getTime(new Date( Date.now() + this.delay * 60 * 1000 ));
-            time = this.getTimeString(timeObj);
+            time = moment(moment().add(20, 'm')).format('DD-MM-YYYY HH:mm');
 
             subvalue = this.delay.toString();
         }
         else if (value == this.time[2]) {
-            //time = moment().format('DD-MM-YYYY') + this.repeatTime;
-            let timeArr = this.repeatTime.split(':');
-            let date = new Date();
-            date.setHours(parseInt(timeArr[0]));
-            date.setMinutes(parseInt(timeArr[1]));
-            let timeObj = this.getTime(date);
-            time = this.getTimeString(timeObj);
+            time = moment(this.datePickerTime).format('DD-MM-YYYY HH:mm');
 
             subvalue = this.repeatTime;
         }
         else if (value == this.time[3]) {
-            time = this.delayTime;
+            time = moment(this.datePickerTime).format('DD-MM-YYYY HH:mm');
             subvalue = this.delayTime;
         }
 
@@ -135,15 +200,15 @@ export class TimePage {
         });
     }
 
-    public getMinTime() {
-        let time = this.getTime(new Date());
-
-        let day = time['curr_date'] < 10 ? `0${time['curr_date']}` : time['curr_date'];
-        let month = time['curr_month'] < 10 ? `0${time['curr_month']}` : time['curr_month'];
-        let year = time['curr_year'];
-
-        return `2016-${month}-${day}`;
-    }
+    // public getMinTime() {
+    //     let time = this.getTime(new Date());
+    //
+    //     let day = time['curr_date'] < 10 ? `0${time['curr_date']}` : time['curr_date'];
+    //     let month = time['curr_month'] < 10 ? `0${time['curr_month']}` : time['curr_month'];
+    //     let year = time['curr_year'];
+    //
+    //     return `2016-${month}-${day}`;
+    // }
 
     showSelect(value: boolean, $event: any) {
         this.isShownInput = value === this.isShownInput ? !value : value;

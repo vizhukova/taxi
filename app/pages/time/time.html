@@ -34,39 +34,40 @@
                     </label>
                 </p>
 
-                <p class="label">
+                <p class="label" (click)="showTimeModal()">
                     <input type="radio"
                            name="time"
                            [checked]="time[2] === timeInput"/>
                     <label>
                         Повторять
-                        <span *ngIf="!repeatTime" class="price bright">-- : --</span>
-                        <ion-datetime displayFormat="HH:mm"
-                                      [(ngModel)]="repeatTime"
-                                      cancelText="Отмена"
-                                      doneText="Готово"
-                                      class="ion-datetime"
-                                      (ionChange)="checkTime(time[2])"
-                        ></ion-datetime>
+                        <span class="price bright">{{repeatTime || '-- : --'}}</span>
+                        <!--<ion-datetime displayFormat="HH:mm"-->
+                                      <!--[(ngModel)]="repeatTime"-->
+                                      <!--cancelText="Отмена"-->
+                                      <!--doneText="Готово"-->
+                                      <!--class="ion-datetime"-->
+                                      <!--(ionChange)="checkTime(time[2])"-->
+                                      <!--androidTheme="1"-->
+                        <!--&gt;</ion-datetime>-->
                     </label>
                 </p>
 
-                <p class="label">
+                <p class="label" (click)="showDateModal()">
                     <input type="radio"
                            name="time"
                            [checked]="time[3] === timeInput"/>
                     <label>
                         Отложить
-                        <span *ngIf="!delayTime" class="price bright">-- - -- - ---- -- : --</span>
-                        <ion-datetime
-                                displayFormat="DD-MM-YYYY  HH:mm"
-                                [(ngModel)]="delayTime"
-                                cancelText="Отмена"
-                                doneText="Готово"
-                                class="ion-datetime"
-                                (ionChange)="checkTime(time[3])"
-                                min={{getMinTime()}}
-                        ></ion-datetime>
+                        <span class="price bright">{{delayTime || '-- - -- - ---- -- : --'}}</span>
+                        <!--<ion-datetime-->
+                                <!--displayFormat="DD-MM-YYYY  HH:mm"-->
+                                <!--[(ngModel)]="delayTime"-->
+                                <!--cancelText="Отмена"-->
+                                <!--doneText="Готово"-->
+                                <!--class="ion-datetime"-->
+                                <!--(ionChange)="checkTime(time[3])"-->
+                                <!--min={{getMinTime()}}-->
+                        <!--&gt;</ion-datetime>-->
                         <!--monthShortNames="янв, фев, мар, апр, май, июн, июл, авг, сен, окт, ноя, фев"-->
                     </label>
                 </p>
