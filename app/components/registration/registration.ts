@@ -66,16 +66,19 @@ export class RegistrationModal {
     }
 
     setClasses() {
-        console.log(this.number.toString().length)
+
+
+
         return {
             sent: true,
             code: true,
-            green: this.number.toString().length === 10
+            green: this.number.length === 10
         }
     }
 
     sentCode() {
-        if(this.number.length < 10 && this.number.length > 10) return;
+        //TODO number.length
+        if(this.number.length < 3 && this.number.length > 10) return;
         this.isCode = true;
         this.AuthProvider.register(this.name, this.code + this.number);
         this.startTime();
