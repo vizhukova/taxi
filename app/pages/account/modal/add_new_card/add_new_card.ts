@@ -8,6 +8,7 @@ import {  Card } from './../../../../providers/cards/cards';
 })
 export class AddNewCardModal {
 
+
     cardName: string = "Master Gold";
     isShownSelect: boolean = false;
     cards: Array<string>;
