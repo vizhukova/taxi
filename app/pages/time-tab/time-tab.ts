@@ -48,19 +48,7 @@ export class TimeTabPage {
       }
 
 
-    })
-
-    //this.addresses = [
-    //  {title: "Дом", data: {street: 'Комсомольская 69, п.1'}},
-    //  {title: "Моя работа", data: {street: 'Петрозаводская 45'}},
-    //  {title: "Работа жены", data: {street: 'Комсомольская 69, п.1'}},
-    //  {title: "Работа жены", data: {street: 'Томсомольская 69, п.1'}},
-    //  {title: "Работа жены", data: {street: 'Ромсомольская 69, п.1'}},
-    //  {title: "Работа жены", data: {street: 'Номсомольская 69, п.1'}},
-    //  {title: "Работа жены", data: {street: 'Акомсомольская 69, п.1'}},
-    //  {title: "Работа жены", data: {street: 'Сомсомольская 69, п.1'}},
-    //  {title: "Детский сад", data: {street: 'Фетрозаводская 45'}}
-    //];
+    });
 
     this.addresses = _.groupBy(this.addresses, (a:any) => {
       return a.data.street.charAt(0).toUpperCase()
@@ -73,17 +61,39 @@ export class TimeTabPage {
     this.address = !this.address
   }
 
+
+
   setAddress(index, char){
-    let address = this.addresses[char][index].data.geo;
+    let address = this.addresses[index].geoPoint;
 
     let curCoord = this.PlaceProvider.getCurrentCoords();
 
     curCoord[this.PlaceProvider.getDirection()] = {
-      longitude: address.lon,
-      latitude: address.lat
+      latitude: address.lat,
+      longitude: address.lon
     };
 
     this.PlaceProvider.changeCoords(curCoord);
+    this.PlaceProvider.changeDetail(this.addresses[index]);
+    this.NavProvider.changeTab('home');
+  }
+
+  setTrip(index) {
+
+
+    var curCoord = {
+      from: {
+        latitude: this.trips[index].source.lat,
+        longitude: this.trips[index].source.lon
+      },
+      to: {
+        latitude: this.trips[index].destinations[0].lat,
+        longitude: this.trips[index].destinations[0].lon
+      }
+    };
+
+    this.PlaceProvider.changeCoords(curCoord);
+    this.PlaceProvider.changeDetail({from: this.trips[index].source, to: this.trips[index].destinations[0]}, true);
     this.NavProvider.changeTab('home');
   }
 }

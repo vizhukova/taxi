@@ -53,7 +53,7 @@ export class AccountPage {
   }
 
   showRidesModal() {
-    this.nav.push(RidesModal);
+    this.nav.push(RidesModal, {}, {animate: false});
   }
 
   newRide() {

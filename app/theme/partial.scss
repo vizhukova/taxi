@@ -519,9 +519,8 @@ i.star-empty {
  span.options {
     background: #fff;
     color: #2C2C30;
-    width: 133px;
-    margin: 5px 10px;
-    padding: 20px 10px;
+    margin: 5px 15px;
+    padding: 0 13px;
     -webkit-transition: all 1s ease-out 0.5s;
     transition: all 1s ease-out 0.5s;
     box-sizing: border-box;
@@ -529,8 +528,13 @@ i.star-empty {
     z-index: 2;
     right: 0;
     top: 0;
-    text-align: center;
+    text-align: left;
     border-radius: 5px;
+
+   span {
+     display: block;
+     line-height: 48px;
+   }
 }
 
 //  span {

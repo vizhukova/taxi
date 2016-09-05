@@ -17,7 +17,7 @@
         <div class="sub-header">{{address ? header.address : header.trip}}</div>
 
         <div class="items addresses" *ngIf="address" >
-            <div class="address-item block" *ngFor="let key of getAddressKeys(); let num=index">
+            <div class="address-item block" *ngFor="let key of getAddressKeys(); let num=index" (click)="setAddress(key, $event)">
                 <i class="more-btn" (click)="showOptions(num, $event)"></i>
               <div class="content">
                    <span class="options" *ngIf="num === optionDetails">

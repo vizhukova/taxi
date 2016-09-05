@@ -119,12 +119,12 @@ export class RegistrationModal {
                     setTimeout(()=>{ self.MapProvider.set('authorized', true) }, 1000);
                 } else if(data === 'WRONGKEY'){
                     self.wrongKey = true;
-                    setTimeout(()=>{ self.wrongKey = false }, 3000)
+                    setTimeout(()=>{ self.wrongKey = false }, 7000)
                 } else { console.log(data) }
             })
         } else {
             self.wrongKey = true;
-            setTimeout(()=>{ self.wrongKey = false }, 3000)
+            setTimeout(()=>{ self.wrongKey = false }, 7000)
         }
     }
 

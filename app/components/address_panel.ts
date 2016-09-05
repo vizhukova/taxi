@@ -341,7 +341,7 @@ export class Address {
 
         this.disabled[this.direction] = true;
 
-        if(direction === 'to' && !this.address.to) {
+        if(direction === 'to' && !this.detailCopy.to) {
             this.coords[this.direction] = {latitude: 0, longitude: 0};
             this.place.changeAddress(this.address);
             this.place.changeDetail("");

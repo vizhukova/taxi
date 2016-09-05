@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import {  OrderFavorite } from './../../providers/order/favorites';
-import {  AddressProvider } from './../../providers/address/address';
-
+import { OrderFavorite } from './../../providers/order/favorites';
+import { AddressProvider } from './../../providers/address/address';
+import { Place } from './../../providers/place/place';
+import { Nav } from './../../providers/nav/nav';
 
 @Component({
   selector: 'feed-tab-page',
@@ -18,7 +19,12 @@ export class FeedTabPage {
   trips: any;
   optionDetails: string; //id of item + key (o-(order) a-(address))
 
-  constructor(public OrderFavoriteProvider: OrderFavorite, public AddressProvider: AddressProvider) {
+  constructor(
+      public OrderFavoriteProvider: OrderFavorite,
+      public AddressProvider: AddressProvider,
+      public PlaceProvider: Place,
+      public NavProvider: Nav
+  ) {
 
     this.addresses = [
       {title: "Дом", data: {street: 'Комсомольская 69, п.1'}},
@@ -33,7 +39,6 @@ export class FeedTabPage {
     //this.trips = this.OrderFavoriteProvider.get();
 
     AddressProvider.addressesFavorite$.subscribe(addresses => {
-      debugger
       this.addresses = addresses;
     });
 
@@ -78,5 +83,20 @@ export class FeedTabPage {
 
   hideOptionDetails() {
     this.optionDetails = '-1';
+  }
+
+  setAddress(index, char){
+    let address = this.addresses[index].geoPoint;
+
+    let curCoord = this.PlaceProvider.getCurrentCoords();
+
+    curCoord[this.PlaceProvider.getDirection()] = {
+        latitude: address.lat,
+        longitude: address.lon
+    };
+
+    this.PlaceProvider.changeCoords(curCoord);
+    this.PlaceProvider.changeDetail(this.addresses[index]);
+    this.NavProvider.changeTab('home');
   }
 }

@@ -44,11 +44,17 @@ export class Place {
     }
 
 
-    public changeDetail(address:Object) {
+    public changeDetail(address:Object, raw?:any) {
 
-        let value = this.detailAddressSource.getValue();
+        var value;
 
-        value[this.direction] = address;
+        if(!raw) {
+            value = this.detailAddressSource.getValue();
+
+            value[this.direction] = address;
+        } else {
+            value = address
+        }
 
         this.detailAddressSource.next(value);
     }
@@ -57,7 +63,7 @@ export class Place {
         return this.direction;
     }
 
-    changeCoords(coords:PathCoordinates) {
+    changeCoords(coords) {
         this.coordsSource.next(coords);
     }
 

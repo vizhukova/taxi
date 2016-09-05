@@ -122,7 +122,8 @@ console.log(this.platform)
           okText: 'Готово',
           cancelText: 'Отмена',
           doneButtonLabel: 'Готово',
-          cancelButtonLabel: 'Отмена'
+          cancelButtonLabel: 'Отмена',
+            locale: 'ru_ru'
         }).then(
           date => this.onGetDate(date),
           err => console.log("Error occurred while getting date:", err)
