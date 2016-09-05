@@ -51,7 +51,7 @@
       &.number {
         width: 60%;
         float: right;
-        margin-top: 15px;
+        margin-top: 18px;
       }
 
       /* LABEL ======================================= */
@@ -80,8 +80,8 @@
 
       /* active state */
       input:focus ~ label, input:valid ~ label        {
-        top:-15px;
-        font-size:12px;
+        top:-18px;
+        font-size:14px;
         color:#565659;
       }
 
@@ -126,8 +126,9 @@
         width: 100%;
       }
       &.code {
-        width: 30%;
+        width: 35%;
         float: left;
+        font-size: 14px;
       }
 
       &.number {

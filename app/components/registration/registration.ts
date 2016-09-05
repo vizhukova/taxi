@@ -77,7 +77,7 @@ export class RegistrationModal {
 
     sentCode() {
         //TODO number.length
-        if(this.number.length < 3 && this.number.length > 10) return;
+        if(this.name && this.number.length < 3 && this.number.length > 10) return;
         this.isCode = true;
         this.AuthProvider.register(this.name, this.code + this.number);
         this.startTime();
@@ -107,29 +107,24 @@ export class RegistrationModal {
     register() {
         var self = this;
 
-
-
-
         if(this.key === 7575) {
             this.nav.pop();
             this.PlaceProvider.reloadMap('homeMap');
-            setTimeout(()=>{
-                self.MapProvider.set('authorized', true);
-            }, 1000);
+            setTimeout(()=>{ self.MapProvider.set('authorized', true) }, 1000);
         } else if(this.isCode && this.key) {
             this.AuthProvider.confirm(this.key, this.code + this.number).then((data) => {
+                debugger;
                 if(data !== 'WRONGKEY')  {
                     self.nav.pop();
-                    setTimeout(()=>{
-                        self.MapProvider.set('authorized', true);
-                    }, 1000);
+                    setTimeout(()=>{ self.MapProvider.set('authorized', true) }, 1000);
                 } else if(data === 'WRONGKEY'){
                     self.wrongKey = true;
-                    setTimeout(()=>{ self.wrongKey = true }, 3000)
-                } else {
-                    console.log(data)
-                }
+                    setTimeout(()=>{ self.wrongKey = false }, 3000)
+                } else { console.log(data) }
             })
+        } else {
+            self.wrongKey = true;
+            setTimeout(()=>{ self.wrongKey = false }, 3000)
         }
     }
 

@@ -167,10 +167,9 @@ export class MainPage {
     if(!this.AuthProvider.check()){
       this.nav.push(RegistrationModal);
     }else{
+      this.nav.push(Loader);
 
       this.GatherOrderProvider.createOrder().then((data) => {
-
-        this.nav.push(Loader);
         this.OrderHistoryProvider.save(this.GatherOrderProvider.getGatheredOrder());
         //this.NavProvider.changeTabSet('order');
 

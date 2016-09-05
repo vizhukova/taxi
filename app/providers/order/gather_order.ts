@@ -109,7 +109,6 @@ export class GatherOrder {
         let requirements = this.CarOptionsProvider.getRequirements();
         let carClass = this.CarOptionsProvider.getCarClass();
         let time = this.TimeProvider.get();
-debugger;
         /**
          * TODO Собрать заказ в нужном формате
          * @type {{}}
@@ -182,7 +181,6 @@ debugger;
         console.log(JSON.stringify(body));
 
         return new Promise((resolve, reject) => {
-            debugger;
             this.http.post(`${URL}/Order/Create?taxi=taxity`, body)
                 .subscribe((res:Response) => {
 
