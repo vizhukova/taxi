@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, Modal, ViewController } from 'ionic-angular';
 import {NavParams} from "ionic-angular/index";
 import {Platform} from "ionic-angular/index";
-import {RidesModal} from "./modal/rides";
+import {RidesModal} from "./modal/rides/rides";
 import {Order} from "../../interfaces/order";
 
 import {Auth} from "../../providers/auth/auth";

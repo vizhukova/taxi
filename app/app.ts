@@ -23,6 +23,7 @@ import { OrderHistory } from './providers/order/history';
 import { MapProvider } from './providers/map/map';
 import { OrderFavorite } from './providers/order/favorites';
 import { TimeProvider } from './providers/time/time';
+import {  Card } from './providers/cards/cards';
 
 declare var cordova: any;
 declare var document: any;
@@ -67,7 +68,7 @@ export class MainTabs {
 
 @Component({
     template: '<ion-nav #myNav [root]="rootPage"></ion-nav>',
-    providers: [Place, Cost, Nav, Auth, AddressProvider, CarOptions, GatherOrder, OrderHistory, MapProvider, OrderFavorite, TimeProvider],
+    providers: [Place, Cost, Nav, Auth, AddressProvider, CarOptions, GatherOrder, OrderHistory, MapProvider, OrderFavorite, TimeProvider, Card],
     directives: [MainPage, RegistrationModal]
 })
 export class App {

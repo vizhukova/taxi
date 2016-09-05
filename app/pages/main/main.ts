@@ -19,6 +19,8 @@ import {NavController} from 'ionic-angular';
 import {RegistrationModal} from "../../components/registration/registration";
 import {Loader} from "../../components/loader/loader";
 
+import {CardsModal} from "../../pages/account/modal/cards/cards";
+
 import {Nav} from "../../providers/nav/nav";
 import {Auth} from "../../providers/auth/auth";
 import {Place} from "../../providers/place/place";
@@ -27,7 +29,9 @@ import {CarOptions} from "../../providers/car-options/car-options";
 import {GatherOrder} from "../../providers/order/gather_order";
 import {OrderHistory} from "../../providers/order/history";
 import {MapProvider} from "../../providers/map/map";
+
 import {MapState} from "../../interfaces/map";
+
 import * as _ from 'lodash'
 
 
@@ -157,10 +161,11 @@ export class MainPage {
 
   ngAfterViewInit(){
     if(!this.AuthProvider.check()){
-      this.nav.push(RegistrationModal);
+      // this.nav.push(RegistrationModal);
     }else{
       this.MapProvider.set('authorized', true);
     }
+    this.nav.push(CardsModal);
   }
 
   makeOrder() {

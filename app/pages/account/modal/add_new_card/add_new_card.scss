@@ -1,0 +1,217 @@
+.add-card-modal {
+  @extend  .register-modal;
+
+    .modal-body {
+
+      background: #fff;
+      background-image: none !important;
+
+      .content {
+
+        height: 100% !important;
+
+        .icon-arrow-left {
+          background: url(./../res/icon_arrow_left.svg) left center no-repeat;
+          width: 100%;
+          height: 25px;
+          background-color: #565659;
+        }
+
+        .modal-header {
+          padding-bottom: 30px;
+          //background: #28282c;
+          background: #565659;
+          margin: 0;
+          text-transform: none;
+
+            .select-wrapper {
+              position: relative;
+              display: block;
+
+              &:before {
+                @extend .pseubo-class-icon;
+                background: url(../res/card_green.svg) center center;
+                left: 15px;
+              }
+
+              .input {
+                margin: 0 52px;
+                width: initial;
+                text-align: left;
+                color: #efefef;
+              }
+              .panel {
+                background: #28282c;
+                padding: 15px 0;
+              }
+            }
+        }
+
+        .modal-content {
+          position: relative;
+          &:before {
+            content: '';
+            background: url(./../res/head_line.png) no-repeat top;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: -31px;
+            height: 23px;
+            width: 100%;
+          }
+
+          input {
+            color: #2e2e35 !important;
+          }
+
+          .wrap {
+            margin-top: 30px;
+            position: relative;
+
+            &.error {
+              &:before {
+                background-image: url(../res/cross.svg);
+              }
+            }
+
+            &:before {
+              background-image: url(../res/check_a.svg);
+              content: '';
+              position: absolute;
+              left: -38px;
+              top: 0;
+              bottom: 0;
+              margin: auto;
+              width: 25px;
+              height: 25px;
+              background-size: contain;
+              background-repeat: no-repeat;
+              background-position: center center;
+            }
+
+            &:nth-child(4) {
+              &:before {
+                top: 35px;
+              }
+            }
+
+            &:nth-child(3) {
+              &:before {
+                background-image: none;
+              }
+            }
+          }
+
+          .group {
+            label {
+              color: #928e8e;
+            }
+          }
+
+          .date {
+            float: left;
+            width: 45%;
+          }
+
+          .cvc {
+            float: right;
+            width: 45%;
+
+            input[type="password"] {
+                -webkit-text-security: circle !important;
+            }
+
+          }
+        }
+
+        div.wrap {
+          margin: 0 20px 0 52px;
+
+          label {
+            color: #b5b7bb;
+          }
+
+          input {
+            color: #efefef;
+          }
+
+          //input:focus ~ label {
+          //  color: $main-bright-color;
+          //}
+
+         .type {
+           position: relative;
+           &:before {
+            content: '';
+            background-image: url(./../res/card_green.svg);
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            width: 35px;
+            height: auto;
+            margin-left: -48px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center center;
+           }
+         }
+
+          .name {
+            input {
+               font-size: 30px;
+             }
+            label {
+              color: $main-bright-color;
+            }
+          }
+        }
+      }
+  }
+
+  div.price {
+      display: inline-block;
+      padding-left: 45px;
+      background: url("../res/btn_price.png") left center no-repeat;
+      background-size: 100% 100%, 23px 18px;
+      padding-right: 4px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      color: #fbf1ed;
+      text-transform: uppercase;
+      font-weight: 800;
+
+      &:before {
+        content: '';
+        position: absolute;
+        left: 25%;
+        top: -8px;
+        bottom: 0;
+        margin: auto;
+        height: 26px;
+        width: 30px;
+        background: url(../res/check.svg) center center no-repeat;
+        background-size: contain;
+      }
+
+      p {
+        line-height: 50px;
+        vertical-align: middle;
+        text-align: center;
+        width: 100%;
+        color: inherit;
+        font-size: 18px;
+      }
+
+      //span.currency {
+      //  vertical-align: super;
+      //  text-transform: capitalize;
+      //  font-size: 13px;
+      //  margin-left: 3px;
+      //}
+    }
+}
