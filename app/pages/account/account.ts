@@ -5,6 +5,8 @@ import {Platform} from "ionic-angular/index";
 import {RidesModal} from "./modal/rides/rides";
 import {Order} from "../../interfaces/order";
 
+import {CardsModal} from "./modal/cards/cards";
+
 import {Auth} from "../../providers/auth/auth";
 import {OrderHistory} from "../../providers/order/history";
 import {Place} from "../../providers/place/place";
@@ -54,6 +56,10 @@ export class AccountPage {
 
   showRidesModal() {
     this.nav.push(RidesModal);
+  }
+
+  showCardsModal() {
+    this.nav.push(CardsModal);
   }
 
   newRide() {
