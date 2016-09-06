@@ -21,7 +21,7 @@
             <div class="address-block" *ngFor="let char of alphabet" >
                 <span class="char">{{char}}</span>
                 <div class="address-item" *ngFor="let item of addresses[char]; let i=index" (click)="setAddress(i, char)">
-                    <span class="address">{{item.data.street}}</span>
+                    <span class="address">{{item.shortAddress}}</span>
                 </div>
             </div>
         </div>
@@ -29,6 +29,7 @@
         <div class="items trips" *ngIf="address" >
             <div class="block"
                  *ngFor="let item of trips;let i=index"
+                 (click)="setTrip(i)"
                  >
                 <div class="content">
                     <p class="panel panel-title">

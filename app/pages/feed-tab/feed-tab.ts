@@ -3,6 +3,7 @@ import { OrderFavorite } from './../../providers/order/favorites';
 import { AddressProvider } from './../../providers/address/address';
 import { Place } from './../../providers/place/place';
 import { Nav } from './../../providers/nav/nav';
+import { MapProvider } from "./../../providers/map/map";
 
 @Component({
   selector: 'feed-tab-page',
@@ -23,7 +24,8 @@ export class FeedTabPage {
       public OrderFavoriteProvider: OrderFavorite,
       public AddressProvider: AddressProvider,
       public PlaceProvider: Place,
-      public NavProvider: Nav
+      public NavProvider: Nav,
+      public MapProvider: MapProvider
   ) {
 
     this.addresses = [
@@ -97,6 +99,29 @@ export class FeedTabPage {
 
     this.PlaceProvider.changeCoords(curCoord);
     this.PlaceProvider.changeDetail(this.addresses[index]);
+    this.NavProvider.changeTab('home');
+  }
+
+  setTrip(index, event) {
+
+    event.stopPropagation();
+
+    var curCoord = {
+      from: {
+        latitude: this.trips[index].source.lat,
+        longitude: this.trips[index].source.lon
+      },
+      to: {
+        latitude: this.trips[index].destinations[0].lat,
+        longitude: this.trips[index].destinations[0].lon
+      }
+    };
+
+    this.PlaceProvider.changeCoords(curCoord);
+    this.PlaceProvider.changeDetail({from: this.trips[index].source, to: this.trips[index].destinations[0]}, true);
+    var curent = this.PlaceProvider.getDirection();
+    this.MapProvider.set('direction', curent === 'from' ? 'to' : 'from');
+    this.MapProvider.set('direction', curent === 'to' ? 'to' : 'from');
     this.NavProvider.changeTab('home');
   }
 }

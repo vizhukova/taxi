@@ -11,7 +11,7 @@ declare var cordova:any;
 export class Place {
 
     data:any;
-    address:any;
+    detailAddress:any;
     coords:PathCoordinates;
     direction:string;
     cbs:Function[];
@@ -35,10 +35,6 @@ export class Place {
     mapCreate$ = this.mapCreateSource.asObservable();
     mapDestroy$ = this.mapDestroySource.asObservable();
 
-    // Service message commands
-    //public changeAddress(address:string) {
-    //    console.log(Date.now(), 'address', address)
-
     public changeAddress(address:Object) {
         this.addressSource.next(address);
     }
@@ -55,6 +51,8 @@ export class Place {
         } else {
             value = address
         }
+
+        this.detailAddress = value;
 
         this.detailAddressSource.next(value);
     }
@@ -83,7 +81,7 @@ export class Place {
             from: {latitude: 0, longitude: 0},
             to: {latitude: 0, longitude: 0}
         };
-        this.address = {
+        this.detailAddress = {
             from: '',
             to: ''
         };
@@ -187,7 +185,7 @@ export class Place {
     public getCurrentAddress(coords:Coordinates) {
         const self = this;
 
-        if(!self.address[self.direction] && self.direction === 'to') {
+        if(!self.detailAddress[self.direction].shortAddress && self.direction === 'to') {
             return;
         }
         self.coords[self.direction] = coords;
@@ -203,10 +201,8 @@ export class Place {
 
                     if(data){
 
-                        self.address[self.direction] = data.shortAddress;
-                        
+
                         setTimeout(() => {
-                            self.changeAddress(self.address);
                             self.changeDetail(data);
                             self.changeCoords(self.coords);
                             self.MapProvider.set('searching', false);
@@ -221,16 +217,11 @@ export class Place {
     public getFullAddress(direction: string) {
 
         return {
-            city : this.fullAddress[direction].address_components
-                ? this.fullAddress[direction].address_components[3].long_name
-                : this.address[direction],
-
-            country : this.fullAddress[direction].address_components
-                ? this.fullAddress[direction].address_components[ this.fullAddress[direction].address_components.length - 1 ].long_name
-                : '',
-
-            fullAddress : this.fullAddress[direction].formatted_address || '',
-            shortAddress : this.address[direction],
+            city : this.detailAddress[direction].city,
+            country : this.detailAddress[direction].country,
+            fullAddress: this.detailAddress[direction].fullAddress,
+            housing: this.detailAddress[direction].housing,
+            shortAddress : this.detailAddress[direction].shortAddress,
             lat : this.coords[direction].latitude,
             lon : this.coords[direction].longitude
         };

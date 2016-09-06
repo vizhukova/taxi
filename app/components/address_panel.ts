@@ -56,7 +56,7 @@ export class Address {
     ) {
 
         const self = this;
-        this.address = {from: '', to: ''};
+        //this.address = {from: '', to: ''};
         this.detailAddress = {from: '', to: ''};
         this.detailCopy = {from: '', to: ''};
         this.direction = 'from';
@@ -76,27 +76,29 @@ export class Address {
             to: {latitude: 0, longitude: 0}
         };
 
-        place.address$.subscribe(newAddress => {
-            self.address = newAddress;
-            self.MapProvider.set('searching', false);
-            if(newAddress.to) {
-                GatherOrderProvider.setDestination(newAddress.to);
-            }
-            if(newAddress.from) {
-                GatherOrderProvider.setSource(newAddress.from);
-            }
-        });
+        //place.address$.subscribe(newAddress => {
+        //    self.address = newAddress;
+        //    self.MapProvider.set('searching', false);
+        //    if(newAddress.to) {
+        //        GatherOrderProvider.setDestination(newAddress.to);
+        //    }
+        //    if(newAddress.from) {
+        //        GatherOrderProvider.setSource(newAddress.from);
+        //    }
+        //});
 
         place.coords$.subscribe(newCoords => {
             self.coords = newCoords;
         });
 
         place.detailAddress$.subscribe(newDetail => {
+
+            //Provider data main <detailAddress>
             self.detailAddress = newDetail;
+            //Model tada for view  data main <detailCopy>
             self.detailCopy = _.assign({}, newDetail);
-            setTimeout(()=>{
-                self.ref.tick();
-            }, 300)
+            self.MapProvider.set('searching', false);
+            setTimeout(()=>{ self.ref.tick() }, 300)
         });
 
         MapProvider.state$.subscribe(newState => {
@@ -105,33 +107,24 @@ export class Address {
             self.state = _.assign({}, newState)
         });
 
+        MapProvider.markers$.subscribe(newMarkers => {
+            self.coords = newMarkers;
+        })
+
 
     }
-
-    ngAfterViewInit() {
-
-        // if(this.view) {
-        //     this.getAll(this.address[this.direction]);
-        //     this.editable[this.direction] = false;
-        // }
-
-        // this.vc.nativeElement.focus();
-
-    }
-
 
     clearAddress(direction, input?:any) {
 
         if(direction==='to') this.search = false;
         else {
-            this.addresses = this.formatAddressesSearch(this.address[direction], [this.detailAddress[direction]]);
+            this.addresses = this.formatAddressesSearch(this.detailCopy[direction].shortAddress, [this.detailAddress[direction]]);
             this.search = true
         }
 
 
         input.value = '';
         this.detailCopy[direction] = '';
-        this.address[direction] = '';
         this.ref.tick();
     }
 
@@ -149,11 +142,11 @@ export class Address {
         };
 
 
-        this.address[this.direction] = address['shortAddress'];
+        //this.address[this.direction] = address['shortAddress'];
         this.coords[this.direction] = newCoords;
         this.detailAddress[this.direction] = address;
         this.detailCopy[this.direction] = this.detailAddress[this.direction];
-        this.place.changeAddress(this.address);
+        //this.place.changeAddress(this.address);
         this.place.changeDetail(this.detailAddress[this.direction]);
         this.place.changeCoords(this.coords);
         this.place.reloadMap('homeMap');
@@ -283,7 +276,7 @@ export class Address {
         if(this.state.searching) return;
         if(this.direction === type && this.detail) return;
         if(this.state.onmapsearch && this.direction !== type) return;
-        if(this.direction === 'to' && 'to' !== type && this.detail) return
+        if(this.direction === 'to' && 'to' !== type && this.detail) return;
         var self = this;
         this.disabled.to = true;
         this.disabled.from = true;
@@ -291,9 +284,6 @@ export class Address {
         if((!this.detail && this.direction === type) || (type === 'to' && !this.coords.to.latitude)) {
             this.disabled[type] = false;
             if(this.NavProvider.getCurrentTabSet() === 'main') this.NavProvider.changeTabSet('search');
-            //if(this.NavProvider.getCurrentTab() === 'settings' || this.NavProvider.getCurrentTab() === 'time') {
-            //
-            //}
             this.MapProvider.set('editable', true);
             this.detail = true;
             setTimeout(()=>{
@@ -311,10 +301,10 @@ export class Address {
     }
 
     showMap() {
-        if(this.state.direction === 'to' && !this.address.to) {
+        if(this.state.direction === 'to' && !this.detailAddress.to) {
             this.coords[this.direction] = this.coords.from;
-            this.address[this.direction] = this.address.from;
-            this.place.changeAddress(this.address);
+            this.detailAddress[this.direction] = this.detailAddress.from;
+            this.place.changeDetail(this.detailAddress, true);
             this.place.changeCoords(this.coords);
             this.detail = false;
         } else {
@@ -341,9 +331,8 @@ export class Address {
 
         this.disabled[this.direction] = true;
 
-        if(direction === 'to' && !this.detailCopy.to) {
+        if(direction === 'to' && !this.detailCopy.to.shortAddress) {
             this.coords[this.direction] = {latitude: 0, longitude: 0};
-            this.place.changeAddress(this.address);
             this.place.changeDetail("");
             this.detailCopy[this.direction] = "";
             this.MapProvider.set('direction', 'from');

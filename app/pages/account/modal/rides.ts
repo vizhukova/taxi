@@ -84,20 +84,4 @@ export class RidesModal {
         this.lastRides = this.lastRides.filter((item, index) => index != num);
         this.OrderHistoryProvider.changeOrders(this.lastRides);
     }
-
-    public setLastOrderOptions(order: Order) {
-
-        this.PlaceProvider.changeAddress({
-            to: order.destinations[0].shortAddress,
-            from: order.source.shortAddress
-        });
-
-        this.CarOptionsProvider.changerCarClass(order.vehicleClass);
-        this.CarOptionsProvider.changerRequirements(order.requirements);
-        this.TimeProvider.change(order.bookingObj);
-
-        this.nav.pop();
-        this.NavProvider.changeTab('home');
-    }
-
 }

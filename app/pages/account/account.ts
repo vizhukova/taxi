@@ -57,7 +57,11 @@ export class AccountPage {
   }
 
   newRide() {
-    this.PlaceProvider.changeAddress({
+    this.PlaceProvider.changeDetail({
+        to: '',
+        from: ''
+    }, true);
+    this.PlaceProvider.changeCoords({
         to: '',
         from: ''
     });

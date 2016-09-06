@@ -32,7 +32,7 @@
         </div>
 
         <div class="items trips" *ngIf="!address" >
-            <div class="block" *ngFor="let item of trips; let num=index">
+            <div class="block" *ngFor="let item of trips; let num=index" (click)="setTrip(num, $event)">
                 <div class="content">
                     <p class="panel panel-title" (click)="showOptions(num, $event)">
                         <span>{{item.bookingDate}}</span>
@@ -40,7 +40,7 @@
                     </p>
                     <p class="panel">
                          <span class="options" *ngIf="num === optionDetails">
-                                <span>Повторить</span>
+                                <span (click)="setTrip(num, $event)">Повторить</span>
                                  <span>Скрыть</span>
                                  <span (click)="deleteTrip(num)">Удалить</span>
                         </span>

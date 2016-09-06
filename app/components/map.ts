@@ -31,14 +31,16 @@ export class Map {
     polyline:any;
     iconFrom:any;
     iconTo:any;
-    markerTo:any;
-    markerFrom:any;
     coords:any;
     error: boolean;
     state: MapState;
     pathButton: any;
     timer: any;
     dragCoordsChange: boolean;
+    markers: any = {
+        from: null,
+        to: null
+    };
 
 
     @Input() callback:Function;
@@ -87,11 +89,10 @@ export class Map {
             popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
         });
 
-        this.markerTo = L.marker([0, 0], {icon: this.iconTo, opacity: 1});
-        this.markerFrom = L.marker([0, 0], {icon: this.iconFrom,  opacity: 1});
+        this.markers.to = L.marker([0, 0], {icon: this.iconTo, opacity: 1});
+        this.markers.from = L.marker([0, 0], {icon: this.iconFrom,  opacity: 1});
 
         MapProvider.state$.subscribe(newState => {
-
 
             if(!this.state.direction && newState.direction) {
                 this.addMarker(newState.direction);
@@ -102,6 +103,7 @@ export class Map {
             if(this.state.onmapsearch && !newState.onmapsearch) {
                 this.state = _.assign({}, newState);
                 this.calcPolyline(this.coords)
+                .then((data:any)=>{this.markPolyline(this.PlaceProvider.decodeGooglePolyline(data.overviewPolyline))})
             }
 
             this.state = _.assign({}, newState);
@@ -112,6 +114,24 @@ export class Map {
             }, 300);
         });
 
+
+
+
+        MapProvider.markers$.subscribe(newMarkers => {
+              for(let marker in newMarkers) {
+                  if(!newMarkers[marker]) return;
+                  this.map.removeLayer(this.markers[marker]);
+                  this.markers[marker].setLatLng(Map.coordinatesToArray(newMarkers[marker]));
+                  this.markers[marker].addTo(this.map);
+              }
+
+            this.coords = newMarkers;
+             this.calcPolyline(newMarkers)
+            .then((data:any)=>{return this.markPolyline(this.PlaceProvider.decodeGooglePolyline(data.overviewPolyline))})
+            .then(()=>{this.boundsPolyline()})
+            .catch((err) => { console.log(err) })
+        });
+
         
         PlaceProvider.coords$.subscribe(newCoords => {
             
@@ -119,12 +139,13 @@ export class Map {
 
             if(this.polyline && newCoords.to.latitude === 0) {
                 this.removeLayer(this.polyline);
-                this.removeLayer(this.markerTo);
-                this.map.setView(this.markerFrom.getLatLng());
+                this.removeLayer(this.markers.to);
+                this.map.setView(this.markers.from.getLatLng());
                 return;
             }
 
-            this.calcPolyline(newCoords);
+            this.calcPolyline(newCoords)
+            .then((data:any)=>{this.markPolyline(this.PlaceProvider.decodeGooglePolyline(data.overviewPolyline))})
 
             if (this.map && newCoords && this.state.direction) {
 
@@ -135,21 +156,12 @@ export class Map {
                         currentCoordinates.latitude,
                         currentCoordinates.longitude
                     ]);
-
+                    this.map.invalidateSize(true)
                 }
                 this.dragCoordsChange = false;
             }
 
         });
-
-        //
-        //PlaceProvider.mapCreate$.subscribe(name => {
-        //    self.createMap(name)
-        //});
-        //
-        //PlaceProvider.mapDestroy$.subscribe(name => {
-        //    self.destroyMap(name)
-        //});
     }
 
     hideError() {
@@ -161,18 +173,18 @@ export class Map {
     addMarker(direction: string) {
 
 
-        if(this.polyline && this.map.hasLayer(this.markerTo) && this.map.hasLayer(this.markerFrom)) {
+        if(this.polyline && this.map.hasLayer(this.markers.to) && this.map.hasLayer(this.markers.from)) {
             switch(direction) {
                 case 'to':
-                    this.map.removeLayer(this.markerTo);
-                    //this.markerTo.setOpacity(0);
-                    this.map.setView(this.markerTo.getLatLng());
+                    this.map.removeLayer(this.markers.to);
+                    //this.markers.to.setOpacity(0);
+                    this.map.setView(this.markers.to.getLatLng());
                     break;
 
                 case 'from':
-                    this.map.removeLayer(this.markerFrom);
-                    //this.markerFrom.setOpacity(0);
-                    this.map.setView(this.markerFrom.getLatLng());
+                    this.map.removeLayer(this.markers.from);
+                    //this.markers.from.setOpacity(0);
+                    this.map.setView(this.markers.from.getLatLng());
             }
 
             return
@@ -183,27 +195,23 @@ export class Map {
                      this.map.getCenter();
 
         if(!coords[0]) {
-            this.map.removeLayer(this.markerFrom);
-            this.map.removeLayer(this.markerTo);
+            this.map.removeLayer(this.markers.from);
+            this.map.removeLayer(this.markers.to);
             return;
         }
 
         switch(direction) {
             case 'to':
-                //this.markerFrom.setOpacity(0);
-                //this.markerTo.setOpacity(1);
-                if(this.polyline) this.map.setView(this.markerFrom.getLatLng());
-                this.map.removeLayer(this.markerFrom);
-                this.markerTo.setLatLng(coords);
-                this.markerTo.addTo(this.map);
+                if(this.polyline) this.map.setView(this.markers.from.getLatLng());
+                this.map.removeLayer(this.markers.from);
+                this.markers.to.setLatLng(coords);
+                this.markers.to.addTo(this.map);
                 break;
             case 'from':
-                if(this.polyline) this.map.setView(this.markerTo.getLatLng());
-                this.map.removeLayer(this.markerTo);
-                this.markerFrom.setLatLng(coords);
-                this.markerFrom.addTo(this.map);
-                //this.markerTo.setOpacity(0);
-                //this.markerFrom.setOpacity(1);
+                if(this.polyline) this.map.setView(this.markers.to.getLatLng());
+                this.map.removeLayer(this.markers.to);
+                this.markers.from.setLatLng(coords);
+                this.markers.from.addTo(this.map);
                 break;
         }
     }
@@ -345,23 +353,25 @@ export class Map {
         }
     }
 
-    private calcPolyline(coords:any):void {
+    private calcPolyline(coords:any) {
+        var self = this;
+        return new Promise((resolve, reject)=>{
+            if (!coords.from || !coords.to || self.state.onmapsearch) return;
 
-        if (!coords.from || !coords.to || this.state.onmapsearch) return;
+            let from = {Lat: coords.from.latitude, Lon: coords.from.longitude};
 
-        let from = {Lat: coords.from.latitude, Lon: coords.from.longitude};
+            let to = {Lat: coords.to.latitude, Lon: coords.to.longitude};
 
-        let to = {Lat: coords.to.latitude, Lon: coords.to.longitude};
+            if (!from.Lat || !from.Lon || !to.Lat || !to.Lon) return;
 
-        if (!from.Lat || !from.Lon || !to.Lat || !to.Lon) return;
+            self.http.post('http://ddtaxity.smarttaxi.ru:8000/1.x/route?taxiserviceid=taxity', [from, to])
 
-        this.http.post('http://ddtaxity.smarttaxi.ru:8000/1.x/route?taxiserviceid=taxity', [from, to])
-
-            .subscribe((res:Response) => {
-                var data = res.json();
-
-                this.markPolyline(this.PlaceProvider.decodeGooglePolyline(data.overviewPolyline));
-            });                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+                .subscribe((res:Response) => {
+                    var data = res.json();
+                    resolve(data);
+                    //this.markPolyline(this.PlaceProvider.decodeGooglePolyline(data.overviewPolyline));
+                });
+        })
     }
 
     private boundsPolyline() {
@@ -372,13 +382,13 @@ export class Map {
         }
 
         if(this.state.direction === 'to') {
-            this.markerTo.setLatLng(this.map.getCenter());
-            //this.markerTo.setOpacity(1);
-            this.markerTo.addTo(this.map);
+            this.markers.to.setLatLng(this.map.getCenter());
+            //this.markers.to.setOpacity(1);
+            this.markers.to.addTo(this.map);
         } else if(this.state.direction === 'from') {
-            this.markerFrom.setLatLng(this.map.getCenter());
-            //this.markerFrom.setOpacity(1);
-            this.markerFrom.addTo(this.map);
+            this.markers.from.setLatLng(this.map.getCenter());
+            //this.markers.from.setOpacity(1);
+            this.markers.from.addTo(this.map);
         }
 
         this.MapProvider.set('direction', '');
@@ -402,6 +412,8 @@ export class Map {
     private markPolyline(path:any):void {
         this.polyline && this.removeLayer(this.polyline);
         this.polyline = L.polyline(path, {color: 'black'}).addTo(this.map);
+        this.map.invalidateSize(true);
+        Promise.resolve(true);
     }
 
     private removeLayer(layer):void {
