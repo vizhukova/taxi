@@ -150,11 +150,12 @@ export class MainPage {
   }
 
   setCallClasses() {
+    this.state.tripFinished = true;
     return {
       call: true,
-      active: !this.state.searching && this.state.cost && !this.state.onmapsearch,
+      active: !this.state.searching && this.state.cost && !this.state.onmapsearch && !this.state.tripFinished,
       next: this.state.onmapsearch
-    }
+    };
   }  
 
   ngAfterViewInit(){
@@ -173,7 +174,9 @@ export class MainPage {
 
       this.GatherOrderProvider.createOrder().then((data) => {
         this.OrderHistoryProvider.save(this.GatherOrderProvider.getGatheredOrder());
+
         //this.NavProvider.changeTabSet('order');
+        // this.state.tripFinished = true;
 
 
       }).catch((err) => {

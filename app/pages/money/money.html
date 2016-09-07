@@ -46,12 +46,12 @@
                  <span class="select-content" *ngIf="isOpenSelect">
                     <span *ngFor="let item of cards" (click)="setCard(item)">
                         <span>{{item.name}}</span>
-                        <span class="comment">{{item.comment}}</span>
+                        <span class="comment">{{getNum(item.num)}}</span>
                     </span>
                  </span>
             </p>
 
-              <p class="label">
+              <p class="label" (click)="addNewCard()">
                 <label class="add">
                     Добавить систему оплаты
                 </label>

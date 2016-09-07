@@ -50,6 +50,7 @@ export class AddNewCardModal {
           }
 
         });
+
     }
 
     showSelect(e, value) {
@@ -89,10 +90,10 @@ export class AddNewCardModal {
 
         var newCard = {
             name: this.name,
-            num: this.name,
-            owner: this.name,
-            date: this.name,
-            cvc: this.name,
+            num: this.num,
+            owner: this.owner,
+            date: this.date,
+            cvc: this.cvc,
             isMain: this.card['isMain'] || false,
             type: this.cardName
         };

@@ -179,7 +179,7 @@ export class Place {
     }
 
     public getAddress() {
-        return this.address;
+        return this.fullAddress;
     }
 
     public getCurrentAddress(coords:Coordinates) {
