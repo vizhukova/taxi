@@ -18,6 +18,7 @@ export class RegistrationModal {
    name: string;
    code: string = '+7';
     key: any;
+    errorCode: any;
     timer: any;
     number: string;
     timeout: number;
@@ -26,6 +27,7 @@ export class RegistrationModal {
     powers: Array<string> = ['Really Smart', 'Super Flexible',
         'Super Hot', 'Weather Changer'];
     model: string;
+    errors: any;
 
     constructor(
         public nav: NavController,
@@ -39,6 +41,13 @@ export class RegistrationModal {
         this.timer = null;
         this.wrongKey = false;
         this.number = '';
+        this.name='';
+        this.errors = {
+            name: 'ВВЕДИТЕ ИМЯ',
+            number: 'ВВЕДИТЕ НОМЕР',
+            code: 'НЕПРАВИЛЬНЫЙ КОД'
+        };
+        this.errorCode = 'code'
     }
 
     closeKeyboard(event) {
@@ -55,29 +64,30 @@ export class RegistrationModal {
         }
     }
 
-     onPageWillEnter() {
-        //hide nav bar when we enter the page
-        // (<HTMLScriptElement[]><any>document.getElementsByTagName('ion-tabbar'))[0].style.display = "none";
-    }
-    //show nav bar when we leave the page
-    onPageDidLeave() {
-       // (<HTMLScriptElement[]><any>document.getElementsByTagName('ion-tabbar'))[0].style.display = "flex";
-    }
-
     setClasses() {
-
-
-
         return {
             sent: true,
             code: true,
-            green: this.number.length === 10
+            green: this.number.length === 10 && this.name.length >= 3,
         }
     }
 
+    executeError(code) {
+        this.errorCode = code;
+        this.wrongKey = true;
+        setTimeout(()=>{ this.wrongKey = false }, 7000)
+    }
+
+
     sentCode() {
-        //TODO number.length
-        if(this.name && this.number.length < 3 && this.number.length > 10) return;
+        if(this.name.length < 3 ) {
+            this.executeError('name');
+            return;
+        } else if(this.number.length < 10 || this.number.length > 10) {
+            this.executeError('number');
+            return;
+        }
+
         this.isCode = true;
         this.AuthProvider.register(this.name, this.code + this.number);
         this.startTime();
@@ -113,18 +123,15 @@ export class RegistrationModal {
             setTimeout(()=>{ self.MapProvider.set('authorized', true) }, 1000);
         } else if(this.isCode && this.key) {
             this.AuthProvider.confirm(this.key, this.code + this.number).then((data) => {
-                debugger;
                 if(data !== 'WRONGKEY')  {
                     self.nav.pop();
                     setTimeout(()=>{ self.MapProvider.set('authorized', true) }, 1000);
                 } else if(data === 'WRONGKEY'){
-                    self.wrongKey = true;
-                    setTimeout(()=>{ self.wrongKey = false }, 7000)
+                    self.executeError('code')
                 } else { console.log(data) }
             })
         } else {
-            self.wrongKey = true;
-            setTimeout(()=>{ self.wrongKey = false }, 7000)
+           self.executeError('code')
         }
     }
 

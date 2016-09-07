@@ -5,6 +5,7 @@ import {Place} from './../../providers/place/place';
 import {Loader} from './../../components/loader/loader';
 import {GatherOrder} from './../../providers/order/gather_order';
 import {CarOptions} from "../../providers/car-options/car-options";
+import { AddNewCardModal } from '../account/modal/add_new_card/add_new_card';
 
 /*
   Generated class for the SettingsPage page.
@@ -112,5 +113,9 @@ export class SettingsPage {
     console.log(this.tariffInput)
     console.log(this.paymentInput)
     console.log(this.serviceInput)
+  }
+
+  createNew() {
+    this.nav.push(AddNewCardModal);
   }
 }

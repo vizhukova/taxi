@@ -41,7 +41,7 @@
             <button *ngIf="!timer" (click)="sentCode()" [ngClass]="setClasses()">{{isCode ? "Повторно выслать код" : "Выслать код"}}</button>
             <button class="sent opacity" *ngIf="timer">Повторить через 00:{{timeout}}</button>
 
-            <div *ngIf="wrongKey" class="status">НЕПРАВИЛЬНЫЙ КОД</div>
+            <div *ngIf="wrongKey" class="status">{{errors[errorCode]}}</div>
 
             <label class="sms">
                 <span *ngIf="isCode">Код из SMS</span>

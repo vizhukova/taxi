@@ -155,8 +155,7 @@ export class Map {
                     this.map.setView([
                         currentCoordinates.latitude,
                         currentCoordinates.longitude
-                    ]);
-                    this.map.invalidateSize(true)
+                    ], 16, {reset: true});
                 }
                 this.dragCoordsChange = false;
             }
@@ -357,6 +356,7 @@ export class Map {
         var self = this;
         return new Promise((resolve, reject)=>{
             if (!coords.from || !coords.to || self.state.onmapsearch) return;
+            if (coords.from.latitude === coords.to.latitude && coords.from.longitude === coords.to.longitude) return;
 
             let from = {Lat: coords.from.latitude, Lon: coords.from.longitude};
 
