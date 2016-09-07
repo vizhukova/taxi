@@ -52,15 +52,14 @@
       display: inline-block;
       color: #fbfbfb;
       text-align: right;
-      margin-left: 9px
     }
 
     div.price {
       display: inline-block;
       padding-left: 45px;
-      background: url("../res/btn_price_layer.png") left center no-repeat, url("../res/icon_coins.png") 15px center no-repeat;
-      background-size: 100% 100%, 23px 18px;
-      padding-right: 4px;
+      background: url("../res/icon_coins.png") 15px center no-repeat, url("../res/btn_price_layer.png") 1px center no-repeat;
+      background-size: 23px 18px, 100% 100%;
+      padding-right: 8px;
 
       p {
         &:after {

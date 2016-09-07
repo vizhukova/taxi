@@ -24,6 +24,7 @@ export class AddNewCardModal {
 
     error: Object = {};
 
+
     isEdit: boolean = false; //открыто для создания или редактирования
 
     constructor(private nav: NavController, private CardProvider: Card) {
@@ -55,7 +56,7 @@ export class AddNewCardModal {
     showSelect(e, value) {
         this.isShownSelect = value;
         if(value) {
-            e.stopPropagation();
+            //e.stopPropagation();
         }
     }
 
