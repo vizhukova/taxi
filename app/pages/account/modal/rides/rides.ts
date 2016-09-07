@@ -1,20 +1,21 @@
 import { Component } from '@angular/core';
 import {  NavController } from 'ionic-angular';
 
-import {  Ride } from './../../../models/ride';
-import {  Order } from './../../../interfaces/order';
+import {  Ride } from '../../../../models/ride';
+import {  Order } from '../../../../interfaces/order';
 
-import {  OrderFavorite } from './../../../providers/order/favorites';
-import {  OrderHistory } from './../../../providers/order/history';
-import {  Place } from './../../../providers/place/place';
-import {  GatherOrder } from './../../../providers/order/gather_order';
-import {  Nav } from './../../../providers/nav/nav';
-import { CarOptions } from './../../../providers/car-options/car-options';
-import { TimeProvider } from './../../../providers/time/time';
-import { MapProvider } from './../../../providers/map/map';
+
+import { MapProvider } from '../../../../providers/map/map';
+import {  OrderFavorite } from '../../../../providers/order/favorites';
+import {  OrderHistory } from '../../../../providers/order/history';
+import {  Place } from '../../../../providers/place/place';
+import {  GatherOrder } from '../../../../providers/order/gather_order';
+import {  Nav } from '../../../../providers/nav/nav';
+import { CarOptions } from '../../../../providers/car-options/car-options';
+import { TimeProvider } from '../../../../providers/time/time';
 
 @Component({
-    templateUrl: 'build/pages/account/modal/rides.html'
+    templateUrl: 'build/pages/account/modal/rides/rides.html'
 })
 export class RidesModal {
 

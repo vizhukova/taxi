@@ -1,0 +1,88 @@
+<ion-content class="modal add-card-modal" (click)="showSelect($event, false)">
+   <div class="modal-body">
+
+        <div class="content form-fields">
+
+         <div class="icon-arrow-left" (click)="closeModal()"></div>
+
+         <div class="modal-header">
+              <div class="wrap" [ngClass]="{'error': isError('name')}">
+                <div class="group name">
+                    <input type="text" [(ngModel)]="name" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Имя карточки</label>
+                </div>
+            </div>
+
+           <!--<div class="wrap">-->
+                <!--<div class="group type">-->
+                    <!--<input type="text" [(ngModel)]="type" required>-->
+                    <!--<span class="highlight"></span>-->
+                    <!--<span class="bar"></span>-->
+                    <!--<label>Тип карточки</label>-->
+                <!--</div>-->
+            <!--</div>-->
+              <span class="select-wrapper">
+                   <div class="input" (click)="showSelect($event, true)">{{cardName}}</div>
+                   <div class="panel" (click)="showSelect($event, false)" *ngIf="isShownSelect">
+                       <span class="option" *ngFor="let item of cards" (click)="setCard(item)">{{item}}</span>
+                   </div>
+
+                    <!--<select [(ngModel)]="code">-->
+                      <!--<option [value]="+ 7">+ 7</option>-->
+                      <!--<option [value]="+ 38">+ 38</option>-->
+                    <!--</select>-->
+               </span>
+        </div>
+
+          <div class="modal-content">
+
+              <div class="wrap" [ngClass]="{'error': isError('num')}">
+                <div class="group num">
+                    <input type="text" [(ngModel)]="num" maxlength="16" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Номер вашей карточки</label>
+                </div>
+            </div>
+
+               <div class="wrap" [ngClass]="{'error': isError('owner')}">
+                <div class="group owner">
+                    <input type="text" [(ngModel)]="owner" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Имя владельца</label>
+                </div>
+            </div>
+
+               <div class="wrap" [ngClass]="{'error': isError('date')}">
+                <div class="group date">
+                    <input type="text" [(ngModel)]="date" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Срок действия</label>
+                </div>
+            </div>
+
+               <div class="wrap" [ngClass]="{'error': isError('cvc')}">
+                <div class="group cvc">
+                    <input type="password" [(ngModel)]="cvc" maxlength="3" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>CVC</label>
+                </div>
+            </div>
+
+          </div>
+
+             <div>
+                <div class="price" (click)="submit()">
+                  <p class="text">Подтверждаю</p>
+                </div>
+              </div>
+
+         </div>
+
+   </div>
+</ion-content>

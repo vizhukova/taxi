@@ -1,0 +1,37 @@
+<ion-content class="modal cards-modal" (click)="hideMenu($event)">
+
+ <div class="header header-line" (click)="closeModal()">
+  <span class="cross"></span>
+  <span class="text">Личный счет</span>
+ </div>
+
+  <div class="block">
+            <div class="list">
+
+                <p class="label">
+                    <span class="label-header">Мои карточки</span>
+                </p>
+
+                <div class="add-new" (click)="createNew()"></div>
+
+                <p class="content"
+                   *ngFor="let item of cards; let index='index'"
+                   [ngClass]="{'main': item.isMain}"
+                   (click)="showMenu($event, index)">
+
+                    <span class="name">{{item.type}}</span>
+                    <span class="main-content">Главная</span>
+                    <span class="card-name">{{item.name}}</span>
+                    <span class="card-num">{{ getNum(item.num) }}</span>
+                    <i class="more-btn"></i>
+
+                    <span class="menu" *ngIf="visibleMenu === index" (click)="hideMenu($event)">
+                        <span (click)="makeMain(index)">Сделать главной</span>
+                        <span (click)="editOption(index)">Редактировать</span>
+                        <span (click)="deleteOption(index)">Удалить</span>
+                    </span>
+                </p>
+            </div>
+        </div>
+
+</ion-content>

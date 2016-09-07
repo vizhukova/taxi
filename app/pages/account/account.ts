@@ -2,8 +2,10 @@ import { Component } from '@angular/core';
 import { NavController, Modal, ViewController } from 'ionic-angular';
 import {NavParams} from "ionic-angular/index";
 import {Platform} from "ionic-angular/index";
-import {RidesModal} from "./modal/rides";
+import {RidesModal} from "./modal/rides/rides";
 import {Order} from "../../interfaces/order";
+
+import {CardsModal} from "./modal/cards/cards";
 
 import {Auth} from "../../providers/auth/auth";
 import {OrderHistory} from "../../providers/order/history";
@@ -54,6 +56,10 @@ export class AccountPage {
 
   showRidesModal() {
     this.nav.push(RidesModal, {}, {animate: false});
+  }
+
+  showCardsModal() {
+    this.nav.push(CardsModal);
   }
 
   newRide() {

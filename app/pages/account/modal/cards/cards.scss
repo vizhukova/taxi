@@ -1,0 +1,151 @@
+.cards-modal {
+  .header {
+    height: 150px;
+    position: relative;
+
+    &:after{
+      @extend .pseubo-class-icon;
+      width: 105%;
+      height: 8px;
+      background: url(./../res/head_line.png) no-repeat center center;
+      bottom: -7px;
+      top: initial;
+    }
+    //background: #28282c;
+    span.text {
+      font-size: 20px;
+      line-height: 30px;
+      height: 25px;
+      display: inline-block;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    span.cross {
+      background-position: center -2px;
+    }
+  }
+
+  .block {
+    height: calc(100% - 150px);
+    .label-header {
+      font-weight: 100;
+      color: $main-bright-color;
+    }
+    .list {
+      height: 100%;
+      padding: 0;
+      background: #e4e7ec;
+
+      .add-new {
+        background-color: #ff7431;
+        background-image: url(./../res/icon-plus.svg);
+        width: 45px;
+        height: 45px;
+        background-size: 25px;
+        border-radius: 50%;
+        background-position: center center;
+        background-repeat: no-repeat;
+        position: absolute;
+        right: 18px;
+        top: 130px;
+
+        -webkit-box-shadow: 3px 3px 16px 0px rgba(79,78,79,1);
+        -moz-box-shadow: 3px 3px 16px 0px rgba(79,78,79,1);
+        box-shadow: 3px 3px 16px 0px rgba(79,78,79,1);
+      }
+
+      p.label {
+        padding: 0 36px;
+      }
+      p.content {
+        background: #f7f7f9;
+        display: block;
+        padding: 5px 72px;
+        margin-bottom: 5px;
+        position: relative;
+
+        webkit-box-shadow: 0px 1px 5px 0px #b4bac3;
+        -moz-box-shadow: 0px 1px 5px 0px #b4bac3;
+        box-shadow: 0px 1px 5px 0px #b4bac3;
+
+        &.main {
+          .main-content {
+            display: inline-block;
+          }
+        }
+
+        .menu {
+          position: absolute;
+          z-index: 1;
+          background: #fdfdfd;
+          font-weight: 100;
+          padding: 10px;
+          top: 60px;
+          right: 10px;
+          webkit-box-shadow: 0px 1px 5px 0px #b4bac3;
+          -moz-box-shadow: 0px 1px 5px 0px #b4bac3;
+          box-shadow: 0px 1px 5px 0px #b4bac3;
+
+          span {
+            line-height: 55px;
+          }
+        }
+
+        span {
+          display: block;
+          color: #2e2e35;
+
+          &.main-content {
+            display: none;
+            position: absolute;
+            right: 15px;
+            top: 0;
+            line-height: 46px;
+            text-transform: uppercase;
+            font-size: 13px;
+            color: $main-bright-color;
+          }
+
+          &.name {
+            padding: 10px 0;
+            width: 100%;
+            position: relative;
+            font-weight: 100;
+            color: #8a8a8c;
+
+            &:before {
+              @extend .pseubo-class-icon;
+              background: url(./../res/card_green.svg) no-repeat center center;
+              left: -35px;
+            }
+
+            &:after {
+              @extend .pseubo-class-icon;
+              bottom: 0;
+              top: initial;
+              background: #e4e7ec;
+              height: 2px;
+              width: calc(100% + 144px);
+              left: -72px;
+            }
+          }
+
+          &.card-name {
+            line-height: 25px;
+            padding-top: 10px;
+            text-transform: uppercase;
+          }
+
+          &.card-num {
+            line-height: 25px;
+          }
+        }
+
+        i.more-btn {
+          top: 39px;
+          right: 15px;
+        }
+      }
+    }
+  }
+}

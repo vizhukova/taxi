@@ -27,7 +27,9 @@ import {CarOptions} from "../../providers/car-options/car-options";
 import {GatherOrder} from "../../providers/order/gather_order";
 import {OrderHistory} from "../../providers/order/history";
 import {MapProvider} from "../../providers/map/map";
+
 import {MapState} from "../../interfaces/map";
+
 import * as _ from 'lodash'
 
 
