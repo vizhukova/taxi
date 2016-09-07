@@ -178,6 +178,10 @@ export class Place {
         return coordinates;
     }
 
+    public getAddress() {
+        return this.address;
+    }
+
     public getCurrentAddress(coords:Coordinates) {
         const self = this;
 

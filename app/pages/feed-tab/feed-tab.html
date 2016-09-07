@@ -21,7 +21,7 @@
                 <i class="more-btn" (click)="showOptions(num, $event)"></i>
               <div class="content">
                    <span class="options" *ngIf="num === optionDetails">
-                        <span>Повторить</span>
+                        <span (click)="setLastAddress(key)">Повторить</span>
                         <span>Скрыть</span>
                         <span (click)="deleteAddress(key)">Удалить</span>
                     </span>

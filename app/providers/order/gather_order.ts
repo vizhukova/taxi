@@ -30,6 +30,9 @@ export class GatherOrder {
     recipientPhone : string;
     requirements : Array<string>;
 
+    clientMark: number;//оценка пользователя
+
+
     order: Order;
 
 
