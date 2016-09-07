@@ -156,7 +156,7 @@ export class MainPage {
       active: !this.state.searching && this.state.cost && !this.state.onmapsearch && !this.state.tripFinished,
       next: this.state.onmapsearch
     };
-  }  
+  }
 
   ngAfterViewInit(){
     if(!this.AuthProvider.check()){
