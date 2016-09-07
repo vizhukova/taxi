@@ -117,11 +117,10 @@ export class FeedTabPage {
       }
     };
 
-    this.PlaceProvider.changeCoords(curCoord);
+
     this.PlaceProvider.changeDetail({from: this.trips[index].source, to: this.trips[index].destinations[0]}, true);
-    var curent = this.PlaceProvider.getDirection();
-    this.MapProvider.set('direction', curent === 'from' ? 'to' : 'from');
-    this.MapProvider.set('direction', curent === 'to' ? 'to' : 'from');
+    this.MapProvider.setMarker(curCoord);
+    this.MapProvider.set('direction', '');
     this.NavProvider.changeTab('home');
   }
 }

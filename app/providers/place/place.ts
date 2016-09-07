@@ -19,7 +19,6 @@ export class Place {
     dragStart:boolean;
 
     // Observable data sources
-    private addressSource = new BehaviorSubject<any>({from: '', to: ''});
     private detailAddressSource = new BehaviorSubject<any>({from: '', to: ''});
     private coordsSource = new BehaviorSubject<any>({from: [], to: []});
     private reloadSource = new BehaviorSubject<any>(true);
@@ -28,17 +27,11 @@ export class Place {
 
 
     // Observable data streams
-    address$ = this.addressSource.asObservable();
     detailAddress$ = this.detailAddressSource.asObservable();
     coords$ = this.coordsSource.asObservable();
     reload$ = this.reloadSource.asObservable();
     mapCreate$ = this.mapCreateSource.asObservable();
     mapDestroy$ = this.mapDestroySource.asObservable();
-
-    public changeAddress(address:Object) {
-        this.addressSource.next(address);
-    }
-
 
     public changeDetail(address:Object, raw?:any) {
 
@@ -92,9 +85,12 @@ export class Place {
         };
 
         this.MapProvider.state$.subscribe(newState => {
-            console.log('Update mapprovider', newState.dragStart)
             this.direction = newState.direction;
             this.dragStart = newState.dragStart;
+        });
+
+        this.MapProvider.markers$.subscribe(newState => {
+            this.coords = newState
         });
 
         this.cbs = []

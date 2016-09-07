@@ -21,7 +21,7 @@
                 </p>
                 <p class="panel">
                      <span class="options" *ngIf="num === optionDetails">
-                         <span>Повторить</span>
+                         <span (click)="setTrip(num)">Повторить</span>
                          <span>Скрыть</span>
                          <span (click)="delete(num, $event)">Удалить</span>
                          <span (click)="toFavorites(item, $event)">В избранные</span>

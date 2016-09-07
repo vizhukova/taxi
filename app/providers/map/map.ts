@@ -22,8 +22,8 @@ export class MapProvider {
     });
 
     private markersSource = new BehaviorSubject({
-        from: null,
-        to: null
+        from: {latitude: 0, longitude: 0},
+        to: {latitude: 0, longitude: 0}
     });
 
     state$ = this.stateSource.asObservable();

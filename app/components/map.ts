@@ -38,8 +38,8 @@ export class Map {
     timer: any;
     dragCoordsChange: boolean;
     markers: any = {
-        from: null,
-        to: null
+        from: {latitude: 0, longitude: 0},
+        to: {latitude: 0, longitude: 0}
     };
 
 
@@ -119,7 +119,7 @@ export class Map {
 
         MapProvider.markers$.subscribe(newMarkers => {
               for(let marker in newMarkers) {
-                  if(!newMarkers[marker]) return;
+                  if(!newMarkers[marker].latitude) return;
                   this.map.removeLayer(this.markers[marker]);
                   this.markers[marker].setLatLng(Map.coordinatesToArray(newMarkers[marker]));
                   this.markers[marker].addTo(this.map);
@@ -298,7 +298,7 @@ export class Map {
         
         if (!this.map) this.map = new L.Map(this.selector, options);
 
-        if (!this.editable) this.map.on('dragstart', () =>{
+        this.map.on('dragstart', () =>{
             if(this.state.direction) {
                 clearTimeout(this.timer);
                 this.MapProvider.set('cost', false);
@@ -306,25 +306,25 @@ export class Map {
             }
         });
 
-        if (!this.editable) this.map.on('dragend', ()=>{
+       this.map.on('dragend', ()=>{
             this.timeout()
         });
 
-        if (!this.editable) this.map.on('drag', ()=>{
+        this.map.on('drag', ()=>{
             if(this.state.direction) {
                 this.MapProvider.set('searching', true)
             }
         });
 
 
-        if (!this.editable) this.map.on('zoomstart', () =>{
+        this.map.on('zoomstart', () =>{
             if(this.state.direction) {
                 clearTimeout(this.timer);
                 this.MapProvider.set('cost', false);
             }
         });
 
-        if (!this.editable) this.map.on('zoomend', this.timeout);
+        this.map.on('zoomend', this.timeout);
 
         setTimeout(()=> {
             this.map.invalidateSize(true)

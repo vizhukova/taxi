@@ -11,6 +11,7 @@ import {  GatherOrder } from './../../../providers/order/gather_order';
 import {  Nav } from './../../../providers/nav/nav';
 import { CarOptions } from './../../../providers/car-options/car-options';
 import { TimeProvider } from './../../../providers/time/time';
+import { MapProvider } from './../../../providers/map/map';
 
 @Component({
     templateUrl: 'build/pages/account/modal/rides.html'
@@ -30,7 +31,8 @@ export class RidesModal {
                 public OrderFavoriteProvider: OrderFavorite,
                 public NavProvider: Nav,
                 public CarOptionsProvider: CarOptions,
-                public TimeProvider: TimeProvider) {
+                public TimeProvider: TimeProvider,
+                public MapProvider: MapProvider) {
 
         this.nav = nav;
 
@@ -83,5 +85,28 @@ export class RidesModal {
         this.showOptions('', $event);
         this.lastRides = this.lastRides.filter((item, index) => index != num);
         this.OrderHistoryProvider.changeOrders(this.lastRides);
+    }
+
+    setTrip(index) {
+
+        var trips = this.lastRides;
+
+        var curCoord = {
+            from: {
+                latitude: trips[index].source.lat,
+                longitude: trips[index].source.lon
+            },
+            to: {
+                latitude: trips[index].destinations[0].lat,
+                longitude: trips[index].destinations[0].lon
+            }
+        };
+
+
+        this.PlaceProvider.changeDetail({from: this.lastRides[index].source, to: this.lastRides[index].destinations[0]}, true);
+        this.MapProvider.setMarker(curCoord);
+        this.MapProvider.set('direction', '');
+        this.nav.pop();
+        this.NavProvider.changeTab('home');
     }
 }

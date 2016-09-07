@@ -34,6 +34,7 @@ export class Auth {
     }
 
     public register(name:string, number:string) {
+        var self = this;
 
         let body = {
             name: name,
@@ -45,15 +46,12 @@ export class Auth {
         this.user['name'] = name;
         this.user['phone'] = number;
 
-        this.emitUpdate();
-
-        localStorage.setItem('user', JSON.stringify(this.user));
-
         return new Promise((resolve, reject) => {
             this.http.post(`${URL}/Register/Register`, JSON.stringify(body))
                 .subscribe((res:Response) => {
 
                     var data = res.json();
+
                     resolve(data);
 
                 }, (err) => {

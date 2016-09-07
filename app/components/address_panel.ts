@@ -109,6 +109,7 @@ export class Address {
 
         MapProvider.markers$.subscribe(newMarkers => {
             self.coords = newMarkers;
+            this.detail = false;
         })
 
 
