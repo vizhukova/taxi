@@ -79,7 +79,6 @@ export class CarOptions {
   }
 
   public getCarClass() {
-    debugger
     return this.carClassInput;
   }
 

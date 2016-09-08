@@ -140,7 +140,7 @@ export class Map {
             if(this.polyline && newCoords.to.latitude === 0) {
                 this.removeLayer(this.polyline);
                 this.removeLayer(this.markers.to);
-                this.map.setView(this.markers.from.getLatLng());
+                this.map.setView(this.markers.from.getLatLng(), this.roundZoom());
                 return;
             }
 
@@ -166,8 +166,10 @@ export class Map {
     hideError() {
         this.MapProvider.set('error', false);
     }
-    
-    
+
+    roundZoom() {
+        return Math.round(this.map.getZoom())
+    }
     
     addMarker(direction: string) {
 
@@ -177,13 +179,13 @@ export class Map {
                 case 'to':
                     this.map.removeLayer(this.markers.to);
                     //this.markers.to.setOpacity(0);
-                    this.map.setView(this.markers.to.getLatLng());
+                    this.map.setView(this.markers.to.getLatLng(), this.roundZoom());
                     break;
 
                 case 'from':
                     this.map.removeLayer(this.markers.from);
                     //this.markers.from.setOpacity(0);
-                    this.map.setView(this.markers.from.getLatLng());
+                    this.map.setView(this.markers.from.getLatLng(), this.roundZoom());
             }
 
             return
@@ -201,13 +203,13 @@ export class Map {
 
         switch(direction) {
             case 'to':
-                if(this.polyline) this.map.setView(this.markers.from.getLatLng());
+                if(this.polyline) this.map.setView(this.markers.from.getLatLng(), this.roundZoom());
                 this.map.removeLayer(this.markers.from);
                 this.markers.to.setLatLng(coords);
                 this.markers.to.addTo(this.map);
                 break;
             case 'from':
-                if(this.polyline) this.map.setView(this.markers.to.getLatLng());
+                if(this.polyline) this.map.setView(this.markers.to.getLatLng(), this.roundZoom());
                 this.map.removeLayer(this.markers.to);
                 this.markers.from.setLatLng(coords);
                 this.markers.from.addTo(this.map);

@@ -55,9 +55,7 @@ export class AddNewCardModal {
 
     showSelect(e, value) {
         this.isShownSelect = value;
-        if(value) {
-            //e.stopPropagation();
-        }
+        //if(value) { e.stopPropagation() }
     }
 
     setCard(value) {

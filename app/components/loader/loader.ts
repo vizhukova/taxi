@@ -13,11 +13,12 @@ export class Loader {
     constructor(public nav: NavController, public GatherOrderProvider: GatherOrder, public OrderHistoryProvider: OrderHistory) {
 
         this.intervalId = setInterval(() => {
+
             this.GatherOrderProvider.getOrderStatus().then((data) => {
                 console.log('status: ', data['response']['status']);
                 //условие, что заказ принят
                 //this.close();
-                this.OrderHistoryProvider.save(data['order']);
+                //this.OrderHistoryProvider.save(data['order']);
             })
         }, 10000);
 
