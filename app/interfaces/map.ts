@@ -9,7 +9,8 @@ export interface MapState {
     error ?: boolean,
     onmapsearch ?: boolean,
     dragStart ?: boolean,
-    savedTrip?: boolean
+    savedTrip?: boolean,
+    tripFinished?: boolean;
 }
 
 // initial - is it initial load of map

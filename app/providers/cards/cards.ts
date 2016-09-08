@@ -19,9 +19,9 @@ export class Card {
 
     constructor(private http:Http) {
         this.cards = [
-            {name: "Яндекс Деньги", num: "xxxxxxxxxxxx6693", type: "Master Card", isMain: true},
-            {name: "Кредитка Сбера", num: "xxxxxxxxxxxx6693", type: "Master GOLD", isMain: false},
-            {name: "QIWI", num: "xxxxxxxxxxxx6693", type: "VISA", isMain: false}
+            {name: "Яндекс Деньги", num: "1234567891236693", type: "Master Card", isMain: true},
+            {name: "Кредитка Сбера", num: "1234567891236693", type: "Master GOLD", isMain: false},
+            {name: "QIWI", num: "1234567891236693", type: "VISA", isMain: false}
         ];
         this.cardsSource.next(this.cards);
     }
