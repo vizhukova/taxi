@@ -9,6 +9,7 @@ import {Destination} from "../../interfaces/order";
 import {Order} from "../../interfaces/order";
 import {TimeProvider} from "../../providers/time/time";
 import {URL} from './../../config';
+import {BehaviorSubject} from "rxjs/Rx";
 
 
 @Injectable()
@@ -34,6 +35,8 @@ export class GatherOrder {
 
 
     order: Order;
+
+
 
 
     constructor(private http:Http,
@@ -254,7 +257,6 @@ export class GatherOrder {
 
                 })
         });
-
     }
 
     public clear() {

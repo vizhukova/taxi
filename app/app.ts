@@ -24,6 +24,7 @@ import { MapProvider } from './providers/map/map';
 import { OrderFavorite } from './providers/order/favorites';
 import { TimeProvider } from './providers/time/time';
 import {  Card } from './providers/cards/cards';
+import {  Car } from './providers/car/car';
 
 declare var cordova: any;
 declare var document: any;
@@ -54,11 +55,7 @@ export class MainTabs {
         private platform: Platform,
         private NavProvider: Nav
     ){
-
-        //document.addEventListener("deviceready", () => {
-        //    cordova.plugins.Keyboard.disableScroll(true);
-        //});
-
+        
     }
 
 
@@ -68,7 +65,7 @@ export class MainTabs {
 
 @Component({
     template: '<ion-nav #myNav [root]="rootPage"></ion-nav>',
-    providers: [Place, Cost, Nav, Auth, AddressProvider, CarOptions, GatherOrder, OrderHistory, MapProvider, OrderFavorite, TimeProvider, Card],
+    providers: [Place, Car, Cost, Nav, Auth, AddressProvider, CarOptions, GatherOrder, OrderHistory, MapProvider, OrderFavorite, TimeProvider, Card],
     directives: [MainPage, RegistrationModal]
 })
 export class App {
@@ -84,16 +81,7 @@ export class App {
         var self = this;
 
         platform.registerBackButtonAction((e)=>{
-            // if(self.NavProvider.getCurrentTabSet()==='main' && self.NavProvider.getCurrentTab()==='home') {
-            //     e.preventDefault();
-            // } else if(self.NavProvider.getCurrentTabSet()==='main' && self.NavProvider.getCurrentTab()!=='home'){
-            //     self.NavProvider.changeTab('home');
-            // } else {
-            //     self.NavProvider.changeTabSet('main');
-            // };
-
             e.preventDefault();
-
         }, 100);
     }
 

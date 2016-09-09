@@ -1,5 +1,4 @@
-<!--<div class="tab-header" *ngIf="activeTabSet === 'main'">-->
-<div class="tab-header" *ngIf="false">
+<div class="tab-header" *ngIf="activeTabSet === 'main'">
   <div [ngClass]="setClasses('home')" (click)="changeTab('home')"></div>
   <div [ngClass]="setClasses('settings')" (click)="changeTab('settings')"></div>
   <div [ngClass]="setClasses('time')" (click)="changeTab('time')"></div>
@@ -13,10 +12,9 @@
   <div [ngClass]="setClasses('fly-tab')" class="disabled"></div>
 </div>
 
-<!--<div class="tab-header ordertab" *ngIf="activeTabSet === 'order'">-->
-<div class="tab-header ordertab" *ngIf="true">
-  <div [ngClass]="setClasses('home')" (click)="changeTab('home')"></div>
-  <div [ngClass]="setClasses('car')" (click)="changeTab('taxi')"></div>
+<div class="tab-header ordertab" *ngIf="activeTabSet === 'order'">
+  <div [ngClass]="setClasses('map-car')" (click)="changeTab('map-car')"></div>
+  <div [ngClass]="setClasses('taxi')" (click)="changeTab('taxi')"></div>
   <div [ngClass]="setClasses('like')" (click)="changeTab('like')"></div>
   <div [ngClass]="setClasses('money')" (click)="changeTab('money')"></div>
 </div>
@@ -35,6 +33,7 @@
   <taxi-page [hidden]="activeTab !== 'taxi'"></taxi-page>
   <like-page [hidden]="activeTab !== 'like'"></like-page>
   <money-page [hidden]="activeTab !== 'money'"></money-page>
+  <map-car [hidden]="activeTab !== 'map-car'"></map-car>
 
 
   <div *ngIf="state.authorized && !state.onmapsearch" class="search">{{status[state.direction]}}</div>

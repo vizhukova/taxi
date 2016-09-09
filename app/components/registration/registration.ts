@@ -1,5 +1,4 @@
-
-import { Component } from '@angular/core';
+import { Component, ApplicationRef } from '@angular/core';
 //import {FormControl, Validators, REACTIVE_FORM_DIRECTIVES } from '@angular/forms';
 import {  NavController } from 'ionic-angular';
 import {  Auth } from './../../providers/auth/auth';
@@ -28,10 +27,12 @@ export class RegistrationModal {
         'Super Hot', 'Weather Changer'];
     model: string;
     errors: any;
+    pauseTime: Date;
 
     constructor(
         public nav: NavController,
         private AuthProvider: Auth,
+        private ref: ApplicationRef,
         private PlaceProvider: Place,
         private MapProvider: MapProvider
     ) {
@@ -47,7 +48,13 @@ export class RegistrationModal {
             number: 'ВВЕДИТЕ НОМЕР',
             code: 'НЕПРАВИЛЬНЫЙ КОД'
         };
-        this.errorCode = 'code'
+        this.errorCode = 'code';
+
+        
+        // this.onPause = this.onPause.bind(this);
+        // this.onResume = this.onResume.bind(this);
+        document.addEventListener("pause", this.onPause.bind(this), false);
+        document.addEventListener("resume", this.onResume.bind(this), false);
     }
 
     closeKeyboard(event) {
@@ -61,7 +68,23 @@ export class RegistrationModal {
 
         if(event.target.className !== 'input') {
             this.isShownInput = false;
+            console.log('className', this.isShownInput)
         }
+    }
+
+    onPause() {
+        this.pauseTime = new Date;
+    }
+
+    onResume() {
+        if(this.timeout <= 0)this.timer = null;
+
+        var resumeTime = new Date;
+        
+        var time = Math.floor((resumeTime.getTime() - this.pauseTime.getTime()) / 1000);
+
+        this.timeout =  (this.timeout - time) > 0 ? this.timeout - time : 0;
+        console.log(this.timeout)
     }
 
     setClasses() {
@@ -94,11 +117,11 @@ export class RegistrationModal {
     }
 
     startTime() {
+        this.timeout = 59;
         this.timer = setInterval(()=>{
             if(this.timeout < 2) {
                 clearInterval(this.timer);
                 this.timer = null;
-                this.timeout = 59;
             }
             --this.timeout
         }, 1000)
@@ -137,6 +160,8 @@ export class RegistrationModal {
 
     showSelect(value) {
         this.isShownInput = value;
+        this.ref.tick()
+        console.log('showSelect', this.isShownInput)
     }
 
     setCode(value) {

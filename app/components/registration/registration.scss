@@ -29,6 +29,14 @@
 
       div.wrap {
         margin: 0 52px;
+        padding-top: 15px;
+        margin-bottom: 35px;
+        position: relative;
+
+
+        div.dividerline {
+          height: 35px;
+        }
       }
     }
 
@@ -46,59 +54,111 @@
 
       &.name {
         margin-bottom: 30px;
+
+        /* LABEL ======================================= */
+        label                {
+          color: #565659;
+          font-size: 16px;
+          font-weight: 400;
+          position:absolute;
+          pointer-events:none;
+          top:15px;
+          left: 0;
+          transition:0.2s ease all;
+          -moz-transition:0.2s ease all;
+          -webkit-transition:0.2s ease all;
+          padding-left: 0;
+
+          &:before {
+            display: none;
+          }
+        }
+        input {
+          -webkit-appearance: none;
+          -webkit-border-radius:0;
+          border-radius:0;
+        }
+
+
+        /* active state */
+        input:focus ~ label, input:valid ~ label        {
+          top:-15px;
+          font-size:14px;
+          color:#565659;
+          width: 100%;
+        }
+
+        .bar:before {
+          left:50%;
+        }
+        .bar:after {
+          right:50%;
+        }
+
+        /* active state */
+        input:focus ~ .bar:before, input:focus ~ .bar:after {
+          width:50%;
+        }
+
+        input:focus ~ i.cross {
+          display: inline-block;
+        }
       }
 
       &.number {
         width: 60%;
+        position: relative;
         float: right;
-        margin-top: 18px;
-      }
+        /* LABEL ======================================= */
+        label                {
+          color: #565659;
+          font-size: 16px;
+          font-weight: 400;
+          position:absolute;
+          pointer-events:none;
+          top:15px;
+          left: 0;
+          transition:0.2s ease all;
+          -moz-transition:0.2s ease all;
+          -webkit-transition:0.2s ease all;
+          padding-left: 0;
 
-      /* LABEL ======================================= */
-      label                {
-        color: #565659;
-        font-size: 16px;
-        font-weight: 400;
-        position:absolute;
-        pointer-events:none;
-        top:15px;
-        left: 0;
-        transition:0.2s ease all;
-        -moz-transition:0.2s ease all;
-        -webkit-transition:0.2s ease all;
-        padding-left: 0;
-
-        &:before {
-          display: none;
+          &:before {
+            display: none;
+          }
         }
-      }
-      input {
-        -webkit-appearance: none;
-        -webkit-border-radius:0;
-        border-radius:0;
-      }
+        input {
+          -webkit-appearance: none;
+          -webkit-border-radius:0;
+          border-radius:0;
+        }
 
-      /* active state */
-      input:focus ~ label, input:valid ~ label        {
-        top:-18px;
-        font-size:14px;
-        color:#565659;
-      }
 
-      .bar:before {
-        left:50%;
-      }
-      .bar:after {
-        right:50%;
-      }
+        /* active state */
+        input:focus ~ label, input:valid ~ label        {
+          top: inherit!important;
+          bottom: 36px;
+          font-size:14px;
+          color:#565659;
+          width: 100%;
+          margin-bottom: 0;
+        }
 
-      /* active state */
-      input:focus ~ .bar:before, input:focus ~ .bar:after {
-        width:50%;
-      }
+        .bar:before {
+          left:50%;
+        }
+        .bar:after {
+          right:50%;
+        }
 
-      input:focus ~ i.cross {
-        display: inline-block;
+        /* active state */
+        input:focus ~ .bar:before, input:focus ~ .bar:after {
+          width:50%;
+        }
+
+        input:focus ~ i.cross {
+          display: inline-block;
+        }
       }
 
       .cross {
@@ -129,6 +189,34 @@
         width: 35%;
         float: left;
         font-size: 14px;
+        margin-bottom: 0;
+
+
+        label {
+          width: 100%;
+          color: #565659;
+          font-size: 14px;
+          font-weight: 400;
+          display: inline-block;
+          margin-bottom: 0;
+          position: absolute;
+          bottom: 36px;
+        }
+
+        .select-wrapper {
+          div.input {
+            border-bottom: solid 1px #e4e7ec;
+            width: 100%;
+            color: #565659;
+            font-size: 18px;
+            //height: 34px;
+            font-weight: 600;
+            background: transparent;
+            position: relative;
+          }
+        }
+
+
       }
 
       &.number {

@@ -13,6 +13,7 @@ import { FlyTabPage } from '../../pages/fly-tab/fly-tab';
 import { TaxiPage } from '../../pages/taxi/taxi';
 import { LikePage } from '../../pages/like/like';
 import { MoneyPage } from '../../pages/money/money';
+import { MapCar } from '../../pages/map_car/map_car';
 
 import {NavController} from 'ionic-angular';
 
@@ -49,7 +50,8 @@ declare var cordova:any;
     FlyTabPage,
     TaxiPage,
     LikePage,
-    MoneyPage
+    MoneyPage,
+    MapCar
   ]
 })
 export class MainPage {
@@ -150,7 +152,7 @@ export class MainPage {
   }
 
   setCallClasses() {
-    this.state.tripFinished = true;
+    // this.state.tripFinished = true;
     return {
       call: true,
       active: !this.state.searching && this.state.cost && !this.state.onmapsearch && !this.state.tripFinished,

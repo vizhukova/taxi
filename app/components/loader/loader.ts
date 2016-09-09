@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {  NavController } from 'ionic-angular';
 import {GatherOrder} from "../../providers/order/gather_order";
 import {OrderHistory} from "../../providers/order/history";
+import {Nav} from "../../providers/nav/nav";
+import {Car} from "../../providers/car/car";
 
 @Component({
     templateUrl: 'build/components/loader/loader.html',
@@ -10,18 +12,30 @@ export class Loader {
 
     intervalId: number;
 
-    constructor(public nav: NavController, public GatherOrderProvider: GatherOrder, public OrderHistoryProvider: OrderHistory) {
+    constructor(
+        public nav: NavController,
+        public GatherOrderProvider: GatherOrder,
+        public OrderHistoryProvider: OrderHistory,
+        public Navigator: Nav,
+        public Car: Car
+    ) {
+        var self = this;
+        
+        this.GatherOrderProvider.getOrderStatus().then((data: any) => {
+            console.log('Order status: ', data.response.status);
+            
+            self.Car.subscribe();
 
-        this.intervalId = setInterval(() => {
+            switch(data.response.status) {
+                case 'driving':
+                case 'assigned':
+                     self.Navigator.changeTabSet('order', 'map-car');
+                     break;
+            }
 
-            this.GatherOrderProvider.getOrderStatus().then((data) => {
-                console.log('status: ', data['response']['status']);
-                //условие, что заказ принят
-                //this.close();
-                //this.OrderHistoryProvider.save(data['order']);
-            })
-        }, 10000);
-
+            this.OrderHistoryProvider.save(data['order']);
+            self.close();
+        })
     }
 
 

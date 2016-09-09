@@ -6,7 +6,7 @@
         </div>
 
         <div class="block-right">
-            <span class="car-type">серебристый металлик</span>
+            <span class="car-type">{{driver.carColor}}</span>
             <span class="stars">
                 <i class="star-fill"></i>
                 <i class="star-fill"></i>
@@ -14,8 +14,10 @@
                 <i class="star-fill"></i>
                 <i class="star-empty"></i>
             </span>
-            <p class="car-name">Mersedez</p>
-            <p class="car-status">Едет к вам</p>
+            <p class="car-name">{{driver.carBand}}</p>
+            <p class="car-name">{{driver.carModel}}</p>
+            <p class="car-number"> / {{driver.carNumber}}</p>
+            <p class="car-status">{{status}}</p>
         </div>
 
     </div>

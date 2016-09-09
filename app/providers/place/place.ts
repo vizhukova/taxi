@@ -66,6 +66,7 @@ export class Place {
         return this.coords;
     }
 
+    
     constructor(
         private http:Http, 
         private MapProvider:MapProvider
