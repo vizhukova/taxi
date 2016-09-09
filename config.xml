@@ -36,8 +36,10 @@
     <preference name="SplashScreenDelay" value="2000" />
     <preference name="FadeSplashScreenDuration" value="2000" />
     <preference name="HideKeyboardFormAccessoryBar" value="true" />
-    <preference name="KeyboardShrinksView" value="false" />
+    <preference name="KeyboardShrinksView" value="true" />
     <preference name="KeyboardDisplayRequiresUserAction" value="false" />
+    <preference name="fullscreen" value="false" />
+    <preference name="android-windowSoftInputMode" value="stateVisible|adjustResize" />
     <feature name="StatusBar">
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>

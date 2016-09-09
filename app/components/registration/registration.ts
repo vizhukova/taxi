@@ -1,4 +1,5 @@
-import { Component, ApplicationRef } from '@angular/core';
+
+import { Component } from '@angular/core';
 //import {FormControl, Validators, REACTIVE_FORM_DIRECTIVES } from '@angular/forms';
 import {  NavController } from 'ionic-angular';
 import {  Auth } from './../../providers/auth/auth';
@@ -32,11 +33,9 @@ export class RegistrationModal {
     constructor(
         public nav: NavController,
         private AuthProvider: Auth,
-        private ref: ApplicationRef,
         private PlaceProvider: Place,
         private MapProvider: MapProvider
     ) {
-        //cordova.plugins.Keyboard.disableScroll(true);
         this.MapProvider.set('authorized', false);
         this.timeout = 59;
         this.timer = null;
@@ -68,7 +67,6 @@ export class RegistrationModal {
 
         if(event.target.className !== 'input') {
             this.isShownInput = false;
-            console.log('className', this.isShownInput)
         }
     }
 
@@ -129,7 +127,7 @@ export class RegistrationModal {
 
     skipRegister() {
         var self = this;
-        this.nav.pop();
+        this.nav.pop({animate: false});
         this.PlaceProvider.reloadMap('homeMap');
         setTimeout(()=>{
             self.MapProvider.set('authorized', true);
@@ -137,17 +135,18 @@ export class RegistrationModal {
     }
 
 
+
     register() {
         var self = this;
 
         if(this.key === 7575) {
-            this.nav.pop();
+            this.nav.pop({animate: false});
             this.PlaceProvider.reloadMap('homeMap');
             setTimeout(()=>{ self.MapProvider.set('authorized', true) }, 1000);
         } else if(this.isCode && this.key) {
             this.AuthProvider.confirm(this.key, this.code + this.number).then((data) => {
                 if(data !== 'WRONGKEY')  {
-                    self.nav.pop();
+                    self.nav.pop({animate: false});
                     setTimeout(()=>{ self.MapProvider.set('authorized', true) }, 1000);
                 } else if(data === 'WRONGKEY'){
                     self.executeError('code')
@@ -160,8 +159,6 @@ export class RegistrationModal {
 
     showSelect(value) {
         this.isShownInput = value;
-        this.ref.tick()
-        console.log('showSelect', this.isShownInput)
     }
 
     setCode(value) {

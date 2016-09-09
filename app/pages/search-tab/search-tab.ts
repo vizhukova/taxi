@@ -17,6 +17,6 @@ export class SearchTabPage {
   }
 
   showRidesModal() {
-    this.nav.push(FavoritePopup);
+    this.nav.push(FavoritePopup, {}, {animate: false});
   }
 }

@@ -82,7 +82,7 @@ export class SettingsPage {
   }
 
   showLoader() {
-    this.nav.push(Loader);
+    this.nav.push(Loader, {}, {animate: false});
   }
 
   changeTariff(data:string) {
@@ -116,6 +116,6 @@ export class SettingsPage {
   }
 
   createNew() {
-    this.nav.push(AddNewCardModal);
+    this.nav.push(AddNewCardModal, {}, {animate: false});
   }
 }

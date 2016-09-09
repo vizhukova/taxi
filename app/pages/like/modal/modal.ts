@@ -14,7 +14,7 @@ export class LikesModal {
     }
 
     public closeModal() {
-        this.nav.pop();
+        this.nav.pop({animate: false});
     }
 
     public canselCloseModal(event) {

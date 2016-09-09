@@ -24,7 +24,6 @@ export class AddNewCardModal {
 
     error: Object = {};
 
-
     isEdit: boolean = false; //открыто для создания или редактирования
 
     constructor(private nav: NavController, private CardProvider: Card) {
@@ -33,22 +32,22 @@ export class AddNewCardModal {
 
         CardProvider.card$.subscribe(card => {
 
-          if(Object.keys(card).length) {
-              this.card = card;
+            if (Object.keys(card).length) {
+                this.card = card;
 
-              this.numInArray = Object.keys(card)[0];
+                this.numInArray = Object.keys(card)[0];
 
-              this.cardName = card[this.numInArray].type;
-              this.name = card[this.numInArray].name;
-              this.num = card[this.numInArray].num;
-              this.owner = card[this.numInArray].owner;
-              this.date = card[this.numInArray].date;
-              this.cvc = card[this.numInArray].cvc;
-              this.isEdit = true;
+                this.cardName = card[this.numInArray].type;
+                this.name = card[this.numInArray].name;
+                this.num = card[this.numInArray].num;
+                this.owner = card[this.numInArray].owner;
+                this.date = card[this.numInArray].date;
+                this.cvc = card[this.numInArray].cvc;
+                this.isEdit = true;
 
-          } else {
-              this.cardName = this.cards[0];
-          }
+            } else {
+                this.cardName = this.cards[0];
+            }
 
         });
 
@@ -56,7 +55,9 @@ export class AddNewCardModal {
 
     showSelect(e, value) {
         this.isShownSelect = value;
-        //if(value) { e.stopPropagation() }
+        if (value) {
+            e.stopPropagation();
+        }
     }
 
     setCard(value) {
@@ -64,25 +65,27 @@ export class AddNewCardModal {
     }
 
     closeModal() {
-        this.nav.pop();
+
+        this.CardProvider.clearCard();
+        this.nav.pop({animate: false});
     }
 
     isError(key) {
-        if( !this[key] ||  !this[key].trim().length || (key == 'num' && this.num.length < 16)) {
+        if (!this[key] || !this[key].trim().length || (key == 'num' && this.num.length < 16)) {
             this.error[key] = true;
             return true;
         } else {
-            if(this.error[key]) delete this.error[key];
+            if (this.error[key]) delete this.error[key];
             return false;
         }
     }
 
     submit() {
-        if( Object.keys(this.error).length) {
+        if (Object.keys(this.error).length) {
             return;
         }
 
-        if(this.num.length < 16) {
+        if (this.num.length < 16) {
             this.error['num'] = true;
             return;
         }
@@ -97,7 +100,7 @@ export class AddNewCardModal {
             type: this.cardName
         };
 
-        if(this.isEdit) {
+        if (this.isEdit) {
             this.CardProvider.changeCardInArray(this.numInArray, newCard);
         } else {
             this.CardProvider.addCard(newCard);

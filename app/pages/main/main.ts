@@ -162,7 +162,7 @@ export class MainPage {
 
   ngAfterViewInit(){
     if(!this.AuthProvider.check()){
-      this.nav.push(RegistrationModal);
+      this.nav.push(RegistrationModal, {}, {animate: false});
     }else{
       this.MapProvider.set('authorized', true);
     }
@@ -170,9 +170,9 @@ export class MainPage {
 
   makeOrder() {
     if(!this.AuthProvider.check()){
-      this.nav.push(RegistrationModal);
+      this.nav.push(RegistrationModal, {}, {animate: false});
     }else{
-      this.nav.push(Loader);
+      this.nav.push(Loader, {}, {animate: false});
 
       this.GatherOrderProvider.createOrder().then((data) => {
         this.OrderHistoryProvider.save(this.GatherOrderProvider.getGatheredOrder());

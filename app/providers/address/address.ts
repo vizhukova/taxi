@@ -34,9 +34,23 @@ export class AddressProvider {
     public save(key: string, data: AddressItem) {
 
         let dataToSave = this.getFavoriteAddresses();
-        dataToSave[key] = data;
+
+        var name = this.getNameToSave(dataToSave, key, null);
+
+        dataToSave[name] = data;
         localStorage.setItem('favorite_address', JSON.stringify(dataToSave));
         this.changeFavoriteAddresses(dataToSave);
+    }
+
+    getNameToSave(objData, name, num) {
+
+        var strName = `${name}${num || ''}`;
+
+        if( objData[strName] === undefined ) return strName;
+        else {
+            num = num ? num ++ : 1;
+            return this.getNameToSave(objData, name, num);
+        }
     }
 
     public saveObject(data: Object) {

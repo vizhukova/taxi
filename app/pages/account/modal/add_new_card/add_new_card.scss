@@ -1,27 +1,32 @@
 .add-card-modal {
   @extend  .register-modal;
 
-    .modal-body {
+  &> * {
+    background-color: #fff;
+  }
 
+    .modal-body {
       background-image: none !important;
-      width: inherit!important;
-      height: inherit!important;
-      background-color: #565659!important;
+      width: 100% !important;
+      height: initial !important;
+      background: #2e2e35;
+      box-shadow: none !important;
+      position: initial !important;
 
       .content {
-
-
-        height: inherit!important;
-        bottom: 23px;
+        height: 100% !important;
+        overflow: hidden;
+        bottom: 40px;
         top: 0;
         margin: auto;
-        position: absolute!important;
+        position: absolute;
         background: #fff;
+        margin-bottom: 60px;
 
         .icon-arrow-left {
           position: absolute;
           top: 15px;
-          left: 13px;
+          left: 15px;
           background: url(./../res/icon_arrow_left.svg) left center no-repeat;
           width: 100%;
           height: 30px;
@@ -29,7 +34,7 @@
         }
 
         .modal-header {
-          padding-top: 38px;
+          padding-top: 30px;
           padding-bottom: 30px;
           //background: #28282c;
           background: #565659;
@@ -53,8 +58,19 @@
                 color: #efefef;
               }
               .panel {
-                background: #28282c;
-                padding: 15px 0;
+                //background: #28282c;
+                //padding: 15px 0;
+                 background: #f1f1f1;
+                  -webkit-box-shadow: 3px 3px 16px 0px rgba(79,78,79,1);
+                  -moz-box-shadow: 3px 3px 16px 0px rgba(79,78,79,1);
+                  box-shadow: 3px 3px 16px 0px rgba(79,78,79,1);
+                  max-height: 180px;
+
+                .option {
+                  line-height: 60px;
+                  border-bottom: solid 1px rgba(173, 142, 142, 0.37);
+                  font-size: 16px;
+                }
               }
             }
         }
@@ -122,13 +138,12 @@
 
           .date {
             float: left;
-            width: 50%;
-            margin-right: 6%;
+            width: 45%;
           }
 
           .cvc {
             float: right;
-            width: 44%;
+            width: 45%;
 
             input[type="password"] {
                 -webkit-text-security: circle !important;

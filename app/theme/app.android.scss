@@ -1,0 +1,129 @@
+.platform-android4_4 {
+
+  &>* {
+    background: #000 !important;
+  }
+  .block {
+    .list {
+      .label {
+        label {
+          padding-top: 7px;
+          span {
+            //line-height: 20px;
+            vertical-align: middle;
+            max-width: 60%;
+            width: 100%;
+
+            .comment {
+              padding-top: 10px;
+            }
+          }
+        }
+        .price {
+
+          &.bright {
+          }
+        }
+        .comment {
+        }
+      }
+    }
+
+    input[type=radio]:checked + label:before {
+      line-height: 23px;
+    }
+
+  }
+
+  .money-page {
+    .block {
+      .list {
+        .label {
+          &> label {
+
+            .comment {
+              margin: -10px 0 10px 0;
+              line-height: 10px;
+            }
+            &> span:last-child {
+              //line-height: 20px;
+              width: 100%;
+              max-width: 38%;
+              text-align: right;
+            }
+          }
+
+          &.bank {
+            .select-content {
+              padding-bottom: 40px;
+
+              &>span {
+                margin-bottom: 10px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .taxi-page {
+    .driver-panel {
+      .top-panel {
+        .block-right {
+          p {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  .driver-panel {
+    .top-panel {
+      .block-right {
+        p {
+          width: 100%;
+        }
+        p.car-name {
+          line-height: 25px;
+        }
+        span.car-type {
+          width: 100%;
+          max-width: calc(100% - 100px);
+        }
+      }
+    }
+  }
+
+  .cards-modal {
+
+    .header {
+      span.text {
+        width: calc(100% - 50px);
+      }
+    }
+
+    .block {
+      .list {
+        p.content {
+          .menu {
+            width: 175px;
+          }
+        }
+      }
+    }
+  }
+
+  .account {
+    .top-panel {
+      p {
+        .text {
+          width: 200px;
+          max-width: 100%;
+        }
+      }
+    }
+  }
+
+}

@@ -82,7 +82,7 @@ export class Loader {
 
     close() {
         clearInterval(this.intervalId);
-        this.nav.pop();
+        this.nav.pop({animate: false});
     }
 
 }
