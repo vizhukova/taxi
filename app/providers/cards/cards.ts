@@ -36,6 +36,11 @@ export class Card {
 
     }
 
+    clearCard() {
+        this.card = {};
+        this.cardSource.next(this.card);
+    }
+
     changeCardInArray(index, item) {
         this.cards[index] = item;
         this.cardsSource.next(this.cards);

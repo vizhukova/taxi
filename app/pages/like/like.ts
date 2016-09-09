@@ -17,7 +17,7 @@ export class LikePage {
   }
 
   openModal() {
-    this.nav.push(LikesModal);
+    this.nav.push(LikesModal, {}, {animate: false});
   }
 
 

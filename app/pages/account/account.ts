@@ -59,7 +59,7 @@ export class AccountPage {
   }
 
   showCardsModal() {
-    this.nav.push(CardsModal);
+    this.nav.push(CardsModal, {}, {animate: false});
   }
 
   newRide() {
@@ -76,7 +76,7 @@ export class AccountPage {
     this.CarOptionsProvider.changerRequirements([]);
     this.TimeProvider.change(null);
 
-    this.nav.pop();
+    this.nav.pop({animate: false});
     this.NavProvider.changeTab('home');
   }
 }

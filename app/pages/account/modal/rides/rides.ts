@@ -107,7 +107,7 @@ export class RidesModal {
         this.PlaceProvider.changeDetail({from: this.lastRides[index].source, to: this.lastRides[index].destinations[0]}, true);
         this.MapProvider.setMarker(curCoord);
         this.MapProvider.set('direction', '');
-        this.nav.pop();
+        this.nav.pop({animate: false});
         this.NavProvider.changeTab('home');
     }
 }

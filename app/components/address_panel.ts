@@ -325,7 +325,7 @@ export class Address {
         addressTosend.description = this.detailAddress[this.direction].description;
 
         this.AddressProvider.changeFavoriteAddress(addressTosend);
-        this.nav.push(FavoritePopup);
+        this.nav.push(FavoritePopup, {}, {animate: false});
     }
 
     onConfirm(direction:string){

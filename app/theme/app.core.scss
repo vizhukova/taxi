@@ -30,6 +30,8 @@
 @import "../components/loader/loader";
 @import "../components/driver_panel/driver_panel";
 
+@import "./app.android";
+
 @font-face {
   font-family: "Myriad Pro";
   src: url(../res/fonts/MyriadProRegular.ttf); /* Путь к файлу со шрифтом */

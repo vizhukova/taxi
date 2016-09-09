@@ -68,11 +68,11 @@ export class MoneyPage {
   }
 
   openModal() {
-    this.nav.push(LikesModal);
+    this.nav.push(LikesModal, {}, {animate: false});
   }
 
   addNewCard() {
-      this.nav.push(AddNewCardModal);
+      this.nav.push(AddNewCardModal, {}, {animate: false});
   }
 
   getNum(num) {

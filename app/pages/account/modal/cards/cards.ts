@@ -41,7 +41,7 @@ export class CardsModal {
 
     editOption(num: string) {
         this.CardProvider.editCard(num);
-        this.nav.push(AddNewCardModal);
+        this.nav.push(AddNewCardModal, {}, {animate: false});
     }
 
     deleteOption(num: string) {
@@ -49,7 +49,7 @@ export class CardsModal {
     }
 
     createNew() {
-        this.nav.push(AddNewCardModal);
+        this.nav.push(AddNewCardModal, {}, {animate: false});
     }
 
     hideMenu(e) {
@@ -58,7 +58,7 @@ export class CardsModal {
     }
 
     closeModal() {
-        this.nav.pop();
+        this.nav.pop({animate: false});
     }
 
     getNum(num) {

@@ -35,7 +35,6 @@ export class RegistrationModal {
         private PlaceProvider: Place,
         private MapProvider: MapProvider
     ) {
-        //cordova.plugins.Keyboard.disableScroll(true);
         this.MapProvider.set('authorized', false);
         this.timeout = 59;
         this.timer = null;
@@ -48,6 +47,8 @@ export class RegistrationModal {
             code: 'НЕПРАВИЛЬНЫЙ КОД'
         };
         this.errorCode = 'code'
+
+        // cordova.plugins.Keyboard.disableScroll(true);
     }
 
     closeKeyboard(event) {
@@ -106,7 +107,7 @@ export class RegistrationModal {
 
     skipRegister() {
         var self = this;
-        this.nav.pop();
+        this.nav.pop({animate: false});
         this.PlaceProvider.reloadMap('homeMap');
         setTimeout(()=>{
             self.MapProvider.set('authorized', true);
@@ -114,17 +115,18 @@ export class RegistrationModal {
     }
 
 
+
     register() {
         var self = this;
 
         if(this.key === 7575) {
-            this.nav.pop();
+            this.nav.pop({animate: false});
             this.PlaceProvider.reloadMap('homeMap');
             setTimeout(()=>{ self.MapProvider.set('authorized', true) }, 1000);
         } else if(this.isCode && this.key) {
             this.AuthProvider.confirm(this.key, this.code + this.number).then((data) => {
                 if(data !== 'WRONGKEY')  {
-                    self.nav.pop();
+                    self.nav.pop({animate: false});
                     setTimeout(()=>{ self.MapProvider.set('authorized', true) }, 1000);
                 } else if(data === 'WRONGKEY'){
                     self.executeError('code')
