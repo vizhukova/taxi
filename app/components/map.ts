@@ -300,6 +300,11 @@ export class Map {
         if (!this.map) this.map = new L.Map(this.selector, options);
 
         this.map.on('dragstart', () =>{
+
+            if(cordova && cordova.plugins && cordova.plugins.Keyboard){
+                cordova.plugins.Keyboard.close();
+            }
+
             if(this.state.direction) {
                 clearTimeout(this.timer);
                 this.MapProvider.set('cost', false);
@@ -310,6 +315,7 @@ export class Map {
        this.map.on('dragend', ()=>{
             this.timeout()
         });
+
 
         this.map.on('drag', ()=>{
             if(this.state.direction) {

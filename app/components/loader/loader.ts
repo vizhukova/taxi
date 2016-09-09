@@ -28,7 +28,6 @@ export class Loader {
 
             switch(data.response.status) {
                 case 'driving':
-                case 'completed':
                 case 'assigned':
                      self.Navigator.changeTabSet('order', 'map-car');
                      break;
