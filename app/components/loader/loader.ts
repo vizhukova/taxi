@@ -28,13 +28,14 @@ export class Loader {
 
             switch(data.response.status) {
                 case 'driving':
+                case 'completed':
                 case 'assigned':
                      self.Navigator.changeTabSet('order', 'map-car');
                      break;
             }
 
             this.OrderHistoryProvider.save(data['order']);
-            self.close();
+            // self.close();
         })
     }
 

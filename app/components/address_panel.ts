@@ -89,6 +89,8 @@ export class Address {
 
         place.coords$.subscribe(newCoords => {
             self.coords = newCoords;
+            self.search = false;
+
         });
 
         place.detailAddress$.subscribe(newDetail => {
@@ -130,6 +132,8 @@ export class Address {
     }
 
     confirmAddress(index: any) {
+        this.disabled.to = true;
+        this.disabled.from = true;
 
         this.detail = false;
 
@@ -302,6 +306,8 @@ export class Address {
     }
 
     showMap() {
+        this.disabled.to = true;
+        this.disabled.from = true;
         if(this.state.direction === 'to' && !this.detailAddress.to) {
             this.coords[this.direction] = this.coords.from;
             this.detailAddress[this.direction] = this.detailAddress.from;

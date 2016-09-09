@@ -127,3 +127,14 @@
   }
 
 }
+
+
+.platform-android6 {
+ .list.radio {
+   label {
+     &:before {
+       line-height: 23px!important;
+     }
+   }
+ }
+}
