@@ -296,7 +296,7 @@
 
       .content {
         //height: 100% !important;
-        overflow-y: scroll;
+        //overflow-y: scroll;
         bottom: 40px;
         top: 0;
         margin: auto;
@@ -347,6 +347,7 @@
                   -moz-box-shadow: 3px 3px 16px 0px rgba(79,78,79,1);
                   box-shadow: 3px 3px 16px 0px rgba(79,78,79,1);
                   max-height: 180px;
+                overflow-y: initial;
 
                 .option {
                   line-height: 60px;
