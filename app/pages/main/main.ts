@@ -139,6 +139,7 @@ export class MainPage {
   changeTab(newTab:string) {
     if(this.state.searching || this.state.onmapsearch) {return};
     this.activeTab = newTab;
+    this.NavProvider.changeTab(newTab);
     this.ref.tick()
   }
 

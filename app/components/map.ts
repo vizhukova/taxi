@@ -322,6 +322,14 @@ export class Map {
                 this.MapProvider.set('searching', true)
             }
         });
+        //
+        // this.map.on('resize', ()=>{
+        //     this.map.invalidateSize(true)
+        // });
+        //
+        // this.map.on('viewreset', ()=>{
+        //     this.map.invalidateSize(true)
+        // });
 
 
         this.map.on('zoomstart', () =>{
