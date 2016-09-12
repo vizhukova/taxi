@@ -132,8 +132,12 @@ export class Map {
             .catch((err) => { console.log(err) })
         });
 
-        
-        PlaceProvider.coords$.subscribe(newCoords => {
+        PlaceProvider.reload$.subscribe(newCoords => {
+                 if(this.map) this.map.invalidateSize(true)
+        });
+
+
+            PlaceProvider.coords$.subscribe(newCoords => {
             
            self.coords = newCoords;
 
