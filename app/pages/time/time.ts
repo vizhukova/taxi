@@ -84,20 +84,20 @@ console.log(this.platform)
 
     public showTimeModal() {
 
-        DatePicker.show({
-          date: new Date(),
-          mode: 'time',
-          androidTheme: 3,
-          minDate: this.minDate || 0,
-          is24Hour: true,
-          okText: 'Готово',
-          cancelText: 'Отмена',
-          doneButtonLabel: 'Готово',
-          cancelButtonLabel: 'Отмена'
-        }).then(
-          date => this.onGetTime(date),
-          err => console.log("Error occurred while getting date:", err)
-        );
+        // DatePicker.show({
+        //   date: new Date(),
+        //   mode: 'time',
+        //   androidTheme: 3,
+        //   minDate: this.minDate || 0,
+        //   is24Hour: true,
+        //   okText: 'Готово',
+        //   cancelText: 'Отмена',
+        //   doneButtonLabel: 'Готово',
+        //   cancelButtonLabel: 'Отмена'
+        // }).then(
+        //   date => this.onGetTime(date),
+        //   err => console.log("Error occurred while getting date:", err)
+        // );
 
     }
 
@@ -112,22 +112,22 @@ console.log(this.platform)
             this.maxDate = moment().add(6, 'd').toString();
         }
 
-        DatePicker.show({
-          date: new Date(),
-          mode: 'datetime',
-          androidTheme: 3,
-          minDate: this.minDate || 0,
-          maxDate: this.maxDate || 0,
-          is24Hour: true,
-          okText: 'Готово',
-          cancelText: 'Отмена',
-          doneButtonLabel: 'Готово',
-          cancelButtonLabel: 'Отмена',
-            locale: 'ru_ru'
-        }).then(
-          date => this.onGetDate(date),
-          err => console.log("Error occurred while getting date:", err)
-        );
+        // DatePicker.show({
+        //   date: new Date(),
+        //   mode: 'datetime',
+        //   androidTheme: 3,
+        //   minDate: this.minDate || 0,
+        //   maxDate: this.maxDate || 0,
+        //   is24Hour: true,
+        //   okText: 'Готово',
+        //   cancelText: 'Отмена',
+        //   doneButtonLabel: 'Готово',
+        //   cancelButtonLabel: 'Отмена',
+        //     locale: 'ru_ru'
+        // }).then(
+        //   date => this.onGetDate(date),
+        //   err => console.log("Error occurred while getting date:", err)
+        // );
 
     }
 

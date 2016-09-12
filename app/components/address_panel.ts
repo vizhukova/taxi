@@ -278,6 +278,7 @@ export class Address {
     }
 
     onFocus(type: string, input ?: any): void {
+        if(this.NavProvider.getCurrentTab() !== 'home') return;
         if(this.state.searching) return;
         if(this.direction === type && this.detail) return;
         if(this.state.onmapsearch && this.direction !== type) return;

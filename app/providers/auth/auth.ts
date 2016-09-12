@@ -79,11 +79,12 @@ export class Auth {
 
                     var data = res.json();
 
-                    self.user['id'] = data.apiId;
+                    if(data.result !== 'WRONGKEY')  {
+                        self.user['id'] = data.apiId;
+                        this.emitUpdate();
+                        localStorage.setItem('user', JSON.stringify(self.user));
+                    }
 
-                    this.emitUpdate();
-
-                    localStorage.setItem('user', JSON.stringify(self.user));
                     resolve(data.result);
 
                 }, (err) => {

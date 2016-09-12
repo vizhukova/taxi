@@ -201,8 +201,6 @@ export class Place {
                     var data = res.json()[0];
 
                     if(data){
-
-
                         setTimeout(() => {
                             self.changeDetail(data);
                             self.changeCoords(self.coords);
