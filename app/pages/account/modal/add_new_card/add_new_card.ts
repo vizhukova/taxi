@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import {  NavController } from 'ionic-angular';
-
+import {FormsModule} from '@angular/forms';
+import MaskedInput from 'angular2-text-mask'
 import {  Card } from './../../../../providers/cards/cards';
 
 @Component({
-    templateUrl: 'build/pages/account/modal/add_new_card/add_new_card.html'
+    templateUrl: 'build/pages/account/modal/add_new_card/add_new_card.html',
+    imports: [FormsModule],
+    declarations: [MaskedInput]
 })
 export class AddNewCardModal {
 
@@ -13,6 +16,7 @@ export class AddNewCardModal {
     isShownSelect: boolean = false;
     cards: Array<string>;
     card: Object = {};
+    mask: Array<any> = [/[0-9]/,/[0-9]/, '/', /[0-9]/,/[0-9]/];
 
     numInArray: string;
 
