@@ -40,7 +40,7 @@
 
               <div class="wrap" [ngClass]="{'error': isError('num')}">
                 <div class="group num">
-                    <input type="text" [(ngModel)]="num" maxlength="16" required>
+                    <input type="text" [textMask]="{mask: mask_card, guide: true}" [(ngModel)]="num">
                     <span class="highlight"></span>
                     <span class="bar"></span>
                     <label>Номер вашей карточки</label>
@@ -55,10 +55,9 @@
                     <label>Имя владельца</label>
                 </div>
             </div>
-
                <div class="wrap" [ngClass]="{'error': isError('date')}">
                 <div class="group date">
-                    <input type="text" [textMask]="{mask: mask}" [guide]="true" [(ngModel)]="date" required>
+                    <input type="text" placeholder="mm/yy" [textMask]="{mask: mask, guide: true}" [(ngModel)]="date">
                     <span class="highlight"></span>
                     <span class="bar"></span>
                     <label>Срок действия</label>
@@ -67,7 +66,7 @@
 
                <div class="wrap" [ngClass]="{'error': isError('cvc')}">
                 <div class="group cvc">
-                    <input type="password" [(ngModel)]="cvc" maxlength="3" required>
+                    <input type="password" placeholder="***" [textMask]="{mask: mask_cvc}" [(ngModel)]="cvc">
                     <span class="highlight"></span>
                     <span class="bar"></span>
                     <label>CVC</label>

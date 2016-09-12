@@ -1,4 +1,4 @@
-import {Component, PLATFORM_DIRECTIVES, PLATFORM_COMMON_PROVIDERS, provide, ViewChild} from '@angular/core';
+import {Component, PLATFORM_DIRECTIVES, PLATFORM_COMMON_PROVIDERS, provide, ViewChild, ApplicationRef} from '@angular/core';
 //import {provideRouter, RouterConfig} from '@angular/router';
 import {Platform, ionicBootstrap, NavController, NavParams} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
@@ -98,6 +98,8 @@ export class App {
     // }
 
 }
+
+
 //
 //const routes: RouterConfig = [
 //  { path: '', pathMatch: 'full', redirectTo: '/home'},
@@ -105,6 +107,7 @@ export class App {
 //  { path: 'search', component: SearchPage }
 //];
 
+class AppModule {}
 //noinspection TypeScriptValidateTypes
 ionicBootstrap(App, [
     // Place,

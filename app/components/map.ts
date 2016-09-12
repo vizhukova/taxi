@@ -132,7 +132,13 @@ export class Map {
             .catch((err) => { console.log(err) })
         });
 
-        
+        PlaceProvider.reload$.subscribe(newCoords => {
+            if(this.map) setTimeout(()=>{
+                self.map.invalidateSize(true)
+            }, 300)
+
+        })
+
         PlaceProvider.coords$.subscribe(newCoords => {
             
            self.coords = newCoords;

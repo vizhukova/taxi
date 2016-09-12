@@ -139,6 +139,7 @@ export class MainPage {
   changeTab(newTab:string) {
     if(this.state.searching || this.state.onmapsearch) {return};
     this.activeTab = newTab;
+    if(newTab === 'home') this.PlaceProvider.reloadMap('homeMap');
     this.ref.tick()
   }
 
