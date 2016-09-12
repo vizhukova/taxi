@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
 import {  NavController } from 'ionic-angular';
-import {FormsModule} from '@angular/forms';
-import MaskedInput from 'angular2-text-mask'
+// import {FormsModule} from '@angular/forms';
+// import MaskedInput from 'angular2-text-mask'
 import {  Card } from './../../../../providers/cards/cards';
 
 @Component({
     templateUrl: 'build/pages/account/modal/add_new_card/add_new_card.html',
-    imports: [FormsModule],
-    declarations: [MaskedInput]
 })
 export class AddNewCardModal {
 
