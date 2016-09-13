@@ -32,3 +32,51 @@
 ion-nav > ion-page > ion-content.statusbar-padding:first-child scroll-content{
   padding-top: 0;
 }
+
+.register-modal {
+
+  scroll-content {
+    overflow-y: hidden;
+  }
+
+  .modal-body {
+    overflow-y: inherit;
+
+    .content {
+      position: absolute;
+      top: 74px;
+      bottom: 0;
+      margin: auto;
+      text-align: center;
+    }
+
+    label {
+
+
+
+      &.sms {
+        //position: absolute;
+        //bottom: 90px;
+        text-align: center;
+        //margin: auto;
+        //left: 52px;
+        //right: 52px;
+        bottom: 80px;
+        position: absolute;
+        left: 0;
+        width: 30%;
+        right: 0;
+        margin: auto;
+        //margin-top: 40%;
+        //margin-bottom: 50px;
+
+      }
+    }
+  }
+}
+
+.add-card-modal {
+  .modal-body {
+    overflow: hidden;
+  }
+}

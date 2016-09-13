@@ -1,366 +1,262 @@
 .register-modal {
-  background-image: url('./../res/background.png');
-  z-index: 1;
-
-  scroll-content {
-    overflow-y: hidden;
-  }
-
-  .modal-body {
-    width: 95%;
-    height: 90%;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    border-radius: 5px;
+   background-image: url('./../res/background.png');
+   z-index: 1;
+   .modal-body {
+     width: 95%;
+     height: 90%;
+     position: absolute;
+     top: 0;
+     bottom: 0;
+     left: 0;
+     right: 0;
+     margin: auto;
+     border-radius: 5px;
     //overflow: hidden;
-    background-image: url('./../res/register_bottom_background.png');
-    background-repeat: no-repeat;
-    background-position: bottom center;
-    background-color: #fff;
-    background-size: 100% 35%;
-    //overflow-y: scroll;
-    background-attachment: local;
+     background-image: url('./../res/register_bottom_background.png');
+     background-repeat: no-repeat;
+     background-position: bottom center;
+     background-color: #fff;
+     background-size: 100% 35%;
+    overflow-y: scroll;
+   background-attachment: local;
 
-    -webkit-box-shadow: 0px 6px 16px -2px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 6px 16px -2px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 6px 16px -2px rgba(0, 0, 0, 0.75);
+     -webkit-box-shadow: 0px 6px 16px -2px rgba(0, 0, 0, 0.75);
+     -moz-box-shadow: 0px 6px 16px -2px rgba(0, 0, 0, 0.75);
+     box-shadow: 0px 6px 16px -2px rgba(0, 0, 0, 0.75);
 
-    .content {
-      position: absolute;
-      top: 74px;
-      bottom: 0;
-      margin: auto;
+     .content {
+       position: relative;
+       height: 84%;
       text-align: center;
 
 
-      div.wrap {
-        margin: 0 52px;
-        padding-top: 15px;
-        margin-bottom: 35px;
-        position: relative;
-        text-align: left;
+       div.wrap {
+         margin: 0 52px;
+       }
+     }
+
+     .modal-header {
+       color: $main-bright-color;
+       font-size: 18px;
+       font-weight: 600;
+       text-transform: uppercase;
+       text-align: center;
+       margin: 18px 0 38px 0;
+     }
+
+     .group {
+       position: relative;
+
+       &.name {
+         margin-bottom: 30px;
+       }
+
+       &.number {
+         width: 60%;
+         float: right;
+         margin-top: 18px;
+       }
+
+       /* LABEL ======================================= */
+       label                {
+         color: #565659;
+         font-size: 16px;
+         font-weight: 400;
+         position:absolute;
+         pointer-events:none;
+         top:15px;
+         left: 0;
+         transition:0.2s ease all;
+         -moz-transition:0.2s ease all;
+         -webkit-transition:0.2s ease all;
+         padding-left: 0;
+
+         &:before {
+           display: none;
+         }
+       }
+       input {
+         -webkit-appearance: none;
+         -webkit-border-radius:0;
+         border-radius:0;
+       }
+
+       /* active state */
+       input:focus ~ label, input:valid ~ label        {
+         top:-18px;
+         font-size:14px;
+         color:#565659;
+       }
+
+       .bar:before {
+         left:50%;
+       }
+       .bar:after {
+         right:50%;
+       }
+
+       /* active state */
+       input:focus ~ .bar:before, input:focus ~ .bar:after {
+         width:50%;
+       }
+
+       input:focus ~ i.cross {
+         display: inline-block;
+       }
+
+       .cross {
+         background-image: url("./../res/cross.svg");
+         position: absolute;
+         right: 0;
+         bottom: 10px;
+         width: 18px;
+         height: 18px;
+         background-size: 18px;
+         display: none;
+       }
+     }
 
 
-        div.dividerline {
-          height: 35px;
-        }
-      }
-    }
+     label {
+       color: $main-dark-color;
+       font-size: 12px;
+       font-weight: 400;
+       display: inline-block;
+       margin-bottom: 35px;
+       position: relative;
 
-    .modal-header {
-      color: $main-bright-color;
-      font-size: 18px;
-      font-weight: 600;
-      text-transform: uppercase;
-      text-align: center;
-      margin: 18px 0 38px 0;
-    }
+       &.name {
+         width: 100%;
+       }
+       &.code {
+         width: 35%;
+         float: left;
+         font-size: 14px;
+       }
 
-    .group {
-      position: relative;
+       &.number {
+         width: 60%;
+         margin-left: 20px;
+         position: relative;
+         float: right;
 
-      &.name {
-        margin-bottom: 30px;
+         .cross {
+           background-image: url("./../res/cross.svg");
+           position: absolute;
+           right: 0;
+           top: 25px;
+           width: 18px;
+           height: 18px;
+           background-size: 18px;
+         }
+       }
 
-        /* LABEL ======================================= */
-        label                {
-          color: #565659;
-          font-size: 16px;
-          font-weight: 400;
-          position:absolute;
-          pointer-events:none;
-          top:15px;
-          left: 0;
-          transition:0.2s ease all;
-          -moz-transition:0.2s ease all;
-          -webkit-transition:0.2s ease all;
-          padding-left: 0;
-
-          &:before {
-            display: none;
-          }
-        }
-        input {
-          -webkit-appearance: none;
-          -webkit-border-radius:0;
-          border-radius:0;
-        }
-
-
-        /* active state */
-        input:focus ~ label, input:valid ~ label        {
-          top:-15px;
-          font-size:14px;
-          color:#565659;
-          width: 100%;
-        }
-
-        .bar:before {
-          left:50%;
-        }
-        .bar:after {
-          right:50%;
-        }
-
-        /* active state */
-        input:focus ~ .bar:before, input:focus ~ .bar:after {
-          width:50%;
-        }
-
-        input:focus ~ i.cross {
-          display: inline-block;
-        }
-      }
-
-      &.number {
-        width: 60%;
-        position: relative;
-        float: right;
-        /* LABEL ======================================= */
-        label                {
-          color: #565659;
-          font-size: 16px;
-          font-weight: 400;
-          position:absolute;
-          pointer-events:none;
-          top:15px;
-          left: 0;
-          transition:0.2s ease all;
-          -moz-transition:0.2s ease all;
-          -webkit-transition:0.2s ease all;
-          padding-left: 0;
-
-          &:before {
-            display: none;
-          }
-        }
-        input {
-          -webkit-appearance: none;
-          -webkit-border-radius:0;
-          border-radius:0;
-        }
-
-
-        /* active state */
-        input:focus ~ label, input:valid ~ label        {
-          top: inherit!important;
-          bottom: 36px;
-          font-size:14px;
-          color:#565659;
-          width: 100%;
-          margin-bottom: 0;
-        }
-
-        .bar:before {
-          left:50%;
-        }
-        .bar:after {
-          right:50%;
-        }
-
-        /* active state */
-        input:focus ~ .bar:before, input:focus ~ .bar:after {
-          width:50%;
-        }
-
-        input:focus ~ i.cross {
-          display: inline-block;
-        }
-      }
-
-      .cross {
-        background-image: url("./../res/cross.svg");
-        position: absolute;
-        right: 0;
-        bottom: 10px;
-        width: 18px;
-        height: 18px;
-        background-size: 18px;
-        display: none;
-      }
-    }
-
-
-    label {
-      color: $main-dark-color;
-      font-size: 12px;
-      font-weight: 400;
-      display: inline-block;
-      margin-bottom: 35px;
-      position: relative;
-
-      &.name {
-        width: 100%;
-      }
-
-      &.code {
-        width: 35%;
-        float: left;
-        font-size: 14px;
-        margin-bottom: 0;
-
-
-        label {
-          width: 100%;
-          color: #565659;
-          font-size: 14px;
-          font-weight: 400;
-          display: inline-block;
-          margin-bottom: 0;
-          position: absolute;
-          bottom: 36px;
-        }
-
-        .select-wrapper {
-          div.input {
-            border-bottom: solid 1px #e4e7ec;
-            width: 100%;
-            color: #565659;
-            font-size: 18px;
-            //height: 34px;
-            font-weight: 600;
-            background: transparent;
-            position: relative;
-          }
-        }
-
-
-      }
-
-      &.number {
-        width: 60%;
-        margin-left: 20px;
-        position: relative;
-        float: right;
-
-        .cross {
-          background-image: url("./../res/cross.svg");
-          position: absolute;
-          right: 0;
-          top: 25px;
-          width: 18px;
-          height: 18px;
-          background-size: 18px;
-        }
-      }
-
-      &.sms {
+       &.sms {
         //position: absolute;
         //bottom: 90px;
-        text-align: center;
-        //margin: auto;
-        //left: 52px;
-        //right: 52px;
-        bottom: 80px;
-        position: absolute;
-        left: 0;
-        width: 30%;
-        right: 0;
-        margin: auto;
-        //margin-top: 40%;
-        //margin-bottom: 50px;
+         text-align: center;
+       //margin: auto;
+       //left: 52px;
+       //right: 52px;
+       margin-top: 40%;
 
-        input {
-          border-color: #d8dadc;
-          text-align: center;
-          font-weight: 100;
+         input {
+           border-color: #d8dadc;
+           text-align: center;
+           font-weight: 100;
 
-          ::-webkit-input-placeholder {
-            color: $main-dark-color !important;
-          }
-          ::-moz-placeholder {
-            color: $main-dark-color !important;
-          }
-          /* Firefox 19+ */
-          :-moz-placeholder {
-            color: $main-dark-color !important;
-          }
-          /* Firefox 18- */
-          :-ms-input-placeholder {
-            color: $main-dark-color !important;
-          }
-        }
+           ::-webkit-input-placeholder {
+             color: $main-dark-color !important;
+           }
+           ::-moz-placeholder {
+             color: $main-dark-color !important;
+           }
+           /* Firefox 19+ */
+           :-moz-placeholder {
+             color: $main-dark-color !important;
+           }
+           /* Firefox 18- */
+           :-ms-input-placeholder {
+             color: $main-dark-color !important;
+           }
+         }
 
-      }
-    }
+       }
+     }
 
-    button {
-      margin: 0;
-    }
+     button {
+       margin: 0;
+     }
 
-    button.sent {
-      color: #f7f7f9;
-      font-size: 16px;
-      font-weight: 600;
-      text-transform: uppercase;
-      text-align: center;
-      width: 84%;
-      margin: auto;
-      display: block;
-      height: 40px;
-      line-height: 40px;
-      background: #a0bfa1;
+     button.sent {
+       color: #f7f7f9;
+       font-size: 16px;
+       font-weight: 600;
+       text-transform: uppercase;
+       text-align: center;
+       width: 84%;
+       margin: auto;
+       display: block;
+       height: 40px;
+       line-height: 40px;
+       background: #a0bfa1;
 
-      &.opacity {
-        opacity: 0.5;
-      }
-      &.activated {
-        background: #849C85;
-      }
+       &.opacity {
+         opacity: 0.5;
+       }
+       &.activated {
+         background: #849C85;
+       }
 
-      &.code {
-        background: #a0bfa1;
-        opacity: 0.5;
-        color: #f7f7f9;
-        &.green {
-          color: #f7f7f9;
-          background: #438037;
-          opacity: 1;
+       &.code {
+         background: #a0bfa1;
+         opacity: 0.5;
+         color: #f7f7f9;
+         &.green {
+           color: #f7f7f9;
+           background: #438037;
+           opacity: 1;
 
-        }
-        &.activated {
-          background: #b3b3b3;
-        }
-      }
-    }
+         }
+         &.activated {
+           background: #b3b3b3;
+         }
+       }
+     }
 
-    button.skip {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      height: 57px;
-      left: 0;
-      right: 0;
-      color: #f7f7f9;
-      font-size: 18px;
-      font-weight: 600;
-      background: #565659;
-      text-transform: uppercase;
-      &.activated {
-        background: #39393C;
-      }
+     button.skip {
+    position: fixed;
+       bottom: 0;
+       width: 100%;
+       height: 57px;
+       left: 0;
+       right: 0;
+       color: #f7f7f9;
+       font-size: 18px;
+       font-weight: 600;
+       background: #565659;
+       text-transform: uppercase;
+       &.activated {
+         background: #39393C;
+       }
 
-      &.code {
-        background: $main-bright-color;
-        &.activated {
-          background: $main-bright-color;
-        }
-      }
+       &.code {
+         background: $main-bright-color;
+         &.activated {
+           background: $main-bright-color;
+         }
+       }
 
-    }
+     }
 
-    div.status {
-      margin: auto;
-      color: red;
-      font-size: 15px;
-      font-weight: bold;
-      margin-top: 6px;
-      text-align: center;
-    }
-  }
+     div.status {
+       margin: auto;
+       color: red;
+       font-size: 15px;
+       font-weight: bold;
+       margin-top: 6px;
+       text-align: center;
+     }
+   }
 
-}
+ }

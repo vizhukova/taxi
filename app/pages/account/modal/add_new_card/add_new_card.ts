@@ -1,13 +1,11 @@
-import { Component, NgModule } from '@angular/core';
+import { Component } from '@angular/core';
 import {  NavController } from 'ionic-angular';
-import {FormsModule} from '@angular/forms';
-import MaskedInput from 'angular2-text-mask'
-import { Card } from './../../../../providers/cards/cards';
-
+// // import {FormsModule} from '@angular/forms';
+// import MaskedInput from 'angular2-text-mask'
+import {  Card } from './../../../../providers/cards/cards';
 
 @Component({
     templateUrl: 'build/pages/account/modal/add_new_card/add_new_card.html',
-    directives: [MaskedInput]
 })
 export class AddNewCardModal {
 
@@ -16,9 +14,7 @@ export class AddNewCardModal {
     isShownSelect: boolean = false;
     cards: Array<string>;
     card: Object = {};
-    mask: Array<any> = [/\d/, /\d/, '/', /\d/, /\d/];
-    mask_cvc: Array<any> = [/\d/, /\d/, /\d/];
-    mask_card: Array<any> = [/\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/];
+    mask: Array<any> = [/[0-9]/,/[0-9]/, '/', /[0-9]/,/[0-9]/];
 
     numInArray: string;
 
@@ -30,9 +26,7 @@ export class AddNewCardModal {
 
     error: Object = {};
 
-    isEdit: boolean = false;
-    private textMask = false;
-    //открыто для создания или редактирования
+    isEdit: boolean = false; //открыто для создания или редактирования
 
     constructor(private nav: NavController, private CardProvider: Card) {
 
@@ -47,10 +41,10 @@ export class AddNewCardModal {
 
                 this.cardName = card[this.numInArray].type;
                 this.name = card[this.numInArray].name;
-                this.num = card[this.numInArray].num + '_';
+                this.num = card[this.numInArray].num;
                 this.owner = card[this.numInArray].owner;
-                this.date = card[this.numInArray].date + '_';
-                this.cvc = card[this.numInArray].cvc + '_';
+                this.date = card[this.numInArray].date;
+                this.cvc = card[this.numInArray].cvc;
                 this.isEdit = true;
 
             } else {
@@ -88,11 +82,6 @@ export class AddNewCardModal {
         }
     }
 
-
-    onAccept(key) {
-        this.textMask = true;
-     }
-
     submit() {
         if (Object.keys(this.error).length) {
             return;
@@ -105,10 +94,10 @@ export class AddNewCardModal {
 
         var newCard = {
             name: this.name,
-            num: this.num.slice(0, -1).replace(/\s/g, ''),
+            num: this.num,
             owner: this.owner,
-            date: this.date.slice(0, -1),
-            cvc: this.cvc.slice(0, -1),
+            date: this.date,
+            cvc: this.cvc,
             isMain: this.card['isMain'] || false,
             type: this.cardName
         };
@@ -118,6 +107,7 @@ export class AddNewCardModal {
         } else {
             this.CardProvider.addCard(newCard);
         }
+
         this.closeModal();
     }
 
