@@ -72,11 +72,19 @@ ion-nav > ion-page > ion-content.statusbar-padding:first-child scroll-content{
 
       }
     }
+
+    button.skip {
+      position: absolute;
+    }
   }
 }
 
 .add-card-modal {
   .modal-body {
     overflow: hidden;
+  }
+
+  div.price {
+    position: absolute;
   }
 }

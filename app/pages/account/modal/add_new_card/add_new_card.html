@@ -58,7 +58,7 @@
 
                <div class="wrap" [ngClass]="{'error': isError('date')}">
                 <div class="group date">
-                    <input type="text" [textMask]="{mask: mask}" [guide]="true" [(ngModel)]="date" required>
+                    <input type="text" [(ngModel)]="date" required>
                     <span class="highlight"></span>
                     <span class="bar"></span>
                     <label>Срок действия</label>
